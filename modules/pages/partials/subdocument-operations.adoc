@@ -2,20 +2,24 @@
 include::partial$attributes.adoc[]
 
 [abstract]
-_sub-document_ operations can be used to efficiently access _parts_ of documents.
+_Sub-document_ operations can be used to efficiently access _parts_ of documents.
 Sub-document operations may be quicker and more network-efficient than _full-document_ operations such as _upsert_, _update_ and _get_ because they only transmit the accessed sections of the document over the network.
 Sub-document operations are also atomic, allowing safe modifications to documents with built-in concurrency control.
 
 == Sub-documents
 
 Starting with Couchbase Server 4.5 you can atomically and efficiently update and retrieve _parts_ of a document.
-These parts are called _sub documents_.
+These parts are called _sub-documents_.
 While full-document retrievals retrieve the entire document and full document updates require sending the entire document, sub-document retrievals only retrieve relevant parts of a document and sub-document updates only require sending the updated portions of a document.
 You should use sub-document operations when you are modifying only portions of a document, and full-document operations when the contents of a document is to change significantly.
 
-In order to use sub-document operations you need to specify a _path_ indicating the location of the subdocument.
-The _path_ follows N1QL syntax.
-Considering the document
+[caption=Attention]
+IMPORTANT: The sub-document operations described on this page are for _Key-Value_ requests only: they are not related to sub-document N1QL queries.
+(Sub-document N1QL queries are explained in the section xref:n1ql-query.adoc[Querying with N1QL].)
+
+In order to use sub-document operations you need to specify a _path_ indicating the location of the sub-document.
+The _path_ follows N1QL syntax (see https://developer.couchbase.com/documentation/server/current/sdk/subdocument-operations.html#story-h2-12[below^], and xref:{version-server}@server:n1ql:n1ql-intro/queriesandresults.adoc[N1QL Queries and Results]).
+Considering the document:
 
 .customer123.json
 [source,json]
@@ -46,12 +50,12 @@ Considering the document
 }
 ----
 
-the paths `name`, `addresses.billing.country` and `purchases.complete[0]` are all valid paths.
+The paths `name`, `addresses.billing.country` and `purchases.complete[0]` are all valid paths.
 
 == Retrieving
 
 The _lookup-in_ operations queries the document for a certain path(s) and returns that/those path(s).
-You have a choice of actually retrieving the document path using the _subdoc-get_ subdocument operation, or simply querying the existence of the path using the _subdoc-exists_ subdocument operation.
+You have a choice of actually retrieving the document path using the _subdoc-get_ sub-document operation, or simply querying the existence of the path using the _subdoc-exists_ sub-document operation.
 The latter saves even more bandwidth by not retrieving the contents of the path if it is not needed.
 
 .Retrieve sub-document value
@@ -94,15 +98,15 @@ echo $frags->value[1]['value'] . ", Code=" . $frags->value[1]['code'] . "\n";
 Mutation operations modify one or more paths in the document.
 The simplest of these operations is _subdoc-upsert_, which, just like the fulldoc-level _upsert_, this will either modify the value of an existing path or create it if it does not exist:
 
-.upserting a new sub-document
+.Upserting a new sub-document
 [source,python]
 ----
-bucket.mutate_in('customer123', SD.upsert('fax', '775-867-5309'))
+bucket.mutate_in('customer123', SD.upsert('fax', '311-555-0151'))
 ----
 
-Likewise, the _subdoc-insert_ operation will only add the new value to the path if it does not exist
+Likewise, the _subdoc-insert_ operation will only add the new value to the path if it does not exist:
 
-.inserting a sub-document
+.Inserting a sub-document
 [source,python]
 ----
 bucket.mutate_in('customer123', SD.insert('purchases.complete', [42, True, None]))
@@ -116,7 +120,7 @@ Here's an example of one which replaces one path and removes another.
 ----
 bucket.mutate_in('customer123',
                  SD.remove('addresses.billing'),
-                 SD.replace('email', 'doug96@hotmail.com'))
+                 SD.replace('email', 'dougr96@hotmail.com'))
 ----
 
 == Array append and prepend
@@ -187,7 +191,7 @@ bucket.mutate_in('some_doc',
 == Arrays as unique sets
 
 Limited support also exists for treating arrays like unique sets, using the _subdoc-array-addunique_ command.
-This will do a check to determine if the given value exists or not before actually adding the item to the array
+This will do a check to determine if the given value exists or not before actually adding the item to the array:
 
 [source,python]
 ----
@@ -252,7 +256,7 @@ Full-document counters will use normal C semantics for overflow (in which the ov
 
 == Executing multiple operations
 
-Multiple subdocument operations can be executed at once on the same document, allowing you to retrieve or modify several sub-documents at once.
+Multiple sub-document operations can be executed at once on the same document, allowing you to retrieve or modify several sub-documents at once.
 When multiple operations are submitted within the context of a single _lookup-in_ or _mutate-in_ command, the server will execute all the operations with the same version of the document.
 
 NOTE: Unlike _batched operations_ which is simply a way of sending multiple individual operations efficiently on the network, multiple subdoc operations are formed into a single command packet, which is then executed atomically on the server.
@@ -298,7 +302,7 @@ In this case, the _create-parents_ or _create-intermediates_ option may be used.
 ----
 bucket.mutate_in('customer123',
                  SD.upsert('level_0.level_1.foo.bar.phone',
-                           {'num': '775-867-5309', 'ext': 16},
+                           {'num': '311-555-0101', 'ext': 16},
                            create_parents=True))
 ----
 
@@ -306,7 +310,7 @@ bucket.mutate_in('customer123',
 
 Subdoc mostly eliminates the need for tracking the xref:concurrent-mutations-cluster.adoc[CAS] value.
 Subdoc operations are atomic and therefore if two different threads access two different sub-documents then no conflict will arise.
-For example the following two blocks can execute concurrently without any risk of conflict
+For example the following two blocks can execute concurrently without any risk of conflict:
 
 [source,python]
 ----
@@ -318,7 +322,8 @@ bucket.mutate_in('customer123', SD.array_append('purchases.complete', 999))
 bucket.mutate_in('customer123', SD.array_append('purchases.abandoned', 998))
 ----
 
-Even when modifying the _same_ part of the document, operations will not necessarily conflict, for example two concurrent _subdoc-array-append_ to the same array will both succeed, never overwriting the other.
+Even when modifying the _same_ part of the document, operations will not necessarily conflict.
+For example, two concurrent _subdoc-array-append_ operations to the same array will both succeed, never overwriting the other.
 
 While CAS is no longer required to ensure document updates are preserved, it may still be needed to ensure document state remains consistent over multiple invocations of _mutate-in_: Sometimes it's important to ensure the entire document didn't change state since the last operation, such as in the case _subdoc-remove_ operations to ensure that the element being removed was not already replaced by something else.
 
@@ -333,7 +338,7 @@ When inserting or upserting a path, this means the _immediate parent_ does not e
 * *Path already exists*: In the context of an _insert_, it means the given path already exists.
 In the context of _array-add-unique_, it means the given value already exists.
 * *Path mismatch*: This means the path may exist in the document, but that there is a type conflict between the path in the document and the path in the command.
-Consider the document,
+Consider the document:
 +
 [source,json]
 ----
@@ -346,7 +351,7 @@ The path `tags.sierra` is a mismatch, since `tags` is actually an array, while t
 * *Invalid path*: This means the path is invalid for the command.
 Certain commands such as _subdoc-array-insert_ expect array elements as their final component, while others such as _subdoc-upsert_ and _subdoc-insert_ expect dictionary (object) keys.
 
-Because subdocument operations are executed using either _mutate-in_ or _replace-in_, if a command fails a top-level error is reported (_Multi Command Failure_), rather than an individual error code (e.g.
+Because sub-document operations are executed using either _mutate-in_ or _replace-in_, if a command fails a top-level error is reported (_Multi Command Failure_), rather than an individual error code (e.g.
 _Path Not Found_).
 When receiving a top-level error code, you should traverse the results of the command to see which individual code failed.
 
@@ -404,3 +409,8 @@ print escape_component("[\"mixed\\") # `[\"mixed\\`
 ----
 
 NOTE: Currently, paths cannot exceed 1024 characters, and cannot be more than 32 levels deep.
+
+== XDCR
+
+XDCR only replicates full documents.
+Sub-documents are only replicated as part of the full document.

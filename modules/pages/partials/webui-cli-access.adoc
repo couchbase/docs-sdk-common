@@ -25,8 +25,8 @@ Note that you will also need to install the _command line tools_.
 .Debian/Ubuntu
 [source,bash]
 ----
-wget http://packages.couchbase.com.s3.amazonaws.com/releases/couchbase-release/couchbase-release-1.0-2-amd64.deb
-sudo dpkg -i couchbase-release-1.0-2-amd64.deb
+wget http://packages.couchbase.com.s3.amazonaws.com/releases/couchbase-release/couchbase-release-1.0-4-amd64.deb
+sudo dpkg -i couchbase-release-1.0-4-amd64.deb
 sudo apt-get update
 sudo apt-get install libcouchbase2-bin
 ----
@@ -34,8 +34,8 @@ sudo apt-get install libcouchbase2-bin
 .CentOS/RHEL
 [source,bash]
 ----
-wget http://packages.couchbase.com.s3.amazonaws.com/releases/couchbase-release/couchbase-release-1.0-2-x86_64.rpm
-sudo rpm -ivh couchbase-release-1.0-2-x86_64.rpm
+wget http://packages.couchbase.com.s3.amazonaws.com/releases/couchbase-release/couchbase-release-1.0-4-x86_64.rpm
+sudo rpm -ivh couchbase-release-1.0-4-x86_64.rpm
 sudo yum install libcouchbase2-bin
 ----
 
@@ -97,41 +97,43 @@ Once in the shell, you should be greeted by a prompt and ready to issue any N1QL
  }
 
 [#webui-access]
-== Web Console Document Access
+== Couchbase Web Console Document Access
 
-You can use the Web Console to view, edit, and create JSON documents up to 2.5KB in size.
-To access documents using the Web Console:
+You can use the Couchbase Web Console to view, edit, and create JSON documents up to 256KB in size.
+To access documents using the Couchbase Web Console:
 
 . Navigate your browser to a cluster node.
 Type the address of the cluster with the admin port (8091).
 Use your [.var]`username` (usually [.in]`Administrator`).
 The [.var]`password` is the password you used when setting up the cluster.
-. Once logged in, go to the [.ui]*Data Buckets* section
-+
-image::{incimagesdir}/webui-buckets.png[,350px]
 
-. Click on the btn:[Documents] button of the `default` bucket:
+. Once logged in, access the [.ui]*Buckets* view, by left-clicking on the [.ui]*Buckets* tab, in the navigation panel at the left-hand side.
+The [.ui]*Buckets* view displays all buckets currently defined on your system.
+In the illustration below, the `travel-sample` bucket is displayed:
 +
-image::{incimagesdir}/webui-documents.png[,650px]
+image::{incimagesdir}/webui-buckets.png[,820px]
 
-. To retrieve a document, type in the document ID and click on [.ui]*Lookup ID*.
-This will then open the document edit page:
+. Left-click on the [.ui]*Documents* tab, at the right-hand side of the [.ui]*travel-sample* bucket-row.
+This brings up the [.ui]*Documents* view, which lists the documents contained by the selected bucket:
 +
-image:{incimagesdir}/webui-lookup.png[,300px] image:{incimagesdir}/webui-editor-existing.png[,350px]
+image::{incimagesdir}/webui-documents.png[,820px]
 
-. To create a new document, return to the [.ui]*Documents* section and click on [.ui]*Create Document*
+. To retrieve a document, enter the document ID into the [.ui]*Look Up ID* field, at the upper-right; then left-click on the adjacent button.
+The [.ui]*Documents Editing* page now appears.
+This allows you to edit the selected document.
 +
-image::{incimagesdir}/webui-create-document.png[,350]
+image::{incimagesdir}/webui-editor-existing.png[,820px]
 
-. You’ll be prompted to enter a document ID
+. To create a new document, return to the [.ui]*Documents* view, and click on [.ui]*Add Document*, at the upper right.
+This brings up the [.ui]*Create Document* dialog, which allows you to enter a Document ID:
 +
 image::{incimagesdir}/webui-newdoc-prompt.png[,300px]
 
-. Once created, you can now edit your document.
-Don't forget to [.ui]*Save* when done
+. Enter an appropriate ID, then save.
+This bring up the [.ui]*Documents Editing* view.
 +
-image::{incimagesdir}/webui-editor-new.png[,650px]
+image::{incimagesdir}/webui-editor-new.png[,820px]
 
-== Web Console Query Accesss
+== Couchbase Web Console Query Accesss
 
 You can use the xref:{version-server}@server:tools:query-workbench.adoc[Query Workbench] to issue queries using the web console.

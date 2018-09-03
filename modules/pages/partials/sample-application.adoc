@@ -2,20 +2,10 @@
 include::partial$attributes.adoc[]
 
 [abstract]
-Couchbase Travel is a sample web application that demonstrates how to interact with the Couchbase query services via the SDKs
+The Couchbase Travel App is a sample web application that demonstrates how to interact with the Couchbase query services via the SDKs.
 
 Each SDK comes with its own implementation of the backend for the application.
-You can download the complete source code and then build and run the app.
-While the app runs, you can get a peek of what is happening in the backend via the "Narration" (a console like UI element that can display N1QL queries for instance).
-It is only visible in components that communicate with the server (but can also be collapsed).
-
-image::{incimagesdir}/travel-app-narration.png[,650px]
-
-The documentation for the travel app illustrates the data model and walks through the N1QL and FTS queries used to select flights and search for hotels.
-
-The https://github.com/couchbaselabs/try-cb-frontend[travel app front-end^] is the same in each SDK implementation and is built on an https://angular.io[Angular2^] stack.
-
-The focus of this tutorial is the backend, which is a REST API, available in the following languages:
+The backend is a REST API available in the following languages:
 
 * xref:nodejs-sdk::sample-app-backend.adoc[Node.js]
 * xref:java-sdk::sample-app-backend.adoc[Java]
@@ -25,10 +15,20 @@ The focus of this tutorial is the backend, which is a REST API, available in the
 * xref:go-sdk::sample-app-backend.adoc[Go]
 * xref:c-sdk::sample-app-backend.adoc[C/C++ (basic interaction with data model only)]
 
-Please refer to the travel-app documentation of your SDK of choice for specifics for that particular SDK, like backend dependencies, source-code checkout and running instructions.
+Please refer to the travel-app documentation of your SDK of choice for specifics for that particular SDK, like backend dependencies, source-code checkout, and running instructions.
+
+The https://github.com/couchbaselabs/try-cb-frontend[travel app front-end^] is the same in each SDK implementation and is built on an https://angular.io[Angular2^] stack.
+
+While the app runs, you can get a peek of what is happening in the backend via the "Narration" — a console-like UI element that can display N1QL queries, for instance.
+It is only visible in components that communicate with the server, but can also be collapsed.
+
+image::{incimagesdir}/travel-app-narration.png[,650px]
 
 The application allows users to find flights by entering airports and travel dates.
-For the airport entries, the app uses a N1QL query bound to an Angular type ahead directive to suggest airport names based on the first few letters entered.
+For the airport entries, the app uses a N1QL query bound to an Angular typeahead directive to suggest airport names based on the first few letters entered.
+
+The focus of this tutorial is the backend.
+The documentation for the travel app illustrates the data model and walks through the N1QL and FTS queries used to select flights and search for hotels.
 
 [#note-installing]
 == Generic set up
@@ -37,90 +37,102 @@ You'll need:
 
 * Your favorite editor or IDE
 * Your SDK of choice and its specific dependencies
-* The sample app source code for your SDK from GitHub (check the instructions and make sure to use the implementation compatible with the v2 API)
-* A local `Couchbase 4.5` (or greater) installation (make sure that the `travel-sample` bucket has been loaded from 4.5 and that there is, at least, one node with data, query, index and full text search services in the cluster)
+* A local `Couchbase 5.1` (or later) installation — make sure that the `travel-sample` bucket has been loaded, and that there is at least one node with data, query, index, and full text search services in the cluster
+* The sample app source code for your SDK from GitHub — check the instructions and make sure to use the implementation compatible with the v2 API
 * That's it!
 
 To start, it is easiest if you run Couchbase Server and the travel sample app on the same machine.
 It's not required to run your development environment this way, and advanced Multi-Dimensional Scaling (MDS) configurations are supported.
 It's just easier to start a development environment with components running locally.
 
-Download http://www.couchbase.com/download[Couchbase Server 4.6^]and install it.
-As you follow the download instructions and setup wizard, make sure you keep all the services (`data`, `query`, and `index`) selected.
-Make sure also to install the sample bucket named `travel-sample` (introduced in Couchbase Server 4.0) because it contains the data used in this tutorial.
+If you do not already have Couchbase Server 5.1 or later installed, download http://www.couchbase.com/download[Couchbase Server^] and install it.
+When installed, open a browser and navigate to the Couchbase Web Console URL — by default, `127.0.0.1:8091`.
+When prompted, create a new cluster.
+Make sure all the services ([.ui]*Data Service*, [.ui]*Index Service*, [.ui]*Search Service* and [.ui]*Query Service*) are selected.
 
-WARNING: It is important to install the `travel-sample` bucket from a 4.5 or later version of Couchbase Server, as it has been enriched with hotels data.
+IMPORTANT: It is important to install the `travel-sample` bucket from Couchbase Server 5.1 or later, as it has been enriched with hotels data.
 If you have installed the sample bucket from an earlier version, delete the bucket and follow the instructions below.
 
-If you already have Couchbase Server 4.5 or later installed but did not install the `travel-sample` bucket (or you installed it from a 4.0 version), open the Couchbase Web Console and select menu:Settings[Sample Buckets].
-Select the `travel-sample` checkbox, and then click [.ui]*Create*.
-A notification box in the upper-right corner disappears when the bucket is ready to use.
+If you have not installed the `travel-sample` bucket from Couchbase Server 5.1, select menu:Settings[Sample Buckets].
+Select the [.ui]*travel-sample* checkbox, and then click [.ui]*Load Sample Data*.
+The activity notification in the upper-right corner shows that the bucket is being added.
+When the bucket is ready to use, it is listed under the [.ui]*Installed Samples* heading.
 
-Finally, in order to be able to search for hotels, an FTS index called `hotels` must be created on the `travel-sample` bucket.
-Go to menu:Indexes[Full Text, New Full Text Index] and create the `hotels` index:
+In order to be able to search for hotels, you must create an FTS index on the `travel-sample` bucket.
+Select menu:Search[Add Index] and create an index named `hotels`.
 
-image::{incimagesdir}/travel-app-fts-index.png[,650px]
+image::{incimagesdir}/travel-app-fts-index.png[,633px]
 
-{empty} .
+NOTE: The index mapping could be better tuned, but a generic mapping will also work fine for this example.
 
-Note that the index mapping could be better tuned, but a generic mapping will also work fine for this example.
+Finally, download the complete source code for the backend, then build and run the Travel App.
+See the <<travel-sample-app-generic,links above>> for instructions for your development environment.
+
+The app displays a message showing the login URL for the frontend.
+Make a note of this so you can log in.
 
 [#using-travel-app]
 == Using the Travel App
 
-To find a flight:
+To find and book a flight:
 
 . Open a browser and navigate to the login URL that was displayed when you started the app.
-. Sign in to Couchbase Travel by providing your credentials, or create a new account (which will expire after some time depending on the backend used, usually 1 hour):
+. Sign in to Couchbase Travel by creating a new account, or providing existing credentials.
+(New accounts expire after some time depending on the backend used, usually 1 hour.)
 +
 image::{incimagesdir}/travel-app-login.png[,650px]
 
-. Find a flight:
+. In the [.ui]*Airport or City* section, enter an airport code or city name in the [.ui]*From* and [.ui]*To* fields.
 +
 image::{incimagesdir}/travel-app-screen-flight.png[,650px]
-+
-In the [.ui]*Airport or City* section, enter an airport code or city name in the [.ui]*From* and [.ui]*To* fields.
 
 . In the [.ui]*Travel Dates* section, enter [.ui]*Leave* and [.ui]*Return* dates in `MM/DD/YYYY` format.
 . Click [.ui]*Find Flights*.
 The app displays the available flights for the outbound and return legs of the trip.
-. Select one or more flights to add to your cart by clicking the `choose` button next to each flight.
+. Select one or more flights to add to your cart by clicking the btn:[Choose] button next to each flight.
 +
 image::{incimagesdir}/travel-app-screen-flight-choose.png[,650px]
 
 Now you have flights stored locally in your cart.
-Go to the cart page and review your flights:
+You can see that the number of flights in the cart and the total cost are displayed in the navigation bar at the top right.
+To review your flights, navigate to the cart page:
 
-. Click on the cart icon button in the navigation bar, top right
-. See that the number of flights in the cart and the total cost are displayed in said navigation bar.
-. Review the flights in your cart, and book one by clicking on the `book` button next to it.
+. Click on the cart icon in the navigation bar.
+image:{incimagesdir}/icon-cart.png[,40px]
+. Review the flights in your cart, and book one by clicking on the btn:[Book] button next to it.
 +
 image::{incimagesdir}/travel-app-screen-cart.png[,650px]
 
-. The flight is now booked, as confirmed by a message on the page
+The flight is now booked, as confirmed by a message on the page.
 
 The flights that you've booked are stored in the backend.
-You can see which flights you've booked by navigating to the "user" page.
 The backend uses authentication to control access to the endpoints for booking and listing flights.
 
+To see which flights you've booked, navigate to the user page:
+
+. Click on the user icon in the navigation bar.
+image:{incimagesdir}/icon-user.png[,40px]
++
 image::{incimagesdir}/travel-app-screen-user.png[,650px]
 
-To search for an hotel, navigate to the hotel page:
+To search for a hotel, navigate to the hotel page:
 
-. click on the "earth" icon in the navigation bar (rightmost icon).
-. click on the `Find Hotels` button if you want to have a look at any first 100 hotels.
-. Refine your search using the input boxes, either by keyword, geographically or both.
+. Click on the hotel icon to the right of the navigation bar.
+image:{incimagesdir}/icon-hotel.png[,40px]
+. Don't enter any search criteria yet.
+Just click on the btn:[Find Hotels] button.
+The first 100 hotels are displayed.
+. Now enter a keyword in the [.ui]*Description* box, or a location in the [.ui]*Location* box, and click on [.ui]*Find Hotels* again to refine your search.
 +
 image::{incimagesdir}/travel-app-screen-hotels.png[,650px]
 
-WARNING: You should make sure that you have installed Couchbase 4.5 with FTS enabled.
-The API backend that is used by the hotels page makes use of an FTS index that you have to create, named `hotels`.
+IMPORTANT: To use the hotel search, you must have created an FTS index named `hotels`, as described earlier.
+The API backend that is used by the hotel page makes use of this FTS index.
 
 [#datamodel]
 == The Travel App data model
 
-The data model for the travel app uses several distinct document types: airline, route, airport and landmark.
-In Couchbase Server 4.5 and later it has been enriched with a 5th type: hotel.
+The data model for the travel app uses several distinct document types: airline, route, airport, and hotel.
 
 The model for each kind of document contains:
 
@@ -128,17 +140,15 @@ The model for each kind of document contains:
 * An `id` field that identifies the document
 * A `type` field that identifies the kind of document
 
-The following figure illustrates the relationship between the different kinds of documents in 4.0.
+The following figure illustrates the relationship between the different kinds of documents in version 5.1 of the Travel App.
 It shows the primary key, ID, and type fields that each document has, plus a few representative fields in each type of document.
 
-.Documents in the travel app 4.0 data model
+.Documents in the Travel App 5.1 data model
 image::{incimagesdir}/travel-app-data-model.png[]
 
-Hotels, like landmarks, don't have relations to other types.
-The figure below displays essential information about the hotel type introduced in the sample in 4.5:
+Landmark documents are not used in the travel-sample application, which focuses on a more specific subset of point of interests that have their own type: hotels.
 
-.The hotel type in the travel app 4.5 data model
-image::{incimagesdir}/travel-app-hotel-data-model.png[]
+Hotels, like landmarks, don't have relations to other types.
 
 == Airline documents
 
@@ -221,15 +231,6 @@ airport_3577                       ←This is the key, which also acts as a prim
 }
 ----
 
-== Landmark documents
-
-[.term]_Landmark documents_ contain details about points of interest such as hotels.
-They include information such as name, location, price, contact information, and the kind of activity that the point of interest provides.
-
-For landmark documents, the value of the `type` field is `landmark`.
-
-Landmark documents are not used in the travel-sample application, which focuses on a more specific subset of point of interests that have their own type: hotels.
-
 == Hotel documents
 
 [.term]_Hotel documents_ are all about a specific type of point of interests: hotels.
@@ -287,7 +288,7 @@ hotel_10180                     ←This is the key, which also acts as a primary
 [#architecture]
 == Architecture
 
-The application serves an HTML file named [.path]_index.html_ (in an [.path]_src/app/_ folder usually contained in a root folder dedicated to frontend files, eg.
+The application serves an HTML file named [.path]_index.html_ (in an [.path]_src/app/_ folder usually contained in a root folder dedicated to frontend files, e.g.
 the [.path]_public_ path in the Node.js application).
 This file contains references to various included script files for front side JavaScript components such as Bootstrap and jQuery.
 It also contains a small script snippet that bootstraps the Angular2 application, as well as an Angular loop (`{{#each scripts.polyfills}}`) to load [.api]`polyfills` (implementation of html5/web component elements that can be used as a backup if the browser doesn't provide the corresponding feature natively).
@@ -419,7 +420,7 @@ The form is bound to the component using a [.api]`FormBuilder`, and it has two o
 When submitting the form, the component's [.api]`findHotels` method is called with a JSON representation of the form's content.
 The [.api]`findHotels` method will use these values to determine if it should hit a more specific endpoint, in the case where a particular description keyword or location are requested by the form.
 
-For instance, to search for an hotel in France with a description matching "golf" (in a full text search sense, possibly including alternative spellings, words with the same root, etc\...), one should use the  [.path]_/api/hotel/France/golf_ endpoint.
+For instance, to search for a hotel in France with a description matching "golf" (in a full text search sense, possibly including alternative spellings, words with the same root, etc\...), one should use the  [.path]_/api/hotel/France/golf_ endpoint.
 The possible endpoints are:
 
 * [.path]_/api/hotel_ to find all hotels
@@ -470,8 +471,8 @@ We use a [.api]`match phrase` sub-query on each, which will attempt to find seve
 * The second disjunction query is added whenever a description is provided for the search.
 It performs two match phrase queries on the description, respectively in the [.api]`name` and [.api]`content` fields of the landmark.
 * There are quite a few other FTS query types.
-For instance, a match query is much like a match phrase query, except it only considers one term to search for, and can apply fuzzyness (eg.
-to match close words with a slightly different spelling).
+For instance, a match query is much like a match phrase query, except it only considers one term to search for, and can apply fuzzyness, e.g.
+to match close words with a slightly different spelling.
 
 Finally, we notice that at the same level as the `query` entry there is also a `size` attribute.
 This is one of the many tunings applicable to the whole query, a top-level parameter that limits the results to 100 hits.

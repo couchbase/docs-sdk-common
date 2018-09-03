@@ -6,13 +6,18 @@ Often, Couchbase will automatically handle the failure transparently and not req
 In some cases however, Couchbase may be unable to automatically handle the failure condition, which will result in errors reported to the application.
 This page discusses how to develop Couchbase applications to function in times of node or network failure.
 
-// tag::group[]
-
+[#failover_definition]
+// tag::failover_definition[]
+--
 Failover is the means by which a node is removed from the cluster and all its owned vBuckets are immediately:
 
 * Transferred to a replica node (if there are replica nodes)
 * Marked offline (if there are no replica nodes).
+--
+// end::failover_definition[]
 
+[#what_to_expect_in_application]
+// tag::what_to_expect_in_application[]
 == What to expect in an application during failure
 
 When a node fails (as opposed to _fails over_) the client library will be unable to contact the node.
@@ -26,7 +31,10 @@ Unfortunately timeout errors can also be received when a network (or server) is 
 The client library will generally not retry timed-out operations: by definition, a timed out operation is an operation which could not be completed within a given amount of time.
 Likewise the application should not retry a timed-out operation.
 The recommended action is to report the failure up the stack.
+// end::what_to_expect_in_application[]
 
+[#what_to_expect_during_failover]
+// tag::what_to_expect_during_failover[]
 == What to expect during Failover
 
 Couchbase offers a feature called _Failover_ which allows an offending node to be removed from the cluster, immediately transferring all its vBucket resources (as opposed to rebalance, which transfers these resources incrementally).
@@ -42,6 +50,7 @@ Further operations will either succeed or fail depending on the status of the cl
 This error will continue to be returned for operations belonging to the relevant vBuckets until either:
  ** The failed node is re-added to the cluster
  ** The cluster is rebalanced (and thus any data on the old node is lost)
+// end::what_to_expect_during_failover[]
 
 [#missing-nodes]
 // tag::missing-nodes[]
@@ -61,6 +70,8 @@ You may specify _multiple_ hostnames or IP addresses in the connection parameter
 When multiple hosts are supplied, the SDK will attempt to connect to each host in the list until a bootstrap attempt has succeeded, or until a timeout has been reached.
 // end::missing-nodes[]
 
+[#timeouts]
+// tag::timeouts[]
 == Timeouts
 
 Timeouts are returned by the client when an operation is waiting too long for an acknowledgment from the server.
@@ -87,7 +98,10 @@ It means the server did not respond in a timely fashion.
 It is possible that the operation completed on the server, but the acknowledgment response was not received by the client.
 If the CAS of the item is known, you may use it to guard against performing the same operation twice.
 ====
+// end::timeouts[]
 
+[#network_failures]
+// tag::network_failures[]
 == Network Failures
 
 Network errors are returned by the client if it cannot establish a network connection to the server, or if an existing network connection was terminated.
@@ -108,30 +122,4 @@ As in timeout errors, it is not possible to determine if an operation was actual
 
 For cases where it is of the utmost importance to retrieve the item, a read from a replica can be performed.
 This will retrieve a potentially stale item.
-
-[#devguide-replica-read]
-// tag::devguide-replica-read[]
-== Reading from replicas
-
-High-availability applications can read documents from replicas, exchanging consistency for availability.
-
-If your bucket is configured for replication, then multiple replicas of each item exist within the cluster.
-By default the client will attempt to access an item using its computed master or active node.
-This returns the current and authoritative version of the item as it is stored within Couchbase.
-
-In conditions where access to the active node is unavailable (for example, it is disconnected from the network), an application may be able to access a replica version of the item using the _get-from-replica_ operation which queries a replica node for a copy of the item.
-
-NOTE: The item received from a replica node may be an older version.
-It is possible a newer version exists in the active node, but did not manage to get replicated before the active node went offline.
-
-[source,python]
-----
-try:
-  result = cb.get("docid")
-except CouchbaseNetworkError as e:
-  print "Got error. Fetching from replica!"
-  result = cb.get(‘docid’, replica=True)
-----
-// end::devguide-replica-read[]
-
-// end::group[]
+// end::network_failures[]
