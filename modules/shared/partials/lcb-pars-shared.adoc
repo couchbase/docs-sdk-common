@@ -1,0 +1,9 @@
+= No Title For Paragraph Partials
+
+[#connstr-intro]
+// tag::connstr-intro[]
+You can specify additional options when connecting to the cluster by using the _connection string_.
+It indicates to the client where cluster nodes may be found and how to connect to them.
+Note that it is common to other Couchbase SDKs as well as the xref:webui-cli-access.adoc[command-line client].
+The _connection string_ uses a URI-like format familiar to what is used in other database systems.
+// end::connstr-intro[]
