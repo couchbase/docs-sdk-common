@@ -12,7 +12,10 @@ You can access individual documents using the _command line_ and _web console_.
 
 You can access documents in Couchbase using command line interfaces.
 You can use the `cbc` tool for simple document lookups by their IDs (or _keys_) and the xref:{version-server}@server:n1ql:n1ql-intro/cbq.adoc[cbq] tool to issue N1QL queries.
-This section will discuss the installation and usage of the `cbc` tool, and is targeted towards Linux and Mac OS X users (though `cbc` can also be used on Windows).
+This section will discuss the installation and usage of the `cbc` tool, and is targeted towards Linux and Mac OS X users.
+
+NOTE: You can also use `cbc` on Windows by extracting the archive with libcouchbase.
+The archive contains `cbc.exe` by default.
 
 == Installing the command-line KV client
 

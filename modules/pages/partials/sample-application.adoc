@@ -2,35 +2,33 @@
 include::partial$attributes.adoc[]
 
 [abstract]
-Couchbase Travel is a sample web application that demonstrates how to interact with the Couchbase query service via the SDKs
+Couchbase Travel is a sample web application that demonstrates how to interact with the Couchbase query services via the SDKs
 
 Each SDK comes with its own implementation of the backend for the application.
 You can download the complete source code and then build and run the app.
-While the app runs, you can view the log of N1QL queries that it sends.
-The documentation for the travel app illustrates the data model and walks through the N1QL queries used to select flights.
+While the app runs, you can get a peek of what is happening in the backend via the "Narration" (a console like UI element that can display N1QL queries for instance).
+It is only visible in components that communicate with the server (but can also be collapsed).
 
-The travel app front-end is the same in each SDK implementation and incorporates the following frameworks:
+image::{incimagesdir}/travel-app-narration.png[,650px]
 
-* http://expressjs.com[Express^]
-* https://angularjs.org[AngularJS^]
-* http://getbootstrap.com[Bootstrap^]
+The documentation for the travel app illustrates the data model and walks through the N1QL and FTS queries used to select flights and search for hotels.
 
-The backend is a REST API, and is available in the following languages:
+The https://github.com/couchbaselabs/try-cb-frontend[travel app front-end^] is the same in each SDK implementation and is built on an https://angular.io[Angular2^] stack.
 
-* https://github.com/couchbaselabs/try-cb-nodejs[Node.js^]
-* https://github.com/couchbaselabs/try-cb-java[Java^]
-* https://github.com/couchbaselabs/try-cb-dotnet[.NET^]
-* https://github.com/couchbaselabs/try-cb-golang[Go^]
-* https://github.com/couchbaselabs/try-cb-php[PHP^]
-* https://github.com/couchbaselabs/try-cb-python[Python^]
-* https://github.com/open-source-parsers/jsoncpp[C^]
+The focus of this tutorial is the backend, which is a REST API, available in the following languages:
+
+* xref:nodejs-sdk::sample-app-backend.adoc[Node.js]
+* xref:java-sdk::sample-app-backend.adoc[Java]
+* xref:dotnet-sdk::sample-app-backend.adoc[.NET]
+* xref:python-sdk::sample-app-backend.adoc[Python]
+* xref:php-sdk::sample-app-backend.adoc[PHP]
+* xref:go-sdk::sample-app-backend.adoc[Go]
+* xref:c-sdk::sample-app-backend.adoc[C/C++ (basic interaction with data model only)]
 
 Please refer to the travel-app documentation of your SDK of choice for specifics for that particular SDK, like backend dependencies, source-code checkout and running instructions.
 
 The application allows users to find flights by entering airports and travel dates.
 For the airport entries, the app uses a N1QL query bound to an Angular type ahead directive to suggest airport names based on the first few letters entered.
-
-See <<using-travel-app>> below for guidelines on how to use the travel app.
 
 [#note-installing]
 == Generic set up
@@ -39,29 +37,90 @@ You'll need:
 
 * Your favorite editor or IDE
 * Your SDK of choice and its specific dependencies
-* The sample app source code for your SDK from GitHub
-* A local `Couchbase 4.5` installation (make sure that the `travel-sample` bucket has been loaded and that there is, at least, one node with data, query, index and search services in the cluster
+* The sample app source code for your SDK from GitHub (check the instructions and make sure to use the implementation compatible with the v2 API)
+* A local `Couchbase 4.5` (or greater) installation (make sure that the `travel-sample` bucket has been loaded from 4.5 and that there is, at least, one node with data, query, index and full text search services in the cluster)
 * That's it!
 
-To start with, it's easiest if you run Couchbase Server and the travel sample app on the same machine.
-It's not required to run your development environment this way, and advanced "MDS" configurations are supported.
+To start, it is easiest if you run Couchbase Server and the travel sample app on the same machine.
+It's not required to run your development environment this way, and advanced Multi-Dimensional Scaling (MDS) configurations are supported.
 It's just easier to start a development environment with components running locally.
 
-Download http://www.couchbase.com/download[Couchbase Server 4.5^]and install it.
+Download http://www.couchbase.com/download[Couchbase Server 4.6^]and install it.
 As you follow the download instructions and setup wizard, make sure you keep all the services (`data`, `query`, and `index`) selected.
-Make sure also to install the sample bucket named `travel-sample` (introduced in CB 4.0) because it contains the data used in this tutorial.
+Make sure also to install the sample bucket named `travel-sample` (introduced in Couchbase Server 4.0) because it contains the data used in this tutorial.
 
-If you already have Couchbase Server installed but did not install the `travel-sample` bucket, open the Couchbase Web Console and select menu:Settings[Sample Buckets].
+WARNING: It is important to install the `travel-sample` bucket from a 4.5 or later version of Couchbase Server, as it has been enriched with hotels data.
+If you have installed the sample bucket from an earlier version, delete the bucket and follow the instructions below.
+
+If you already have Couchbase Server 4.5 or later installed but did not install the `travel-sample` bucket (or you installed it from a 4.0 version), open the Couchbase Web Console and select menu:Settings[Sample Buckets].
 Select the `travel-sample` checkbox, and then click [.ui]*Create*.
 A notification box in the upper-right corner disappears when the bucket is ready to use.
 
-The travel app, as a REST API backend, will run in the terminal window, which you need to keep open.
-Please refer to SDK-specific instructions on how to run the application.
+Finally, in order to be able to search for hotels, an FTS index called `hotels` must be created on the `travel-sample` bucket.
+Go to menu:Indexes[Full Text, New Full Text Index] and create the `hotels` index:
+
+image::{incimagesdir}/travel-app-fts-index.png[,650px]
+
+{empty} .
+
+Note that the index mapping could be better tuned, but a generic mapping will also work fine for this example.
+
+[#using-travel-app]
+== Using the Travel App
+
+To find a flight:
+
+. Open a browser and navigate to the login URL that was displayed when you started the app.
+. Sign in to Couchbase Travel by providing your credentials, or create a new account (which will expire after some time depending on the backend used, usually 1 hour):
++
+image::{incimagesdir}/travel-app-login.png[,650px]
+
+. Find a flight:
++
+image::{incimagesdir}/travel-app-screen-flight.png[,650px]
++
+In the [.ui]*Airport or City* section, enter an airport code or city name in the [.ui]*From* and [.ui]*To* fields.
+
+. In the [.ui]*Travel Dates* section, enter [.ui]*Leave* and [.ui]*Return* dates in `MM/DD/YYYY` format.
+. Click [.ui]*Find Flights*.
+The app displays the available flights for the outbound and return legs of the trip.
+. Select one or more flights to add to your cart by clicking the `choose` button next to each flight.
++
+image::{incimagesdir}/travel-app-screen-flight-choose.png[,650px]
+
+Now you have flights stored locally in your cart.
+Go to the cart page and review your flights:
+
+. Click on the cart icon button in the navigation bar, top right
+. See that the number of flights in the cart and the total cost are displayed in said navigation bar.
+. Review the flights in your cart, and book one by clicking on the `book` button next to it.
++
+image::{incimagesdir}/travel-app-screen-cart.png[,650px]
+
+. The flight is now booked, as confirmed by a message on the page
+
+The flights that you've booked are stored in the backend.
+You can see which flights you've booked by navigating to the "user" page.
+The backend uses authentication to control access to the endpoints for booking and listing flights.
+
+image::{incimagesdir}/travel-app-screen-user.png[,650px]
+
+To search for an hotel, navigate to the hotel page:
+
+. click on the "earth" icon in the navigation bar (rightmost icon).
+. click on the `Find Hotels` button if you want to have a look at any first 100 hotels.
+. Refine your search using the input boxes, either by keyword, geographically or both.
++
+image::{incimagesdir}/travel-app-screen-hotels.png[,650px]
+
+WARNING: You should make sure that you have installed Couchbase 4.5 with FTS enabled.
+The API backend that is used by the hotels page makes use of an FTS index that you have to create, named `hotels`.
 
 [#datamodel]
 == The Travel App data model
 
 The data model for the travel app uses several distinct document types: airline, route, airport and landmark.
+In Couchbase Server 4.5 and later it has been enriched with a 5th type: hotel.
 
 The model for each kind of document contains:
 
@@ -69,11 +128,17 @@ The model for each kind of document contains:
 * An `id` field that identifies the document
 * A `type` field that identifies the kind of document
 
-The following figure illustrates the relationship between the different kinds of documents.
+The following figure illustrates the relationship between the different kinds of documents in 4.0.
 It shows the primary key, ID, and type fields that each document has, plus a few representative fields in each type of document.
 
-.Documents in the travel app data model
+.Documents in the travel app 4.0 data model
 image::{incimagesdir}/travel-app-data-model.png[]
+
+Hotels, like landmarks, don't have relations to other types.
+The figure below displays essential information about the hotel type introduced in the sample in 4.5:
+
+.The hotel type in the travel app 4.5 data model
+image::{incimagesdir}/travel-app-hotel-data-model.png[]
 
 == Airline documents
 
@@ -163,298 +228,131 @@ They include information such as name, location, price, contact information, and
 
 For landmark documents, the value of the `type` field is `landmark`.
 
-.Landmark document model
+Landmark documents are not used in the travel-sample application, which focuses on a more specific subset of point of interests that have their own type: hotels.
+
+== Hotel documents
+
+[.term]_Hotel documents_ are all about a specific type of point of interests: hotels.
+They include information such as a name, description, location (coutry, state, city and address), price and services, and even customer reviews.
+
+For hotel documents, the value of the `type` field is `hotel`.
+
+.Hotel document model
 [source,json]
 ----
-landmark_21661                     ←This is the key, which also acts as a primary key
+hotel_10180                     ←This is the key, which also acts as a primary key
 {
-  "activity": "sleep",
-  "address": "12 Rue Boulainvilliers",
-  "alt": null,
-  "checkin": null,
-  "checkout": null,
-  "city": null,
-  "content": "Small three star hotel (33 rooms).",
-  "country": "France",
-  "directions": null,
-  "email": null,
-  "fax": null,
-  "geo": {
-      "lat": 48.853,
-      "lon": 2.27593
-  },
-  "hours": null,
-  "id": 21661,
-  "image": null,
-  "name": "Hotel Eiffel Kennedy",
-  "phone": "+33 1 45 24 45 75",
-  "price": "~\u20ac150",
-  "state": "Ile-de-France",
-  "title": "Paris/16th arrondissement",
-  "tollfree": null,
-  "type": "landmark",            ←This is the type identifier for the document
-  "url": "http://ww.eiffelkennedy.com"
+    "address": "8301 Hollister Ave",
+    "checkin": "12PM",
+    "checkout": "4PM",
+    "city": "Santa Barbara",
+    "country": "United States",
+    "description": "Located on 78 acres of oceanfront property, this resort is an upscale experience that caters to luxury travelers. There are 354 guest rooms in 19 separate villas, each in a Spanish style. Property amenities include saline infinity pools, a private beach, clay tennis courts, a 42,000 foot spa and fitness center, and nature trails through the adjoining wetland and forest. The onsite Miro restaurant provides great views of the coast with excellent food and service. With all that said, you pay for the experience, and this resort is not for the budget traveler.  In addition to quoted rates there is a $25 per day resort fee that includes a bottle of wine in your room, two bottles of water, access to fitness center and spa, and internet access.",
+    "free_breakfast": true,
+    "free_internet": false,
+    "free_parking": false,
+    "geo": {
+        "accuracy": "ROOFTOP",
+        "lat": 34.43429,
+        "lon": -119.92137
+    },
+    "id": 10180,
+    "name": "Bacara Resort \u0026 Spa",
+    "pets_ok": false,
+    "price": "$300-$1000+",
+    "reviews": [
+        {
+            "author": "Orval Lebsack",
+            "content": "I stayed there with a friend for a girls trip around St. Patricks Day. This was my third time to NOLA, my first at Chateau Lemoyne. The location is excellent....very easy walking distance to everything, without the chaos of staying right on Bourbon Street. Even though its a Holiday Inn, it still has the historical feel and look of NOLA. The pool looked nice too, even though we never used it. The staff was friendly and helpful. Chateau Lemoyne would be hard to top, considering the price.",
+            "date": "2013-10-26 15:01:39 +0300",
+            "ratings": {
+                "Cleanliness": 5,
+                "Location": 5,
+                "Overall": 4,
+                "Rooms": 4,
+                "Service": 4,
+                "Sleep Quality": 5,
+                "Value": 4
+            }
+        }
+    ],
+    "state": "California",
+    "type": "hotel",         ←This is the type identifier for the document
+    "url": "http://www.bacararesort.com/",
+    "vacancy": true
+}
 }
 ----
 
 [#architecture]
 == Architecture
 
-The application serves an HTML file named [.path]_index.html_ (eg.
-from the public path in the Node.js application).
-This file contains references to various included script files for front-side JavaScript components such as Bootstrap, jQuery, and AngularJS.
-The Angular controller script named `script.js`, which you can find in the [.path]_/public/js/_ directory, controls how the application interacts with the REST API in the server application.
+The application serves an HTML file named [.path]_index.html_ (in an [.path]_src/app/_ folder usually contained in a root folder dedicated to frontend files, eg.
+the [.path]_public_ path in the Node.js application).
+This file contains references to various included script files for front side JavaScript components such as Bootstrap and jQuery.
+It also contains a small script snippet that bootstraps the Angular2 application, as well as an Angular loop (`{{#each scripts.polyfills}}`) to load [.api]`polyfills` (implementation of html5/web component elements that can be used as a backup if the browser doesn't provide the corresponding feature natively).
+
+Angular2 works in terms of [.api]`Components`, and the main component that gets displayed at bootstrap is in [.path]_src/app/try.component.ts_.
+It is in charge of displaying the common elements of the single-page app, and defines [.api]`Routes`, determining which component to show depending on the URL.
+The place at which said components are shown in the html is represented by a component [.api]`tag` provided by the angular [.api]`Router`: `<router-outlet></router-outlet>`.
+
+The application is then split into several packages.
+Each talks to a specific subset of the REST API provided by the backend.
+Each package has a corresponding main Angular [.api]`Component` that provides the methods to interact with the API or perform work.
+Their corresponding views then use these methods to populate data in the application.
+
+The backend REST API, in its version associated with Couchbase Server 4.5 (version 2), can be found in the https://github.com/couchbaselabs/try-cb-frontend/blob/master/documentation/try-cb-api-spec-v2.adoc[couchbaselabs/try-cb-frontend^] repository on GitHub.
 
 .The Application Services
-image::{incimagesdir}/architecture-overview.png[,650px]
+image::{incimagesdir}/travel-app-archi.png[,650px]
 
-== REST API
+== The Home component
 
-The application uses these methods to populate data in the application:
+[.path]_src/app/+home_ is the main page, dealing with flight searches.
+In the backend, these searches are performed using [.api]`N1QL` queries.
+It has three main methods:
 
-* [.api]`$scope.findFlights`, which is a REST API call to the [.path]_/api/flightPath/findAll_ endpoint
-* [.api]`$scope.findAirports`, which is a REST API call to the [.path]_/api/airport/findAll_ endpoint
+* Two at [.api]`getToAirport` and [.api]`getFromAirport` which are both REST API calls to the [.path]_/api/airports_ REST endpoint
+* And one at [.api]`findFlights`, which is a REST API call to the [.path]_/api/flightPaths/\{to}/\{from}_ endpoint
 
-.Front End Framework REST calls
-image::{incimagesdir}/angular-rest.png[,350px]
-
-.REST API for finding airports
-image::{incimagesdir}/architecture-airport.png[,650px]
+.Home Component call hierarchy
+image::{incimagesdir}/travel-app-archi-home.png[,650px]
 
 The application attempts to find an airport based on the codes used for the `name` (case sensitive), and codes for Federal Aviation Administration (FAA) or International Civil Aviation Organization (ICAO).
-The travel app uses the data model and binds the input field for the `from` airport to an Angular typeahead directive, which is defined in the [.path]_index.html_ file as follows:
+The backend method allows the user to search by FAA code, ICAO code or airport name.
+It then prepares a N1QL query based on the selection criteria (using bucket information from its configuration).
+The query is then sent to the Couchbase query service, all by using the backend's associated SDK.
 
-.Angular typeahead directive from /public/index.html file
-[source,markup]
-----
-<input type="text"
-  placeholder="find airport"
-  typeahead="data.airportname for data in findAirports($viewValue)"
-  typeahead-min-length="3"
-  typeahead-wait-ms="250"
-  ng-model="fromName"
-  ng-minlength="3"
-  class="input-small form-control"
-  name="from" required/>
-----
-
-In the Angular controller script, the [.api]`findAirports()` function is:
-
-.findAirports() function from /public/js/scripts.js file
-[source,javascript]
-----
-$scope.findAirports=function(val){
-  return $http.get("/api/airport/findAll",{
-      params:{search:val}
-  }).then(function(response){
-      return response.data;
-  });
-}
-----
-
-The API call to the server application [.path]_/api/airport/findAll_ function is defined in the [.path]_/routes/routes.js_ file as:
-
-./api/airport/findAll function from /routes/routes.js file
-[source,javascript]
-----
-//// ▶▶ airports ◀◀ ////
-app.get('/api/airport/findAll',function(req,res) {
-if (req.query.search) {
-    airport.findAll(req.query.search, function (err, done) {
-        if (err) {
-            res.status = 400;
-            res.send(err);
-            return;
-        }
-        res.status = 202;
-        res.send(done);
-    });
-}else{
-    res.status = 400;
-    res.send({"airport":"bad request"});
-    return;
-}
-});
-----
-
-The [.path]_/api/airport/findAll_ route function in the [.path]_route.js_ file points to the corresponding [.api]`findAll` function in the airport module in the [.path]_/model/airport.js_ file.
-This method allows the user to search by FAA code, ICAO code or airport name.
-It then prepares a N1QL query based on the selection criteria and bucket information from the [.path]_/config.json_ file.
-The query is passed to the Couchbase query service in the [.path]_/model/db.js_ module that calls Couchbase.
-
-.findAll() function from /model/airport.js file
-[source,javascript]
-----
-module.exports.findAll = function (queryStr, done) {
-  var queryPrep;
-  if (queryStr.length == 3) {
-      queryPrep = "SELECT airportname FROM `" + config.couchbase.bucket + "` WHERE faa ='" + queryStr.toUpperCase() + "'";
-  } else if (queryStr.length == 4 && (queryStr==queryStr.toUpperCase()||queryStr==queryStr.toLowerCase())) {
-      queryPrep = "SELECT airportname FROM `" + config.couchbase.bucket + "` WHERE icao ='" + queryStr.toUpperCase() + "'";
-  } else {
-      queryPrep = "SELECT airportname FROM `" + config.couchbase.bucket + "` WHERE airportname LIKE '" + queryStr + "%'";
-  }
-
-  db.query(queryPrep, function (err, res) {
-      if (err) {
-          done(err, null);
-          return;
-      }
-      if (res) {
-          done(null, res);
-          return;
-      }
-  });
-}
-----
-
-Using the data model, if you enter [.in]`SEA`, [.in]`KSEA`, or [.in]`Seattle`, the typeahead directive gives you the option to select [.ui]*Seattle Tacoma Intl.* To see the results of the query, watch the terminal window in which the Node application is running.
+Using the data model, if you enter [.in]`SEA`, [.in]`KSEA`, or [.in]`Seattle`, the typeahead directive gives you the option to select [.ui]*Seattle Tacoma Intl.* To see the results of the query, watch the terminal window in which the application is running.
 The example is showing an output for the N1QL statements:
 
+[source,sql]
 ----
 QUERY: SELECT airportname FROM `travel-sample` WHERE faa ='SEA'
 QUERY: SELECT airportname FROM `travel-sample` WHERE icao ='KSEA'
 QUERY: SELECT airportname FROM `travel-sample` WHERE airportname LIKE 'Seattle%'
 ----
 
-You can enable or disable console logging for N1QL statements by changing the value of the `showQuery` property in the [.path]_/config.json_ file to `true` or `false`.
-
-.REST API for finding flight paths
-image::{incimagesdir}/architecture-flight-path.png[,650px]
-
 After the airports are selected and a leave date is entered, the application tries to find route and schedule information for an airline that services the requested flight path.
-The call to the REST API [.path]_/api/flightPath/findAll_ on the server is initiated when the user clicks the [.ui]*Find Flights* button.
-The button is defined within the `travelForm` form element in the [.path]_index.html_ file, as shown in the following code snippets:
+The call to the REST API [.path]_/api/flightPaths/\{to}/\{from}_ on the server is initiated when the user clicks the [.ui]*Find Flights* button.
 
-.travelForm form element from /public/index.html file
-[source,markup]
-----
-<form class="form-horizontal" role="form"
-     name="travelForm" ng-submit="findFlights()" novalidate>
-----
+The elements in the form bind their controls to corresponding objects in the component, which allows to perform some validation checking among other things.
+To learn more about forms and validation in Angular2, please refer to the https://angular.io/docs/ts/latest/guide/forms.html[official documentation^].
+The submit button calls the component's `findFlights()` function, which in turn invokes the server REST API [.path]_/api/flightPaths/\{to}/\{from}/_ function either once for a one way flight or twice for a round-trip flight.
+When it requests the return flight for a round trip, it just uses the reverse `to` and `from` sequence.
+While `to` and `from` are made part of the URL, the API also expects an additional query parameter, `leaves`, that contains the requested travel date.
 
-.Find Flights button element from /public/index.html file
-[source,markup]
-----
-<button class="btn btn-primary pull-right btn-sm"
-       type="submit" ng-disabled="travelForm.$invalid">Find Flights</button>
-----
-
-The `travelForm` form element contains various Angular validation options that are used with the input directives.
-For more information about validation and the input directive see https://docs.angularjs.org/api/ng/directive/input[^].
-After validating the input options, the Angular function in the [.path]_script.js_ file is called to find flights.
-
-.findFlights() function from /public/js/scripts.js file
-[source,javascript]
-----
-$scope.findFlights = function () {
-  $scope.empty = true;
-  $scope.rowCollectionLeave = [];
-  $scope.rowCollectionRet = [];
-  $http.get("/api/flightPath/findAll", {
-      params: {from: this.fromName, to: this.toName, leave: this.leave}
-  }).then(function (response) {
-      if (response.data.length > 0) {
-          $scope.empty = false;
-      }
-      for (var j = 0; j < response.data.length; j++) {
-          $scope.rowCollectionLeave.push(response.data[j]);
-      }
-  });
-  if (this.ret) {
-      $http.get("/api/flightPath/findAll", {
-          params: {from: this.toName, to: this.fromName, leave: this.ret}
-      }).then(function (responseRet) {
-          if (responseRet.data.length > 0) {
-              $scope.retEmpty = false;
-          }
-          for (var j = 0; j < responseRet.data.length; j++) {
-              $scope.rowCollectionRet.push(responseRet.data[j]);
-          }
-      });
-  }
-}
-----
-
-The `findFlights()` function checks the form input to determine whether the return option is enabled or disabled.
-It then calls the server REST API [.path]_/api/flightPath/findAll_ function either once for a one way flight or twice for a round-trip flight.
-When it requests the return flight for a round trip, it uses the reverse `to` and `from` sequence.
-
-./api/flightPath/findAll function from /routes/routes.js file
-[source,javascript]
-----
-//// ▶▶ flightPath ◀◀ ////
-app.get('/api/flightPath/findAll',function(req,res){
-  if(req.query.from && req.query.to && req.query.leave){
-      flightPath.findAll(req.query.from, req.query.to,req.query.leave, function (err, done) {
-          if (err) {
-              res.status = 400;
-              res.send(err);
-              return;
-          }
-          res.status = 202;
-          res.send(done);
-      });
-  }else{
-      res.status = 400;
-      res.send({"flightPath":"bad request"});
-      return;
-  }
-});
-----
-
-The `/api/flightPath/findAll` route function in the [.path]_route.js_ file points to the corresponding [.api]`findAll` function in the `flightPath` module, found in the [.path]_/model/flghtPath.js_ file.
-The [.api]`findAll` function performs several important steps for processing the request to find flights:
+In the backend, the code corresponding to the [.api]`flightPaths` endpoint performs several important steps for processing the request to find flights:
 
 * It determines the FAA identifier for the `to` and `from` airports.
 * It searches for routes and schedule information based on the source and destination airports and the requested dates.
 The collection of schedule documents is nested in the route document for each route.
 They are grouped by day of the week (1-7), and the requested dates are compared to the day of the week to see what flights are available on those particular dates.
-It returns a list of flights that includes data for the following fields: airline, flight, departure, from, to, and aircraft.
-
-This method in the [.path]_flightPath.js_ module is:
-
-.findAll function from the /model/flightPath.js file
-[source,javascript]
-----
-module.exports.findAll = function (from, to, leave,done) {
-  var queryPrep = "SELECT faa as fromAirport FROM `" + config.couchbase.bucket + "` WHERE airportname = '" + from +
-      "' UNION SELECT faa as toAirport FROM `" + config.couchbase.bucket + "` WHERE airportname = '" + to + "'";
-  db.query(queryPrep, function (err, res) {
-      if (err) {
-          done(err, null);
-          return;
-      }
-      if (res) {
-          var queryTo;
-          var queryFrom;
-          for(i=0;i<res.length;i++){
-              if(res[i].toAirport){
-                  queryTo=res[i].toAirport;
-              }
-              if(res[i].fromAirport){
-                  queryFrom=res[i].fromAirport;
-              }
-          }
-          queryPrep="SELECT a.name, s.flight, s.utc, r.sourceairport, r.destinationairport, r.equipment FROM `" + config.couchbase.bucket + "` r UNNEST r.schedule s JOIN `" + config.couchbase.bucket + "` a ON KEYS r.airlineid WHERE r.sourceairport='" + queryFrom + "' AND r.destinationairport='" + queryTo + "' AND s.day=" + convDate(leave) + " ORDER BY a.name";
-          db.query(queryPrep,function (err, flightPaths) {
-                       if (err) {
-                           done(err, null);
-                           return;
-                       }
-                       if (flightPaths) {
-                           done(null, flightPaths);
-                           return;
-                       }
-                   }
-          );
-      }
-  });
-}
-----
+It returns a list of flights that includes data for the following fields: airline, flight, departure time ("utc" field), from, to, price (randomly assigned by the backend) and aircraft ("equipment" field).
 
 The Query can be seen in the terminal window that is running the backend application:
 
+[source,sql]
 ----
 QUERY:
 SELECT a.name, s.flight, s.utc, r.sourceairport, r.destinationairport, r.equipment
@@ -499,28 +397,83 @@ The data model for the travel application includes an `airlineid` field in each 
 That `airlineid` field is used as a foreign key identifier and corresponds to the key for an `airline` document.
 To select the airline name `a.name`, the query uses the following clause: `pass:c[JOIN `travel-sample` a ON KEYS r.airlineid]`.
 
-One of the most powerful features available in the Couchbase Query API is the ability to `UNNEST` or flatten,the results returned in the `SELECT` statement.
+One of the powerful features available in the N1QL query language is the ability to `UNNEST` or flatten, the results returned in the `SELECT` statement.
+This is frequently needed when working with JSON documents, which may have rich heirarchies.
 In the data model for the travel application, each route document contains a nested collection of schedule documents.
-To alleviate a complicated JSON parsing code pattern for the return results, you can `UNNEST` the schedule documents, so they become the root-level fields in the returned results.
+To alleviate a complicated JSON parsing code pattern for the return results, you can have the query execution `UNNEST` the schedule documents, so they become the root-level fields in the returned results.
 
 Standard SQL syntax is used in the `WHERE` clause for the `SELECT` statement.
 The result set is ordered by the `a.name` field, which contains the airline name.
 
-[#using-travel-app]
-== Using the Travel App
+Refer to the xref:n1ql-query.adoc[Querying with N1QL] section for more information on using N1QL with the SDKs.
 
-. Open a browser and navigate to the login URL that was displayed when you started the app.
-. Sign in to Couchbase Travel by providing your credentials:
-+
-image::{incimagesdir}/travel-app-login.png[,650px]
+== The Hotels component
 
-. Find a flight:
-+
-image::{incimagesdir}/travel-app-screen.png[,650px]
-+
-In the [.ui]*Airport or City* section, enter an airport code or city name in the [.ui]*From* and [.ui]*To* fields.
+[.path]_src/app/+hotels_ allows to search for hotels.
+In the backend these searches are performed using [.api]`FTS` queries, performed using the [.path]_/api/hotel/_ REST API endpoint.
 
-. In the [.ui]*Travel Dates* section, select [.ui]*Leave* and [.ui]*Return* dates by using the date picker that pops up when you click the date fields.
-. Click [.ui]*Find Flights*.
-+
-The app displays the available flights for the outbound and return legs of the trip.
+.Hotels component call hierarchy
+image::{incimagesdir}/travel-app-archi-hotel.png[,650px]
+
+The form is bound to the component using a [.api]`FormBuilder`, and it has two optional text inputs: a description and a location field.
+When submitting the form, the component's [.api]`findHotels` method is called with a JSON representation of the form's content.
+The [.api]`findHotels` method will use these values to determine if it should hit a more specific endpoint, in the case where a particular description keyword or location are requested by the form.
+
+For instance, to search for an hotel in France with a description matching "golf" (in a full text search sense, possibly including alternative spellings, words with the same root, etc\...), one should use the  [.path]_/api/hotel/France/golf_ endpoint.
+The possible endpoints are:
+
+* [.path]_/api/hotel_ to find all hotels
+* [.path]_/api/hotel/\{description}/_ to find all hotels matching a keyword/phrase in their name or description.
+* [.path]_/api/hotel/\{description}/\{location}/_ to find all hotels matching the keyword/phrase and a location keyword (in either of the location-related fields: country, city, state, address\...)
+* [.path]_/api/hotel/*/\{location}/_ to find all hotels within a location (not using keyword)
+
+As a second step, for each hit returned by the FTS service the information that we want to display is collected by the backend using the subdocument API.
+This allows the client to request that the cluster to only transmit specific parts of the hotel document to be sent back to the client for display.
+
+Refer to the xref:subdocument-operations.adoc[Sub-Document Operations] section for more information on using the Subdocument API with the SDKs.
+
+Both parts of the request can be individually seen in the narration component:
+
+image::{incimagesdir}/travel-app-narration.png[,650px]
+
+== FTS query anatomy
+
+The Couchbase Search API (FTS) is a powerful tool for searching text inside a document data store.
+In each SDK-specific travel application, queries about hotels are created by a dedicated module (for example in Java, the [.path]_Hotel_ service).
+Here's an example of a query that finds hotels mentioning "golf" in France, followed by a description of what's happening in the query:
+
+[source,json]
+----
+{"query":{"conjuncts": [
+    {"field":"type","term":"hotel"},
+    {"disjuncts":[
+        {"field":"country","match_phrase":"France"},
+        {"field":"city","match_phrase":"France"},
+        {"field":"state","match_phrase":"France"},
+        {"field":"address","match_phrase":"France"}
+    ]},
+    {"disjuncts":[
+        {"field":"description","match_phrase":"golf"},
+        {"field":"name","match_phrase":"golf"}
+    ]}
+]},
+"size":100}
+----
+
+The `query` is actually a composite (`conjuncts`) of 3 sub-queries: a `term` query and two `disjuncts` queries.
+
+* The term query matches a term as-is, without performing any analysis: it must match *exactly* what is stored in the index (which could be just the root of a word).
+Here we use it to restrict our search to the `hotel` [.api]`type`.
+* A disjunction query matches if any of its sub-queries matches.
+We use the first only when there is a `location` provided, to search for it in any of the [.api]`country`, [.api]`city`, [.api]`state` and [.api]`address` fields.
+We use a [.api]`match phrase` sub-query on each, which will attempt to find several keywords, analyzing them to remove stop words, include close results like words from the same root, etc\...
+* The second disjunction query is added whenever a description is provided for the search.
+It performs two match phrase queries on the description, respectively in the [.api]`name` and [.api]`content` fields of the landmark.
+* There are quite a few other FTS query types.
+For instance, a match query is much like a match phrase query, except it only considers one term to search for, and can apply fuzzyness (eg.
+to match close words with a slightly different spelling).
+
+Finally, we notice that at the same level as the `query` entry there is also a `size` attribute.
+This is one of the many tunings applicable to the whole query, a top-level parameter that limits the results to 100 hits.
+
+Refer to the xref:full-text-search-overview.adoc[Full Text Search] section for more information on using FTS with the SDKs.

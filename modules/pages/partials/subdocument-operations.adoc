@@ -13,11 +13,6 @@ These parts are called _sub documents_.
 While full-document retrievals retrieve the entire document and full document updates require sending the entire document, sub-document retrievals only retrieve relevant parts of a document and sub-document updates only require sending the updated portions of a document.
 You should use sub-document operations when you are modifying only portions of a document, and full-document operations when the contents of a document is to change significantly.
 
-NOTE: In the case of concurrent sub-document API operations from multiple clients, Couchbase Server does not honor the atomicity (http://www.couchbase.com/issues/browse/MB-21597[MB-21597^]).
-This can result in one update overwriting the previous update, even though the previous update was successful as far as the client is concerned.
-Workaround: For use cases where sub-document API is being used and are covered by an Enterprise Edition license, contact Couchbase Support.
-For all other cases, Couchbase recommends that you do not use the sub-document API feature for concurrent updates.
-
 In order to use sub-document operations you need to specify a _path_ indicating the location of the subdocument.
 The _path_ follows N1QL syntax.
 Considering the document
@@ -268,11 +263,6 @@ When submitting multiple _mutation_ operations within a single _mutate-in_ comma
 When submitting multiple _retrieval_ operations within a single _lookup-in_ command, the status of each command does not affect any other command.
 This means that it is possible for some retrieval operations to succeed and some others to fail.
 While their statuses are independent of each other, you should note that operations submitted within a single _lookup-in_ are all executed against the same _version_ of the document.
-
-NOTE: In the case of concurrent sub-document API operations from multiple clients, Couchbase Server does not honor the atomicity (http://www.couchbase.com/issues/browse/MB-21597[MB-21597^]).
-This can result in one update overwriting the previous update, even though the previous update was successful as far as the client is concerned.
-Workaround: For use cases where sub-document API is being used and are covered by an Enterprise Edition license, contact Couchbase Support.
-For all other cases, Couchbase recommends that you do not use the sub-document API feature for concurrent updates.
 
 [#subdoc-create-parents]
 == Creating parents
