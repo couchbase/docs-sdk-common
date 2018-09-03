@@ -195,6 +195,10 @@ name, email = cb.retrieve_in('user:kingarthur', 'contact.name', 'contact.email')
 
 You can atomically increment or decrement the numerical value of special counter document
 
+NOTE: Do not increment or decrement counters if using XDCR.
+Within a single cluster the `incr()` is atomic, as is `decr()`; across XDCR however, if two clients connecting to two different (bidirectional) clusters issue `incr` concurrently, this may (and most likely will) result in the value only getting incremented once in total.
+The same is the case for `decr()`.
+
 A document may be used as a counter if its value is a simple ASCII number, like `42`.
 Couchbase allows you to increment and decrement these values atomically using a special [.api]`counter` operation.
 The example below (in Python) shows how to use counters:
@@ -400,3 +404,6 @@ cease to occupy storage and RAM) when an _expiry pager_ is run.
 The _expiry pager_ is a routine internal process which scans the database for items which have expired and promptly removes them from storage.
 
 When gathering resource usage statistics, note that expired-but-not-purged items (such as the expiry pager has not scanned this item yet) will still be considered with respect to the overall storage size and item count.
+
+NOTE: Although the API only sets expiry values _per document_, it is possible that elsewhere in the server, an expiry value is being set for https://developer.couchbase.com/documentation/server/5.5/architecture/core-data-access-bucket-expiration.html[every document in a bucket^].
+Should this be the case, the document TTL may be reduced, and the document may become unavailable to the app sooner than expected.

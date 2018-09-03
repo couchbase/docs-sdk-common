@@ -2,301 +2,32 @@
 include::partial$attributes.adoc[]
 
 [abstract]
-Couchbase Server Full Text Search (FTS) enables you to create, manage, and query full text indexes on JSON documents stored in a Couchbase bucket.
-You should use search instead of query when your application requires natural language processing when searching.
+_Full Text Search_ (FTS) lets you create, manage, and query specially purposed _indexes_, defined on JSON documents within a Couchbase bucket.
 
-== What is Full Text Search
+== What is Full Text Search?
 
-Couchbase FTS is similar in purpose to other search software such as _ElasticSearch_ or _Solr_.
-Couchbase FTS is not intended as a replacement for third party search software if search is at the core of your application.
-It is a simple and lightweight way to add search to your Couchbase data without deploying additional software and servers.
-If you have many queries which look like `+SELECT ... field1 LIKE %pattern% OR field2 LIKE %pattern+`, then full-text search may be right for you.
+_Full Text Search_ provides extensive capabilities for _natural-language querying_: this allows special search-constraints to be applied to text-queries.
+Results can be _scored_, to indicate match-relevancy; and result-sets ordered correspondingly.
+_Conjunctive_ and _disjunctive_ searches can be performed, whereby common result-subsets from multiple queries can either be returned or omitted.
 
-== Executing Your First Search
+A full overview of Full Text Search is provided in xref:{version-server}@server:fts:full-text-intro.adoc[Full Text Search: Fundamentals].
+This includes information on the principal features of Couchbase Full Text Search, its architecture, and the latest feature-additions.
+Other information-sources include:
 
-Our first search query will be done against the `travel-sample` bucket (install it, if you haven't done so already).
+* xref:{version-server}@server:fts:fts-performing-searches.adoc[Performing Searches]: An explanation of the steps required to prepare for and perform Full Text Search.
+* xref:{version-server}@server:fts:fts-searching-from-the-ui.adoc[Searching from the UI]: A brief introduction to the Full Text Search user interface provided by the Couchbase Web Console, with a step-by-step example of how to create a simple Full Text Index, and perform a search on it.
+* xref:{version-server}@server:fts:fts-searching-with-the-rest-api.adoc[Searching with the REST API]: Basic examples of how Full Text Search is performed with REST, and pointers to more complex examples.
+* xref:{version-server}@server:fts:fts-creating-indexes.adoc[Creating Indexes]: A full description of the index-creation facility provided by the Couchbase Web Console, with explanations of each component to be used, and illustrations of how indexes can be designed to include specific subsets of documents and their fields.
+* xref:{version-server}@server:fts:fts-using-analyzers.adoc[Understanding Analyzers]: An explanation of _analyzers_, which are used to process the text to be included in Full Text Indexes.
+* xref:{version-server}@server:fts:fts-queries.adoc[Queries]: A detailed account of available query types, response objects, and result-sorting options.
 
-. Go to the Couchbase Web Console (for example, \http://localhost:8091) and log in with your administrative username and password.
-. Select menu:Indexes[Full Text] (at the top bars).
-. In the dropdown menu on the top left (`-- choose full text index or alias --`) select [.in]`travel-search`.
-. In the input box (on the right), type [.in]`cheese` and click [.ui]*Search*.
+== Performing Full Text Search from the SDK
 
-You will see a list of document IDs that contain the given search term.
-You can click on any document ID to see the full document.
-You can also click on [.ui]*Advanced* to see the raw query as it is sent over the REST API.
-If you click on the [.ui]*command-line curl example* checkbox, you can simply copy/paste the output to your terminal and execute the search again.
+Each language supported by the Couchbase SDK provides an API for the support of Full Text Search querying.
+For detailed information, see the page for your language of choice.
 
-Here's a similar version of the search done using `curl` on the command line:
+A detailed example of performing Full Text Search queries from the Java SDK is provided in xref:java-sdk::full-text-searching-with-sdk.adoc[Searching from the SDK].
 
-[source,bash]
-----
-curl -XPOST -H "Content-Type: application/json" \
-    http://localhost:8094/api/index/travel-search/query \
-    -d '{"query":{"query":"cheese"}, "size": 1}' | json_pp
-----
-
-(Note that `json_pp` is just a JSON formatter.
-You can omit the pipe if you do not have it installed).
-
-[source,json]
-----
-{
-   ...
-   "hits" : [
-      {
-         "index" : "travel-search_2c8e9e3d5a3638a8_b7ff6b68",
-         "score" : 1.20476244729454,
-         "locations" : {
-            "name" : {
-               "cheese" : [
-                  {
-                     "end" : 12,
-                     "array_positions" : null,
-                     "start" : 6,
-                     "pos" : 2
-                  }
-               ]
-            },
-            ...
-         },
-         "id" : "landmark_27808"
-      }
-   ]
-}
-----
-
-(Most of the output has been redacted)
-
-The same query using the Python SDK:
-
-[source,python]
-----
-from couchbase.bucket import Bucket
-import couchbase.fulltext as FT
-
-cb = Bucket()
-results = cb.search('travel-search', FT.StringQuery('cheese'), limit=5)
-for hit in results:
-    print('Found in document ID={}. Score={}'.format(hit['id'], hit['score']))
-----
-
-....
-Found in document ID=landmark_27808. Score=1.20476244729
-Found in document ID=landmark_8689. Score=0.961675281363
-Found in document ID=landmark_1154. Score=0.883110932061
-Found in document ID=landmark_1163. Score=0.846040674514
-Found in document ID=landmark_15133. Score=0.81847489864
-....
-
-The result contains one or more _hits_, where each _hit_ contains information about the location of the match within a document.
-This includes the _relevance score_ as well as the _location_ where the match was found.
-
-== Making Your Bucket Searchable
-
-In order to execute a search query you must first define a search index.
-You can define a search index by using the Couchbase Web Console.
-
-. Go to the Couchbase Web Console (for example, \http://localhost:8091) and log in with your administrative username and password.
-. Select menu:Indexes[Full Text, New Full Text Index]
-. Type the desired _name_ of the search index in the [.ui]*Index Name* field.
-. Select the bucket you would like to associate the search with in the [.ui]*Bucket* field
-
-The default settings are sufficient for most cases.
-You can edit the index later, specifying how certain fields may be analyzed and which fields to index.
-
-Once you've created your index, your can query it by using the methods above, replacing `travel-search` with the name you used to create the index.
-
-To learn more about making your buckets searchable, see the xref:{version-server}@server:fts:fts-creating-indexes.adoc[Text Indexing] section of the full text search documentation.
-
-== Query Types
-
-The query executed in the previous section is called a _string query_.
-This type of query searches for terms based on a special type of input string.
-The query string `+description:cheese -country:france` will match documents which contain _cheese_ in their `description` field, but are _not_ located in France.
-String queries are ideal for searchbox fields to allow users to provide more specialized query criteria.
-You can read more about the xref:{version-server}@server:fts:fts-query-types.adoc#query-string-query-syntax[Query String syntax] in the full text search documentation.
-
-There are many other query types available.
-These query types differ primarily in how they interpret the search term: whether it is treated as a phrase, a word, an exact match, or a prefix: A [.term]_Match_ query searches for the input text within documents and is the simplest of queries.
-[.term]_Match Phrase_ query searches for documents in which a specific _phrase_ (i.e.
-one or more terms, such as `"french cheese tasting"`) is present.
-A [.term]_Prefix_ query searches documents which contain terms beginning with the supplied prefix.
-
-There are some other specialized queries, such as [.term]_Wildcard_ and [.term]_Regexp_ queries which allow you to use wildcards (`Couch?base'`) or regular expressions (`Couchbase (php|python) SDK`).
-
-Below are two code snippets showing how the query for `ch` is treated differently when using a [.term]_Prefix Query_ versus a [.term]_Match Query_.
-
-[source,python]
-----
-results = cb.search('travel-search', FT.MatchQuery('ch'), limit=5)
-for r in results:
-    print('  Result: ID', r['id'])
-    for location, terms in r['locations'].items():
-        print('   ', location, terms.keys())
-----
-
-....
-  Result: ID airline_1442
-    iata dict_keys(['ch'])
-  Result: ID landmark_35848
-    image_direct_url dict_keys(['ch'])
-....
-
-[source,python]
-----
-results = cb.search('travel-search', FT.PrefixQuery('ch'), limit=5)
-for r in results:
-    print('  Result: ID', r['id'])
-    for location, terms in r['locations'].items():
-        print('   ', location, terms.keys())
-----
-
-....
-  Result: ID hotel_15912
-    reviews.content dict_keys(['check', 'cheese', 'charge', 'checkout', 'chairs', 'chances', 'choice', 'checked', 'cheapcaribbean', 'cheeses', 'charged', "church's", 'cheaper', 'chicken', 'change'])
-    reviews.author dict_keys(['christiansen'])
-  Result: ID hotel_33886
-    reviews.content dict_keys(['check', 'chose', 'chips', 'choosing', 'chairs', 'channels', 'changed', 'choice', 'checked', 'chair', 'chocolate', 'chaise', 'checking', 'chicken', 'change', 'choose', 'charter', 'cheerful'])
-    reviews.author dict_keys(['christy'])
-  Result: ID hotel_16634
-    reviews.content dict_keys(['check', 'chocolate', 'chinese', 'chairs', 'children', 'chips', 'chilis', 'chilly', 'checked', 'choice', 'chicago', 'childrens', "church's", 'cheaper', 'chicken', 'choose', 'christina', 'choices'])
-  Result: ID hotel_37318
-    reviews.content dict_keys(['check', 'choices', 'chairs', 'children', 'changed', 'choice', 'charge', 'challenging', 'chair', 'childrens', 'chicken', 'change', 'choose', 'chambermaid', 'chichen', 'child'])
-    city dict_keys(['cheshire'])
-  Result: ID hotel_21723
-    reviews.content dict_keys(['check', 'chairs', 'cheesy', 'changed', 'checked', 'chair', 'charging', 'chaotic', 'charge', 'chapel', 'change', 'choose', 'children', 'cheep', 'chef', 'child'])
-    content dict_keys(['cheapie'])
-    public_likes dict_keys(['christop'])
-....
-
-As can be seen in the above examples, the [.term]_Term_ assumes the search input is an actual term to search for (`ch`) and therefore rejects things such as `chose`, `chairs` and similar.
-
-== Compound Queries
-
-You can compose queries made of other queries.
-You can use a [.term]_Conjunction_ or _Disjunction_ query which contains one or more queries that the document should match (a [.term]_Disjunction_ query can be configured with the number of required subqueries that must be matched).
-You may also use a [.term]_Boolean_ query that itself contains sub queries which _should_, _must_, and _must not_ be matched.
-
-Compound queries can be used to execute searches such as _find any landmark containing "cheese" and also containing one of "wine" , "crackers" , or "old", but does not contain "lake" or "ocean"_:
-
-.Compound Query example
-[source,python]
-----
-results = cb.search('travel-search',
-        FT.BooleanQuery(
-            must=FT.TermQuery('cheese'),
-            should=[FT.TermQuery('wine'), FT.TermQuery('crackers')],
-            must_not=[FT.TermQuery('lake'), FT.TermQuery('ocean')]),
-        limit=5)
-
-for r in results:
-    print('ID', r['id'])
-    for location, terms in r['locations'].items():
-        print('\t{}: {}'.format(location, terms.keys()))
-----
-
-....
-ID landmark_25779
-	content: dict_keys(['cheese', 'crackers'])
-ID landmark_7063
-	content: dict_keys(['wine'])
-	alt: dict_keys(['cheese'])
-	name: dict_keys(['wine'])
-ID landmark_16693
-	content: dict_keys(['cheese', 'wine'])
-ID landmark_27793
-	content: dict_keys(['cheese', 'wine'])
-ID landmark_40690
-	content: dict_keys(['cheese', 'wine'])
-....
-
-When using compoound queries, you can modify any subquery's [.param]`boost` setting to increase its relevance and scoring over other subqueries, affecting the ordering.
-
-== Other Query Types
-
-There are other query types you can use, such as [.term]_Date Range_ and [.term]_Numeric Range_ queries which match documents matching a certain time span or value range.
-There are also debugging queries such as [.term]_Term_ and [.term]_Phrase_ queries which perform exact queries (without any analysis).
-
-For a quick overview of all the available query types, see the xref:{version-server}@server:fts:fts-query-types.adoc[Types of Queries] section of the full text search documentation.
-
-== Query Options
-
-You can specify query options to modify how the search term is treated.
-This section will enumerate some common query options and how they affect query results.
-
-* [.param]`field`: This option restricts searches to a given field.
-By default searches will be executed against all fields.
-* [.param]`fuzziness`: Sets the _leniency_ of the matching algorithm.
-A higher fuzziness value may result in less relevant matches being considered
-* [.param]`analyzer`: Sets the analyzer to be used for the search term.
-* [.param]`limit`: Limits the number of search results to be returned.
-* [.param]`skip`: Start returning after this many results.
-This may be used in conjunction with [.param]`limit` to use pagination.
-
-== Search Results
-
-After you have executed a search, you will be given a set of results, containing information about documents which match the query.
-In the raw JSON payload, the server returns an object with a [.param]`hits` property, which contains a _search result_.
-
-The _search result_ itself is a JSON object containing:
-
-* [.param]`id`: The document ID of the hit
-* [.param]`score`: How relevant the result is to the initial search query.
-Search results are always ordered by score, with highest-scored hits appearing first.
-* [.param]`locations`: A JSON object containing information about each match in the document.
-Its keys are _document paths_ (in the xref:{version-server}@server:n1ql:n1ql-intro/queriesandresults.adoc#paths[N1QL sense]) where matches may be found, and its values are arrays that contain the _match location_.
-The _match location_ is a JSON object whose keys are the matched terms found, and whose values are _locations_:
- ** [.param]`start`: The character offset at which the matched text begins
- ** [.param]`end`: The character offset at which the matched text ends
- ** [.param]`pos`: The word-position of the matched result.
-This indicates how far deep the match is, in respect to words.
-For example if the searched term was `schema`, and the matched text was: `Ahout NoSQL schema organization`, the [.param]`pos` would be `3`, or the third word in the field.
-
-To learn more about the response format used by the FTS service, see the xref:{version-server}@server:fts:fts-response-object-schema.adoc[Response Object Schema] section of the full text search documentation.
-Couchbase SDKs may abstract some of the fields or provide wrapper methods around them.
-
-== Aggregation and Statistics (Facets)
-
-You may perform search result aggregation and statistics using _facets_.
-Facets allow you to specify aggregation parameters in your query.
-When the query results are received, aggregation results are returned alongside the actual query hits.
-
-You can use a _Term Facet_ to count the number of times a specific term appears in the results
-
-[source,python]
-----
-results = cb.search('beer-search', FT.MatchQuery('hops'), limit=5,
-                    facets={'terms': FT.TermFacet('description', limit=5)})
-for result in results:
-    # handle results
-    pass
-
-pprint(results.facets['terms'])
-----
-
-[source,json]
-----
-{'field': 'description',
- 'missing': 9,
- 'other': 30725,
- 'terms': [{'count': 782, 'term': 'hops'},
-           {'count': 432, 'term': 'beer'},
-           {'count': 365, 'term': 'ale'},
-           {'count': 327, 'term': 'malt'},
-           {'count': 130, 'term': 'hop'}],
- 'total': 32761}
-----
-
-You can likewise use a _Date Range Facet_ to count the number of results by their age, and _Numeric Range Facet_ to count results using an arbitrary numeric range.
-
-To learn more about facets, see the xref:{version-server}@server:fts:fts-queries.adoc#search-facets[Search Facets] section of the full text search documentation.
-
-== Partial Search Results
-
-The FTS service splits the indexing data between several _pindexes_.
-Because of that, you may encounter situations where only a subset of the pindexes could provide results (eg.
-if some pindex nodes are not online\...).
-
-What happens in this case is that FTS returns a list of _partial_ results, and notifies you that one or several _errors_ also happened.
-You can inspect the errors, which will each correspond to an failing pindex, via the SDK.
-Of course, the partial results (the result from healthy pindexes) are still available through the usual methods in the SDK result representation.
+Note that to access Full Text Search, users require appropriate _roles_.
+The role *FTS Admin* must therefore be assigned to those who intend to create indexes; and the role *FTS Searcher* to those who intend to perform searches.
+For information on creating users and assigning roles, see xref:{version-server}@server:security:security-authorization.adoc[Authorization].

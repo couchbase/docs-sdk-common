@@ -16,7 +16,7 @@ Nevertheless, the result format received using an SDK may be a bit different tha
 == Running cbq
 
 The interactive shell xref:{version-server}@server:tools:cbq-shell.adoc[[.cmd]`cbq`] for executing N1QL queries is shipped with Couchbase Server and designed to be run on a cluster node.
-It is xref:{version-server}@server:cli:cli-intro.adoc[located alongside the other couchbase tools] (by default, `/opt/couchbase/bin/` on Linux, `/Applications/Couchbase Server.app/Contents/Resources/couchbase-core/bin/cbq` on OS X, and `C:\Program Files\Couchbase\Server\bin\cbq.exe` on Microsoft Windows).
+It is xref:{version-server}@server:cli:cli-intro.adoc[located alongside the other Couchbase tools] (by default, `/opt/couchbase/bin/` on Linux, `/Applications/Couchbase Server.app/Contents/Resources/couchbase-core/bin/cbq` on OS X, and `C:\Program Files\Couchbase\Server\bin\cbq.exe` on Microsoft Windows).
 
 == Issuing Queries
 
@@ -117,6 +117,10 @@ The above queries showed how to query top-level fields within a document.
 One of the main differences between JSON and flat rows is that JSON supports a nested structure, allowing documents to contain other documents, also known as sub-documents.
 In N1QL, you can use the path syntax to query and address sub-documents.
 See xref:{version-server}@server:n1ql:n1ql-intro/queriesandresults.adoc[N1QL Queries and Results] for more information on the path syntax.
+
+[caption=Attention]
+IMPORTANT: N1QL sub-document queries are not related to _Key-Value_ sub-document operations.
+(Key-Value sub-document operations are explained in the section xref:subdocument-operations.adoc[Sub-Document Operations]).
 
 ....
 cbq> SELECT airportname, city, country, geo.alt FROM `travel-sample` WHERE type="airport" AND geo.alt > 4000 AND country="United States" LIMIT 3;

@@ -32,7 +32,7 @@ Applications may specify requirements for durability to the Couchbase client to 
 This ensures greater durability of your data against failure in certain edge cases, such as a slow network or storage media.
 Operations performed using the durability requirement options will appear as failures to the application if the modification could not be successfully stored to disk and/or replicated to replica nodes.
 Upon receiving such a failure response, the application may retry the operation or mark it as a failure.
-In any event, the application will never be under the mistaken assumption that the modification was performed when it fact it was lost inside one of the aforementioned queues.
+In any event, the application will never be under the mistaken assumption that the modification was performed when in fact it was lost inside one of the aforementioned queues.
 
 == Configuring durability
 
