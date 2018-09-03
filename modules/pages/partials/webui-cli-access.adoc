@@ -1,0 +1,134 @@
+= Browser and CLI Access
+:page-topic-type: concept
+include::partial$attributes.adoc[]
+
+[abstract]
+You can browse and access documents in Couchbase using browser and command line tools without writing any code.
+This can be helpful to you if you simply wish to inspect cluster data without writing code.
+You can access individual documents using the _command line_ and _web console_.
+
+[#cli-access]
+== Command-Line
+
+You can access documents in Couchbase using command line interfaces.
+You can use the `cbc` tool for simple document lookups by their IDs (or _keys_) and the xref:{version-server}@server:n1ql:n1ql-intro/cbq.adoc[cbq] tool to issue N1QL queries.
+This section will discuss the installation and usage of the `cbc` tool, and is targeted towards Linux and Mac OS X users (though `cbc` can also be used on Windows).
+
+== Installing the command-line KV client
+
+To use the `cbc` tool, first install the C SDK.
+Note that you will also need to install the _command line tools_.
+
+.Debian/Ubuntu
+[source,bash]
+----
+wget http://packages.couchbase.com.s3.amazonaws.com/releases/couchbase-release/couchbase-release-1.0-2-amd64.deb
+sudo dpkg -i couchbase-release-1.0-2-amd64.deb
+sudo apt-get update
+sudo apt-get install libcouchbase2-bin
+----
+
+.CentOS/RHEL
+[source,bash]
+----
+wget http://packages.couchbase.com.s3.amazonaws.com/releases/couchbase-release/couchbase-release-1.0-2-x86_64.rpm
+sudo rpm -ivh couchbase-release-1.0-2-x86_64.rpm
+sudo yum install libcouchbase2-bin
+----
+
+.Mac OS X
+[source,bash]
+----
+brew install libcouchbase
+----
+
+NOTE: The `cbc` tool is part of the C SDK.
+Refer to xref:c-sdk::start-using-sdk.adoc[C SDK] for other installation options.
+
+== Using the command-line KV client
+
+The `cbc` command contains subcommands that perform various operations on the server.
+Some subcommands are:
+
+* `cbc create` (create/update documents)
+* `cbc cat` (retrieve a document)
+* `cbc rm` (remove a document).
+
+To point the client at a cluster, provide one of the cluster nodes using the -U argument:
+
+ $ cbc cat document-id -U couchbase://node-ip-or-hostname
+
+You can store a document using the `cbc create` command.
+
+ $ cbc create document_id -V '{"json":"value"}'
+ document_id         Stored. CAS=0xd0d92f40500
+
+NOTE: The command line client is not JSON-aware.
+If dealing with JSON documents, ensure that values passed to it are well formed JSON because the [.cmd]`cbc` program does not do any validation.
+
+You can retrieve a document using the `cbc cat` subcommand.
+
+ $ cbc cat document_id
+ document_id          CAS=0xe0004ea40100, Flags=0x0. Size=16
+ {"json":"value"}
+
+You can find out more about the `cbc` command by referring to your local `man` pages or by viewing its https://github.com/couchbase/libcouchbase/blob/master/doc/cbc.markdown[documentation^].
+
+== Using the command-line query shell (cbq)
+
+You can use the xref:{version-server}@server:n1ql:n1ql-intro/cbq.adoc[cbq] program as a command line query shell to issue N1QL queries in couchbase.
+_cbq_ is available on all cluster nodes and does not require a separate installation.
+Simply run _cbq_ from the Couchbase installation directory (`/opt/couchbase/bin/cbq` on Linux and `"/Applications/Couchbase Server.app/Contents/Resources/couchbase-core/bin/cbq"`).
+Once in the shell, you should be greeted by a prompt and ready to issue any N1QL query.
+
+ $ ./cbq
+ cbq> select airportname FROM `travel-sample` WHERE airportname IS NOT NULL LIMIT 1;
+ {
+     ...
+     "results": [
+         {
+             "airportname": "Abbeville"
+         }
+     ]
+     ...
+ }
+
+[#webui-access]
+== Web Console Document Access
+
+You can use the Web Console to view, edit, and create JSON documents up to 2.5KB in size.
+To access documents using the Web Console:
+
+. Navigate your browser to a cluster node.
+Type the address of the cluster with the admin port (8091).
+Use your [.var]`username` (usually [.in]`Administrator`).
+The [.var]`password` is the password you used when setting up the cluster.
+. Once logged in, go to the [.ui]*Data Buckets* section
++
+image::{incimagesdir}/webui-buckets.png[,350px]
+
+. Click on the btn:[Documents] button of the `default` bucket:
++
+image::{incimagesdir}/webui-documents.png[,650px]
+
+. To retrieve a document, type in the document ID and click on [.ui]*Lookup ID*.
+This will then open the document edit page:
++
+image:{incimagesdir}/webui-lookup.png[,300px] image:{incimagesdir}/webui-editor-existing.png[,350px]
+
+. To create a new document, return to the [.ui]*Documents* section and click on [.ui]*Create Document*
++
+image::{incimagesdir}/webui-create-document.png[,350]
+
+. You’ll be prompted to enter a document ID
++
+image::{incimagesdir}/webui-newdoc-prompt.png[,300px]
+
+. Once created, you can now edit your document.
+Don't forget to [.ui]*Save* when done
++
+image::{incimagesdir}/webui-editor-new.png[,650px]
+
+== Web Console Query Accesss
+
+You can use the xref:{version-server}@server:tools:query-workbench.adoc[Query Workbench] to issue queries using the web console.
