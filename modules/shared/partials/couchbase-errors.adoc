@@ -1,0 +1,83 @@
+= Error Types
+
+// tag::group[]
+
+[#devguide-data-errors]
+// tag::devguide-data-errors[]
+== Data Errors
+
+Data errors are errors returned by the server because a certain data condition was not met.
+Data errors typically have very clear corrective paths.
+
+*Document Does not Exist*
+
+If a document is not found, then it has either not yet been created or has since been deleted.
+It is received on retrieval (_get_) operations (get a document), _replace_ operations (replace a document that already exists), and _remove_ operations (delete a document).
+
+If this error is received when attempting to retrieve a document, then the item should either be created (if possible) or return an error to the user.
+
+If this error is received when replacing a document, then it indicates an issue in the application state (perhaps you can raise an exception up the stack).
+If you do not care that the document exists, the _upsert_ method may be used instead which ignores this case.
+
+If receiving this error when removing an document, it may safely be ignored: not-found on remove essentially means the item is already removed.
+
+The _Not Found_ error is returned by the server.
+
+*Document Already Exists*
+
+The _insert_ operation requires that the document does not exist yet; it is intended to create a new unique record (think about inserting a "new user ID").
+This error is returned by the server when a document already exists.
+Applications at this point should probably return an error up the stack to the user (when applicable); for example indicating that a new account could not be registered with the given user name, since it already exists.
+
+*CAS Mismatch*
+
+A xref:concurrent-mutations-cluster.adoc[CAS] mismatch error is returned when an operation was executed with a CAS value (supplied by the application) and the CAS value passed differs from the CAS value on the server.
+The corrective course of action in this case is for the application to re-try the read-update cycle as explained in detail in the CAS documentation.
+
+*Document too Big*
+
+If the maximum content size is larger than 20MB the server responds with an error noting that it can't store it since it is too big.
+This error is not transient and must be raised up the stack since it likely indicates an application error that creates too large document contents.
+// end::devguide-data-errors[]
+
+[#devguide-transient-errors]
+// tag::devguide-transient-errors[]
+== Transient and Resource Errors
+
+These errors may be received because of resource starvation.
+
+*Temporary Failure*
+
+This error is received when the server is temporarily inhibiting an error that doesn't allow it to respond successfully.
+For example during mutations when the cluster node has run out of memory or is currently warming up.
+Its disk and replication queues are full and must wait until items in those queues are stored and replicated before it can begin receiving new operations.
+
+While this condition is rare, it may happen under massively concurrent writes from clients and a limited memory allocation on the server.
+
+The short-term corrective action for this error is to throttle and slow down the application, giving Couchbase some time for pending operations to complete (or to complete warmup) before issuing new operations.
+The long term corrective action is to increase memory capacity on the cluster, either by adding more RAM to each node, or by adding more nodes.
+The above example shows (in pseudo-code) how to handle a temporary failure error with a linear backoff.
+
+[source,c]
+----
+MAX_RETRIES = 5
+BASE_DELAY = 50 // milliseconds
+
+current_attempts = 1
+do {
+    try {
+        bucket.upsert(id, document)
+        break
+    } catch (TemporaryFailure error) {
+        sleep(BASE_DELAY * current_attempts)
+    }
+} while (++current_attempts != MAX_RETRIES)
+----
+
+*Out Of Memory*
+
+This error indicates a severe condition on the server side and probably needs to be logged and/or signaled to monitoring systems.
+There is not much the application can do there to mitigate the situation other than backing off significantly and waiting until the server side memory shortage is resolved.
+// end::devguide-transient-errors[]
+
+// end::group[]
