@@ -1,0 +1,7 @@
+== Installing Couchbase Server
+
+To install Couchbase Server, pick up the platform download the software and run the installer.
+
+If you are installing Couchbase Server for development, test, or production purposes, set up Couchbase Server by following the detailed [setup instructions] that cover pre-installation, installation on supported platforms, post-installation, upgrading, cloud deployment, and migration.
+
+The SDK-specific installation is explained for each SDK.
