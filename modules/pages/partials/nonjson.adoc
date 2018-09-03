@@ -41,7 +41,7 @@ The _name_ column displays the format name; the _native type_ column displays th
 The format code is discussed more in depth below.
 
 .Built-in format types
-[#table_wrc_2nb_bt,cols="20,35,103,21"]
+[cols="20,35,103,21"]
 |===
 | Name | Native Type | Description | Flags value (see below)
 
