@@ -1,0 +1,178 @@
+= Couchbase SDK Common Documentation
+
+This repository hosts the common documentation files for the Couchbase SDKs.
+
+== Versioning
+
+This repository is versioned to track the version of Couchbase Server (e.g., release/5.5, release/6.0, etc).
+The component version is defined in the component descriptor, _antora.yml_.
+References from this repository to pages in the Couchbase Server documentation should mostly stick to this version.
+
+Unlike other documentation repositories that track the Couchbase Server version, this repository is not a hard dependency of the Couchbase Server documentation.
+Instead, this repository is consumed by the documentation for the language-specific SDKs.
+
+== Component Name
+
+The common SDK component identifies as `sdk`.
+The component name is defined in the component descriptor, _antora.yml_.
+This name should be used in any IDs that refer to files in this repository.
+
+== Repository Structure
+
+The files and directories in this repository are organized as an auxilary Antora documentation component.
+That means this repository doesn't contribute any pages to the documentation directly.
+Instead, it provides a) partial files (both complete pages and page fragments) which can be included into pages from another component and b) shared images that those pages can reference.
+
+At a high level, this repository contains two modules, which serve two distinct purposes:
+
+* pages
+* shared
+
+The *pages* module (not to be confused with Antora's pages folder), contains complete pages in the form of partials.
+These partials are the common pages shared by all the Couchbase SDKs.
+
+The *shared* module contains page fragments, also in the form of partials.
+These partials hold information common to all the Couchbase SDKs, but which do not constitute complete pages.
+
+=== Pages Module
+
+The pages module has the following structure starting from the root of the repository:
+
+....
+modules/
+  pages/
+    partials/
+      *.adoc
+    assets/
+      images
+        *.png
+....
+
+Although the AsciiDoc files are located in the [.path]_partials_ folder, they are, in fact, complete pages.
+The only reason they're located in the [.path]_partials_ folder is so that they don't get turned into pages directly.
+Instead, they need to be included into pages in the language-specific SDKs.
+
+==== Usage
+
+One example is the "`Sample Application`" page, located in this repository at [.path]_modules/pages/partials/sample-application.adoc_.
+To promote this common page to a concrete page in one of the language-specific SDKs, create the following file in that SDK and populate it with a single include directive, as follows:
+
+.modules/ROOT/pages/sample-application.adoc
+[source,asciidoc]
+----
+\include::6.0@sdk:pages:partial$sample-application.adoc[]
+----
+
+The include directive effectively imports the common page into a page in the language-specific SDK documentation.
+Every common page must have a corresponding master page in every language-specific SDK.
+
+==== Page References
+
+All page references in the common page are assumed to be relative to the module in which the page is included (i.e., relative to the master page).
+Thus, the reference `+xref:n1ql-query.adoc[Querying with N1QL]+` refers to the [.path]_n1ql-query.adoc_ page in the same module as [.path]_sample-application.adoc_ master page in the language-specific SDK.
+
+References to all other locations, such as to server, must provide the necessary context (component, version, module, etc).
+
+All the common pages include a shared attributes file, [.path]_modules/pages/partials/attributes.adoc_
+
+[source,asciidoc]
+----
+= Document Title
+\include::partial$attributes.adoc[]
+
+...
+----
+
+The attributes file controls the version of Couchbase Server (`version-server`) as well as the path to shared images (`incimagesdir`), which will get to in the next section.
+
+The `version-server` attribute is used in the common pages to refer to pages in the Couchbase Server documentation.
+For example:
+
+[source,asciidoc]
+----
+Use the xref:{version-server}@server:tools:query-workbench.adoc[Query Workbench] to issue queries using the web console.
+----
+
+Using the attributes file allows the server version to be managed in a single place.
+
+==== Image References
+
+Using images in the common folders is a little tricky because Antora doesn't yet support image references outside the current module (nor does the include cause the context to change).
+Therefore, it's necessary to employ a workaround.
+
+To workaround this limitation in Antora, the location of images in common pages is controlled using a shared attribute named `incimagesdir`.
+Here's how you'll use it to specify the location of images in these common pages:
+
+[source,asciidoc]
+----
+image::{incimagesdir}/travel-app-narration.png[]
+----
+
+_This is the only time in Antora you would use an attribute reference at the start of an image target._
+
+The `incimagesdir` attribute is defined in the attributes file, [.path]_modules/pages/partials/attributes.adoc_.
+The value of this attribute refers to the relative path to the images folder in the pages module (though it has to do a bit of a reach to get there).
+
+You don't have to worry about any of these details as long as you prefix the image target with `{incimagesdir}` for now.
+
+=== Shared Module
+
+The shared module has the following structure starting from the root of the repository:
+
+....
+modules/
+  shared/
+    partials/
+      *.adoc
+....
+
+This module is a little easier to understandn because it contains partials which really are partials (i.e., page fragments).
+These partials can be included into any page in the language-specific SDK documentation to provide shared content such as reference sections, explanations, definitions, phrases, etc.
+
+Although not required, the content in these partials is often selected using a tag or tags.
+
+==== Usage
+
+One example is the introduction to views in the file [.path]_modules/ROOT/pages/view-queries-with-sdk.adoc_ for a language-specific SDK.
+
+[source,asciidoc]
+----
+\include::6.0@sdk:shared:partial$views.adoc[tag=views-intro]
+----
+
+This imports a page fragment that looks like the following:
+
+[source,asciidoc]
+-----
+// tag::views-intro[]
+--
+The normal CRUD methods allow you to look up a document by its ID.
+...
+
+TIP: See xref:6.0@server:understanding-couchbase:views/views-intro.adoc[Views].
+--
+// end::views-intro[]
+-----
+
+All the lines between `tag::views-intro[]` and `end::views-intro[]` get imported into the page.
+
+==== Page References
+
+Like the common pages, all page references in shared partials are assumed to be relative to the module in which the partial is included.
+Thus, the reference `+xref:n1ql-query.adoc[Querying with N1QL]+` refers to the [.path]_n1ql-query.adoc_ page in the same module as [.path]_sample-application.adoc_ in the language-specific SDK.
+
+References to all other locations, such as to server, must provide the necessary context (component, version, module, etc).
+
+Unlike the common pages, the partials do not import a shared attributes file.
+That's because partials can be included partially and thus bypass attributes defined in the document header.
+Unfortunately, that means that the references in the share partials to the server have to be hard-coded for now.
+
+[source,asciidoc]
+----
+See xref:6.0@server:understanding-couchbase:views/views-intro.adoc[Views].
+----
+
+==== Image References
+
+Currently, the shared module doesn't contain any images.
+If they are added, a different workaround will have to be developed since not all partials would pick up a shared attributes file.
