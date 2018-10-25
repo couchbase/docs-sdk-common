@@ -1,5 +1,6 @@
 = Field Level Encryption
 :page-topic-type: concept
+:page-edition: Enterprise Edition
 include::partial$attributes.adoc[]
 
 [abstract]
@@ -41,7 +42,7 @@ public class InsecureKeyProvider : IKeyProvider
 ----
 
 The keys are stored by name in a dictionary and retrieved using the same name.
-See the xref:java-sdk::encrypting-using-sdk.adoc[sample code page] for more secure code.
+See the xref:encrypting-using-sdk.adoc[sample code page] for more secure code.
 
 [#format]
 == Field Encryption Format
@@ -58,8 +59,8 @@ __[PREFIX]_[FIELDNAME]” : {
 }
 ----
 
-This is how Couchbase stores the JSON internally, but it is exposed to the developer as a public API (which currently has an https://developer.couchbase.com/documentation/server/5.5/sdk/encryption.html#story-h2-8[uncommited^] status).
-For your preferred SDK, an API reference is available, linked from xref:java-sdk::start-using-sdk.adoc[Install and Start Using the Java SDK with Couchbase Server] as well as xref:java-sdk::encrypting-using-sdk.adoc[sample code].
+This is how Couchbase stores the JSON internally, but it is exposed to the developer as a public API.
+For your preferred SDK, an API reference is available, linked from xref:start-using-sdk.adoc[Install and Start Using the Java SDK with Couchbase Server] as well as xref:encrypting-using-sdk.adoc[sample code].
 
 [#field-types]
 == Field Types
