@@ -36,8 +36,8 @@ The username must correspond to a user defined on the cluster that is being acce
 * The value formerly interpreted as a bucket-password is now interpreted as the password of the defined user.
 
 Note that on Couchbase Server 5.0 and beyond, the only buckets that can be accessed without a user-password are those that were created on legacy versions of the server; were not originally created with a bucket-password; and continue to be available on 5.0 and beyond, following the required upgrade process.
-See xref:6.0@server:security:security-rbac-upgrade.adoc[Upgrading to RBAC] for information on server-upgrade to 5.0, and how this affects access to legacy buckets.
+See xref:6.0@server:learn:security/upgrading-to-rbac.adoc[Upgrading to RBAC] for information on server-upgrade to 5.0, and how this affects access to legacy buckets.
 
 On Couchbase Server 5.0 and beyond, for any bucket to be accessed successfully, the defined user attempting access must have been assigned appropriate roles.
-See xref:6.0@server:security:security-rbac-user-management.adoc[RBAC User Management] for information on user-management.
+See xref:6.0@server:manage:manage-security/manage-users-and-roles.adoc[Manage Users and Roles] for information on user-management.
 // end::authenticating_with_legacy_sdk_versions[]
