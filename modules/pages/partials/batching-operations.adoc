@@ -37,7 +37,7 @@ When multiple requests are batched into a single IP header or TCP segment, the I
 Reducing the number of packets is also more efficient for the CPU, as it requires fewer system calls to send/receive data over the network: Since the data is in a single buffer, it can be sent at once using a single system call and its responses received with a single system call.
 When using non-batched operations, each request and response will need to make its own system call.
 
-Due to Couchbase’ distributed architecture, multi-item access may result in multiple servers being contacted.
+Due to Couchbase’s distributed architecture, multi-item access may result in multiple servers being contacted.
 For instance, when accessing 15 items on a 4 node cluster, roughly 3 items will exist on each node.
 When operations are batched, the SDK can efficiently parallelize requests to each involved server, allowing all items to be access quicker.
 On a per-server basis, batching requests allows each individual node to fetch relevant items in parallel from its memory.
