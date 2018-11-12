@@ -105,6 +105,8 @@ Assuming an average key size of 5 and an average value size of 50:
 
 // end::size[]
 
+// tag::python[]
+
 == Batching operations using SDK
 
 The following example is written in Python, and demonstrates properly splitting operations for batch sizes.
@@ -162,3 +164,5 @@ while batches:
 
     print "Completed {}/{} items".format(num_completed, len(all_data))
 ----
+
+// tag::python[]
