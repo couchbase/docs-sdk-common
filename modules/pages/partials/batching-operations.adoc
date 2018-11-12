@@ -15,16 +15,20 @@ Batching operations is done either via explicit _multi_ methods, or by schedulin
 
 NOTE: The availability of _multi_ APIs or the ability to explicitly schedule and wait for operations is dependent on language and SDK features.
 Refer to the SDK documentation for more specifics.
+
 // end::intro[]
 
 // tag::async[]
+
 == Asynchronous batching
 
 Asynchronous clients inherently batch operations: because the application receives the response at a later stage in the application, it may attain batching via issuing many requests in sequence.
 When using an SDK in an asynchronous (non-blocking) model, all requests are inherently batched.
+
 // end::async[]
 
 // tag::perf[]
+
 == Performance benefits
 
 IP packets and TCP segments carry their own overhead, so no matter how small the contents, there is still a 20 byte overhead for IP, a 10 byte overhead for TCP, and a 26 byte overhead for Ethernet for each TCP packet; making the total overhead for each request close to 60 bytes.
@@ -37,9 +41,11 @@ Due to Couchbase’ distributed architecture, multi-item access may result in mu
 For instance, when accessing 15 items on a 4 node cluster, roughly 3 items will exist on each node.
 When operations are batched, the SDK can efficiently parallelize requests to each involved server, allowing all items to be access quicker.
 On a per-server basis, batching requests allows each individual node to fetch relevant items in parallel from its memory.
+
 // end::perf[]
 
 // tag::err[]
+
 == Error handling
 
 Operation batching is done purely on the _client_ and _network_.
@@ -47,9 +53,11 @@ Couchbase does not have a concept of _transactional_ batched operations - in whi
 As such, some operations may succeed and some may fail when batching commands.
 
 Consult your SDK documentation on how to distinguish successes and failures in batched operation.
+
 // end::err[]
 
 // tag::guide[]
+
 == Batching guidelines
 
 Batching improves network utilization.
@@ -66,9 +74,11 @@ The limit may be lower for congested networks or slow server nodes (for example,
 The [cbc-pillowfight] utility may be used to appropriately determine the correct batch size for a cluster.
 
 When calculating the batch size, also consider that each operation has a 24 byte overhead at the protocol level:
+
 // end::guide[]
 
 // tag::size[]
+
 == Sizing batches: examples
 
 When storing items, with each key being approximately 10 bytes long and each value being approximately 4000 bytes long, estimate the following:
@@ -92,6 +102,7 @@ Assuming an average key size of 5 and an average value size of 50:
  ** Total: 74
 . Divide 1 megabyte by the total size of an operation:
  ** Batch Size: 14169
+
 // end::size[]
 
 == Batching operations using SDK
