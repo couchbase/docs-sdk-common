@@ -14,5 +14,5 @@ In order to specify that a subdocument operation should be performed on an exten
 
 _Virtual_ extended attributes consist of meta-data on an individual document: this can be retrieved by specifying `$document` as a search-path.
 
-For more information, see xref:6.0@server:understanding-couchbase:data/extended-attributes-fundamentals.adoc[Extended Attributes].
+For more information, see xref:6.0@server:learn:data/extended-attributes-fundamentals.adoc[Extended Attributes].
 // end::using_extended_attributes[]
