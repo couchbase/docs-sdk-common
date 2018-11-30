@@ -30,4 +30,4 @@ A detailed example of performing Full Text Search queries from the Java SDK is p
 
 Note that to access Full Text Search, users require appropriate _roles_.
 The role *FTS Admin* must therefore be assigned to those who intend to create indexes; and the role *FTS Searcher* to those who intend to perform searches.
-For information on creating users and assigning roles, see xref:{version-server}@server:learn:security:security-authorization.adoc[Authorization].
+For information on creating users and assigning roles, see xref:{version-server}@server:learn:security/authorization-overview.adoc[Authorization].
