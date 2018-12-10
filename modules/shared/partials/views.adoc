@@ -13,7 +13,7 @@ The _map_ and _reduce_ functions are stored on the server and written in JavaScr
 
 MapReduce queries can be further customized during query time to allow only a subset (or range) of the data to be returned.
 
-TIP: See xref:{version-server}@server:learn:views/views-intro.adoc[Views].
+TIP: See xref:server:learn:views/views-intro.adoc[Views].
 --
 // end::views-intro[]
 
