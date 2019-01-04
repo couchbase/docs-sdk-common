@@ -20,12 +20,7 @@ For detailed information on the Subdocument API, see xref:subdocument-operations
 
 For more information, see xref:6.0@server:learn:data/extended-attributes-fundamentals.adoc[Extended Attributes], and our xref:sdk-xattr-example.adoc[example code].
 
-[Note]
----
-The maximum content size for a document stored in Couchbase Server is 20MB.
+NOTE: The maximum content size for a document stored in Couchbase Server is 20MB.
 XATTRs -- including Virtual XATTRs -- will reduce the space available for the remainder of the document.
----
-
-_Virtual_ extended attributes consist of metadata on an individual document: this can be retrieved by specifying `$document` as a search-path.
 
 // end::using_extended_attributes[]
