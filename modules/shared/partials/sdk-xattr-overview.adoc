@@ -1,8 +1,11 @@
 = Extended Attributes
 
 [abstract]
+Extended Attributes (XATTRs) are metadata that can be provided on a per-application basis.
+
 // tag::intro_extended_attributes[]
-Couchbase Server permits the definition of _extended attributes_.
+Couchbase Server permits the addition of _extended attributes_ (XATTRs).
+
 These allow application developers to define application-specific metadata that will only be visible to those applications that request it or attempt to modify it.
 This might be, for example, meta-data specific to a programming framework that should be hidden by default from other frameworks, or possibly from other versions of the same framework.
 // end::intro_extended_attributes[]
@@ -13,8 +16,11 @@ This might be, for example, meta-data specific to a programming framework that s
 
 The SDK supports extended attributes by means of extensions to the _Sub-Document API_: so that extended attributes can be defined, searched for, edited, removed, and more.
 In order to specify that a subdocument operation should be performed on an extended rather than a regular attribute, an `xattr` flag should be set to `true`, by the calling application.
+For detailed information on the Subdocument API, see xref:subdocument-operations.adoc[Subdocument Operations].
 
-_Virtual_ extended attributes consist of metadata on an individual document: this can be retrieved by specifying `$document` as a search-path.
+For more information, see xref:6.0@server:learn:data/extended-attributes-fundamentals.adoc[Extended Attributes], and our xref:sdk-xattr-example.adoc[example code].
 
-For more information, see xref:6.0@server:learn:data/extended-attributes-fundamentals.adoc[Extended Attributes].
+NOTE: The maximum content size for a document stored in Couchbase Server is 20MB.
+XATTRs -- including Virtual XATTRs -- will reduce the space available for the remainder of the document.
+
 // end::using_extended_attributes[]
