@@ -1,9 +1,11 @@
 = Extended Attributes
 
 [abstract]
+// tag::intro_extended_attributes[]
 Couchbase Server permits the definition of _extended attributes_.
 These allow application developers to define application-specific metadata that will only be visible to those applications that request it or attempt to modify it.
 This might be, for example, meta-data specific to a programming framework that should be hidden by default from other frameworks, or possibly from other versions of the same framework.
+// end::intro_extended_attributes[]
 
 [#using_extended_attributes]
 // tag::using_extended_attributes[]
