@@ -1,6 +1,7 @@
 = Non-JSON Documents
 include::partial$attributes.adoc[]
 
+// tag::nonjson_intro[]
 [abstract]
 Couchbase is a document database and functions best when document contents are JSON.
 Nevertheless Couchbase may be used to store non-JSON data for various use cases.
@@ -76,6 +77,7 @@ _Using this format will make your documents inaccessible from other-language SDK
 == Custom formats
 
 If your application must store data that cannot be handled by any of the built-in SDK formats (for example, if the application wishes to store data as UTF-16), there are generally two options:
+// end::nonjson_intro[]
 
 == Using the _RAW_ format
 
@@ -135,6 +137,7 @@ cb.upsert('utf16_doc', 'Hello, UTF-16 World!', format=UTF16_TYPECODE)
 cb.get('utf16_doc')
 ----
 
+// tag::nonjson_flags[]
 == Format flags (type codes) and SDK interoperability
 
 Modern Couchbase SDKs have standardized type codes for the various built-in document formats.
@@ -169,3 +172,4 @@ The resultant typecode is:
 ....
 
 When defining a new type code using the transcoder, ensure to keep the above information in mind, so as not to clash with any existing ones.
+// end::nonjson_flags[]
