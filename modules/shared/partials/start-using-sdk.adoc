@@ -1,0 +1,27 @@
+// tag::heading_1[]
+
+WARNING: These pages cover the first _Developer Preview_ of the Couchbase .NET SDK 3.0 (DP1).
+As such they are likely to change without notice.
+The DP1 code _should not_ be used in production.
+
+== Installing the SDK
+// end::heading_1[]
+
+
+
+
+
+// tag::heading_2[]
+== Hello Couchbase
+
+// end::heading_2[]
+
+
+
+
+
+// tag::heading_3[]
+
+== Additional Resources
+
+// tag::heading_3[]
