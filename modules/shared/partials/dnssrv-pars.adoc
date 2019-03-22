@@ -13,9 +13,9 @@ The following steps are necessary to make it work:
 Your DNS server should be set up like this (one row for each bootstrap node):
 
 ----
-_couchbase._tcp.example.com.  3600  IN  SRV  0  0  0  node1.example.com.
-_couchbase._tcp.example.com.  3600  IN  SRV  0  0  0  node2.example.com.
-_couchbase._tcp.example.com.  3600  IN  SRV  0  0  0  node3.example.com.
+_couchbase._tcp.example.com.  3600  IN  SRV  0  0  11210  node1.example.com.
+_couchbase._tcp.example.com.  3600  IN  SRV  0  0  11210  node2.example.com.
+_couchbase._tcp.example.com.  3600  IN  SRV  0  0  11210  node3.example.com.
 ----
 
 NOTE: The ordering, priorities, ports and weighting are completely ignored and should not be set on the records to avoid ambiguities.
@@ -23,8 +23,8 @@ NOTE: The ordering, priorities, ports and weighting are completely ignored and s
 If you plan to use secure connections, you use `_couchbases` instead:
 
 ----
-_couchbases._tcp.example.com.  3600  IN  SRV  0  0  0  node1.example.com.
-_couchbases._tcp.example.com.  3600  IN  SRV  0  0  0  node2.example.com.
-_couchbases._tcp.example.com.  3600  IN  SRV  0  0  0  node3.example.com.
+_couchbases._tcp.example.com.  3600  IN  SRV  0  0  11207  node1.example.com.
+_couchbases._tcp.example.com.  3600  IN  SRV  0  0  11207  node2.example.com.
+_couchbases._tcp.example.com.  3600  IN  SRV  0  0  11207  node3.example.com.
 ----
 // end::dnssrv[]
