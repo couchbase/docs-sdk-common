@@ -18,7 +18,7 @@ _couchbase._tcp.example.com.  3600  IN  SRV  0  0  11210  node2.example.com.
 _couchbase._tcp.example.com.  3600  IN  SRV  0  0  11210  node3.example.com.
 ----
 
-NOTE: The ordering, priorities, ports and weighting are completely ignored and should not be set on the records to avoid ambiguities.
+NOTE: The ordering, priorities and weighting are completely ignored and should not be set on the records to avoid ambiguities.
 
 If you plan to use secure connections, you use `_couchbases` instead:
 
