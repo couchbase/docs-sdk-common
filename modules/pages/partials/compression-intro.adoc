@@ -3,6 +3,8 @@
 :page-edition: Enterprise Edition
 include::partial$attributes.adoc[]
 
+// tag::intro[]
+
 [abstract]
 In response to increasing volumes of data being sent over the wire, Couchbase Data Platform now provides data compression between the SDK and Couchbase Server.
 
@@ -18,6 +20,8 @@ These operations take place automatically, after `HELLO` negotiation with the se
 
 The document must be below 20MB in size in both compressed and uncompressed form.
 Compression is only available in the Enterprise Edition of Couchbase Data Platform.
+
+// end::intro[]
 
 [#Modes]
 == Operating Modes
