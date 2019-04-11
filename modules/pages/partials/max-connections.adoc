@@ -1,0 +1,3 @@
+// tag::limits[]
+IMPORTANT: Each Couchbase Data node allows up to 30,000 concurrent key-value connections xref:server:learn:clusters-and-availability/size-limitations.adoc[by default].
+// end::limits[]
