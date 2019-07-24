@@ -26,7 +26,7 @@ The syntax required for creating a user varies according to language.
 The basic form is as follows:
 
 ----
-booleanupsertUser (String userid, UserSettings settings)
+boolean upsertUser (String userid, UserSettings settings)
 ----
 
 The method *upsertUser* creates a user and adds the user to the Couchbase Cluster.
@@ -76,7 +76,7 @@ The method returns a _boolean_, which is `true` if the operation is successful, 
 The basic form of the method used to return currently defined users is as follows:
 
 ----
-List<User>getUsers()
+List<User> getUsers()
 ----
 
 The method returns a list of _User_ objects, each of which takes the following form:
@@ -130,7 +130,7 @@ Each Role object in the Role-array has the form described above, in _Creating a 
 The basic form of the method used to remove users is as follows:
 
 ----
-booleanremoveUser (String userid)
+boolean removeUser (String userid)
 ----
 
 The method's sole argument is the id of the user to be removed from the system, specified as a _String_.
