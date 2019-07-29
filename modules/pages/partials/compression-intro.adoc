@@ -1,6 +1,7 @@
 = Compression
 :page-topic-type: concept
 :page-edition: Enterprise Edition
+:page-aliases: concept-docs:compression
 include::partial$attributes.adoc[]
 
 // tag::intro[]
