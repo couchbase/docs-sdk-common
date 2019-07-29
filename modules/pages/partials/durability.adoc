@@ -1,6 +1,6 @@
 = Durability
 :page-topic-type: concept
-:page-aliases: howtos:durability,howtos:synchronous-replication
+:page-aliases: howtos:durability,howtos:synchronous-replication,concept-docs:durability
 include::partial$attributes.adoc[]
 
 [abstract]
