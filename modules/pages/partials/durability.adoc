@@ -1,5 +1,6 @@
 = Durability
 :page-topic-type: concept
+:page-aliases: howtos:durability.adoc
 include::partial$attributes.adoc[]
 
 [abstract]
