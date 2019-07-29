@@ -1,6 +1,7 @@
 = Field Level Encryption
 :page-topic-type: concept
 :page-edition: Enterprise Edition
+:page-aliases: concept-docs:encryption
 include::partial$attributes.adoc[]
 
 [abstract]
