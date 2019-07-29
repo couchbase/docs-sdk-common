@@ -1,4 +1,5 @@
 = Full Text Search
+:page-aliases: concept-docs:full-text-search-overview
 include::partial$attributes.adoc[]
 
 [abstract]
