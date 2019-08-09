@@ -112,12 +112,12 @@ Durability operations may also cause increased network traffic since it is imple
 // This section only in Java for 3.0 β
 // and C++ & .NET for GA
 
-Couchbase Data Platform introduced xref:6.5@server:learn:data/distributed-acid-transactions.adoc[distributed, multi-document ACID Transactions], with Couchbase Data Platform 6.5.
-They are implemented as a separate library -- currently for the Java SDK, and in C++, for use with libcouchbase.
+Couchbase introduced xref:6.5@server:learn:data/distributed-acid-transactions.adoc[distributed, multi-document ACID Transactions], with Couchbase Data Platform 6.5.
+They are implemented as a separate library -- currently for the Java SDK.
 The following documentation is available:
-xref:6.5@server:learn:data/distributed-acid-transactions.adoc[An introductory guide to how Couchbase ACID Transactions work].
-xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[A HOWTO guide].
-xref:project-docs:distributed-transactions-java-release-notes.adoc[Transactions Release Notes].
+* xref:6.5@server:learn:data/distributed-acid-transactions.adoc[An introductory guide to how Couchbase ACID Transactions work].
+* xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[A HOWTO guide].
+* xref:project-docs:distributed-transactions-java-release-notes.adoc[Transactions Release Notes].
 
 
 // end::txns[]
