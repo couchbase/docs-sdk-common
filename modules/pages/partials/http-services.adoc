@@ -17,12 +17,12 @@ You can follow the links below for more information on the services with the Cou
 
 .Couchbase HTTP Services
 * xref:[KV Operations]
-* xref:subdocument-operations.adoc[Sub-Document API]
-* xref:analytics-for-sdk-users.adoc[Couchbase Analytics Service (CBAS)]
-* xref:n1ql-query.adoc[Query Service]
-* xref:full-text-search-overview.adoc[Full Text Search]
-* xref:understanding-views.adoc[MapReduce Views]
-* xref:6.5@server:connectors/intro[Connectors]
+* xref:howtos:subdocument-operations.adoc[Sub-Document API]
+* xref:concept-docs:analytics-for-sdk-users.adoc[Couchbase Analytics Service (CBAS)]
+* xref:concept-docs:n1ql-query.adoc[Query Service]
+* xref:concept-docs:full-text-search-overview.adoc[Full Text Search]
+* xref:concept-docs:understanding-views.adoc[MapReduce Views]
+* xref:6.5@server:connectors:intro.adoc[Connectors]
 
 
 == Use Cases
@@ -80,7 +80,7 @@ Use the Full Text Search (FTS) service when you want to take advantage of natura
 For phrase matching, over free-form text, or matching over word stems, FTS is a powerful solution.
 
 There are more concepts to learn, as FTS offers a very flexible service.
-In particular, care should be taken over building indexes, to stop them becoming unnecessarily large -- see our xref:server:fts/full-text-intro.adoc[FTS documentation].
+In particular, care should be taken over building indexes, to stop them becoming unnecessarily large -- see our xref:6.5@server:fts:full-text-intro.adoc[FTS documentation].
 Once again, the SDK abstracts away much of the complexity from deeply nested queries, and the interface is similar to our Query Service.
 
 From Couchbase Server 6.5, xref:6.5@server:n1ql:n1ql-language-reference/searchfun.adoc[Search Functions] allow the use of FTS _within_ N1QL queries.
