@@ -1,0 +1,137 @@
+= Durability & Failure
+:page-topic-type: concept
+:page-aliases: ROOT:failure-considerations,ROOT:durability;ROOT:enhanced-durability
+
+
+[abstract]
+Data durability refers to the fault tolerance and persistence of data in the face of software or hardware failure.
+Even the most reliable software and hardware might fail at some point, and along with the failures, introduce a chance of data loss.
+// This page discusses planning for a server node outage, to safeguard against data loss.
+Couchbase’s durability features include Synchronous Replication, and the possibility to use distributed, multi-document ACID transactions.
+It is the responsibility of the development team and the software architect to evaluate the best choice for each use case.
+
+// tag::intro[]
+
+Couchbase’s distributed and scalable nature exposes any set-up to the risk of potential network and hardware problems.
+The key to durability is planning for resilience, by evaluating the options on offer for persistence and replication, and carefully considering the performance trade-offs involved.
+
+== Durability
+Writes in Couchbase (from the SDK or elsewhere) are written to a single node.
+From there, Couchbase Server will take care of sending the mutation to any configured replicas, and to disk.
+By default all writes are asynchronous, but levels of durability can be set, to ensure replication and/or _persistence_ to disks, before the write is _committed_.
+
+// end::intro[]
+
+// tag::syncrep[]
+== Synchronous Replication
+Durability has been enhanced in Couchbase Data Platform 6.5, with xref:6.5@server:learn:data/durability.adoc[Synchronous Replication], 
+under which mutations will not be visible to other clients until they have met their durability requirements.
+These requirements are now enforced on the server side, rather than requiring client logic, which means that this committed durability can now be guaranteed. 
+
+The optional `durabilityLevel` parameter, which all mutating operations accept, allows the application to wait until this replication (or persistence) is successful before proceeding.
+If `durabilityLevel()` is used with no argument, the application will report success back as soon as the primary node has acknowledged the mutation in its memory.
+With Couchbase Server 6.5 and above, the three replication level options are:
+
+* `Majority` -- The server will ensure that the change is available in memory on the majority of configured replicas.
+* `MajorityAndPersistOnMaster` -- Majority level, plus persisted to disk on the master node.
+* `PersistToMajority` -- Majority level, plus persisted to disk on the majority of configured replicas.
+
+The options are in order of increasing levels of safety.  
+For a given node, waiting for writes to storage is considerably slower than waiting for it to be available in-memory.
+In particular, `PersistToMajority` will take longer than the other two, and `timeout` value needs to be selected with care -- particularly for large numbers of documents -- after testing on a representative network, with a realistic workload.
+Variation in network speeds and conditions, _inter alia_, make it difficult to give blanket recommendations.
+
+IMPORTANT: 
+Sync Writes must not be made with three replicas. 
+Attempting this will result in an error message: `DURABILITY_IMPOSSIBLE`.
+
+While synchronous writes are being attempted, another client cannot write to the document concerned 
+-- see the diagram and explanation xref:6.5@server:learn:data/durability.adoc#process-and-communication[in the Server Durability docs].
+
+
+
+
+=== Errors & Exceptions
+
+See xref:ref:error-codes.adoc#sync-replication[Synchronous Replication error codes].
+
+==== Ambiguity
+
+Synchronous Replication does a great deal to mitigate against network problems, but working in a distributed environment always brings its own class of extra problems to any client-server communication.
+
+Consider carefully the case where the client has sent the operation to the server, the server has sent the mutation on to the replica(s), and the replicas have acknowledged completion of their operation(s). Now, at the point where the server is sending the successful status to the client, the network drops. The client is in an ambiguous state, not knowing whether or not the operation was successful.
+
+In cases where the operation is idempotent (such as an upsert operation), then simply retrying is a perfectly acceptable strategy, where the cost of doing so is justified by the importance of the operation.
+Where the operation is an array append, or somesuch, then xref:6.5@server:learn:data/distributed-acid-transactions.adoc[distributed, multi-document ACID transactions] should be considered.
+
+// end::syncrep[]
+
+
+// tag::older[]
+== Older Server Versions
+
+In a version of Couchbase Server lower than 6.5 is being used then the application can fall-back to 'client verified' durability.  
+Here the SDK will do a simple poll of the replicas and only return once the requested durability level is achieved. 
+
+Couchbase Server versions prior to 6.5 implement durability using the `Observe` operation for clients to check if a mutation has been replicated and/or persisted to a specified number of cluster nodes. 
+This allows applications to determine when a write is durable (that is, will still be present after some amount of failure).
+
+The_level of durability_ is configurable with two values:
+
+* The _replication_ factor of the operation: how many replicas must this operation be propagated to, using `ReplicateTo`.
+* The_persistence_ of the modification: how many persisted copies of the modified record must exist, using the `PersistTo` option.
+
+See xref:howtos:kv-operations.adoc#durability[the durability examples in each SDK].
+
+When an operation is propagated to a replica, it is first propagated to the replica’s memory and then placed in a queue, to be persisted to the replica’s disk.
+You can control whether you desire the operation to only be propagated to a replica’s memory (`ReplicateTo`), or whether to wait until it is fully persisted to the replica’s disk (`PersistTo`).
+
+`PersistTo` receives a value total to the number of nodes that an operation should be persisted.
+The maximum value is the number of replica nodes plus one.
+A value of `1` indicates master-only persistence (and no replica persistence).
+
+`ReplicateTo` receives a value total to the number of _replica_ nodes the operation should be replicated.
+Its maximum value is the number of replica nodes.
+
+// end::older[]
+
+// tag::performance[]
+=== Performance considerations
+
+Note that Couchbase’s design of asynchronous persistence and replication is there for a reason: The time it takes to store an item in memory is several orders of magnitude quicker than persisting it to disk or sending it over the network.
+Operation times and latencies will increase when waiting on the speed of the network and the speed of the disk.
+
+Durability operations may also cause increased network traffic since it is implemented at the client level by sending special probes to each server once the actual modification has completed.
+
+
+// end::performance[]
+
+// tag::txns[]
+== Transactions
+
+// This section only in Java for 3.0 β
+// and C++ & .NET for GA
+
+Couchbase Data Platform introduced xref:6.5@server:learn:data/distributed-acid-transactions.adoc[distributed, multi-document ACID Transactions], with Couchbase Data Platform 6.5.
+They are implemented as a separate library -- currently for the Java SDK, and in C++, for use with libcouchbase.
+The following documentation is available:
+xref:6.5@server:learn:data/distributed-acid-transactions.adoc[An introductory guide to how Couchbase ACID Transactions work].
+xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[A HOWTO guide].
+xref:project-docs:distributed-transactions-java-release-notes.adoc[Transactions Release Notes].
+
+
+// end::txns[]
+
+
+////
+
+// tag::failover[]
+
+== Failure Considerations
+
+-------- eventually to be a discussion of what happens when a node goes down ---------
+
+// end::failover[]
+
+////
+
