@@ -75,7 +75,7 @@ When multiple hosts are supplied, the SDK will attempt to connect to each host i
 == Timeouts
 
 Timeouts are returned by the client when an operation is waiting too long for an acknowledgment from the server.
-The length of time a client waits for an a response from the server is configurable (see your language’s Couchbase SDK reference for how to configure it).
+The length of time a client waits for a response from the server is configurable (see your language’s Couchbase SDK reference for how to configure it).
 
 Timeouts are caused by an unresponsive network or software system.
 Possible causes are:
