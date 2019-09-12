@@ -93,6 +93,11 @@ A value of `1` indicates master-only persistence (and no replica persistence).
 `ReplicateTo` receives a value total to the number of _replica_ nodes the operation should be replicated.
 Its maximum value is the number of replica nodes.
 
+As with xref#ambiguity[Ambiguity] in recent server versions' Synchronous Replication, the operation may succeed before a network (or other) failure occurs
+-- it's up to the client application to handle such possibilities.
+Take a look at the xref:howtos:durability-error-handling-from-the-sdk.adoc[Durability in Action] code sample to see how to handle ambiguous situations in your code, with appropriate use of `Retry`.
+
+
 // end::older[]
 
 // tag::performance[]
