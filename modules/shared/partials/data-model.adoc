@@ -7,7 +7,7 @@ including UTF-8 strings, raw sequences of bytes, and language specific serializa
 however, only JSON is supported by xref:n1ql-query.adoc[Query].
 In Couchbase, JSON’s key-value structure allows the storage of collection data structures such as lists, maps, sets and queues
 -- __see xref:#data-structures[below]__.
-JSON’s tree-like structure allows operations against xref:subdocument.adoc[specific paths in the Document],
+JSON’s tree-like structure allows operations against xref:subdocument-operations.adoc[specific paths in the Document],
 and efficient support for these data structures.
 
 
