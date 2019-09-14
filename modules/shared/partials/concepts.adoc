@@ -13,7 +13,7 @@ This section contains discussion-style expansions of key Couchbase features, whi
 ** xref:subdocument-operations.adoc[Sub-Documents]
 ** xref:xattr.adoc[XATTR & Virtual XATTR]
 * xref:errors.adoc[Errors, Exceptions, and Diagnostics]
-** xref:health-chack.adoc[Health Check]
+** xref:health-check.adoc[Health Check]
 ** xref:response-time-observability.adoc[Tracing]
 // * xref:durability.adoc[Failure Considerations (Durability / Synchronous Replication/Brief Transactions Note)]
 * xref:encryption.adoc[Field Level Encryption]
