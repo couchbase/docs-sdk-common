@@ -42,7 +42,7 @@ public class InsecureKeyProvider : IKeyProvider
 ----
 
 The keys are stored by name in a dictionary and retrieved using the same name.
-See the xref:encrypting-using-sdk.adoc[sample code page] for more secure code.
+See the xref:howto:encrypting-using-sdk.adoc[sample code page] for more secure code.
 
 [#format]
 == Field Encryption Format
