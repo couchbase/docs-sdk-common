@@ -6,7 +6,7 @@ This section contains discussion-style expansions of key Couchbase features, whi
 
 * xref:buckets-and-clusters.adoc[Buckets & Clusters]
 * xref:collections.adoc[Collections & Scope]
-* xref::compression.adoc[Compression]
+* xref:compression.adoc[Compression]
 * xref:data-model.adoc[Data Model]
 ** xref:documents.adoc[Documents (includes discussion of Counters)]
 ** xref:nonjson.adoc[Non-json Docs]
