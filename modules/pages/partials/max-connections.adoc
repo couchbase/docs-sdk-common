@@ -1,4 +1,13 @@
 // tag::limits[]
-IMPORTANT: Each Couchbase Data node allows up to 30,000 concurrent key-value connections xref:server:learn:clusters-and-availability/size-limitations.adoc[by default], in Couchbase Data Platform 6.0 and earlier.
-From 6.5 onwards, the default value is 65,000.
+[IMPORTANT]
+.Connection Limits
+====
+Each Couchbase Data node allows xref:6.0@server:learn:clusters-and-availability/size-limitations.adoc[by default], in Couchbase Data Platform 6.0 and earlier, 
+up to 30,000 concurrent key-value connections per port exposed to the user by the Data Service (ports 11210 and 11207).
+This means that if you are mixing SSL connections (port 11207) and plain connections (port 11210), you can have 30,000 connections on each of these two ports, or up to 60,000 in total.
+If you are using plain (or SSL) _alone_, then the limit is 30,000.
+
+From 6.5 onwards, the default value is 65,000 _connections to the server_ -- with 5000 of these reseved for system use.
+Thus, you can use xref:6.5@server:learn:clusters-and-availability/size-limitations.adoc[60,000 connections] even if you only use one of the two ports (plain or SSL).
+====
 // end::limits[]
