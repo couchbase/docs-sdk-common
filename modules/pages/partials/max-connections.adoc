@@ -7,7 +7,7 @@ up to 30,000 concurrent key-value connections per port exposed to the user by th
 This means that if you are mixing SSL connections (port 11207) and plain connections (port 11210), you can have 30,000 connections on each of these two ports, or up to 60,000 in total.
 If you are using plain (or SSL) _alone_, then the limit is 30,000.
 
-From 6.5 onwards, the default value is 65,000 _connections to the server_ -- with 5000 of these reseved for system use.
-Thus, you can use xref:6.5@server:learn:clusters-and-availability/size-limitations.adoc[60,000 connections] even if you only use one of the two ports (plain or SSL).
+From 6.5 onwards, the default value is 65,000 _connections to the server_ -- with 5000 of these reserved for system use.
+Thus, you can use xref:6.5@server:learn:clusters-and-availability/size-limitations.adoc[60,000 connections] even if you only use_ one_ of the two ports (plain or SSL).
 ====
 // end::limits[]
