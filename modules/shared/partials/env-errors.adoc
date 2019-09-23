@@ -83,7 +83,7 @@ Possible causes are:
 . Congested network.
 . Heavy CPU load on the server.
 . Heavy CPU load on the client.
-. Physical disruption between client and server
+. Physical disruption between client and server.
 
 Applications should generally *not* retry an operation if it resulted in a timeout before performing corrective action and/or analysis to determine the cause of these timeouts.
 
