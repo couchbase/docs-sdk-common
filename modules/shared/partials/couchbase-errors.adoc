@@ -19,7 +19,7 @@ If this error is received when attempting to retrieve a document, then the item 
 If this error is received when replacing a document, then it indicates an issue in the application state (perhaps you can raise an exception up the stack).
 If you do not care that the document exists, the _upsert_ method may be used instead which ignores this case.
 
-If receiving this error when removing an document, it may safely be ignored: not-found on remove essentially means the item is already removed.
+If receiving this error when removing a document, it may safely be ignored: not-found on remove essentially means the item is already removed.
 
 The _Not Found_ error is returned by the server.
 
