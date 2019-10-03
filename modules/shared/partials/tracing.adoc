@@ -31,7 +31,7 @@ http://opentracing.io/[OpenTracing^] is a standardised API to structure tracing 
 
 The threshold tracer receives completed spans and verifies if an operation has exceeded the given threshold for the operation type.
 Operations that exceed the threshold are periodically logged with a total count and a sample of the slowest ones.
-The following are SDK configuration properties.
+The following are SDK configuration properties, also found in the xref:client-settings.adoc#threshold-configuration-settings[Client Settings page] of some SDKs.
 
 .Threshold Logging Tracer Properties
 [#threshold-logging-tracer-ref,cols="3,3,1"]
