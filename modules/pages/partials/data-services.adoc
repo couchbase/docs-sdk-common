@@ -1,7 +1,7 @@
 = Services -- Choosing the Right One
 :nav-title: Services
 :page-topic-type: landing-page
-:page-aliases: choosing-the-right-service
+:page-aliases: choosing-the-right-service,http-services
 
 [abstract]
 Data in the Couchbase Data Platform can be accessed through Key Value (KV) Operations (including the Sub-Document API), the Analytics Service, the Query Service, Full Text Search, or even MapReduce Views: 
@@ -15,7 +15,7 @@ the Couchbase SDKs abstract away many of the differences -- offering consistency
 
 You can follow the links below for more information on the services with the Couchbase SDKs, or read on to see which use case matches which service.
 
-.Couchbase HTTP Services
+.Couchbase Data Services
 * xref:[KV Operations]
 * xref:howtos:subdocument-operations.adoc[Sub-Document API]
 * xref:concept-docs:analytics-for-sdk-users.adoc[Couchbase Analytics Service (CBAS)]
