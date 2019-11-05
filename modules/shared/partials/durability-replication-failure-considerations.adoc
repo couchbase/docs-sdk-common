@@ -55,6 +55,7 @@ While synchronous writes are being attempted, another client cannot write to the
 
 See xref:ref:error-codes.adoc#sync-replication[Synchronous Replication error codes].
 
+[#ambiguity]
 ==== Ambiguity
 
 Synchronous Replication does a great deal to mitigate against network problems, but working in a distributed environment always brings its own class of extra problems to any client-server communication.
@@ -115,13 +116,13 @@ Durability operations may also cause increased network traffic since it is imple
 == Transactions
 
 // This section only in Java for 3.0 β
-// and C++ & .NET for GA
+// and later others...
 
-Couchbase introduced xref:6.5@server:learn:data/distributed-acid-transactions.adoc[distributed, multi-document ACID Transactions], with Couchbase Data Platform 6.5.
+Couchbase introduced xref:6.5@server:introduction:distributed-acid-transactions.adoc[distributed, multi-document ACID Transactions], with Couchbase Data Platform 6.5.
 They are implemented as a separate library -- currently for the Java SDK.
 The following documentation is available:
 
-* xref:6.5@server:learn:data/distributed-acid-transactions.adoc[An introductory guide to how Couchbase ACID Transactions work].
+* xref:6.5@server:introduction:distributed-acid-transactions.adoc[An introductory guide to how Couchbase ACID Transactions work].
 * xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[A HOWTO guide].
 * xref:project-docs:distributed-transactions-java-release-notes.adoc[Transactions Release Notes].
 
