@@ -1,0 +1,176 @@
+= Migration Guide
+
+// tag::intro[]
+
+== Fundamentals
+
+The Couchbase SDK team takes https://semver.org/[semantic versioning] seriously, which means that API should not be broken in incompatible ways while staying on a certain major release.
+This has the benefit that most of the time upgrading the SDK should not cause much trouble, even when switching between minor versions (not just bugfix releases).
+The downside though is that significant improvements to the APIs are very often not possible, save as pure additions -- which eventually lead to overloaded methods.
+
+To support new server releases and prepare the SDK for years to come, we have decided to increase the major version of each SDK and as a result take the opportunity to break APIs where we had to.
+As a result, migration from the previous major version to the new major version will take some time and effort -- an effort to be counterbalanced by improvements to coding time, through the simpler API, and performance.
+The new API is built on years of hands-on experience with the current SDK as well as with a focus on simplicity, correctness, and performance.
+
+Before this guide dives into the language-specific technical component of the migration, it is important to understand the high level changes first.
+As a migration guide, this document assumes you are familiar with the previous generation of the SDK and does not re-introducing SDK 2.0 concepts.
+We recommend familiarizing yourself with the new SDK first by reading at least the xref:hello-world:start-using-sdk.adoc[getting started guide], and browsing through the other chapters a little.
+
+// end::intro[]
+
+
+
+// tag::terms[]
+
+===  Terminology
+
+The concept of a `Cluster` and a `Bucket` remain the same, but a fundamental new layer is introduced into the API: `Collections` and their `Scopes`.
+Collections are logical data containers inside a Couchbase bucket that let you group similar data just like a _Table_ does in a relational database
+-- although documents inside a collection do not need to have the same structure.
+Scopes allow the grouping of collections into a namespace, which is very usfeul when you have multilpe tenants acessing the same bucket.
+Couchbase Server is including support for collections as a xref:6.5@server:developer-preview:preview-mode.adoc[developer preview] in version 6.5
+-- in a future release, it is hoped that collections will become a first class concept of the programming model.
+To prepare for this, the SDKs include the feature from SDK 3.0.
+
+In the previous SDK generation, particularly with the `KeyValue` API, the focus has been on the codified concept of a `Document`.
+Documents were read and written and had a certain structure, including the `id`/`key`, content, expiry (`ttl`), and so forth.
+While the server still operates on the logical concept of documents, we found that this model in practice didn't work so well for client code in certain edge cases.
+As a result we have removed the `Document` class/structure completely from the API.
+The new API follows a clear scheme: each command takes required arguments explicitly, and an option block for all optional values.
+The returned value is always of type `Result`.
+This avoids method overloading bloat in certain languages, and has the added benefit of making it easy to grasp APIs evenly across services.
+
+// end::terms[]
+
+
+
+As an example here is a KeyValue document fetch:
+
+[source,java]
+----
+GetResult getResult = collection.get("key", getOptions().timeout(Duration.ofSeconds(3));
+----
+
+Compare this to a N1QL query:
+
+[source,java]
+----
+QueryResult queryResult = cluster.query("select 1=1", queryOptions().timeout(Duration.ofSeconds(3));
+----
+
+
+// tag::terms2[]
+
+Since documents also fundamentally handled the serialization aspects of content, two new concepts are introduced: the `Serializer` and the `Transcoder`.
+Out of the box the SDKs ship with a JSON serializer which handles the encoding and decoding of JSON.
+You'll find the serializer exposes the options for methods like N1QL queries and KeyValue subdocument operations,.
+
+The KV API extends the concept of the serializer to the `Transcoder`.
+Since you can also store non-JSON data inside a document, the `Transcoder` allows the writing of binary data as well.
+It handles the object/entity encoding and decoding, and if it happens to deal with JSON makes uses of the configured `Serializer` internally.
+See the _Serialization and Transcoding_ section below for details.
+
+// end::terms2[]
+
+
+
+
+// tag::new[]
+
+===  What to look out for
+
+The SDKs are more proactive in retrying with certain errors and in certain situations, within the timeout budget given by the user
+-- as an example, temporary failures or locked documents are now being retried by default
+-- making it even easier to program against certain error cases.
+This behavior is customizable in a `RetryStrategy`, which can be overridden on a per operation basis for maximum flexibility if you need it.
+
+Note, most of the bootstrap sequence is now lazy (happening behind the scenes).
+For example, opening a bucket is not raising an error anymore, but it will only show up once you perform an actual operation.
+The reason behind this is to spare the application developer the work of having to do error handling in more places than needed.
+A bucket can go down 2ms after you opened it, so you have to handle request failures anyway.
+By delaying the error into the operation result itself, there is only one place to do the error handling.
+There will still be situations why you want to check if the resource you are accessing is available before continuing the bootstrap;
+for this, we have the diagnostics and ping commands at each level which allow you to perform those checks eagerly.
+
+// end::new[]
+
+
+// tag::lang[]
+
+==  Language Specifics
+
+Now that you are familiar with the general theme of the migration, the next sections dive deep into the specifics.
+First, installation and configuration are covered, then we talk about exception handling,
+and then each service (i.e. Key/Value, Query,...) is covered separately.
+
+// end::lang[]
+
+
+
+// Outline below for individual SDKs
+
+===  Installation and Configuration
+
+ - where to get the new artifacts / vs old place
+ - discuss new dependencies if needed
+ - discuss configuration old and new, especially if certain
+   custom options are not present anymore (why they are not used)
+   and how users might want to transfer this config over to the
+   new one
+ - discuss cert auth
+ - discuss encryption config
+
+===  Connection Lifecycle
+
+ - discuss bootstrapping
+ - important: bootstrapping is now "lazy" so also discuss how to do the eager
+   checks and any impact it might have on the first op being slow?
+ - discuss shutdown
+ - if external state is passed in optionally, discuss
+   management of this state
+ - discuss the impact of 6.5 "gcccp" and cluster level queries
+ - SASL by default on non-PLAIN (if applicable)
+
+===  Exception Handling
+
+ - discuss new exception hierachy in principle and how users should
+   approach it when migrating
+ - explain maybe new error handling strategies that are in place,
+   around retry strategies especially and their behavior
+
+=== Serialization and Transcoding
+
+ - describe how it works for your language, how to override and any platform-specific
+   encoding and decoding guidelines. 
+ - Also important how to convert from the document types to the new approach
+
+=== Logging and Events
+
+ - discuss any changes to the logging infrastructure or event system if made
+
+===  Migrating Services
+
+ - one section for each service that goes in-depth on each command 
+   and discusses old vs. new
+
+==== Key Value
+
+ - don't forget the get replica changes!
+
+==== Query
+
+==== Analytics
+
+=== Search
+
+ - especial focus, since the API has been reordered quite a bit
+ - if applicable: Change in FTS Geospatial Lat/Lon ordering (i.e. node)
+
+=== Views
+
+ - don't forget that the consistency bit has been renamed, biggest change there
+
+== Management APIs
+
+ - discusses how to migrate from each old management api to the new one
+ - where it is found, what exceptions it throws, etc.
