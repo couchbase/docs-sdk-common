@@ -23,7 +23,7 @@ By default all writes are asynchronous, but levels of durability can be set, to 
 // end::intro[]
 
 // tag::syncrep[]
-== Synchronous Replication
+== Synchronous Writes
 Durability has been enhanced in Couchbase Data Platform 6.5, with xref:6.5@server:learn:data/durability.adoc[Synchronous Replication], 
 under which mutations will not be visible to other clients until they have met their durability requirements.
 These requirements are now enforced on the server side, rather than requiring client logic, which means that this committed durability can now be guaranteed. 
