@@ -33,7 +33,7 @@ If `durabilityLevel()` is used with no argument, the application will report suc
 With Couchbase Server 6.5 and above, the three replication level options are:
 
 * `Majority` -- The server will ensure that the change is available in memory on the majority of configured replicas.
-* `MajorityAndPersistOnMaster` -- Majority level, plus persisted to disk on the master node.
+* `MajorityAndPersistToActive` -- Majority level, plus persisted to disk on the active node.
 * `PersistToMajority` -- Majority level, plus persisted to disk on the majority of configured replicas.
 
 The options are in order of increasing levels of safety.  
@@ -89,7 +89,7 @@ You can control whether you desire the operation to only be propagated to a repl
 
 `PersistTo` receives a value total to the number of nodes that an operation should be persisted.
 The maximum value is the number of replica nodes plus one.
-A value of `1` indicates master-only persistence (and no replica persistence).
+A value of `1` indicates active-only persistence (and no replica persistence).
 
 `ReplicateTo` receives a value total to the number of _replica_ nodes the operation should be replicated.
 Its maximum value is the number of replica nodes.
