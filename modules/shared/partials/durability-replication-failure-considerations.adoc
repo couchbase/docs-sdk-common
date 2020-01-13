@@ -23,8 +23,8 @@ By default all writes are asynchronous, but levels of durability can be set, to 
 // end::intro[]
 
 // tag::syncrep[]
-== Synchronous Writes
-Durability has been enhanced in Couchbase Data Platform 6.5, with xref:6.5@server:learn:data/durability.adoc[Synchronous Replication], 
+== Durable Writes
+Durability has been enhanced in Couchbase Data Platform 6.5, with xref:6.5@server:learn:data/durability.adoc[Durable Writes], 
 under which mutations will not be visible to other clients until they have met their durability requirements.
 These requirements are now enforced on the server side, rather than requiring client logic, which means that this committed durability can now be guaranteed. 
 
@@ -41,11 +41,14 @@ For a given node, waiting for writes to storage is considerably slower than wait
 In particular, `PersistToMajority` will take longer than the other two, and `timeout` value needs to be selected with care -- particularly for large numbers of documents -- after testing on a representative network, with a realistic workload.
 Variation in network speeds and conditions, _inter alia_, make it difficult to give blanket recommendations.
 
+Options for making changes to `kvEndpoints` and `kvDurableTimeout` for Durable Writes can be found on the xref:ref:client-settings.adoc#io-options[Client Settings page].
+Increasing the number of reader and writer threads for Couchbase Server storage _may_ be advantageous: see the discussion on the xref:6.5@server:learn:buckets-memory-and-storage/storage.adoc#threading[Server storage page].
+
 IMPORTANT: 
-Sync Writes must not be made with three replicas. 
+Durable Writes must not be made with three replicas. 
 Attempting this will result in an error message: `DURABILITY_IMPOSSIBLE`.
 
-While synchronous writes are being attempted, another client cannot write to the document concerned 
+While Durable Writes are being attempted, another client cannot write to the document concerned 
 -- see the diagram and explanation xref:6.5@server:learn:data/durability.adoc#process-and-communication[in the Server Durability docs].
 
 
@@ -53,12 +56,12 @@ While synchronous writes are being attempted, another client cannot write to the
 
 === Errors & Exceptions
 
-See xref:ref:error-codes.adoc#sync-replication[Synchronous Replication error codes].
+See xref:ref:error-codes.adoc#durable-writes[Durable Writes error codes].
 
 [#ambiguity]
 ==== Ambiguity
 
-Synchronous Replication does a great deal to mitigate against network problems, but working in a distributed environment always brings its own class of extra problems to any client-server communication.
+Durable Writes do a great deal to mitigate against network problems, but working in a distributed environment always brings its own class of extra problems to any client-server communication.
 
 Consider carefully the case where the client has sent the operation to the server, the server has sent the mutation on to the replica(s), and the replicas have acknowledged completion of their operation(s). Now, at the point where the server is sending the successful status to the client, the network drops. The client is in an ambiguous state, not knowing whether or not the operation was successful.
 
