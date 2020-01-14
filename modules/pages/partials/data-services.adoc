@@ -97,7 +97,7 @@ It’s a powerful and flexible way of querying, retrieving, and updating data, u
 
 === Lowest Latency
 Streaming in a distributed system is complex, and thus we do not make our internal streams and changes feed directly available.
-// Or do we? https://github.com/couchbase/java-dcp-client et al.
+This Open Source https://github.com/couchbase/java-dcp-client[Java DCP client] is _not supported_ in production use (although the curious may wish to inspect the source, for fuller understanding of Couchbase internals).
 However, it is exposed through use of our xref:2.3@spark-connector::index[Spark] or xref:3.4@kafka-connector::index[Kafka] connectors, which give you a high level API to our low level primitives.
 
 
