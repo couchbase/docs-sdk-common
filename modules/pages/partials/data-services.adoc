@@ -16,7 +16,7 @@ the Couchbase SDKs abstract away many of the differences -- offering consistency
 You can follow the links below for more information on the services with the Couchbase SDKs, or read on to see which use case matches which service.
 
 .Couchbase Data Services
-* xref:[KV Operations]
+* xref:howtos:kv-operations.adoc[KV Operations]
 * xref:howtos:subdocument-operations.adoc[Sub-Document API]
 * xref:concept-docs:analytics-for-sdk-users.adoc[Couchbase Analytics Service (CBAS)]
 * xref:concept-docs:n1ql-query.adoc[Query Service]
