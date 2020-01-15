@@ -121,7 +121,7 @@ Durability operations may also cause increased network traffic since it is imple
 // This section only in Java for 3.0 β
 // and later others...
 
-Couchbase introduced xref:6.5@server:introduction:distributed-acid-transactions.adoc[distributed, multi-document ACID Transactions], with Couchbase Data Platform 6.5.
+Couchbase introduced xref:6.5@server:learn:data/transactions.adoc[distributed, multi-document ACID Transactions], with Couchbase Data Platform 6.5.
 They are implemented as a separate library -- currently for the Java SDK.
 The following documentation is available:
 
