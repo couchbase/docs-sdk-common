@@ -100,11 +100,9 @@ for this, we have the diagnostics and ping commands at each level which allow yo
 ==  Language Specifics
 
 Now that you are familiar with the general theme of the migration, the next sections dive deep into the specifics.
-First, installation and configuration are covered, then we talk about exception handling,
-and then each service (i.e. Key/Value, Query,...) is covered separately.
+First, installation and configuration are covered, then we talk about exception handling, and then each service (i.e. Key/Value, Query,...) is covered separately.
 
 // end::lang[]
-
 
 
 // Outline below for individual SDKs

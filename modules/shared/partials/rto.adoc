@@ -1,6 +1,6 @@
+= RTO
 
 // tag::placeholder[]
-
 OpenTelemetry is an Observability Framework, created by the merging of OpenCensus and OpenTracing -- the latter was used in the previous version of the SDK.
 OpenTelemetry is currently in testing, and will be released later in 2020.
 
