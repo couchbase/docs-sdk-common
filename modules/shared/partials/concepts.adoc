@@ -15,7 +15,7 @@ This section contains discussion-style expansions of key Couchbase features, whi
 * xref:errors.adoc[Errors, Exceptions, and Diagnostics]
 ** xref:health-check.adoc[Health Check]
 ** xref:response-time-observability.adoc[Tracing]
-* xref:durability.adoc[Failure Considerations & Durability]
+// * xref:durability.adoc[Failure Considerations & Durability]
 * xref:encryption.adoc[Field Level Encryption]
 * xref:data-services.adoc[Services - choosing the right one]
 ** xref:analytics-for-sdk-users.adoc[Analytics]
