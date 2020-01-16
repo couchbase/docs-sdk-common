@@ -7,8 +7,6 @@
 Data in the Couchbase Data Platform can be accessed through Key Value (KV) Operations (including the Sub-Document API), the Analytics Service, the Query Service, Full Text Search, or even MapReduce Views: 
 how do you pick the right service for your application?
 
-include::partial$beta-warning.adoc[]
-
 Couchbase Data Platform features several services to enable efficient information retrieval at a speed and scale to suit every use case.
 Although each service uses a different API, exposed on a different port, and often addressing different protocols, 
 the Couchbase SDKs abstract away many of the differences -- offering consistency across different language SDKs where it is reasonable to do so.
