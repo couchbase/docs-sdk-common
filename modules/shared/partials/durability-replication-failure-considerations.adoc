@@ -66,7 +66,7 @@ Durable Writes do a great deal to mitigate against network problems, but working
 Consider carefully the case where the client has sent the operation to the server, the server has sent the mutation on to the replica(s), and the replicas have acknowledged completion of their operation(s). Now, at the point where the server is sending the successful status to the client, the network drops. The client is in an ambiguous state, not knowing whether or not the operation was successful.
 
 In cases where the operation is idempotent (such as an upsert operation), then simply retrying is a perfectly acceptable strategy, where the cost of doing so is justified by the importance of the operation.
-Where the operation is an array append, or somesuch, then xref:6.5@server:introduction:distributed-acid-transactions.adoc[distributed, multi-document ACID transactions] should be considered.
+Where the operation is an array append, or somesuch, then xref:6.5@server:learn:data/distributed-acid-transactions.adoc[distributed, multi-document ACID transactions] should be considered.
 
 // end::syncrep[]
 
