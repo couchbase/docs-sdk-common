@@ -1,0 +1,85 @@
+= Errors, Exceptions, and Diagnostics
+:nav-title: Errors & Diagnostics
+:page-topic-type: concept
+:page-aliases: 
+
+[abstract]
+When the unexpected happens.
+
+// tag::exception
+All Couchbase specific exceptions are derived from `CouchbaseException`.
+These unrecoverable errors are left to the application developer to handle -- practical approaches to this are covered in our
+//xref:howtos:error-handling.adoc // don't forget to add back the []
+practical error handling doc.
+All the other Exception types used are part of the JDK, including `IllegalArgumentException`, `TimeoutException` and others.
+// end::exception
+
+// tag::ref
+== Error Reference
+
+Error messages are all listed in our xref:ref:error-codes.adoc[comprehensive SDK error reference] whoch, where appropriate, links to steps to take to correct the error.
+// end::ref
+
+// tag::durability
+== Durable Writes
+
+// shared with
+// https://docs-staging.couchbase.com/server/6.5/learn/data/durability.html#failure-scenarios
+// TODO add this partials include to that page
+
+// tag::durability-failure
+
+A durable write fails in the following situations:
+
+. _Server timeout exceeded_.
+The active node aborts the durable write, instructs all replica nodes also to abort the pending write, and informs the client that the durable write has had an ambiguous result.
+See xref:learn:data/durability.adoc#handling-ambiguous-results[Handling Ambiguous Results], below.
+
+. _Replica node fails while SyncWrite is pending (that is, before the active node can identify whether the node hosted a replica)_.
+If enough alternative replica nodes can be identified, the durable write can proceed.
+Otherwise, the active node waits until a server-side timeout has expired; then aborts the durable write, and duly informs the client that the durable write has had an ambiguous result.
+
+. _Active node fails while SyncWrite is pending_.
+This disconnects the client, which must assume that the result of the durable write has proved ambiguous.
+If the active node is failed over, a replica is promoted from a replica node: depending on how advanced the durable write was at the time of active-node failure, the durable write may proceed.
+
+. _Write while SyncWrite is pending_.
+A client that attempts a durable or an asynchronous write on a key whose value is currently undergoing a durable write receives a `SYNC_WRITE_IN_PROGRESS` message, to indicate that the new write cannot currently proceed.
+The client may retry.
+
+// end::durability-failure
+
+== Handling Ambiguous Results
+
+// tag::handling-ambiguous-results
+Couchbase Server informs the client of an ambiguous result whenever Couchbase Server cannot confirm that an intended commit was successful.
+This situation may be caused by node-failure, network-failure, or timeout.
+
+If a client receives notification of an ambiguous result, and the attempted durable write is _idempotent_, the durable write can be re-attempted.
+If the attempted durable write is _not_ idempotent, the options are:
+
+* Verify the current state of the saved data; and re-attempt the durable write if appropriate.
+
+* Return an error to the user.
+
+// end::handling-ambiguous-results
+
+Further discussion of handling ambiguous results can be found in our xref:concept-docs:durability-replication-failure-considerations.adoc#ambiguity[Durability & Failure discussion].
+
+// end::durability
+
+// tag::diag
+== Health Check
+
+Distributed systems are not easy to debug.
+One cause of errors to try to eliminate, or quickly diagnose to deal with, is those caused by the network.
+Our xref:health-check.adoc[Health Check API] offers status and diagnostics on your cluster's network, and can be used, for example, to diagnose network latencies that are behind timeout errors.
+// end::diag
+
+
+// tag::rto
+== Tracing
+
+// awaiting opentelemetry release
+// end::rto
+
