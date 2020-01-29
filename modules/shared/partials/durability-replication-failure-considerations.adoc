@@ -125,7 +125,7 @@ Couchbase introduced xref:6.5@server:learn:data/transactions.adoc[distributed, m
 They are implemented as a separate library -- currently for the Java SDK.
 The following documentation is available:
 
-* xref:6.5@server:introduction:distributed-acid-transactions.adoc[An introductory guide to how Couchbase ACID Transactions work].
+* xref:6.5@server:learn:data/transactions.adoc[An introductory guide to how Couchbase ACID Transactions work].
 * xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[A HOWTO guide].
 * xref:project-docs:distributed-transactions-java-release-notes.adoc[Transactions Release Notes].
 
