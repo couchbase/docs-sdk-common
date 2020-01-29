@@ -1,33 +1,33 @@
 = Errors, Exceptions, and Diagnostics
 :nav-title: Errors & Diagnostics
 :page-topic-type: concept
-:page-aliases: 
+:page-partial: 
 
 [abstract]
 When the unexpected happens.
 
-// tag::exception
+// tag::exception[]
 All Couchbase specific exceptions are derived from `CouchbaseException`.
 These unrecoverable errors are left to the application developer to handle -- practical approaches to this are covered in our
 //xref:howtos:error-handling.adoc // don't forget to add back the []
 practical error handling doc.
 All the other Exception types used are part of the JDK, including `IllegalArgumentException`, `TimeoutException` and others.
-// end::exception
+// end::exception[]
 
-// tag::ref
+// tag::ref[]
 == Error Reference
 
 Error messages are all listed in our xref:ref:error-codes.adoc[comprehensive SDK error reference] whoch, where appropriate, links to steps to take to correct the error.
-// end::ref
+// end::ref[]
 
-// tag::durability
+// tag::durability[]
 == Durable Writes
 
 // shared with
 // https://docs-staging.couchbase.com/server/6.5/learn/data/durability.html#failure-scenarios
 // TODO add this partials include to that page
 
-// tag::durability-failure
+// tag::durability-failure[]
 
 A durable write fails in the following situations:
 
@@ -47,11 +47,11 @@ If the active node is failed over, a replica is promoted from a replica node: de
 A client that attempts a durable or an asynchronous write on a key whose value is currently undergoing a durable write receives a `SYNC_WRITE_IN_PROGRESS` message, to indicate that the new write cannot currently proceed.
 The client may retry.
 
-// end::durability-failure
+// end::durability-failure[]
 
 == Handling Ambiguous Results
 
-// tag::handling-ambiguous-results
+// tag::handling-ambiguous-results[]
 Couchbase Server informs the client of an ambiguous result whenever Couchbase Server cannot confirm that an intended commit was successful.
 This situation may be caused by node-failure, network-failure, or timeout.
 
@@ -62,24 +62,24 @@ If the attempted durable write is _not_ idempotent, the options are:
 
 * Return an error to the user.
 
-// end::handling-ambiguous-results
+// end::handling-ambiguous-results[]
 
 Further discussion of handling ambiguous results can be found in our xref:concept-docs:durability-replication-failure-considerations.adoc#ambiguity[Durability & Failure discussion].
 
-// end::durability
+// end::durability[]
 
-// tag::diag
+// tag::diag[]
 == Health Check
 
 Distributed systems are not easy to debug.
 One cause of errors to try to eliminate, or quickly diagnose to deal with, is those caused by the network.
 Our xref:health-check.adoc[Health Check API] offers status and diagnostics on your cluster's network, and can be used, for example, to diagnose network latencies that are behind timeout errors.
-// end::diag
+// end::diag[]
 
 
-// tag::rto
+// tag::rto[]
 == Tracing
 
 // awaiting opentelemetry release
-// end::rto
+// end::rto[]
 
