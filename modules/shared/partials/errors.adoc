@@ -12,12 +12,14 @@ These unrecoverable errors are left to the application developer to handle -- pr
 //xref:howtos:error-handling.adoc // don't forget to add back the []
 practical error handling doc.
 All the other Exception types used are part of the JDK, including `IllegalArgumentException`, `TimeoutException` and others.
+
+See our xref:howtos:error-handling.adoc[practical error handling docs] for some of the approaches to take.
 // end::exception[]
 
 // tag::ref[]
 == Error Reference
 
-Error messages are all listed in our xref:ref:error-codes.adoc[comprehensive SDK error reference] whoch, where appropriate, links to steps to take to correct the error.
+Error messages are all listed in our xref:ref:error-codes.adoc[comprehensive SDK error reference] which, where appropriate, links to steps to take to correct the error.
 // end::ref[]
 
 // tag::durability[]
