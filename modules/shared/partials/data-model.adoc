@@ -40,7 +40,7 @@ Adding an item to a dictionary is expressed as `MapAdd`, rather than retrieving 
 * *Efficiency*: Data structure operations do not transfer the entire document across the network.
 Only the relevant data is exchanged between client and server, allowing for less network overhead and lower latency.
 
-NOTE: Besides the [.api]`IBucket` level data structure methods, there is a new namespace called [.api]`Couchbase.Collections` which contains implementations of some of the core interfaces in [.api]`System.Collection.Generics` such as [.api]`ISet<TValue>`, [.api]`IList<TValue>`, [.api]`IDictionary<Tkey, TValue>` and a [.api]`CouchbaseQueue` class.
+NOTE: Besides the `IBucket` level data structure methods, there is a new namespace called `Couchbase.Collections` which contains implementations of some of the core interfaces in `System.Collection.Generics` such as `ISet<TValue>`, `IList<TValue>`, `IDictionary<Tkey, TValue>` and a `CouchbaseQueue` class.
 See section <<couchbase-collections,The Couchbase.Collections Namespace>> below for more details.
 
 // end::structures[]
