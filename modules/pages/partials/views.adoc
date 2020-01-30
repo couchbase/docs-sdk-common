@@ -1,0 +1,93 @@
+= MapReduce Views
+:navtitle: MapReduce Views
+:page-topic-type: concept
+:page-aliases: ROOT:managing-views,
+
+[abstract]
+You can use MapReduce views to create queryable indexes in Couchbase Server.
+
+// may be out of date - needs some re-working
+
+WARNING: Although still maintained and supported for legacy use, Views date from the earliest days of Couchbase Server development, and as such are rarely the best choice over, say, xref:n1ql-query.adoc[our Query service] for your application, see xref:data-services.adoc[our guide to choosing the right service].
+
+= MapReduce Views
+
+Views are stored in design documents.
+The SDK provides convenient methods to create, retrieve, and remove design documents.
+To set up views, you create design documents that contain one or more view definitions, and then insert the design documents into a bucket.
+
+// In the SDKs, design documents are represented by the `DesignDocument` class `View` interface.
+// All operations on design documents are performed on a `BucketManager` instance.
+
+
+== Creating design documents
+
+Each view in a design document is represented by a name and a set of MapReduce functions.
+The mandatory map function describes how to select and transform the data from the bucket, and the optional reduce function describes how to aggregate the results.
+////
+The following example inserts a design document with two regular views and one spatial view into a bucket named `travel-sample`:
+
+[source,java]
+----
+CouchbaseCluster cluster = CouchbaseCluster.create("127.0.0.1");
+Bucket bucket = cluster.openBucket("travel-sample");
+// Get bucket manager
+BucketManager bucketManager = bucket.bucketManager();
+
+// Initialize design document
+DesignDocument designDoc = DesignDocument.create(
+	"landmarks",
+	Arrays.asList(
+		DefaultView.create("by_country",
+			"function (doc, meta) { if (doc.type == 'landmark') { emit([doc.country, doc.city], null); } }"),
+		DefaultView.create("by_activity",
+			"function (doc, meta) { if (doc.type == 'landmark') { emit(doc.activity, null); } }",
+			"_count"),
+		SpatialView.create("by_coordinates",
+			"function (doc, meta) { if (doc.type == 'landmark') { emit([doc.geo.lon, doc.geo.lat], null); } }")
+	)
+);
+
+// Insert design document into the bucket
+bucketManager.insertDesignDocument(designDoc);
+----
+
+When you initialize the design document, you can also specify how often to trigger indexing on documents and replicas.
+The following table lists the available options:
+
+.`DesignDocument.create()` method `options` parameter
+|===
+| Option | Description
+
+| `UPDATE_MIN_CHANGES`
+| The minimum changes to perform on a design document before indexing is triggered.
+
+| `REPLICA_UPDATE_MIN_CHANGES`
+| The minimum changes to perform on a design document before replica indexing is triggered.
+|===
+
+By default, the `insertDesignDocument()` method publishes the design document into production mode, which means that all documents in the distributed bucket are indexed.
+Alternatively, you can create a lightweight development view by using `bucketManager.insertDesignDocument(designDoc, true)`, where the additional Boolean parameter specifies that you want the design document put into development mode.
+////
+
+== Retrieving design documents
+
+To inspect design documents, you can either retrieve them by name or iterate through a list of documents.
+
+////
+The following example shows both approaches:
+
+[source,java]
+----
+// Get design document by name
+DesignDocument designDoc = bucketManager.getDesignDocument("landmarks");
+System.out.println(designDoc.name() + " has " + designDoc.views().size() + " views");
+
+// Iterate over all production design documents
+List<DesignDocument> designDocs = bucketManager.getDesignDocuments();
+System.out.println("bucket 'travel-sample' has " + designDocs.size() + " design documents:");
+for (DesignDocument doc : designDocs) {
+	System.out.println(doc.name() + " has " + doc.views().size() + " views");
+}
+----
+////
