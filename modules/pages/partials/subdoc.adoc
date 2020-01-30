@@ -1,0 +1,62 @@
+= Sub-Document API
+:page-topic-type: concept
+include::partial$attributes.adoc[]
+:nav-title: Sub-Doc
+:page-aliases: 
+
+[abstract]
+High performance Sub-Document API for more efficient use of network bandwidth than fetching entire documents.
+
+Sub-Document operations may be quicker and more network-efficient than _full-document_ operations such as _upsert_, _replace_ and _get_ because they only transmit the accessed sections of the document over the network.
+
+Sub-Document operations are also atomic, in that if one Sub-Document mutation fails then all will, allowing safe modifications to documents with built-in concurrency control.
+
+== Sub-Documents
+
+While full-document retrievals retrieve the entire document and full document updates require sending the entire document, Sub-Document retrievals only retrieve relevant parts of a document and Sub-Document updates only require sending the updated portions of a document.
+
+You should use Sub-Document operations when you are modifying only portions of a document, and full-document operations when the contents of a document is to change significantly.
+
+IMPORTANT: The Sub-Document operations described on this page are for _Key-Value_ requests only: they are not related to Sub-Document N1QL queries.
+(Sub-Document N1QL queries are explained in the section xref:howtos:n1ql-queries-with-sdk.adoc[Querying with N1QL].)
+
+In order to use Sub-Document operations you need to specify a _path_ indicating the location of the Sub-Document.
+The _path_ follows <<Path syntax,N1QL syntax>>.
+Considering the document:
+
+.customer123.json
+[source,json]
+----
+{
+  "name": "Douglas Reynholm",
+  "email": "douglas@reynholmindustries.com",
+  "addresses": {
+    "billing": {
+      "line1": "123 Any Street",
+      "line2": "Anytown",
+      "country": "United Kingdom"
+    },
+    "delivery": {
+      "line1": "123 Any Street",
+      "line2": "Anytown",
+      "country": "United Kingdom"
+    }
+  },
+  "purchases": {
+    "complete": [
+      339, 976, 442, 666
+    ],
+    "abandoned": [
+      157, 42, 999
+    ]
+  }
+}
+----
+
+The paths `name`, `addresses.billing.country` and `purchases.complete[0]` are all valid paths.
+
+
+== Sub-Doc form the SDK
+
+The Subdocument APIs is exposed through two separate builders which are available through two top-level Collection methods `LookupIn` and `MutateIn`. 
+The object returned, and how to work with it, is extensively documented in our xref:howtos:subdocument-operations.adoc[practical uide to using Sub_Doc from the SDK].
