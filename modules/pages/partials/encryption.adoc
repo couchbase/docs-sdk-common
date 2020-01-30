@@ -18,7 +18,7 @@ This is a client-side implementation, with key management and initialization of 
 [#algorithm]
 == Algorithm and Key Store
 
-In Couchbase Data Platform 5.5, AES-256, AES-128, and RSA are all supported.
+In Couchbase Data Platform 5.5 and up, AES-256, AES-128, and RSA are all supported.
 Native Keystores (including Java Key Store and Windows Certificate Store) are supported, as well as an in-memory keystore for development and testing.
 More options for key stores and encryption algorithms may appear in future SDK releases.
 
