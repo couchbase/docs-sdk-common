@@ -19,7 +19,7 @@ A full overview of Full Text Search is provided in xref:{version-server}@server:
 This includes information on the principal features of Couchbase Full Text Search, its architecture, and the latest feature-additions.
 Other information-sources include:
 
-* xref:{version-server}@server:fts:fts-performing-searches.adoc[Performing Searches]: An explanation of the steps required to prepare for and perform Full Text Search.
+* xref:6.5@server:fts:fts-performing-searches.adoc[Performing Searches]: An explanation of the steps required to prepare for and perform Full Text Search.
 * xref:6.5@server:fts:fts-searching-from-the-ui.adoc[Searching from the UI]: A brief introduction to the Full Text Search user interface provided by the Couchbase Web Console, with a step-by-step example of how to create a simple Full Text Index, and perform a search on it.
 * xref:6.5@server:fts:fts-searching-with-the-rest-api.adoc[Searching with the REST API]: Basic examples of how Full Text Search is performed with REST, and pointers to more complex examples.
 * xref:6.5@server:fts:fts-creating-indexes.adoc[Creating Indexes]: A full description of the index-creation facility provided by the Couchbase Web Console, with explanations of each component to be used, and illustrations of how indexes can be designed to include specific subsets of documents and their fields.
