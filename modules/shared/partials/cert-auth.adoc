@@ -1,0 +1,9 @@
+= Certificate Authentication
+
+
+
+// howto common files
+
+// tag::[]
+
+// end::[]

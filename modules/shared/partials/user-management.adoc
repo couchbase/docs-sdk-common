@@ -1,0 +1,128 @@
+= User Management
+:page-partial:
+
+[abstract]
+The SDK now lets you create _users_, assign them _roles_ and associated _privileges_, and remove them from the system.
+
+// concept-docs common files
+
+
+
+[#users_resources_roles_and_privileges]
+// tag::users_resources_roles_and_privileges[]
+Access to Couchbase clusters for SDK users is controlled by 
+
+== Users, Resources, Roles, and Privileges
+
+Couchbase Server  introduces for applications.
+Resources on a Couchbase cluster can only be accessed by an identified _user_, using _Role-Based Access Control_, commonly referred to as RBAC. 
+This was introduced back in Couchbase Server 5.0 Enterprise Edition, and is a feature of all currently supported editions of Couchbase.
+
+Each user who attempts resource-access is identified by means of the _credentials_ they pass to Couchbase Server, for purposes of _authentication_: these consist of a _username_ and (typically) a _password_.
+Once the user is authenticated, an _authorization_ process checks the _roles_ with which the user is associated.
+If one or more of these roles correspond to _privileges_ that permit the user-requested level of resource-access, access is duly granted; otherwise, it is denied.
+
+Users who have been assigned the *Admin* role for the cluster are able to create, edit, and remove users.
+The SDK provides APIs to support these activities.
+// end::users_resources_roles_and_privileges[]
+
+[#creating_a_user]
+// tag::creating_a_user[]
+== Creating a User
+
+Let's start with creating a user:
+
+include::partial$usr-mgmnt.adoc[tag=upsert]
+
+The method *upsertUser* creates a user and adds the user to the Couchbase Cluster.
+The user will subsequently be visible in the *Security* panel of the Couchbase Web Console.
+Note that successful user-addition results in a user _locally_ defined, with _username_ and _password_ stored on Couchbase Server: _external_ users (whose credentials reside on a network-available server, possibly accessed by means of LDAP) cannot be created by this SDK method.
+If the local user created by *upsertUser* already exists, the previous definition is overwritten.
+
+The method takes two arguments.
+The first, a _String_ is the user ID of the user to be created: for example, `annsmith0325`, or `user734`.
+This must be specified.
+
+The second is a _UserSettings_ object.
+This takes the following form:
+
+include::partial$usr-mgmnt.adoc[tag=user-settings]
+
+The object contains three data-members.
+The first is a _String_ that specifies the user's password: this must be provided.
+The second is a _String_ that specifies the user's name (for example, `Ann Smith`): this is optional, and so may be omitted.
+The third is an array of _Role_ objects: this must be specified.
+Each _Role_ object takes the following form:
+
+include::partial$usr-mgmnt.adoc[tag=role-object]
+
+
+The object's two data-members are both _Strings_, and must both be specified.
+The _String_ specified as the role must correspond to a role supported by Couchbase Server.
+The _String_ specified as the bucket_name must either correspond to a bucket currently defined on Couchbase Server; or be the asterisk character (_*_), meaning _all buckets_.
+
+The method returns a _boolean_, which is `true` if the operation is successful, otherwise `false`.
+// end::creating_a_user[]
+
+[#listing_users]
+// tag::listing_users[]
+
+
+== Listing Users
+
+The basic form of the method used to return currently defined users is as follows:
+
+include::partial$usr-mgmnt.adoc[tag=list]
+
+The method returns a list of _User_ objects, each of which takes the following form:
+
+include::partial$usr-mgmnt.adoc[tag=object]
+
+The name is the full name of the user.
+The id is the user's ID.
+The domain is either `local` or `external`.
+Each Role object in the Role-array has the form already described above, in _Creating a User_.
+// end::listing_users[]
+
+[#getting_a_user]
+// tag::getting_a_user[]
+== Getting a User
+
+The basic form of the method used to return an already defined user is as follows:
+
+include::partial$usr-mgmnt.adoc[tag=get]
+
+The method returns a _User_ object, which takes the following form:
+
+include::partial$usr-mgmnt.adoc[tag=return]
+
+
+The name is the full name of the user.
+The id is the user's ID.
+The domain is either `local` or `external`.
+Each Role object in the Role-array has the form described above, in _Creating a User_.
+// end::getting_a_user[]
+
+[#removing_a_user]
+// tag::removing_a_user[]
+== Removing a User
+
+The basic form of the method used to remove users is as follows:
+
+include::partial$usr-mgmnt.adoc[tag=remove]
+
+The method's sole argument is the id of the user to be removed from the system, specified as a _String_.
+The method returns a _boolean_, whose value is `true` if the operation is successful, otherwise `false`.
+// end::removing_a_user[]
+
+
+// tag::rbac[]
+== Further Reading
+
+All aspects of the Couchbase RBAC system are covered in the section xref:6.5@server:learn:security/authorization-overview.adoc[Authorization].
+Specifically, for information on:
+
+* Adding _Users_ and assigning _roles_, by means of the Couchbase Web Console, see xref:6.5@server:manage:manage-security/manage-users-and-roles.adoc[Manage Users and Roles].
+* _Roles_ required for resource-access, and the privileges they entail, see xref:6.5@server:learn:security/roles.adoc[Roles].
+* _Resources_ controlled by Couchbase RBAC, see xref:6.5@server:learn:security/resources-under-access-control.adoc[Resources Under Access Control].
+// end::rbac[]

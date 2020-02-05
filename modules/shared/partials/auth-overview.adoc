@@ -1,0 +1,35 @@
+= User Authentication
+
+
+
+// concept-docs common files
+
+
+
+
+// tag::[]
+
+// end::[]
+
+
+
+// tag::[]
+== Certificate-Based Authentication
+
+Couchbase Server supports the use of X.509 certificates to authenticate clients (only available in the Enterprise Edition, not the Community Edition).
+This allows authenticated users to access specific resources by means of the data service, in Couchbase Server 5.1 and up, and all other services, from version 5.5 of the Couchbase Data Platform.
+
+The process relies on a certificate authority, for the issuing of certificates that validate identities.
+A certificate includes information such as the name of the entity it identifies, an expiration date, the name of the authority that issued the certificate, and the digital signature of the authority.
+A client attempting to access Couchbase Server can present a certificate to the server, allowing the server to check the validity of the certificate.
+If the certificate is valid, the user under whose identity the client is running, and the roles assigned that user, are verified.
+If the assigned roles are appropriate for the level of access requested to the specified resource, access is granted.
+
+Note that this means that the explicit authentication process otherwise required by Couchbase _Role-Based Access Control_ — whereby, in Java, username and password are passed by means of the `authenticate` method on the `Cluster` object — must not be used (instead the _CertAuthenticator_ is passed in).
+(See xref:start-using-sdk.adoc[Start Using the SDK] for an example of such standard authentication.)
+
+For a more detailed conceptual description of using certificates, see xref:6.0@server:learn:security/certificates.adoc[Certificates].
+
+For sample procedures whereby certificates can be generated and deployed, see xref:6.0@server:manage:manage-security/manage-certificates.adoc[Manage Certificates].
+Note that this section includes the steps whereby a Java keystore is created, to enable certificate-based authentication by a Java client.
+// end::[]

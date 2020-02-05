@@ -1,0 +1,28 @@
+= User Management
+
+
+// howto common files
+
+// tag::[create-role]
+The full range of users, resources, roles, and privileges exposed in our User Management API is discussed in our xref:concept-docs:sdk-user-management.adoc[discussion document], on the subject, which gives a high-level overview of the API.
+
+Users who have been assigned the *Admin* role for the cluster are able to create, edit, and remove users.
+Here we set out brief examples to get you up and running quickly.
+
+
+== Creating Roles
+
+The following code-example demonstrates how the user-management APIs can be used.
+It assumes that Couchbase Server is established on `localhost`; that the Full Administrator username and password are `Administrator` and `password` respectively; and that the `travel-sample` bucket is installed.
+For information on installing the `travel-sample` bucket, see xref:6.5@server:manage:manage-settings/install-sample-buckets.adoc[Sample Buckets].
+
+[IMPORTANT]
+====
+Use of the Full Administrator username and password gives an application complete access to all resources within the Couchbase Server-environment: use of the Full Administrator username and password may therefore be useful during code-development.
+
+However, for production purposes, the Full Administrator username and password should only be used when absolutely essential: in all other circumstances, the specified username and password should correspond to some lesser role, which appropriately delimits access to server-resources.
+====
+
+Creation of such a role, and the establishment of its associated username and password, is demonstrated in the following code-example.
+// end::[create-role]
+
