@@ -177,6 +177,7 @@ For example, if a document represents a user, and the application is simply upda
 (like an email field), the method to update this information may look like this:
 // end::errors[]
 
+// code sample follows errors section in each SDK's page.
 
 // tag::performance[]
 == Performance considerations
