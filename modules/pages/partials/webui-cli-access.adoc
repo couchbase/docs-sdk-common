@@ -46,7 +46,7 @@ brew install libcouchbase
 ----
 
 NOTE: The `cbc` tool is part of the C SDK.
-Refer to xref:c-sdk::start-using-sdk.adoc[C SDK] for other installation options.
+Refer to xref:2.10@c-sdk::start-using-sdk.adoc[C SDK] for other installation options.
 
 == Using the command-line KV client
 
