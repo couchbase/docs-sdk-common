@@ -26,7 +26,7 @@ Nevertheless if your application requires a non-JSON format, the SDK may still s
 If there is no native support for your format, you can write a _transcoder_ which handles the encoding and decoding of your documents to and from the server.
 
 [#devguide_nonjson_itmflags]
-== Item flags
+== Common flags
 
 Every item (record) in Couchbase contains metadata stored along with it in the server.
 One of the metadata fields is a 32 bit "flag" value.
