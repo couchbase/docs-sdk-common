@@ -1,0 +1,51 @@
+= About these Docs
+:page-topic-type: reference
+
+[abstract]
+handy information to help you get the most from the Couchbase SDK docs.
+
+This SDK documentation set is split by document type, to make navigation more easy. 
+Look to the navigation in the left-hand side of the page, and you will see the following headers:
+
+* Getting Staerted
+* Working With Data
+* Advanced Data Operations
+* Managing Couchbase
+* Errors & Diagnostics
+* Learn
+* Reference
+* Project Docs
+
+The first section, _Getting Started_, contains a general guide to installing the SDK, connecting to a cluster, and performing simple operations on the database.
+It also contains an introduction to our Travel Sample Application, which introduces our SQL-like querying language, N1QL, as well as fuzzy search.
+
+== HOWTOs and more
+
+The next four sections are composed entirely of HOWTO style docs, giving you a practical introduction to working with the SDKs, and containing useful snippets of code which can also be found in complete form over at [https://github.com/couchbaselabs/sdk-examples].
+_Working With Data_ covers using the main HTTP Services offered by the Couchbase Data Platform, whilst the other three HOWTO sections group together, respectively, more advanced operations, working with the management interfaces, and dealing with problems.
+
+Longer discussions of various features are found in the _Learn_ section, a complete reading of which may help those programmers who like to see"the whole picture" before diving into a project, but which, for others, are reachable as needed by rich links direct from the various HOWTO guides.
+
+After the pure reference section, comes the section that you are in now: _Project Docs_.
+This groups together all of the docs that sit outside the _software_ docs, being not about directly working with the software, but information about the _project_ itself, such as release notes, licenses, and tables of compatibility,
+
+== Getting the Most Out
+
+There are currently eight different SDKs, which can be selected individually from the top navigation bar's dropdown component selector, or from the xref:6.5@server:sdk:overview.adoc[SDK landing page].
+If the navigation doesn't show you what you need to dive straight in and learn, use the search bar at the top right of this and every other page.
+
+You can also navigate between SDKs, or different versions of the same SDK, staying on the same topic page -- by using the dropdown component selection.
+On the rare occasions where this does not work, select the SDK and version you want, and then navigate to the page.
+
+== Helping us to help you
+
+Few sets of software documentation are perfect, and here at Couchbase we document a fast-moving target.
+Nevertheless, we want them to be as accurate as possible, and we welcome and encourage reports of any bug in the docs.
+An orange *Feedback?* button at the bottom-right of each page pops up a quick form which will enable you to report any problems in the docs.
+Note that this feeds directly into our https://issues.couchbase.com/projects/DOC/issues/[issue tracker], so please be sure to fill out all three fields (_Summary_, _Description_, and _Page URL_) to ensure that the problem can be properly tracked.
+
+////
+The SDK docs are all stored in GitHub, with the YYY SDK at [https://github.com/couchbase/docs-sdk-java] and some shared files in [https://github.com/couchbase/docs-sdk-common].
+Pull Requests are welcome.
+The docs are written using asciidoc markup, and more information can be found in the https://docs.couchbase.com/home/contribute/index.html[Improve the Docs] section.
+////

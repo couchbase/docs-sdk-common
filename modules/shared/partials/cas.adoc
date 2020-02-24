@@ -1,0 +1,244 @@
+= Concurrent Document Mutations
+:page-topic-type: howto
+
+// tag::intro[]
+[abstract]
+You can use the CAS value to control how concurrent document modifications are handled.
+It helps avoid and control potential race conditions in which some mutations may be inadvertently
+lost or overridden by mutations made by other clients.
+
+The [.term]_CAS_ is a value representing the current state of an item.
+Each time the item is modified, its CAS changes.
+
+The CAS value itself is returned as part of a document’s metadata whenever a document is accessed.
+In the SDK, this is presented as the `cas` field in the result object from any operation which executes successfully.
+
+CAS is an acronym for _Compare And Swap_, and is known as a form of optimistic locking.
+The CAS can be supplied as parameters to the _replace_ and _remove_ operations.
+When applications provide the CAS, server will check the application-provided version of CAS against the CAS of the document on the server:
+
+* If the two CAS values match (they compare successfully), then the mutation operation succeeds.
+* If the two CAS values differ, then the mutation operation fails.
+
+CAS, on the server-side might be implemented along these lines (pseudocode):
+
+[source,c]
+----
+uint Replace(string docid, object newvalue, uint oldCas=0) {
+    object existing = this.kvStore.get(docid);
+    if (!existing) {
+        throw DocumentDoesNotExist();
+    } else if (oldCas != 0 && oldCas != existing.cas) {
+        throw CasMismatch();
+    }
+    uint newCas = ++existing.cas;
+    existing.value = newValue;
+    return newCas;
+}
+----
+// end::intro[]
+
+
+// tag::demo[]
+== Demonstration
+
+The following demonstrates how the server handles CAS.
+A use case for employing the CAS is when adding a new field to an existing document.
+At the application level, this requires the following steps:
+
+. Read entire document.
+. Perform modification locally.
+. Store new document to server.
+
+Assume the following two blocks of code are executing concurrently in different application instances:
+
+.CAS flow
+|===
+| Thread #1 | Thread #2
+
+a|
+....
+>>> result = cb1.get('docid')
+>>> new_doc = result.value
+>>> new_doc['field1'] = 'value1'
+>>> cb1.replace('docid', new_doc)
+....
+a|
+....
+>>> result = cb2.get('docid')
+>>> new_doc = result.value
+>>> new_doc['field2'] = 'value2'
+>>> cb2.replace('docid', new_doc)
+....
+|===
+
+Retrieving the document again yields:
+
+[source,python]
+----
+>>> cb1.get('docid').value
+{u'field2': u'value2', u'a_field': u'a_value'}
+----
+
+Note that `field1` is not present, even though the application inserted it into the document.
+The reason is because the replace on Thread #2 happened to run after the replace on Thread #1, however Thread #1’s replace was executed after Thread #2’s get: Since the local version of the document on Thread #2 did not contain field1 (because Thread #1’s update was not stored on the server yet), by executing the replace, it essentially overrode the replace performed by Thread #1.
+
+[cols="1,4"]
+|===
+| 1
+| (#2): `new_doc = get("docid").value`
+
+| 2
+| (#1): `new_doc = get("docid").value`
+
+| 3
+| (#1): `new_doc["field1"] = "value1"`
+
+| 4
+| (#2): `new_doc["field2"] = "value2"`
+
+| 5
+| (#1): `cb.replace("docid", new_doc)`
+
+| 6
+| (#2): `cb.replace("docid", new_doc)`
+|===
+// end::demo[]
+
+
+// tag::example[]
+== Using CAS - Example
+
+In the prior example, we saw that concurrent updates to the same document may result in some updates being lost.
+This is not because Couchbase itself has lost the updates, but because the application was unaware of newer changes made to the document and inadvertently overwrote them.
+
+.CAS flow
+|===
+| |
+
+a|
+....
+>>> result = cb1.get('docid')
+>>> new_doc = result.value
+>>> print new_doc
+{u'a_field': u'a_value'}
+>>> cur_cas = result.cas
+>>> print cur_cas
+272002471883283
+>>> new_doc['field1'] = 'value1'
+>>> new_result = cb1.replace(
+       'docid',
+       new_doc,
+       cas=cur_cas)
+....
+
+NOTE: Server's CAS matches `cur_cas`.
+New CAS assigned
+
+....
+>>> print new_result.cas
+195896137937427
+....
+a|
+....
+>>> result = cb2.get('docid')
+>>> new_doc = result.value
+>>> print new_doc
+{u'a_field': u'a_value'}
+>>> cur_cas = result.cas
+>>> print cur_cas
+272002471883283
+>>> new_doc['field2'] = 'value2'
+>>> new_result = cb2.replace(
+       'docid',
+       new_doc,
+       cas=cur_cas)
+....
+
+WARNING: CAS on server differs: `195896137937427` vs `272002471883283`!
+|===
+// end::example[]
+
+
+// tag::errors[]
+== Handling CAS errors
+
+If the item’s CAS has changed since the last operation performed by the current client (i.e.
+the document has been changed by another client), the CAS used by the application is considered _stale_.
+If a _stale_ CAS is sent to the server (via one of the mutation commands, as above), the server will reply
+with an error, and the Couchbase SDK will accordingly return this error to the application (either via return
+code or exception, depending on the language).
+
+How to handle this error depends on the application logic.
+If the application wishes to simply insert a new property within the document (which is not dependent on other
+properties within the document), then it may simply retry the read-update cycle by retrieving the item (and
+thus getting the new CAS), performing the local modification and then uploading the change to the server.
+For example, if a document represents a user, and the application is simply updating a user’s information
+(like an email field), the method to update this information may look like this:
+// end::errors[]
+
+
+// tag::performance[]
+== Performance considerations
+
+CAS operations incur no additional overhead.
+CAS values are always returned from the server for each operation.
+Comparing CAS at the server involves a simple integer comparison which incurs no overhead.
+// end::performance[]
+
+
+// tag::format[]
+== CAS value format
+
+The CAS value should be treated as an opaque object at the application level.
+No assumptions should be made with respect to how the value is changed (for example, it is wrong to assume that it is a simple counter value).
+In the SDK, the CAS is represented as a 64 bit integer for efficient copying but should otherwise be treated as an opaque 8 byte buffer.
+// end::format[]
+
+// tag::locking[]
+== Pessimistic locking
+
+While CAS is the recommended way to perform locking and concurrency control, Couchbase also offers explicit _locking_.
+When a document is locked, attempts to mutate it without supplying the correct CAS will fail.
+
+Documents can be locked using the _get-and-lock_ operation and unlocked either explicitly using the _unlock_ operation or implicitly by mutating
+the document with a valid CAS. While a document is locked, it may be retrieved but not modified without using the correct CAS value.
+When a locked document is retrieved, the server will return an invalid CAS value, preventing mutations of that document.
+
+This handy table shows various behaviors while an item is locked:
+
+.Behavior of various operations on a locked item
+|===
+| Operation | Result
+
+| _get-and-lock_
+| Locked error.
+
+| _get_
+| Always succeeds, but with an invalid CAS value returned (so it cannot be used as an input to subsequent mutations).
+
+| _unlock_ with bad/missing CAS value
+| Locked error.
+
+| _unlock_ with correct CAS
+| Item is unlocked.
+It can now be locked again and/or accessed as usual.
+
+| Mutate with bad/missing CAS value
+| CasMismatch error.
+
+| Mutate with correct CAS value
+| Mutation is performed and item is unlocked.
+It can now be locked again and/or accessed as usual.
+|===
+
+A document can be locked for a maximum of 15 seconds, after which the server will unlock it.
+This is to prevent misbehaving applications from blocking access to documents inadvertently.
+You can modify the time the lock is held for (though it can be no longer than 15 seconds).
+
+Be sure to keep note of the _cas_ value when locking a document.
+You will need it when unlocking or mutating the document.
+The following blocks show how to use [.api]`lock` and [.api]`unlock` operations.
+// end::locking[]
+
+
