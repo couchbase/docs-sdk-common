@@ -18,7 +18,8 @@ If you have yet to install Couchbase Server in your development environment, xre
 
 Then load up the Travel Sample Bucket, using either the xref:6.5@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-ui[Web interface] 
 or the xref:6.5@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-cli[command line].
-You will also need to xref:6.5@server:fts:fts-searching-from-the-ui.adoc#create-an-index[create a Search Index] -- Query indexes are taken care of by the Sample Bucket.
+You will also need to xref:6.5@server:fts:fts-searching-from-the-ui.adoc#create-an-index[create a Search Index] called `hotels`, for all documents of type `hotel`.
+Query indexes are taken care of by the Sample Bucket.
 // end::prereq[]
 
 
