@@ -67,7 +67,7 @@ When storing items, with each key being approximately 10 bytes long and each val
  ** 4000 (Value)
  ** 24 (Memcached Packet)
  ** Total: 4034.
-. Divide 1 megabyte by the total size of an operation:
+. Divide 1 mebibyte by the total size of an operation:
  ** 1048576 / 4034
  ** Batch Size: 259
 
@@ -78,9 +78,9 @@ Assuming an average key size of 5 and an average value size of 50:
  ** 5 (Key)
  ** 50 (value)
  ** 24 (Packet)
- ** Total: 74
-. Divide 1 megabyte by the total size of an operation:
- ** Batch Size: 14169
+ ** Total: 79
+. Divide 1 mebibyte by the total size of an operation:
+ ** Batch Size: 13,273
 
 == Batching operations using SDK
 
