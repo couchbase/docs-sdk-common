@@ -15,7 +15,7 @@ _Full Text Search_ provides extensive capabilities for _natural-language queryin
 Results can be _scored_, to indicate match-relevancy; and result-sets ordered correspondingly.
 _Conjunctive_ and _disjunctive_ searches can be performed, whereby common result-subsets from multiple queries can either be returned or omitted.
 
-A full overview of Full Text Search is provided in xref:{version-server}@server:fts:full-text-intro.adoc[Full Text Search: Fundamentals].
+A full overview of Full Text Search is provided in xref:6.5@server:fts:full-text-intro.adoc[Full Text Search: Fundamentals].
 This includes information on the principal features of Couchbase Full Text Search, its architecture, and the latest feature-additions.
 Other information-sources include:
 
