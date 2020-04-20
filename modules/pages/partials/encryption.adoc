@@ -6,6 +6,11 @@ include::partial$attributes.adoc[]
 [abstract]
 Fields within a document can be securely encrypted by the SDK, to support FIPS-140-2 compliance.
 
+
+Client-side implementation of Field Level Encryption is available in the previous version of the SDK.
+It will be enabled in a future release of the third generation SDK.
+
+////
 [#architecture]
 == Overview
 
@@ -107,3 +112,4 @@ For example, for AES-HMAC-SHA256 the entire temporary field is signed; if any ch
 
 Field Level Encryption for all SDKs is a separate package from the Couchbase SDK itself; the APIs are extensions of the SDK, but the SDK does not have a dependency on FLE.
 This means you can install the relevant SDK without being dependent upon a suite of crypto libraries.
+////
