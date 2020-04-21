@@ -33,3 +33,14 @@ For a more detailed conceptual description of using certificates, see xref:6.5@s
 // end::cert-auth[]
 
 
+// tag::ldap[]
+== LDAP
+
+If you are on a network where access is controlled by LDAP, the SDK will work transparently with it.
+Please pay attention to the following important note on secure connection.
+
+[IMPORTANT]
+If LDAP is enabled, Couchbase Server will only allow PLAIN sasl authentication which by default, for good security, the SDK will not allow.
+Although this can be overridden in a development environment, by explicitly enabling PLAIN in the password authenticator, _the secure solution_ is xref:managing-connections.adoc#ssl[to use TLS].
+
+// end::ldap[]
