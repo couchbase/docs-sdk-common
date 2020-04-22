@@ -40,7 +40,7 @@ If you are on a network where access is controlled by LDAP, the SDK will work tr
 Please pay attention to the following important note on secure connection.
 
 [IMPORTANT]
-If LDAP is enabled, Couchbase Server will only allow PLAIN sasl authentication which by default, for good security, the SDK will not allow.
+If xref:6.5@server:manage:manage-security/configure-ldap.adoc#understanding-ldap-authentication[LDAP] is enabled, Couchbase Server will only allow PLAIN sasl authentication which by default, for good security, the SDK will not allow.
 Although this can be overridden in a development environment, by explicitly enabling PLAIN in the password authenticator, _the secure solution_ is xref:managing-connections.adoc#ssl[to use TLS].
 
 // end::ldap[]
