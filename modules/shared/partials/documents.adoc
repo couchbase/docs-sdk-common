@@ -417,6 +417,13 @@ Should this be the case, the document TTL may be reduced, and the document may b
 // end::expiration[]
 
 
+// tag::exp-note[]
+NOTE: If the absolute value of the expiry is less than 30 days (such as `60 * 60 * 24 * 30`), it is considered an _offset_.
+If the value is greater, it is considered an _absolute time stamp_.
+For more on expiration see the xref:concept-docs:documents.adoc#setting-document-expiration[expiration section] of our documents discussion doc.
+// end::exp-note[]
+
+
 
 
 //
