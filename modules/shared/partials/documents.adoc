@@ -355,6 +355,7 @@ The performance impact may be significant when document sizes reach beyond 100KB
 Finally, note that while append saves network traffic from the client to server (by only specifying the fragment to append), the entire document is replicated for each mutation.
 Five append operations on a single 10MB document will result in 50MB of traffic to each replica.
 
+// tag::expiration[]
 [#expiry]
 == Expiration Overview
 
@@ -389,7 +390,7 @@ For Couchbase SDKs which accept simple integer expiry values (as opposed to a pr
 . As an offset from the current time.
 . As an absolute Unix time stamp
 
-If the absolute value of the expiry is less than 30 days (such as `60 * 60 * 24 * 30`), it is considered an _offset_.
+If the absolute value of the expiry is less than 30 days (`60 * 60 * 24 * 30` seconds), it is considered an _offset_.
 If the value is greater, it is considered an _absolute time stamp_.
 
 It might be preferable for applications to normalize the expiration value, such as by always converting it to an absolute time stamp.
@@ -397,22 +398,23 @@ The conversion is performed to avoid issues when the intended offset is larger t
 
 [IMPORTANT,caption=Remember]
 ====
-* If you wish to use the expiry feature, then you should supply the expiry value for every mutation operation.
-* When dealing with expiration, it is important to note that most operations will implicitly remove any existing expiration.
+* If you wish to use the expiration feature, then you should supply the expiry value for every mutation operation.
+* When dealing with expiration, it is important to note that _most operations will implicitly remove any existing expiration_.
 Thus, when modifying a document with expiration, it is important to pass the desired expiration time.
 * A document is expired as soon as the current time on the Couchbase Server node responsible for the document exceeds the expiration value.
 Bear this in mind in situations where the time on your application servers differs from the time on your Couchbase Server nodes.
 ====
 
 Note that expired documents are not deleted from the server as soon as they expire.
-While a request to the server for an expired document will receive a response indicating the document does not exist, expired documents are actually deleted (i.e.
-cease to occupy storage and RAM) when an _expiry pager_ is run.
+While a request to the server for an expired document will receive a response indicating the document does not exist, expired documents are actually deleted 
+(_i.e._ cease to occupy storage and RAM) when an _expiry pager_ is run.
 The _expiry pager_ is a routine internal process which scans the database for items which have expired and promptly removes them from storage.
 
 When gathering resource usage statistics, note that expired-but-not-purged items (such as the expiry pager has not scanned this item yet) will still be considered with respect to the overall storage size and item count.
 
-NOTE: Although the API only sets expiry values _per document_, it is possible that elsewhere in the server, an expiry value is being set for https://developer.couchbase.com/documentation/server/5.5/architecture/core-data-access-bucket-expiration.html[every document in a bucket^].
+NOTE: Although the API only sets expiry values _per document_, it is possible that elsewhere in the server, an expiry value is being set for xref:6.5@server:learn:buckets-memory-and-storage/expiration.adoc[every document in a bucket^].
 Should this be the case, the document TTL may be reduced, and the document may become unavailable to the app sooner than expected.
+// end::expiration[]
 
 
 
