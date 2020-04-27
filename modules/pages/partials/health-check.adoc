@@ -7,7 +7,7 @@
 Health Check provides ping() and diagnostics() tests for the health of the network and the cluster.
 
 Working in distributed environments is _hard_.
-Latencies come and go, so do connections in their entirity.
+Latencies come and go, so do connections in their entirety.
 Is it a network glitch, or is the remote cluster down?
 Sometimes just knowing the likely cause is enough to get a good start on a workaround, or at least avoid hours wasted on an inappropriate solution.
 
