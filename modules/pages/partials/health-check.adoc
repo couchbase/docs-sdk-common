@@ -6,7 +6,13 @@
 [abstract]
 Health Check provides ping() and diagnostics() tests for the health of the network and the cluster.
 
-`Ping` and `diagnostics` methods, on the bucket and cluster objects respectively, can give us information about the current state of nodes, and their connections.
+Working in distributed environments is _hard_.
+Latencies come and go, so do connections in their entirity.
+Is it a network glitch, or is the remote cluster down?
+Sometimes just knowing the likely cause is enough to get a good start on a workaround, or at least avoid hours wasted on an inappropriate solution.
+
+Health Check enables useful diagnostics on the state of Couchbase Clusters across networks. 
+`Ping` and `diagnostics` methods on the bucket and cluster objects respectively, can give us information about the current state of nodes, and their connections.
 
 == Uses
 
