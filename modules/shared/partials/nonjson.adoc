@@ -13,7 +13,7 @@ Non-JSON documents may be desirable if migrating a legacy application, which is 
 
 Note that only JSON documents can be accessed using Query (N1QL) and Search.
 Limited support for non-JSON documents is available for MapReduce views.
-Additionally, non-JSON documents will not be accessible using the xref:webui-cli-access.adoc[Web UI] (the contents will be shown in their Base64 equivalent).
+Additionally, non-JSON documents will not be accessible using the xref:6.5@server:manage:manage-ui/manage-ui.adoc[Web UI] (the contents will be shown in their Base64 equivalent).
 // end::intro[]
 
 
