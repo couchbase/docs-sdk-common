@@ -1,0 +1,25 @@
+= Browser and CLI Access
+:page-topic-type: landing-page
+:page-aliases: ROOT:webui-cli-access,cbc
+
+[abstract]
+Web and command line interfaces to Couchbase Server are available. 
+These are documented in the Server and the C SDK docs respectively.
+
+
+Web and command line interfaces to Couchbase Server are available. 
+Links are given below.
+
+
+== Command Line
+
+You can access documents in Couchbase using command line interfaces.
+This is included in libcouchbase, our C SDK -- see the xref:3.0@c-sdk:hello-world:cbc.adoc[LCB Command Line Tools page] for details.
+
+
+== Couchbase Web Console Document & Query Access
+
+You can use the Couchbase Web Console to view, edit, and create JSON documents up to 256KB in size.
+To access documents using the 6.5@server:manage:manage-ui/manage-ui.adoc[Couchbase Web Console].
+
+You can use the xref:6.5@server:tools:query-workbench.adoc[Query Workbench] to issue queries using the web console.
