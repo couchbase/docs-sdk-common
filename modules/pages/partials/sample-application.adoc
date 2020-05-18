@@ -7,13 +7,13 @@ The Couchbase Travel App is a sample web application that demonstrates how to in
 Each SDK comes with its own implementation of the backend for the application.
 The backend is a REST API available in the following languages:
 
-* xref:nodejs-sdk::sample-app-backend.adoc[Node.js]
-* xref:java-sdk::sample-app-backend.adoc[Java]
-* xref:dotnet-sdk::sample-app-backend.adoc[.NET]
-* xref:python-sdk::sample-app-backend.adoc[Python]
-* xref:php-sdk::sample-app-backend.adoc[PHP]
-* xref:go-sdk::sample-app-backend.adoc[Go]
-* xref:c-sdk::sample-app-backend.adoc[C/C++ (basic interaction with data model only)]
+* xref:2.3@nodejs-sdk::sample-app-backend.adoc[Node.js]
+* xref:2.4@java-sdk::sample-app-backend.adoc[Java]
+* xref:2.4@dotnet-sdk::sample-app-backend.adoc[.NET]
+* xref:2.2@python-sdk::sample-app-backend.adoc[Python]
+* xref:2.3@php-sdk::sample-app-backend.adoc[PHP]
+* xref:1.3@go-sdk::sample-app-backend.adoc[Go]
+* xref:2.7@c-sdk::sample-app-backend.adoc[C/C++ (basic interaction with data model only)]
 
 Please refer to the travel-app documentation of your SDK of choice for specifics for that particular SDK, like backend dependencies, source-code checkout, and running instructions.
 
