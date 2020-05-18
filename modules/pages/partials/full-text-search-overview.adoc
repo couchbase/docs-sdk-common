@@ -26,7 +26,7 @@ Other information-sources include:
 Each language supported by the Couchbase SDK provides an API for the support of Full Text Search querying.
 For detailed information, see the page for your language of choice.
 
-A detailed example of performing Full Text Search queries from the Java SDK is provided in xref:2.4Ijava-sdk::full-text-searching-with-sdk.adoc[Searching from the SDK].
+A detailed example of performing Full Text Search queries from the Java SDK is provided in xref:2.4@java-sdk::full-text-searching-with-sdk.adoc[Searching from the SDK].
 
 Note that to access Full Text Search, users require appropriate _roles_.
 The role *FTS Admin* must therefore be assigned to those who intend to create indexes; and the role *FTS Searcher* to those who intend to perform searches.
