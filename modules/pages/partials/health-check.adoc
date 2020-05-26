@@ -6,6 +6,7 @@
 [abstract]
 Health Check provides ping() and diagnostics() tests for the health of the network and the cluster.
 
+// tag::intro[]
 Working in distributed environments is _hard_.
 Latencies come and go, so do connections in their entirety.
 Is it a network glitch, or is the remote cluster down?
@@ -13,7 +14,10 @@ Sometimes just knowing the likely cause is enough to get a good start on a worka
 
 Health Check enables useful diagnostics on the state of Couchbase Clusters across networks. 
 `Ping` and `diagnostics` methods on the bucket and cluster objects respectively, can give us information about the current state of nodes, and their connections.
+// end::intro[]
 
+
+// tag::uses[]
 == Uses
 
 'Ping` provides a raw JSON payload suitable for feeding into reactive log and aggregation components, including monitoring systems like _Splunk_, _ElasticSearch_, and _Nagios_.
@@ -29,14 +33,16 @@ This API does not provide binary yes/no answers about the health of the cluster;
 
 Note: `Ping` may reopen a connection, so is not without side-effects.
 `Diagnostics` shows what the SDK _perceives_ as the current state of the network and services -- it is without side-effects, but may not be up to date.
+// end::uses[]
 
 
+// tag::ping[]
 == Ping
 
 `Ping` _actively_ queries the status of the specified services,giving status and latency information for every node reachable.
 In addition to its use as a monitoring tool, a regular `Ping` can be used in an environment which does not respect keep alive values for a connection. 
 This is a Map (a JavaScript `object`) with `type` keys for each service available, such as `kv` and `n1ql`, and the value containing latency and status information.
-
+// end::ping[]
 
 [source,javascript]
 ----
@@ -106,11 +112,14 @@ bucket.ping(services, (err, res) => {
 ----
 
 
+
+// tag::diag[]
 == Diagnostics
 
 `Diagnostics` returns a list of the nodes that the SDK currently has (or had) a connection to, and the current status of the connection.
 However this call _does not_ actively poll the nodes, reporting instead the state the last time it tried to access each node.
 If you want the _current_ status, then use xref:#ping[Ping].
+// end::diag[]
 
 [source,javascript]
 ----
