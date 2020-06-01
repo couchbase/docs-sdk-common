@@ -56,7 +56,7 @@ Considering the document:
 The paths `name`, `addresses.billing.country` and `purchases.complete[0]` are all valid paths.
 
 
-== Sub-Doc form the SDK
+== Sub-Doc from the SDK
 
-The Subdocument APIs is exposed through two separate builders which are available through two top-level Collection methods `LookupIn` and `MutateIn`. 
-The object returned, and how to work with it, is extensively documented in our xref:howtos:subdocument-operations.adoc[practical uide to using Sub_Doc from the SDK].
+The Sub-Document APIs is exposed through two separate builders which are available through two top-level Collection methods `LookupIn` and `MutateIn`. 
+The object returned, and how to work with it, is extensively documented in our xref:howtos:subdocument-operations.adoc[practical guide to using Sub-Doc from the SDK].
