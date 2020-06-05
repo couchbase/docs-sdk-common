@@ -1,0 +1,26 @@
+= Certificate-Based Authentication
+:nav-title: Cert Auth
+:page-topic-type: concept
+:page-aliases: 
+
+[abstract]
+x.509 Certificates for client-server authentication.
+
+
+== Certificate-Based Authentication
+
+Couchbase Server supports the use of x.509 certificates, for authentication between clients and servers. 
+This is covered extensively in:
+
+* Our xref:6.5@server:learn:security/certificates.adoc[Client Certificate discussion doc];
+* xref:6.5@server:manage:manage-security/configure-client-certificates.adoc[Configure Client Certificates];
+* The xref:6.5@server:manage:manage-security/manage-certificates.adoc[Certificate Management Overview]...
+* ... and xref:6.5@server:manage:manage-security/configure-server-certificates.adoc[Certificate Configuration] pages.
+
+As well as our practical guide to xref:howtos:sdk-authentication.html#certificate-authentication.adoc[authenticating an SDK client against Couchbase Server by certificate].
+
+
+== TLS
+
+Certificates are also used for xref:6.5@server:manage:manage-security/configure-client-certificates.adoc#enabling-client-security[secure connection to the Server]
+-- the xref:howtos:managing-connections.adoc#ssl[SDK guide] gives practical details.
