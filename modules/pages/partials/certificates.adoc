@@ -17,7 +17,7 @@ This is covered extensively in:
 * The xref:6.5@server:manage:manage-security/manage-certificates.adoc[Certificate Management Overview]...
 * ... and xref:6.5@server:manage:manage-security/configure-server-certificates.adoc[Certificate Configuration] pages.
 
-As well as our practical guide to xref:howtos:sdk-authentication.html#certificate-authentication.adoc[authenticating an SDK client against Couchbase Server by certificate].
+As well as our practical guide to xref:howtos:sdk-authentication.adoc#certificate-authentication.adoc[authenticating an SDK client against Couchbase Server by certificate].
 
 
 == TLS
