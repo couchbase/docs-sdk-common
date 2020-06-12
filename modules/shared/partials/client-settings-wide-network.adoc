@@ -1,0 +1,18 @@
+== Commonly Used Options
+
+The defaults above have been carefully considered and in general it is not recommended to make changes without expert guidance or careful testing of the change.
+Some options may be commonly used together in certain envionments or to achieve certain effects.
+
+=== Constrained Network Environments
+
+//TODO: how can this xref link to the specific anchor in the page?
+Though xref:project-docs:compatibility.adoc[wide area network] (WAN) connections are not directly supported, some development and non-critical operations activities across a WAN are convenient.
+These settings are some you may want to consider adjusting:
+Connect Timeout to 30s
+Key-Value Timeout to 5s
+Config Poll Interval to 10s
+Circuit Breaker ErrorThresholdPercentage 75
+
+A program using the SDK can also use the `waitUntilReady()` API call to handle all connection negotiations and realted errors at one place.
+It may be useful to block in, for example, a basic console testing application for up to 30 seconds before proceeding in the program to perform data operations.
+See the API reference for further details.
