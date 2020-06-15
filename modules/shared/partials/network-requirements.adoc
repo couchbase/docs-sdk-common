@@ -1,4 +1,4 @@
-= Network Requirements
+== Network Requirements
 
 Couchbase SDKs are developed to be run in an environment with local area network (LAN) like throughput and latencies.
 While there is no technical issue that prevents the use across a wide area network (WAN), SDKs have certain thresholds around timeouts and behaviors to recover that will not be the same once the higher latency and possible bandwidth constraints and congestion of a WAN is introduced.
