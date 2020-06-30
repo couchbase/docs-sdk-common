@@ -2,11 +2,13 @@
 :page-topic-type: howto
 
 [abstract]
-Diagnise DNS-SRV problems and other network connection trouble with SDK doctor.
+Diagnise DNS-SRV problems.
+Troubleshoot other network connection trouble with SDK doctor.
 
 
 Connecting to Cloud -- in particular when developing applications outside the network where the Cluster is hosted -- can expose unexpected network problems. 
-SDK doctor is a powerful but simple tool to help diagnose those problems.
+We'll show you how to troubleshoot _Host not Found_ problems. 
+SDK doctor is a powerful but simple tool to help diagnose other connection problems.
 
 == Troubleshooting Problems
 
