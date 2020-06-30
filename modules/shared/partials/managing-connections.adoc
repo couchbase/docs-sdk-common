@@ -8,6 +8,13 @@ The use of DNS-SRV. Altermate Address, and TLS is covered above.
 
 We strongly recommend that the client and server xref:project-docs:compatibility.adoc#network-requirements[are in the same LAN-like environment] (e.g. AWS Availability Zone).
 As this may not always be possible during development, read the guidance on working with xref:ref:client-settings.adoc#commonly-used-options[constrained network environments].
-More details on connecting your client code to the Couchbase Cloud can be found https://docs.stage.nonprod-project-avengers.com/cloud/BETA/get-started/connect-to-cluster.html#locate-the-clusters-endpoints-and-built-in-sdk-examples[in the Cloud docs].
+More details on connecting your client code to the Couchbase Cloud can be found https://docs.couchbase.com/cloud/get-started/connect-to-cluster.html#locate-the-clusters-endpoints-and-built-in-sdk-examples[in the Cloud docs].
+
+
+=== Troubleshooting Connections to Cloud
+
+Some DNS caching providers (notably, home routers) can’t handle an SRV record that’s large -- if you have DNS-SRV issues with such a set-up, reduce your DNS-SRV to only include three records.
+[_For development only, not production._]. 
+Our xref:troubleshooting-cloud-connections.adoc[Troubleshooting Cloud Connections] page will help you to diagnose this and other problems -- as well as introducing the SDK doctor tool.
 // end::cloud[]
 
