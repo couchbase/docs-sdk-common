@@ -1,0 +1,512 @@
+= Troubleshooting Cloud Connections During Development
+:page-topic-type: howto
+
+[abstract]
+Diagnise DNS-SRV problems and other network connection trouble with SDK doctor.
+
+
+Connecting to Cloud -- in particular when developing applications outside the network where the Cluster is hosted -- can expose unexpected network problems. 
+SDK doctor is a powerful but simple tool to help diagnose those problems.
+
+== Troubleshooting Problems
+
+Couchbase Cloud is secure by default, and that means that it always uses TLS connections. 
+Before carrying out other troubleshooting, please check that your application code is configured for TLS/SSL, using the default method of connecting (not http/https), and not specifying any port numbers.
+
+
+== Troubleshooting Host not Found
+
+In order for your application to connect to your cloud, Couchbase Cloud creates a special kind of DNS record, called a Service record, or DNS-SRV record. 
+DNS SRV records are widely supported and used frequently in systems like XMPP, and Kubernetes services.  
+Occasionally, some DNS providers can run into issues with large DNS SRV records. 
+This can manifest as a host not found issue.  
+The actual problem is (a typically older) DNS server that cannot handle large responses which converts the error to host not found. 
+This has frequently been observed when working from home with a service provider ‘router’ that embeds a caching DNS Server.
+To determine if this is the cause, you can compare an nslookup command from a shell from your default DNS server to a public DNS server, like those from Google or Cloudflare. 
+If, for example, your public cloud record were cb.490e597e-73fd-4b87-a08a-1da9c826970e.dp.cloud.couchbase.com, you might see this with nslookup for the associated DNS SRV record:
+
+[source,console]
+----
+$nslookup -q=SRV _couchbases._tcp.cb.490e597e-73fd-4b87-a08a-1da9c826970e.dp.cloud.couchbase.com
+----
+
+----
+Server:  UnKnown
+Address:  10.0.0.1
+*** UnKnown can't find _couchbases._tcp.cb.490e597e-73fd-4b87-a08a-1da9c826970e.dp.cloud.couchbase.com: Query refused
+----
+
+Specifying a different DNS Server may work (note the 8.8.8.8 on the end of the command):
+
+[source,console]
+----
+$ nslookup -q=SRV _couchbases._tcp.cb.490e597e-73fd-4b87-a08a-1da9c826970e.dp.cloud.couchbase.com 8.8.8.8
+----
+
+----
+Non-authoritative answer:
+Server:  dns.google
+Address:  8.8.8.8
+_couchbases._tcp.cb.490e597e-73fd-4b87-a08a-1da9c826970e.dp.cloud.couchbase.com SRV service location:
+         priority       = 0
+         weight         = 0
+         port           = 11207
+         svr hostname   = cb-0000.cb.490e597e-73fd-4b87-a08a-1da9c826970e.dp.cloud.couchbase.com
+_couchbases._tcp.cb.490e597e-73fd-4b87-a08a-1da9c826970e.dp.cloud.couchbase.com SRV service location:
+         priority       = 0
+         weight         = 0
+         port           = 11207
+         svr hostname   = cb-0001.cb.490e597e-73fd-4b87-a08a-1da9c826970e.dp.cloud.couchbase.com
+_couchbases._tcp.cb.490e597e-73fd-4b87-a08a-1da9c826970e.dp.cloud.couchbase.com SRV service location:
+         priority       = 0
+         weight         = 0
+         port           = 11207
+         svr hostname   = cb-0002.cb.490e597e-73fd-4b87-a08a-1da9c826970e.dp.cloud.couchbase.com
+_couchbases._tcp.cb.490e597e-73fd-4b87-a08a-1da9c826970e.dp.cloud.couchbase.com SRV service location:
+         priority       = 0
+         weight         = 0
+         port           = 11207
+         svr hostname   = cb-0003.cb.490e597e-73fd-4b87-a08a-1da9c826970e.dp.cloud.couchbase.com
+_couchbases._tcp.cb.490e597e-73fd-4b87-a08a-1da9c826970e.dp.cloud.couchbase.com SRV service location:
+         priority       = 0
+         weight         = 0
+         port           = 11207
+         svr hostname   = cb-0004.cb.490e597e-73fd-4b87-a08a-1da9c826970e.dp.cloud.couchbase.com
+_couchbases._tcp.cb.490e597e-73fd-4b87-a08a-1da9c826970e.dp.cloud.couchbase.com SRV service location:
+         priority       = 0
+         weight         = 0
+         port           = 11207
+         svr hostname   = cb-0005.cb.490e597e-73fd-4b87-a08a-1da9c826970e.dp.cloud.couchbase.com
+_couchbases._tcp.cb.490e597e-73fd-4b87-a08a-1da9c826970e.dp.cloud.couchbase.com SRV service location:
+         priority       = 0
+         weight         = 0
+         port           = 11207
+         svr hostname   = cb-0006.cb.490e597e-73fd-4b87-a08a-1da9c826970e.dp.cloud.couchbase.com
+_couchbases._tcp.cb.490e597e-73fd-4b87-a08a-1da9c826970e.dp.cloud.couchbase.com SRV service location:
+         priority       = 0
+         weight         = 0
+         port           = 11207
+         svr hostname   = cb-0007.cb.490e597e-73fd-4b87-a08a-1da9c826970e.dp.cloud.couchbase.com
+_couchbases._tcp.cb.490e597e-73fd-4b87-a08a-1da9c826970e.dp.cloud.couchbase.com SRV service location:
+         priority       = 0
+         weight         = 0
+         port           = 11207
+         svr hostname   = cb-0008.cb.490e597e-73fd-4b87-a08a-1da9c826970e.dp.cloud.couchbase.com
+_couchbases._tcp.cb.490e597e-73fd-4b87-a08a-1da9c826970e.dp.cloud.couchbase.com SRV service location:
+         priority       = 0
+         weight         = 0
+         port           = 11207
+         svr hostname   = cb-0009.cb.490e597e-73fd-4b87-a08a-1da9c826970e.dp.cloud.couchbase.com
+----
+
+As a workaround, you can switch to a DNS provider which can support modern DNS SRV records.
+
+
+== Validating Connectivity with SDK doctor
+
+If you appear to be having connectivity issues, it'd be good to diagnostically check for lower level details with https://github.com/couchbaselabs/sdk-doctor[SDK doctor].  
+From the environment where it looks like your program cannot connect, run one of the of the https://github.com/couchbaselabs/sdk-doctor/releases[pre-built binaries] for your platform. 
+Usually the summary at the end is pretty easy to interpret.
+Output that shows correct connectivity may look like this:
+
+[source,console]
+----
+$ ./sdk-doctor-macos diagnose -u username -p password couchbases://cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com/travel-sample
+----
+
+----
+|====================================================================|
+|          ___ ___  _  __   ___   ___   ___ _____ ___  ___           |
+|         / __|   \| |/ /__|   \ / _ \ / __|_   _/ _ \| _ \          |
+|         \__ \ |) | ' <___| |) | (_) | (__  | || (_) |   /          |
+|         |___/___/|_|\_\  |___/ \___/ \___| |_| \___/|_|_\          |
+|                                                                    |
+|====================================================================|
+
+Note: Diagnostics can only provide accurate results when your cluster
+ is in a stable state.  Active rebalancing and other cluster configuration
+ changes can cause the output of the doctor to be inconsistent or in the
+ worst cases, completely incorrect.
+
+17:03:47.055 INFO ▶ Parsing connection string `couchbases://cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com/travel-sample`
+17:03:47.059 INFO ▶ Connection string was parsed as a potential DNS SRV record
+17:03:47.196 INFO ▶ Connection string specifies to use secured connections
+17:03:47.196 INFO ▶ Connection string identifies the following CCCP endpoints:
+17:03:47.196 INFO ▶   1. cb-0000.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:11207
+17:03:47.196 INFO ▶   2. cb-0002.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:11207
+17:03:47.196 INFO ▶   3. cb-0001.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:11207
+17:03:47.196 INFO ▶ Connection string identifies the following HTTP endpoints:
+17:03:47.196 INFO ▶ Connection string specifies bucket `travel-sample`
+17:03:47.196 WARN ▶ No certificate authority file specified (--tls-ca), skipping server certificate verification for this run.
+17:03:47.233 INFO ▶ Performing DNS lookup for host `cb-0002.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com`
+17:03:47.253 INFO ▶ Bootstrap host `cb-0002.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com` refers to a server with the address `54.244.32.132`
+17:03:47.265 INFO ▶ Performing DNS lookup for host `cb-0001.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com`
+17:03:47.293 INFO ▶ Bootstrap host `cb-0001.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com` refers to a server with the address `52.12.217.175`
+17:03:47.319 INFO ▶ Performing DNS lookup for host `cb-0000.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com`
+17:03:47.333 INFO ▶ Bootstrap host `cb-0000.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com` refers to a server with the address `52.34.53.119`
+17:03:47.350 INFO ▶ Attempting to connect to cluster via CCCP
+17:03:47.350 INFO ▶ Attempting to fetch config via cccp from `cb-0000.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:11207`
+17:03:47.684 INFO ▶ Attempting to fetch config via cccp from `cb-0002.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:11207`
+17:03:47.994 INFO ▶ Attempting to fetch config via cccp from `cb-0001.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:11207`
+17:03:48.378 WARN ▶ Bootstrap host `cb-0000.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com` is not using the canonical node hostname of `cb-0000.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.svc`.  This is not neccessarily an error, but has been known to result in strange and challenging to diagnose errors when DNS entries are reconfigured.
+17:03:48.378 WARN ▶ Bootstrap host `cb-0002.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com` is not using the canonical node hostname of `cb-0002.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.svc`.  This is not neccessarily an error, but has been known to result in strange and challenging to diagnose errors when DNS entries are reconfigured.
+17:03:48.378 WARN ▶ Bootstrap host `cb-0001.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com` is not using the canonical node hostname of `cb-0001.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.svc`.  This is not neccessarily an error, but has been known to result in strange and challenging to diagnose errors when DNS entries are reconfigured.
+17:03:48.379 INFO ▶ Selected the following network type: external
+17:03:48.379 INFO ▶ Identified the following nodes:
+17:03:48.379 INFO ▶   [0] cb-0000.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com
+17:03:48.379 INFO ▶                  mgmtSSL: 18091,     indexStreamMaint:  9105,           indexHttps: 19102
+17:03:48.379 INFO ▶                       kv: 11210,                 capi:  8092,                 n1ql:  8093
+17:03:48.379 INFO ▶        eventingAdminPort:  8096,        eventingDebug:  9140,          eventingSSL: 18096
+17:03:48.379 INFO ▶               indexAdmin:  9100,                 mgmt:  8091,                 cbas:  8095
+17:03:48.379 INFO ▶                indexHttp:  9102,   indexStreamCatchup:  9104,                kvSSL: 11207
+17:03:48.379 INFO ▶                  n1qlSSL: 18093,              capiSSL: 18092,              cbasSSL: 18095
+17:03:48.379 INFO ▶                      fts:  8094,               ftsSSL: 18094,              ftsGRPC:  9130
+17:03:48.379 INFO ▶               ftsGRPCSSL: 19130,            indexScan:  9101,      indexStreamInit:  9103
+17:03:48.379 INFO ▶                projector:  9999
+17:03:48.380 INFO ▶   [1] cb-0001.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com
+17:03:48.380 INFO ▶                indexHttp:  9102,                 n1ql:  8093,              n1qlSSL: 18093
+17:03:48.380 INFO ▶              eventingSSL: 18096,                  fts:  8094,           indexAdmin:  9100
+17:03:48.380 INFO ▶                indexScan:  9101,     indexStreamMaint:  9105,                   kv: 11210
+17:03:48.380 INFO ▶          indexStreamInit:  9103,              capiSSL: 18092,                 cbas:  8095
+17:03:48.380 INFO ▶                  cbasSSL: 18095,        eventingDebug:  9140,               ftsSSL: 18094
+17:03:48.380 INFO ▶                  ftsGRPC:  9130,           ftsGRPCSSL: 19130,            projector:  9999
+17:03:48.380 INFO ▶                     capi:  8092,                 mgmt:  8091,              mgmtSSL: 18091
+17:03:48.380 INFO ▶        eventingAdminPort:  8096,   indexStreamCatchup:  9104,           indexHttps: 19102
+17:03:48.380 INFO ▶                    kvSSL: 11207
+17:03:48.380 INFO ▶   [2] cb-0002.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com
+17:03:48.380 INFO ▶               indexHttps: 19102,                 mgmt:  8091,                 cbas:  8095
+17:03:48.380 INFO ▶                  cbasSSL: 18095,    eventingAdminPort:  8096,              ftsGRPC:  9130
+17:03:48.380 INFO ▶               ftsGRPCSSL: 19130,            indexScan:  9101,                kvSSL: 11207
+17:03:48.380 INFO ▶                  mgmtSSL: 18091,        eventingDebug:  9140,          eventingSSL: 18096
+17:03:48.380 INFO ▶                   ftsSSL: 18094,           indexAdmin:  9100,                 n1ql:  8093
+17:03:48.381 INFO ▶                      fts:  8094,            indexHttp:  9102,   indexStreamCatchup:  9104
+17:03:48.381 INFO ▶                       kv: 11210,                 capi:  8092,            projector:  9999
+17:03:48.381 INFO ▶          indexStreamInit:  9103,     indexStreamMaint:  9105,              capiSSL: 18092
+17:03:48.384 INFO ▶                  n1qlSSL: 18093
+17:03:48.384 INFO ▶ Fetching config from `https://cb-0000.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:18091`
+17:03:48.842 INFO ▶ Received cluster configuration, nodes list:
+[
+  {
+    "addressFamily": "inet",
+    "alternateAddresses": {
+      "external": {
+        "hostname": "cb-0000.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com",
+        "ports": {
+          "capi": 8092,
+          "capiSSL": 18092,
+          "kv": 11210,
+          "mgmt": 8091,
+          "mgmtSSL": 18091
+        }
+      }
+    },
+    "clusterCompatibility": 393221,
+    "clusterMembership": "active",
+    "configuredHostname": "cb-0000.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.svc:8091",
+    "couchApiBase": "http://cb-0000.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.svc:8092/",
+    "couchApiBaseHTTPS": "https://cb-0000.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.svc:18092/",
+    "cpuCount": 7.41,
+    "externalListeners": [
+      {
+        "afamily": "inet",
+        "nodeEncryption": false
+      },
+      {
+        "afamily": "inet6",
+        "nodeEncryption": false
+      }
+    ],
+    "hostname": "cb-0000.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.svc:8091",
+    "interestingStats": {
+      "cmd_get": 0,
+      "couch_docs_actual_disk_size": 95931868,
+      "couch_docs_data_size": 75800076,
+      "couch_spatial_data_size": 0,
+      "couch_spatial_disk_size": 0,
+      "couch_views_actual_disk_size": 0,
+      "couch_views_data_size": 0,
+      "curr_items": 10518,
+      "curr_items_tot": 21130,
+      "ep_bg_fetched": 0,
+      "get_hits": 0,
+      "mem_used": 60430704,
+      "ops": 0,
+      "vb_active_num_non_resident": 0,
+      "vb_replica_curr_items": 10612
+    },
+    "mcdMemoryAllocated": 50899,
+    "mcdMemoryReserved": 50899,
+    "memoryFree": 62661132288,
+    "memoryTotal": 66714533888,
+    "nodeEncryption": false,
+    "nodeUUID": "658729d9892e255eb8ee14ff0d83c77b",
+    "os": "x86_64-unknown-linux-gnu",
+    "otpNode": "ns_1@cb-0000.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.svc",
+    "ports": {
+      "direct": 11210,
+      "distTCP": 21100,
+      "distTLS": 21150,
+      "httpsCAPI": 18092,
+      "httpsMgmt": 18091
+    },
+    "recoveryType": "none",
+    "services": [
+      "cbas",
+      "eventing",
+      "fts",
+      "index",
+      "kv",
+      "n1ql"
+    ],
+    "status": "healthy",
+    "systemStats": {
+      "cpu_cores_available": 7.41,
+      "cpu_stolen_rate": 0,
+      "cpu_utilization_rate": 14.37578814627995,
+      "mem_free": 62661132288,
+      "mem_limit": 60321431552,
+      "mem_total": 66714533888,
+      "swap_total": 0,
+      "swap_used": 0
+    },
+    "thisNode": true,
+    "uptime": "355557",
+    "version": "6.5.1-6299-enterprise"
+  },
+  {
+    "addressFamily": "inet",
+    "alternateAddresses": {
+      "external": {
+        "hostname": "cb-0001.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com",
+        "ports": {
+          "capi": 8092,
+          "capiSSL": 18092,
+          "kv": 11210,
+          "mgmt": 8091,
+          "mgmtSSL": 18091
+        }
+      }
+    },
+    "clusterCompatibility": 393221,
+    "clusterMembership": "active",
+    "configuredHostname": "cb-0001.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.svc:8091",
+    "couchApiBase": "http://cb-0001.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.svc:8092/",
+    "couchApiBaseHTTPS": "https://cb-0001.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.svc:18092/",
+    "cpuCount": 7.41,
+    "externalListeners": [
+      {
+        "afamily": "inet",
+        "nodeEncryption": false
+      },
+      {
+        "afamily": "inet6",
+        "nodeEncryption": false
+      }
+    ],
+    "hostname": "cb-0001.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.svc:8091",
+    "interestingStats": {
+      "cmd_get": 0,
+      "couch_docs_actual_disk_size": 94462140,
+      "couch_docs_data_size": 74382586,
+      "couch_spatial_data_size": 0,
+      "couch_spatial_disk_size": 0,
+      "couch_views_actual_disk_size": 0,
+      "couch_views_data_size": 0,
+      "curr_items": 10505,
+      "curr_items_tot": 21003,
+      "ep_bg_fetched": 0,
+      "get_hits": 0,
+      "mem_used": 60246064,
+      "ops": 0,
+      "vb_active_num_non_resident": 0,
+      "vb_replica_curr_items": 10498
+    },
+    "mcdMemoryAllocated": 50899,
+    "mcdMemoryReserved": 50899,
+    "memoryFree": 63074009088,
+    "memoryTotal": 66714533888,
+    "nodeEncryption": false,
+    "nodeUUID": "3c75947930dbf33a4bc923c262c3e4a3",
+    "os": "x86_64-unknown-linux-gnu",
+    "otpNode": "ns_1@cb-0001.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.svc",
+    "ports": {
+      "direct": 11210,
+      "distTCP": 21100,
+      "distTLS": 21150,
+      "httpsCAPI": 18092,
+      "httpsMgmt": 18091
+    },
+    "recoveryType": "none",
+    "services": [
+      "cbas",
+      "eventing",
+      "fts",
+      "index",
+      "kv",
+      "n1ql"
+    ],
+    "status": "healthy",
+    "systemStats": {
+      "cpu_cores_available": 7.41,
+      "cpu_stolen_rate": 0,
+      "cpu_utilization_rate": 2.756892230576441,
+      "mem_free": 63074009088,
+      "mem_limit": 60321431552,
+      "mem_total": 66714533888,
+      "swap_total": 0,
+      "swap_used": 0
+    },
+    "uptime": "355490",
+    "version": "6.5.1-6299-enterprise"
+  },
+  {
+    "addressFamily": "inet",
+    "alternateAddresses": {
+      "external": {
+        "hostname": "cb-0002.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com",
+        "ports": {
+          "capi": 8092,
+          "capiSSL": 18092,
+          "kv": 11210,
+          "mgmt": 8091,
+          "mgmtSSL": 18091
+        }
+      }
+    },
+    "clusterCompatibility": 393221,
+    "clusterMembership": "active",
+    "configuredHostname": "cb-0002.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.svc:8091",
+    "couchApiBase": "http://cb-0002.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.svc:8092/",
+    "couchApiBaseHTTPS": "https://cb-0002.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.svc:18092/",
+    "cpuCount": 7.41,
+    "externalListeners": [
+      {
+        "afamily": "inet",
+        "nodeEncryption": false
+      },
+      {
+        "afamily": "inet6",
+        "nodeEncryption": false
+      }
+    ],
+    "hostname": "cb-0002.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.svc:8091",
+    "interestingStats": {
+      "cmd_get": 0,
+      "couch_docs_actual_disk_size": 94096058,
+      "couch_docs_data_size": 73964794,
+      "couch_spatial_data_size": 0,
+      "couch_spatial_disk_size": 0,
+      "couch_views_actual_disk_size": 0,
+      "couch_views_data_size": 0,
+      "curr_items": 10568,
+      "curr_items_tot": 21049,
+      "ep_bg_fetched": 0,
+      "get_hits": 0,
+      "mem_used": 60300208,
+      "ops": 0,
+      "vb_active_num_non_resident": 0,
+      "vb_replica_curr_items": 10481
+    },
+    "mcdMemoryAllocated": 50899,
+    "mcdMemoryReserved": 50899,
+    "memoryFree": 63155494912,
+    "memoryTotal": 66714533888,
+    "nodeEncryption": false,
+    "nodeUUID": "e7f034ff24a10eae59808b8b858bab62",
+    "os": "x86_64-unknown-linux-gnu",
+    "otpNode": "ns_1@cb-0002.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.svc",
+    "ports": {
+      "direct": 11210,
+      "distTCP": 21100,
+      "distTLS": 21150,
+      "httpsCAPI": 18092,
+      "httpsMgmt": 18091
+    },
+    "recoveryType": "none",
+    "services": [
+      "cbas",
+      "eventing",
+      "fts",
+      "index",
+      "kv",
+      "n1ql"
+    ],
+    "status": "healthy",
+    "systemStats": {
+      "cpu_cores_available": 7.41,
+      "cpu_stolen_rate": 0,
+      "cpu_utilization_rate": 4.636591478696742,
+      "mem_free": 63155494912,
+      "mem_limit": 60321431552,
+      "mem_total": 66714533888,
+      "swap_total": 0,
+      "swap_used": 0
+    },
+    "uptime": "355435",
+    "version": "6.5.1-6299-enterprise"
+  }
+]
+
+
+17:03:55.056 INFO ▶ Successfully connected to Key Value service at `cb-0000.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:11207`
+17:03:55.278 INFO ▶ Successfully connected to Management service at `cb-0000.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:18091`
+17:03:55.534 INFO ▶ Successfully connected to Views service at `cb-0000.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:18092`
+17:03:55.697 INFO ▶ Successfully connected to Query service at `cb-0000.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:18093`
+17:03:55.880 INFO ▶ Successfully connected to Search service at `cb-0000.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:18094`
+17:03:56.035 INFO ▶ Successfully connected to Analytics service at `cb-0000.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:18095`
+17:03:56.273 INFO ▶ Successfully connected to Key Value service at `cb-0001.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:11207`
+17:03:56.494 INFO ▶ Successfully connected to Management service at `cb-0001.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:18091`
+17:03:56.794 INFO ▶ Successfully connected to Views service at `cb-0001.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:18092`
+17:03:56.964 INFO ▶ Successfully connected to Query service at `cb-0001.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:18093`
+17:03:57.115 INFO ▶ Successfully connected to Search service at `cb-0001.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:18094`
+17:03:57.290 INFO ▶ Successfully connected to Analytics service at `cb-0001.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:18095`
+17:03:57.533 INFO ▶ Successfully connected to Key Value service at `cb-0002.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:11207`
+17:03:57.780 INFO ▶ Successfully connected to Management service at `cb-0002.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:18091`
+17:03:58.000 INFO ▶ Successfully connected to Views service at `cb-0002.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:18092`
+17:03:58.216 INFO ▶ Successfully connected to Query service at `cb-0002.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:18093`
+17:03:58.458 INFO ▶ Successfully connected to Search service at `cb-0002.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:18094`
+17:03:58.666 INFO ▶ Successfully connected to Analytics service at `cb-0002.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:18095`
+17:03:59.254 INFO ▶ Memd Nop Pinged `cb-0000.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:11207` 10 times, 0 errors, 30ms min, 45ms max, 35ms mean
+17:03:59.254 WARN ▶ Memcached service on `cb-0000.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:11207` on average took longer than 10ms (was: 35ms) to reply.  This is usually due to network-related issues, and could significantly affect application performance.
+17:03:59.254 WARN ▶ Memcached service on `cb-0000.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:11207` maximally took longer than 20ms (was: 45ms) to reply. This is usually due to network-related issues, and could significantly affect application performance.
+17:03:59.848 INFO ▶ Memd Nop Pinged `cb-0001.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:11207` 10 times, 0 errors, 29ms min, 60ms max, 36ms mean
+17:03:59.848 WARN ▶ Memcached service on `cb-0001.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:11207` on average took longer than 10ms (was: 36ms) to reply.  This is usually due to network-related issues, and could significantly affect application performance.
+17:03:59.848 WARN ▶ Memcached service on `cb-0001.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:11207` maximally took longer than 20ms (was: 60ms) to reply. This is usually due to network-related issues, and could significantly affect application performance.
+17:04:00.485 INFO ▶ Memd Nop Pinged `cb-0002.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:11207` 10 times, 0 errors, 30ms min, 70ms max, 37ms mean
+17:04:00.485 WARN ▶ Memcached service on `cb-0002.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:11207` on average took longer than 10ms (was: 37ms) to reply.  This is usually due to network-related issues, and could significantly affect application performance.
+17:04:00.485 WARN ▶ Memcached service on `cb-0002.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:11207` maximally took longer than 20ms (was: 70ms) to reply. This is usually due to network-related issues, and could significantly affect application performance.
+17:04:00.485 INFO ▶ Diagnostics completed
+
+Summary:
+[WARN] No certificate authority file specified (--tls-ca), skipping server certificate verification for this run.
+[WARN] Bootstrap host `cb-0000.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com` is not using the canonical node hostname of `cb-0000.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.svc`.  This is not neccessarily an error, but has been known to result in strange and challenging to diagnose errors when DNS entries are reconfigured.
+[WARN] Bootstrap host `cb-0002.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com` is not using the canonical node hostname of `cb-0002.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.svc`.  This is not neccessarily an error, but has been known to result in strange and challenging to diagnose errors when DNS entries are reconfigured.
+[WARN] Bootstrap host `cb-0001.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com` is not using the canonical node hostname of `cb-0001.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.svc`.  This is not neccessarily an error, but has been known to result in strange and challenging to diagnose errors when DNS entries are reconfigured.
+[WARN] Memcached service on `cb-0000.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:11207` on average took longer than 10ms (was: 35ms) to reply.  This is usually due to network-related issues, and could significantly affect application performance.
+[WARN] Memcached service on `cb-0000.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:11207` maximally took longer than 20ms (was: 45ms) to reply. This is usually due to network-related issues, and could significantly affect application performance.
+[WARN] Memcached service on `cb-0001.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:11207` on average took longer than 10ms (was: 36ms) to reply.  This is usually due to network-related issues, and could significantly affect application performance.
+[WARN] Memcached service on `cb-0001.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:11207` maximally took longer than 20ms (was: 60ms) to reply. This is usually due to network-related issues, and could significantly affect application performance.
+[WARN] Memcached service on `cb-0002.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:11207` on average took longer than 10ms (was: 37ms) to reply.  This is usually due to network-related issues, and could significantly affect application performance.
+[WARN] Memcached service on `cb-0002.cb.51bbb323-476e-4354-bec8-5f9b0a67d146.dp.cloud.couchbase.com:11207` maximally took longer than 20ms (was: 70ms) to reply. This is usually due to network-related issues, and could significantly affect application performance.
+
+Found multiple issues, see listing above.
+----
+
+Note that there are a few warnings because we did not specify the CA certificate (available in the Couchbase Cloud Console) and because we are connecting across the Internet, which has higher latency than we would have if running the application in the cloud. 
+There are no errors.
+
+A ‘bad’ result from SDK-Doctor would end in output more like this:
+
+[source,console]
+----
+Summary:
+[WARN] Your connection string specifies only a single host.  You should consider adding additional static nodes from your cluster to this list to improve your applications fault-tolerance
+[ERRO] Bootstrap host `cb.490e597e-73fd-4b87-a08a-1da9c826970e.dp.cloud.couchbase.com` does not have a valid DNS entry.
+[ERRO] Failed to fetch configuration via cccp from `cb.490e597e-73fd-4b87-a08a-1da9c826970e.dp.cloud.couchbase.com:11207` (error: dial tcp: lookup cb.490e597e-73fd-4b87-a08a-1da9c826970e.dp.cloud.couchbase.com: getaddrinfow: This is usually a temporary error during hostname resolution and means that the local server did not receive a response from an authoritative server.)
+[ERRO] Failed to fetch terse configuration via http from `cb.490e597e-73fd-4b87-a08a-1da9c826970e.dp.cloud.couchbase.com:18091` (error: Get "http://cb.490e597e-73fd-4b87-a08a-1da9c826970e.dp.cloud.couchbase.com:18091/pools/default/b/couchbasecloudbucket": dial tcp: lookup cb.490e597e-73fd-4b87-a08a-1da9c826970e.dp.cloud.couchbase.com: getaddrinfow: This is usually a temporary error during hostname resolution and means that the local server did not receive a response from an authoritative server.)
+[ERRO] All endpoints specified by your connection string were unreachable, further cluster diagnostics are not possible
+----
+
+This output is a possible indication that the DNS server in use does not support DNS SRV records, as covered in an earlier section.
+
+
