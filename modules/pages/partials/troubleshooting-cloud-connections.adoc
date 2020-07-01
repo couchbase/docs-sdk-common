@@ -497,7 +497,7 @@ Found multiple issues, see listing above.
 Note that there are a few warnings because we did not specify the CA certificate (available in the Couchbase Cloud Console) and because we are connecting across the Internet, which has higher latency than we would have if running the application in the cloud. 
 There are no errors.
 
-A ‘bad’ result from SDK-Doctor would end in output more like this:
+A 'bad' result from SDK-Doctor would end in output more like this:
 
 [source,console]
 ----
