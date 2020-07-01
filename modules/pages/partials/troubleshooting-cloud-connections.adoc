@@ -2,7 +2,7 @@
 :page-topic-type: howto
 
 [abstract]
-Diagnise DNS-SRV problems.
+Diagnose DNS-SRV problems.
 Troubleshoot other network connection trouble with SDK doctor.
 
 
