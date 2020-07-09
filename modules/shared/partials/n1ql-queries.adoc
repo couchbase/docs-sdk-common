@@ -27,6 +27,9 @@ For Couchbase Server 6.0 and earlier, the generated plan is not influenced by pl
 Thus parameterized queries are considered the same query for caching and planning purposes, even if the supplied parameters are different.
 With Couchbase Server 6.5 and newer, if a statement has placeholders, _and_ a placeholder is supplied, the Query service will generate specially optimized plans.
 Therefore, if you are supplying the placeholder each time, `adhoc = true` will actually return a better-optimized plan (at the price of generating a fresh plan for each query).
+
+If your queries are highly dynamic, we recommend using parameterized queries if possible (epecially when prepared statements are not used). 
+Parameterized queries are more cache efficient and will allow for better performance. 
 // end::prepared[]
 
 
