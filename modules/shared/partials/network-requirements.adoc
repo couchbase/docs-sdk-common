@@ -7,3 +7,10 @@ For this reason, only LAN-like network environments are officially supported.
 
 Couchbase does document, for purposes of convenience when developing and performing basic operational work, what may need to be tuned when network throughputs and latencies are higher.
 If you encounter issues, even with these tune-ables, you should attempt the same workload from a supported, LAN-like environment.
+
+[IMPORTANT]
+.Running on AWS Lambda
+====
+AWS Lambda’s execution environment can freeze processes, and when the client application running on the λ comes back up ("thaw"), unexpected behaviour may arise.
+For this reason AWS λ is not a supported platform for running current Couchbase SDKs.
+====
