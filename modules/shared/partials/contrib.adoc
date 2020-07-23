@@ -1,0 +1,10 @@
+= Contrib Methods  
+
+// tag::contrib[]
+== Other Ways to Contribute
+
+* Join the discussion in our https://forums.couchbase.com/[forum] and on our https://gitter.im/couchbase/discuss[Gitter channel].
+
+* Improve the documentation -- https://docs.couchbase.com/home/contribute/index.html[bug reports and pull requests are welcome].
+// end::contrib[]
+
