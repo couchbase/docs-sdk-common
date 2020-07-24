@@ -11,6 +11,7 @@ If you encounter issues, even with these tune-ables, you should attempt the same
 [IMPORTANT]
 .Running on AWS Lambda
 ====
-AWS Lambda’s execution environment can freeze processes, and when the client application running on the λ comes back up ("thaw"), unexpected behaviour may arise.
-For this reason AWS λ is not a supported platform for running current Couchbase SDKs.
+AWS Lambda's execution environment can freeze/thaw processes. Current Couchbase SDKs run background processing to check and adapt to topology changes in the Couchbase Cluster being used. 
+Since the freeze does not allow this background processing and upon thaw the event-driven Couchbase SDKs may issue requests to an old topology, unexpected behavior including failures may occur. 
+AWS λ does not provide a way to detect the freeze/thaw cycle. For this reason AWS λ is not currently a tested and supported platform for running current Couchbase SDKs.
 ====
