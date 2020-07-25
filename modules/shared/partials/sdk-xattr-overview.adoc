@@ -6,8 +6,9 @@ Extended Attributes (XATTRs) are metadata that can be provided on a per-applicat
 // tag::intro_extended_attributes[]
 Couchbase Server permits the addition of _extended attributes_ (XATTRs).
 
-These allow application developers to define application-specific metadata that will only be visible to those applications that request it or attempt to modify it.
+These allow developers to define application-specific metadata that will only be visible to those applications that request it or attempt to modify it.
 This might be, for example, meta-data specific to a programming framework that should be hidden by default from other frameworks, or possibly from other versions of the same framework.
+They are not intended for use in general applications, only libraries and frameworks, and data stored there cannot be accessed easily by some Couchbase services, such as Search.
 // end::intro_extended_attributes[]
 
 [#using_extended_attributes]
@@ -36,3 +37,13 @@ See xref:6.5@server:learn:data/extended-attributes-fundamentals.adoc#virtual-ext
 These attributes are generated on-demand to expose storage-level document metadata, such as expiry to expose document expiration.
 For expiry using Virtual XATTR, use the following:
 // end::virtual_extended_attributes[]
+
+// Section below goes in each Sub-Doc HOWTO
+
+// tag::extended_attributes[]
+== Extended Attributes
+
+Extended Attributes (also known as XATTRs), built upon the Sub-Document API, allow developers to define application-specific metadata that will only be visible to those applications that request it or attempt to modify it.
+This might be, for example, meta-data specific to a programming framework that should be hidden by default from other frameworks or libraries, or possibly from other versions of the same framework.
+They are not intended for use in general applications, and data stored there cannot be accessed easily by some Couchbase services, such as Search.
+// end::extended_attributes[]
