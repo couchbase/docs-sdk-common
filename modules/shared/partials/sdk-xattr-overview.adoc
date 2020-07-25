@@ -20,7 +20,6 @@ In order to specify that a subdocument operation should be performed on an exten
 For detailed information on the Subdocument API, see xref:subdocument-operations.adoc[Subdocument Operations], and the accompanying xref:howtos:subdocument-operations.adoc[practical doc].
 
 For more information, see xref:6.5@server:learn:data/extended-attributes-fundamentals.adoc[Extended Attributes].
-//, and our xref:howtos:sdk-xattr-example.adoc[example code].
 
 NOTE: The maximum content size for a document stored in Couchbase Server is 20MB.
 XATTRs -- including Virtual XATTRs -- will reduce the space available for the remainder of the document.
