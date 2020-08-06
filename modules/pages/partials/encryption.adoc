@@ -90,8 +90,8 @@ The encryption _payload_ can be any JSON type.
 | `null`
 
 | _array_
-| `"myFruityArray":['Apple', 'Banana','Olive']`
-| `['Apple', 'Banana','Olive']`
+| `"myFruityArray":['Apple', 'Banana', 'Olive']`
+| `['Apple', 'Banana', 'Olive']`
 
 | _boolean_
 | `"dues_paid":true`
