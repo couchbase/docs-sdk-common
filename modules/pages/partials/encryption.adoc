@@ -66,7 +66,7 @@ For your preferred SDK, an API reference is available, linked from xref:start-us
 [#field-types]
 == Field Types
 
-The encryption _payload_ can be any object that comes after a key in a JSON document.
+The encryption _payload_ can be any JSON type.
 
 .Supported Field Types
 [#sprtd-field-types,cols="1,4,3"]
@@ -88,6 +88,14 @@ The encryption _payload_ can be any object that comes after a key in a JSON docu
 | _null_
 | `"isnull":null`
 | `null`
+
+| _array_
+| `"myFruityArray":['Apple', 'Banana','Olive']`
+| `['Apple', 'Banana','Olive']`
+
+| _boolean_
+| `"dues_paid":true`
+| `true`
 |===
 
 [#auditing]
