@@ -22,8 +22,14 @@ _Uncommitted_ APIs usually end up becoming stable APIs.
 * *Volatile*: This level is used to indicate experimental APIs that are still in flux and may likely be changed.
 It may also be used to indicate inherently private APIs that may be exposed, but "YMMV" (your mileage may vary) principles apply.
 _Volatile_ APIs typically end up being promoted to _Uncommitted_ after undergoing some modifications.
-* *Internal*: This level is used to indicate you should not rely on this API as it is not intended for use outside the module, even to other Couchbase components.
 
 APIs that are marked as _Committed_ have a stable implementation.
 _Uncommitted_ and _Volatile_ APIs should be stable within the bounds of any known and often documented issues, but Couchbase has not made a commitment to these APIs and may not respond to reported defects with the same priority.
+
+Additionally, take note of the following interface labels:
+
+* *Deprecated*: Any API marked deprecated may be removed in the next major version released. 
+Couchbase recommends migrating from the deprecated API to the replacement as soon as possible. 
+In rare instances, deprecated API may be rendered non-functional in a dot-minor release when the API cannot continue to be supported.
+* *Internal*: This level is used to indicate you should not rely on this API as it is not intended for use outside the module, even to other Couchbase components.
 // end::interface-stability-section[]
