@@ -105,7 +105,7 @@ When using a storage operation, the _full content_ of the document is replaced w
 The following example shows a document being stored using the xref:webui-cli-access.adoc#cli-access[`cbc`] utility.
 The ID of the document is `docid` and its value is JSON containing a single field (`json`) with the value of `value`.
 
-[source,bash]
+[source,console]
 ----
 # When storing JSON data using cbc, ensure it is properly quoted for your shell:
 $ cbc create -u Administrator -P password docid -V '{"json":"value"}' -M upsert -U couchbase://cluster-node/bucket-name
@@ -135,7 +135,7 @@ cb.mutate_in('docid', subdoc.array_addunique('tags', 'fast'))
 
 or xref:6.0@server:n1ql:n1ql-language-reference/update.adoc[N1QL UPDATE] to update documents based on specific query criteria:
 
-[source,sql]
+[source,n1ql]
 ----
 update `default` SET sale_price = msrp * 0.75 WHERE msrp < 19.95;
 ----
@@ -157,7 +157,7 @@ Retrieving a document via its ID is the simplest and quickest operation in Couch
 {'json': 'value'}
 ....
 
-[source,bash]
+[source,console]
 ----
 $ cbc cat docid
 docid                CAS=0x8234c3c0f213, Flags=0x0. Size=16
@@ -175,14 +175,14 @@ While N1QL is generally used for secondary queries, it can also be used to retri
 Lookups may be done either by comparing the `META(from-term).id` or by using the `USE KEYS` [\...] keyword:
 // end::get_generic[]
 
-[source,sql]
+[source,n1ql]
 ----
 SELECT * FROM default USE KEYS ["docid"];
 ----
 
 or
 
-[source,sql]
+[source,n1ql]
 ----
 SELECT * FROM default WHERE META(default).id = "docid";
 ----
