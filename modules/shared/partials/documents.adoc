@@ -199,13 +199,15 @@ name, email = cb.retrieve_in('user:kingarthur', 'contact.name', 'contact.email')
 
 You can atomically increment or decrement the numerical value of special counter document
 
-NOTE: Do not increment or decrement counters if using XDCR.
-Within a single cluster the `incr()` is atomic, as is `decr()`; across XDCR however, if two clients connecting to two different (bidirectional) clusters issue `incr` concurrently, this may (and most likely will) result in the value only getting incremented once in total.
+CAUTION: Do not increment or decrement counters if using XDCR.
+Within a single cluster the `incr()` is atomic, as is `decr()`; 
+across XDCR however, if two clients connecting to two different (bidirectional) clusters issue `incr` concurrently, 
+this may (and most likely will) result in the value only getting incremented once in total.
 The same is the case for `decr()`.
 
 A document may be used as a counter if its value is a simple ASCII number, like `42`.
-Couchbase allows you to increment and decrement these values atomically using a special [.api]`counter` operation.
-The example below (in Python) shows how to use counters:
+Couchbase allows you to increment and decrement these values atomically using a special `counter` operation.
+The example below shows how to use counters:
 // end::counters1[]
 
 [source,python]
@@ -219,7 +221,7 @@ The example below (in Python) shows how to use counters:
 ----
 
 // tag::counters2[]
-In the above example, a counter is created by using the [.api]`counter` Python method with an [.param]`initial` value.
+In the above example, a counter is created by using the `counter` method with an `initial` value.
 The initial value is the value the counter uses if the counter ID does not yet exist.
 
 Once created, the counter can be incremented or decremented atomically by a given _amount_ or _delta_.
@@ -234,7 +236,7 @@ Many SDKs will limit the _delta_ argument to the value of a _signed_ 64-bit inte
 
 xref:concurrent-mutations-cluster.adoc[CAS] values are not used with counter operations since counter operations are atomic.
 The intent of the counter operation is to simply increment the current server-side value of the document.
-If you wish to only increment the document if it is at a certain value, then you may use a normal [.api]`upsert` function with CAS:
+If you wish to only increment the document if it is at a certain value, then you may use a normal `upsert` function with CAS:
 // end::counters2[]
 
 [source,python]
@@ -247,6 +249,7 @@ if should_increment_value(value):
 
 // tag::counters3[]
 You can also use xref:subdocument-operations.adoc#ul_fp2_2yw_mv[sub-document counter operations] to increment numeric values _within_ a document containing other content.
+An example can be found in the xref:howtos:subdocument-operations.adoc#counters-and-numeric-fields[practical sub-doc page].
 // end::counters3[]
 
 
