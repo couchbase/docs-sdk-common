@@ -15,11 +15,11 @@ This section discusses the various ways in which you can access data (Documents)
 // tag::document[]
 == Document
 
-A _document_ refers to an entry in the database (other databases may refer to the same concept as a _row_).
+A _document_ refers to an entry in the database (other databases may refer to the same concept as a xref:6.6@server:learn:data/document-data-model.adoc#couchbase-server-and-json-the-benefits[_row_]).
 A document has an ID (_primary key_ in other databases), which is unique to the document and by which it can be located.
 The document also has a value which contains the actual application data.
 
-*Document IDs* are assigned by application.
+*Document IDs* (keys) are assigned by application.
 A valid document ID must:
 
 * Conform to UTF-8 encoding
@@ -27,8 +27,8 @@ A valid document ID must:
 +
 NOTE: There is a difference between bytes and characters: most non-Latin characters occupy more than a single byte.
 
-You are free to choose any ID for your document, so long as it conforms to the above restrictions.
-Unlike some other database, Couchbase does not automatically generate IDs for you, though you may use a separate xref:#counters[counter] to increment a serial number.
+You are free to choose any ID (key) for your document, so long as it conforms to the above restrictions.
+Unlike some other database, Couchbase does not automatically generate IDs for you, though you may use a separate xref:#counters[counter] to increment a serial number -- you can also use UUIDs as keys, the best choice being determined by your use case.
 
 The *document value* contains the actual application data; for example, a _product_ document may contain information about the price and description.
 Documents are usually (xref:nonjson.adoc[but not always]) stored as JSON on the server.
@@ -194,7 +194,7 @@ You can also retrieve _parts_ of documents using xref:subdocument-operations.ado
 name, email = cb.retrieve_in('user:kingarthur', 'contact.name', 'contact.email')
 ----
 
-// tag::counters
+// tag::counters1[]
 == Counters
 
 You can atomically increment or decrement the numerical value of special counter document
@@ -206,6 +206,7 @@ The same is the case for `decr()`.
 A document may be used as a counter if its value is a simple ASCII number, like `42`.
 Couchbase allows you to increment and decrement these values atomically using a special [.api]`counter` operation.
 The example below (in Python) shows how to use counters:
+// end::counters1[]
 
 [source,python]
 ----
@@ -217,6 +218,7 @@ The example below (in Python) shows how to use counters:
 51L
 ----
 
+// tag::counters2[]
 In the above example, a counter is created by using the [.api]`counter` Python method with an [.param]`initial` value.
 The initial value is the value the counter uses if the counter ID does not yet exist.
 
@@ -233,6 +235,7 @@ Many SDKs will limit the _delta_ argument to the value of a _signed_ 64-bit inte
 xref:concurrent-mutations-cluster.adoc[CAS] values are not used with counter operations since counter operations are atomic.
 The intent of the counter operation is to simply increment the current server-side value of the document.
 If you wish to only increment the document if it is at a certain value, then you may use a normal [.api]`upsert` function with CAS:
+// end::counters2[]
 
 [source,python]
 ----
@@ -242,8 +245,9 @@ if should_increment_value(value):
   cb.upsert('counter_id', value + increment_amount, cas=cas)
 ----
 
+// tag::counters3[]
 You can also use xref:subdocument-operations.adoc#ul_fp2_2yw_mv[sub-document counter operations] to increment numeric values _within_ a document containing other content.
-// end::counters
+// end::counters3[]
 
 
 [#devguide_datastructures]
