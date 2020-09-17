@@ -233,13 +233,15 @@ It can now be locked again and/or accessed as usual.
 It can now be locked again and/or accessed as usual.
 |===
 
-A document can be locked for a maximum of 15 seconds, after which the server will unlock it.
+A document can be locked for a maximum of 30 seconds, after which the server will unlock it.
 This is to prevent misbehaving applications from blocking access to documents inadvertently.
-You can modify the time the lock is held for (though it can be no longer than 15 seconds).
+You can modify the time the lock is held for (though it can be no longer than 30 seconds).
+
+CAUTION: Setting a lock greater than 30 seconds will cause Couchbase Server to set the lock duration at the Server's  _default_ value, which is 15 seconds.
 
 Be sure to keep note of the _cas_ value when locking a document.
 You will need it when unlocking or mutating the document.
-The following blocks show how to use [.api]`lock` and [.api]`unlock` operations.
+The following blocks show how to use `lock` and `unlock` operations.
 // end::locking[]
 
 
