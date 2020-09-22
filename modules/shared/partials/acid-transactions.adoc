@@ -177,7 +177,7 @@ All exceptions derive from `TransactionFailed` for backwards-compatibility purpo
 
 
 
-// tag::txnfailed1[]
+// tag::txnfailed[]
 === TransactionFailed and TransactionExpired
 The transaction definitely did not reach the commit point.
 `TransactionFailed` indicates a fast-failure whereas `TransactionExpired` indicates that retries were made until the expiration point was reached, but this distinction is not normally important to the application and generally `TransactionExpired` does not need to be handled individually.
