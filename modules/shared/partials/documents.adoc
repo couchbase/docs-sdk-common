@@ -206,18 +206,20 @@ this may (and most likely will) result in the value only getting incremented onc
 The same is the case for `decr()`.
 
 A document may be used as a counter if its value is a simple ASCII number, like `42`.
-Couchbase allows you to increment and decrement these values atomically using a special `counter` operation.
-The example below shows how to use counters:
+Couchbase allows you to increment and decrement these values atomically using a special `counter` operation in the `Binary.Collection`.
+The example below shows a counter being initialised, then being incremented and decremented:
 // end::counters1[]
 
-[source,python]
+[source,java]
 ----
->>> cb.counter('counter_id', delta=20, initial=100).value
-100L
->>> cb.counter('counter_id', delta=1).value
-101L
->>> cb.counter('counter_id', delta=-50).value
-51L
+String counterDocId = "counter-doc";
+// Increment by 1, creating doc if needed
+collection.binary().increment(counterDocId);
+// Decrement by 1
+collection.binary().decrement(counterDocId);
+// Decrement by 5
+collection.binary().decrement(counterDocId,
+DecrementOptions.decrementOptions().delta(5));
 ----
 
 // tag::counters2[]
@@ -248,7 +250,7 @@ if should_increment_value(value):
 ----
 
 // tag::counters3[]
-You can also use xref:subdocument-operations.adoc#ul_fp2_2yw_mv[sub-document counter operations] to increment numeric values _within_ a document containing other content.
+You can also use xref:subdocument-operations.adoc[sub-document counter operations] to increment numeric values _within_ a document containing other content.
 An example can be found in the xref:howtos:subdocument-operations.adoc#counters-and-numeric-fields[practical sub-doc page].
 // end::counters3[]
 
