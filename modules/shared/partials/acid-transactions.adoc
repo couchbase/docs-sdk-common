@@ -72,6 +72,7 @@ Each such run is called an 'attempt' inside the overall transaction.
 === Active Transaction Record Entries
 The first mechanic is that each of these attempts adds an entry to a metadata document in the Couchbase cluster.
 These metadata documents:
+
 * Are named Active Transaction Records, or ATRs.
 * Are created and maintained automatically.
 * Begin with "_txn:atr-".
