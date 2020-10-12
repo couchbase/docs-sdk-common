@@ -77,7 +77,7 @@ These metadata documents:
 * Are created and maintained automatically.
 * Begin with "_txn:atr-".
 * Each contain entries for multiple attempts.
-* Are viewable, and they should not be modified externally.
+* Are viewable, and _they should not be modified externally_.
 
 Each such ATR entry stores some metadata and, crucially, whether the attempt has committed or not.
 In this way, the entry acts as the single point of truth for the transaction, which is essential for providing an 'atomic commit' during reads.
