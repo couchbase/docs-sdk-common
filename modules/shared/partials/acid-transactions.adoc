@@ -50,7 +50,7 @@ If durability is set to `None`, then atomicity _cannot be guaranteed_.
 // tag::creating[]
 == Creating a Transaction
 
-A core idea of the library is that the application supplies the logic for transaction inside a Java lambda, including any conditional logic required, and the transactions library takes care of getting the transaction committed.
+A core idea of the library is that the application supplies the logic for transaction inside a lambda, including any conditional logic required, and the transactions library takes care of getting the transaction committed.
 
 It is important to understand that the lambda may be run multiple times in order to handle some types of transient error, such as a temporary conflict with another transaction.
  
