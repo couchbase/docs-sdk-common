@@ -40,12 +40,16 @@ The options are in order of increasing levels of safety.
 For a given node, waiting for writes to storage is considerably slower than waiting for it to be available in-memory.
 In particular, `PersistToMajority` will take longer than the other two, and `timeout` value needs to be selected with care -- particularly for large numbers of documents -- after testing on a representative network, with a realistic workload.
 Variation in network speeds and conditions, _inter alia_, make it difficult to give blanket recommendations.
+// end::syncrep[]
 
-Options for making changes to `kvEndpoints` and `kvDurableTimeout` for Durable Writes can be found on the xref:ref:client-settings.adoc#io-options[Client Settings page].
+// tag::syncrep2[]
+Options for making changes to `numKvConnections` (kvEndpoints) and `kvDurableTimeout` for Durable Writes can be found on the xref:ref:client-settings.adoc#io-options[Client Settings page].
 Increasing the number of reader and writer threads for Couchbase Server storage _may_ be advantageous: see the discussion on the xref:6.5@server:learn:buckets-memory-and-storage/storage.adoc#threading[Server storage page].
+// end::syncrep2[]
 
-IMPORTANT: 
-Durable Writes must not be made with three replicas. 
+
+// tag::syncrep3[]
+IMPORTANT: Durable Writes must not be made with three replicas. 
 Attempting this will result in an error message: `DURABILITY_IMPOSSIBLE`.
 
 While Durable Writes are being attempted, another client cannot write to the document concerned 
@@ -56,7 +60,7 @@ While Durable Writes are being attempted, another client cannot write to the doc
 
 === Errors & Exceptions
 
-See xref:ref:error-codes.adoc#durable-writes[Durable Writes error codes].
+See xref:ref:error-codes.adoc#107-durabilitylevelnotavailable[Durable Writes error codes].
 
 [#ambiguity]
 ==== Ambiguity
@@ -68,7 +72,7 @@ Consider carefully the case where the client has sent the operation to the serve
 In cases where the operation is idempotent (such as an upsert operation), then simply retrying is a perfectly acceptable strategy, where the cost of doing so is justified by the importance of the operation.
 Where the operation is an array append, or somesuch, then xref:6.5@server:learn:data/transactions.adoc[distributed, multi-document ACID transactions] should be considered.
 
-// end::syncrep[]
+// end::syncrep3[]
 
 
 // tag::older[]
