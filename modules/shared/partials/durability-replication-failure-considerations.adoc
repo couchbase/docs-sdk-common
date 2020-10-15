@@ -40,6 +40,7 @@ The options are in order of increasing levels of safety.
 For a given node, waiting for writes to storage is considerably slower than waiting for it to be available in-memory.
 In particular, `PersistToMajority` will take longer than the other two, and `timeout` value needs to be selected with care -- particularly for large numbers of documents -- after testing on a representative network, with a realistic workload.
 Variation in network speeds and conditions, _inter alia_, make it difficult to give blanket recommendations.
+
 // end::syncrep[]
 
 // tag::syncrep2[]
@@ -49,6 +50,7 @@ Increasing the number of reader and writer threads for Couchbase Server storage 
 
 
 // tag::syncrep3[]
+
 IMPORTANT: Durable Writes must not be made with three replicas. 
 Attempting this will result in an error message: `DURABILITY_IMPOSSIBLE`.
 
