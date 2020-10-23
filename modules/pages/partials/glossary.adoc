@@ -1,0 +1,93 @@
+= Glossary of SDK-related Terms
+:navtitle: Glossary
+:page-topic-type: project-doc
+:page-aliases: 
+
+[abstract] Unpicking the tangled alphabet soup of the Couchbase Platform, from an SDK perspective.
+
+The Couchbase Data platform offers several services, and many advanced features, which we document here, in the Couchbase SDK documentation.
+Below you will find short definitions of many Couchbase-related terms, with links to the pages that describe them in more detail, or show practical examples of their use.
+
+// Forms a sort of index of links
+
+Analytics - Couchbase Analytics Service allows longer running queries over big data, whilst taking advantage of Couchbase’s Multi-Dimensional scaling.
+
+Bootstrapping -
+
+CAS - Check And Swap. Used in Concurrent Document Mutations to ...
+
+Cert Auth - Certificate Authentication
+
+Cluster Provisioning -  … can be managed from the SDK
+
+Collections
+
+Custom Transcoders
+
+DCP - 
+Durability - 
+(for older server versions, see xxx)
+
+Encryption - see Field Level Encryption
+Eventing -
+
+
+Field Level Encryption (FLE) - 
+
+FTS - Full Text Search
+
+GC - Garbage Collection?
+
+GSI -
+   MOI,  non-MOI (?)
+
+Index
+...inc ?
+
+xref:[KV Operations] - Key Value Operations work directly on the document, for CRUD operations on documents whose identity is known.
+
+MapReduce Views
+
+xref:[N1QL] - Couchbase’s powerful SQL-like language allows queries in a format familiar to Database Administrators.
+
+xref:[Query] - The Couchbase Query Service uses a SQL-like language for powerful queries across documents.
+
+RBAC
+
+RTO - see Tracing
+
+Scope - 
+
+Sub-Doc - Sub-Document
+
+Synchronous Replication - 
+
+Sync-Gateway (? for awareness, also another possible source of interactions via mobile devices?)
+
+Threshold Logging - see Tracing
+
+Tracing - vs Response Time Observability vs Threshold Logging
+
+Transactions
+
+Transcoders - see Custom Transcoders
+
+Virtual XATTR
+
+XATTR
+
+
+
+// Link to Tony’s Server Glossary
+// https://docs.couchbase.com/server/6.0/learn/glossary.html
+
+== Further Reading
+
+Glossaries are available for:
+
+* xref:server:learn:glossary.adoc[Couchbase Server]
+* xref:server:eventing:eventing-Terminologies.adoc[Couchbase Eventing Service]
+* xref:couchbase-lite:android:refer/java-android-refer-glossary.adoc[Couchbase Lite (Android)]
+* xref:sync-gateway:refer:refer-sgw-glossary.adoc[Sync Gateway]
+
+Only the Server Glossary takes the form of an index, linking to other pages, in the same manner as this page.
