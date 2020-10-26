@@ -39,7 +39,7 @@ xref:6.5@server:learn:services-and-indexes/services/analytics-service.adoc[Couch
 CBAS supports workloads involving only SELECT (not INSERT or UPDATE), and uses local secondary indexes.
 Scalable performance comes from multi-node partitioned-parallel join, sort, aggregate, and grouped aggregate operators, and multiple storage devices (vbuckets over several nodes).
 
-Use the Analytics service when you don’t know every aspect of the query in advance -- 
+Use the Analytics Service when you don’t know every aspect of the query in advance -- 
 for example, if the data access patterns change frequently, or you want to avoid creating an index for each data access pattern, 
 or you want to run ad hoc queries for data exploration or visualization.
 
@@ -49,7 +49,7 @@ or you want to run ad hoc queries for data exploration or visualization.
 Use KV Operations - for better performance. 
 Where your mutations are on just a path within the document, use the Sub-Document API.
 
-For the “update from a WHERE clause” with our Query service, 
+For the “update from a WHERE clause” with our Query Service, 
 in which case you don’t know which documents would be altered,
 read the section on CAS and Concurrent Document Mutation to be aware of all of the implications.
 
