@@ -4,7 +4,7 @@ You can xref:6.5@server:n1ql:n1ql-language-reference/index.adoc[read up on the l
 but you probably just want to xref:howtos:n1ql-queries-with-sdk.adoc[dive into a practical example].
 
 Below, we fill in some of the gaps between reference and rolling-up-your-sleeves practicality,
-with discussion of a few areas of the Query service where more background knowledge will help you to better program your application.
+with discussion of a few areas of the Query Service where more background knowledge will help you to better program your application.
 // end::intro[]
 
 
@@ -20,12 +20,12 @@ Often-used queries can be _prepared_ so that its _plan_ is generated only once.
 Subsequent queries using the same query string will use the pre-generated plan instead, saving on the overhead and processing of the plan each time. 
 This is done for queries from the SDK by setting the `adhoc` query option to `false`. 
 
-For Couchbase Server 6.0 and earlier, the plan is cached by the SDK (up to a limit of 5000), as well as the Query service. 
-On Couchbase Server 6.5 and newer, the plan is stored by the Query service -- up to an adjustable limit of 16 384 plans per Query node. 
+For Couchbase Server 6.0 and earlier, the plan is cached by the SDK (up to a limit of 5000), as well as the Query Service. 
+On Couchbase Server 6.5 and newer, the plan is stored by the Query Service -- up to an adjustable limit of 16 384 plans per Query node. 
 
 For Couchbase Server 6.0 and earlier, the generated plan is not influenced by placeholders. 
 Thus parameterized queries are considered the same query for caching and planning purposes, even if the supplied parameters are different.
-With Couchbase Server 6.5 and newer, if a statement has placeholders, _and_ a placeholder is supplied, the Query service will generate specially optimized plans.
+With Couchbase Server 6.5 and newer, if a statement has placeholders, _and_ a placeholder is supplied, the Query Service will generate specially optimized plans.
 Therefore, if you are supplying the placeholder each time, `adhoc = true` will actually return a better-optimized plan (at the price of generating a fresh plan for each query).
 
 If your queries are highly dynamic, we recommend using parameterized queries if possible (epecially when prepared statements are not used). 
@@ -43,7 +43,7 @@ Parameterized queries are more cache efficient and will allow for better perform
 // tag::index-consistency[]
 == Index Consistency
 
-Because indexes are by design outside the data service, they are _eventually consistent_ with respect to changes to documents 
+Because indexes are by design outside the Data Service, they are _eventually consistent_ with respect to changes to documents 
 and, depending on how you issue the query, may at times not contain the most up-to-date information.
 This may especially be the case when deployed in a write-heavy environment: changes may take some time to propagate over to the index nodes.
 
