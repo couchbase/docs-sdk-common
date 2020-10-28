@@ -197,7 +197,7 @@ name, email = cb.retrieve_in('user:kingarthur', 'contact.name', 'contact.email')
 // tag::counters1[]
 == Counters
 
-You can atomically increment or decrement the numerical value of special counter document
+You can atomically increment or decrement the numerical value of special counter document -- examples can be found in the xref:howtos:kv-operations.adoc#atomic-counters[practical K-V Howto document].
 
 CAUTION: Do not increment or decrement counters if using XDCR.
 Within a single cluster the `incr()` is atomic, as is `decr()`; 
