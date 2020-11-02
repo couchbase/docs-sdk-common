@@ -61,7 +61,7 @@ Other reference material includes the xref:ref:client-settings.adoc[Client Setti
 
 == Project Docs
 
-All of the above (tutorials, howtos, concept docs, and reference docs) help you directly in _using_ the software, but there remain several decisions around managing your use of the software that can be grouped into documentation about the software _as a projuct_.
+All of the above (tutorials, howtos, concept docs, and reference docs) help you directly in _using_ the software, but there remain several decisions around managing your use of the software that can be grouped into documentation about the software _as a project_.
 Things like xref:project-docs:sdk-licenses.adoc[License Information] and xref:project-docs:compatibility.adoc[Compatibility] (with versions of Couchbase Server, with the language, or with the underlying platform).
 Here can also be found the xref:project-docs:sdk-release-notes.adoc[Release Notes], and help in xref:project-docs:migrating-sdk-code-to-3.n.adoc[migrating] from the previous major release.
 
