@@ -10,6 +10,17 @@ This page is to help with those occasions when you are unsure precisely what you
 so this page is a guide to the SDK docs, to help you to get the most from them.
 
 
+== Assumptions & Presumptions
+
+Couchbase is a complex and powerful product, with many components.
+The SDKs interact with Couchbase Server and its various services; although some links are given to the pages for these services, gaining an understanding of them is not the principal aim of the SDK documentation, 
+rather it is to gain an understanding of how to interact with them programmatically from the SDK,
+as many application programmers will have the task specced out for them.
+
+Some concepts, such as Role-Based Access Control, do need to be understood in greater depth -- but this is documented xref:6.5@server:learn:security/roles.adoc[in the appropriate place in the Server docs], and linked from the xref:hello-world:start-using-sdk.adoc[Getting Started Guide].
+Furthermore, things which are essential in production can be a barrier to getting up and running quickly in order to try something out -- so the _Full Admin_ RBAC role is used in the _Hello World_ code example, contrary to best prractice (but this is, of course, called out).
+
+
 == Getting Started
 
 The Getting Started section contains tutorial pages -- in intention, if not always in style -- covering xref:hello-world:start-using-sdk.adoc[how to install and start using] the SDK, as well as a longer xref:hello-world:sample-application.adoc[Sample Application] (which is not present for every SDK).
