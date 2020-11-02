@@ -1,0 +1,82 @@
+= About the SDK Docs
+
+[abstract]
+Meta documentation -- what you might need to know to get the best from these docs, from their intent to their Information Architecture.
+
+Welcome to the SDK 3.0 docs -- this is an _afterword_ to the documentation, rather than something most people will read as a _foreward_.
+Why so?
+On most occasions you will arrive at a page directly from a search engine, perhaps follow a link to another page or too, and then depart (with, we hope, your questions answererd).
+This page is to help with those occasions when you are unsure precisely what you want, but you are after understanding --
+so this page es a guide to the SDK docs, to help you to get the most from them.
+
+
+== Getting Started
+
+The Getting Started section contains tutorial pages -- in intention, if not always in style -- covering xref:hello-world:start-using-sdk.adoc[how to install and start using] the SDK, as well as a longer xref:hello-world:sample-application.adoc[Sample Application] (which is not present for every SDK).
+
+
+== How to Work With the SDK
+
+The next four sections are collections of practical, task-oriented pages, featuring snippets of code designed to help you with the individual pieces that will become your application.
+
+=== Working with Data
+
+This section deals with all of the main Couchbase Services: xref:howtos:kv-operations.adoc[The Data Service] (including xref:howtos:subdocument-operations.adoc[Sub-Document Operations]; the xref:howtos:n1ql-queries-with-sdk.adoc[Query Service]; the xref:howtos:analytics-using-sdk.adoc[Analytics Service]; Full-Text xref:howtos:full-text-searching-with-sdk.adoc[Search Service]; and xref:howtos:view-queries-with-sdk.adoc[MapReduce Views]. 
+
+NOTE: Some SDKs feature an additional xref:3.0@python-sdk:howtos:caching-example.adoc[fully-worked, complete code example].
+Others may be added at a later date.
+
+=== Advanced Data Operations
+
+In using the above services, there are several more advanced Couchbase and SDK features that may be advantageous or even critical to your app.
+Everything from xref:howtos:concurrent-async-apis.adoc[Asynchronous APIs] to xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[Distributed Transactions].
+
+=== Managing Couchbase
+
+In this section are collected practical documents grouped around the Management APIs, and around other management tasks, particularly those needed in getting your application talking to the Couchbase Server (xref:howtos:managing-connections.adoc[Managing Connections]), and xref:howtos:provisioning-cluster-resources.adoc[programmatically dealing with Cluster resources].
+
+=== Errors & Diagnostics
+
+xref:howtos:error-handling.adoc[Error handling] is an essential part of developing any application -- as is xref:howtos:collecting-information-and-logging.adoc[logging] --
+but this section also includes some useful diagnostic tools, all too necessary in a distributed environment.
+
+
+== Concept Docs
+
+The xref:concept-docs:concepts.adoc[Learn] section is a collection of concept docs offering expansive background and context to key areas of the SDKs.
+These understanding-oriented docs are aimed at broadening coverage beyond the goal-oriented howtos, to clarify and illuminate each subject.
+They are a work in progress -- with more breadth and depth to be added over time.
+
+
+== Reference Docs
+
+The key reference doc is the API guide, which should be an accurate and complete source of truth for programming with the SDK's API.
+Any error here should be filed directly against the individual SDKs bug tracker (JIRA), although a ticket against the docs https://issues.couchbase.com/projects/DOC/issues[here] will always be converted to the correct project.
+
+The first link in the navigation for the Reference Section is to the API Guide for the _latest version_ of the SDK.
+Links to previous versions can be found with the xref:project-docs:sdk-release-notes.adoc[Release Notes].
+
+Other reference material includes the xref:ref:client-settings.adoc[Client Settings] that can be adjusted, and a listing of all xref:ref:error-codes.adoc[Error Codes].
+
+
+== Project Docs
+
+All of the above (tutorials, howtos, concept docs, and reference docs) help you directly in _using_ the software, but there remain several decisions around managing your use of the software that can be grouped into documentation about the software _as a projuct_.
+Things like xref:project-docs:sdk-licenses.adoc[License Information] and xref:project-docs:compatibility.adoc[Compatibility] (with versions of Couchbase Server, with the language, or with the underlying platform).
+Here can also be found the xref:project-docs:sdk-release-notes.adoc[Release Notes], and help in xref:project-docs:migrating-sdk-code-to-3.n.adoc[migrating] from the previous major release.
+
+
+ == Another Route Through?
+ 
+ Each page contains several links to related pages in the docs, as well as to relevant sections of the latest generated API docs.
+ Links are made to cover as many common user journeys as we could think of.
+ For cases where we didn't anticipate your needs, every page in each SDK is linked from the left-hand navigation, and the paragraphs above detail the broad purpose of these groupings and some of their content. 
+ 
+ NOTE: Several _non-pages_ exist, in the sense that where a page found in one or more SDKs, such as the _Travel Sample Application_, is not available in one (or more) SDKs --
+ as, for example, we have not made a xref:3.0@c-sdk:hello-world:sample-application.adoc[libcouchbase Travel Sample Application] --
+ then a page will still exist, so that when navigating between SDKs through either the dropdown nav, or changing ghe name in the URL bar, you will not find yourself facing a 404 error, and will still have access to the left-hand nvigation for that SDK.
+ 
+ === Site Search
+ 
+ Our internal _Site Search_ is an excellent resource for finding information across Couchbase components and (supported) versions.
+ 
