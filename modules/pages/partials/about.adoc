@@ -3,7 +3,7 @@
 [abstract]
 Meta documentation -- what you might need to know to get the best from these docs, from their intent to their Information Architecture.
 
-Welcome to the SDK 3.0 docs -- this is an _afterword_ to the documentation, rather than something most people will read as a _foreward_.
+Welcome to the SDK 3.0 docs -- this is an _afterword_ to the documentation, rather than something most people will read as a _foreword_.
 Why so?
 On most occasions you will arrive at a page directly from a search engine, perhaps follow a link to another page or two, and then depart (with, we hope, your questions answererd).
 This page is to help with those occasions when you are unsure precisely what you want, but you are after understanding --
