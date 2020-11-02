@@ -18,7 +18,7 @@ rather it is to gain an understanding of how to interact with them programmatica
 as many application programmers will have the task specced out for them.
 
 Some concepts, such as Role-Based Access Control, do need to be understood in greater depth -- but this is documented xref:6.5@server:learn:security/roles.adoc[in the appropriate place in the Server docs], and linked from the xref:hello-world:start-using-sdk.adoc[Getting Started Guide].
-Furthermore, things which are essential in production can be a barrier to getting up and running quickly in order to try something out -- so the _Full Admin_ RBAC role is used in the _Hello World_ code example, contrary to best prractice (but this is, of course, called out).
+Furthermore, things which are essential in production can be a barrier to getting up and running quickly in order to try something out -- so the _Full Admin_ RBAC role is used in the _Hello World_ code example, contrary to best practice (but this is, of course, called out).
 
 
 == Getting Started
