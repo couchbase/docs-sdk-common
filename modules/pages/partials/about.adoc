@@ -21,7 +21,7 @@ The next four sections are collections of practical, task-oriented pages, featur
 
 === Working with Data
 
-This section deals with all of the main Couchbase Services: xref:howtos:kv-operations.adoc[The Data Service] (including xref:howtos:subdocument-operations.adoc[Sub-Document Operations]; the xref:howtos:n1ql-queries-with-sdk.adoc[Query Service]; the xref:howtos:analytics-using-sdk.adoc[Analytics Service]; Full-Text xref:howtos:full-text-searching-with-sdk.adoc[Search Service]; and xref:howtos:view-queries-with-sdk.adoc[MapReduce Views]. 
+This section deals with all of the main Couchbase Services: xref:howtos:kv-operations.adoc[The Data Service] (including xref:howtos:subdocument-operations.adoc[Sub-Document Operations]); the xref:howtos:n1ql-queries-with-sdk.adoc[Query Service]; the xref:howtos:analytics-using-sdk.adoc[Analytics Service]; Full-Text xref:howtos:full-text-searching-with-sdk.adoc[Search Service]; and xref:howtos:view-queries-with-sdk.adoc[MapReduce Views]. 
 
 NOTE: Some SDKs feature an additional xref:3.0@python-sdk:howtos:caching-example.adoc[fully-worked, complete code example].
 Others may be added at a later date.
