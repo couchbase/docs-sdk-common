@@ -7,7 +7,7 @@ Welcome to the SDK 3.0 docs -- this is an _afterword_ to the documentation, rath
 Why so?
 On most occasions you will arrive at a page directly from a search engine, perhaps follow a link to another page or two, and then depart (with, we hope, your questions answererd).
 This page is to help with those occasions when you are unsure precisely what you want, but you are after understanding --
-so this page es a guide to the SDK docs, to help you to get the most from them.
+so this page is a guide to the SDK docs, to help you to get the most from them.
 
 
 == Getting Started
