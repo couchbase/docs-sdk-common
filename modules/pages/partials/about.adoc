@@ -66,17 +66,16 @@ Things like xref:project-docs:sdk-licenses.adoc[License Information] and xref:pr
 Here can also be found the xref:project-docs:sdk-release-notes.adoc[Release Notes], and help in xref:project-docs:migrating-sdk-code-to-3.n.adoc[migrating] from the previous major release.
 
 
- == Another Route Through?
- 
- Each page contains several links to related pages in the docs, as well as to relevant sections of the latest generated API docs.
- Links are made to cover as many common user journeys as we could think of.
- For cases where we didn't anticipate your needs, every page in each SDK is linked from the left-hand navigation, and the paragraphs above detail the broad purpose of these groupings and some of their content. 
- 
- NOTE: Several _non-pages_ exist, in the sense that where a page found in one or more SDKs, such as the _Travel Sample Application_, is not available in one (or more) SDKs --
- as, for example, we have not made a xref:3.0@c-sdk:hello-world:sample-application.adoc[libcouchbase Travel Sample Application] --
- then a page will still exist, so that when navigating between SDKs through either the dropdown nav, or changing ghe name in the URL bar, you will not find yourself facing a 404 error, and will still have access to the left-hand nvigation for that SDK.
- 
- === Site Search
- 
- Our internal _Site Search_ is an excellent resource for finding information across Couchbase components and (supported) versions.
- 
+== Another Route Through?
+
+Each page contains several links to related pages in the docs, as well as to relevant sections of the latest generated API docs.
+Links are made to cover as many common user journeys as we could think of.
+For cases where we didn't anticipate your needs, every page in each SDK is linked from the left-hand navigation, and the paragraphs above detail the broad purpose of these groupings and some of their content. 
+
+NOTE: Several _non-pages_ exist, in the sense that where a page found in one or more SDKs, such as the _Travel Sample Application_, is not available in one (or more) SDKs --
+as, for example, we have not made a xref:3.0@c-sdk:hello-world:sample-application.adoc[libcouchbase Travel Sample Application] --
+then a page will still exist, so that when navigating between SDKs through either the dropdown nav, or changing ghe name in the URL bar, you will not find yourself facing a 404 error, and will still have access to the left-hand nvigation for that SDK.
+
+=== Site Search
+
+Our internal _Site Search_ is an excellent resource for finding information across Couchbase components and (supported) versions.
