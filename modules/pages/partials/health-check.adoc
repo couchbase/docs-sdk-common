@@ -40,8 +40,7 @@ Note: `Ping` may reopen a connection, so is not without side-effects.
 == Ping
 
 `Ping` _actively_ queries the status of the specified services,giving status and latency information for every node reachable.
-In addition to its use as a monitoring tool, a regular `Ping` can be used in an environment which does not respect keep alive values for a connection. 
-This is a Map (a JavaScript `object`) with `type` keys for each service available, such as `kv` and `n1ql`, and the value containing latency and status information.
+In addition to its use as a monitoring tool, a regular `Ping` can be used in an environment which does not respect keep alive values for a connection.
 // end::ping[]
 
 [source,javascript]
