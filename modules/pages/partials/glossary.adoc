@@ -10,21 +10,27 @@ Below you will find short definitions of many Couchbase-related terms, with link
 
 // Forms a sort of index of links
 
-Analytics - Couchbase Analytics Service allows longer running queries over big data, whilst taking advantage of Couchbase’s Multi-Dimensional scaling.
-
-Bootstrapping -
-
-CAS - Check And Swap. Used in Concurrent Document Mutations to ...
-
-Cert Auth - Certificate Authentication
-
-Cluster Provisioning -  … can be managed from the SDK
-
-Collections
-
-Custom Transcoders
-
-DCP - 
+* xref:howtos:analytics-using-sdk.adoc[Analytics] -- Couchbase Analytics Service allows longer running queries over big data, whilst taking advantage of Couchbase’s Multi-Dimensional scaling.
+// Bootstrapping -
+* xref:howtos:concurrent-document-mutations.adoc[CAS] -- Check And Swap. 
+A value which is altered each time a document is mutated. 
+Used in Concurrent Document Mutations for a type of optimistic logging.
+* xref:howtos:sdk-authentication.adoc#certificate-authentication[Cert Auth] -- Certificate Authentication (xref:6.6@server:introduction:editions.adoc[Enterprise Edition] only). 
+A client attempting to access Couchbase Server can present a certificate to the server, allowing the server to check the validity of the certificate. 
+If the certificate is valid, the user under whose identity the client is running, and the roles assigned that user, are verified. If the assigned roles are appropriate for the level of access requested to the specified resource, access is granted.
+* xref:howtos:provisioning-cluster-resources.adoc[Cluster Provisioning] -- The primary means for managing clusters is through the Couchbase Web UI which provides an easy to use interface for adding, removing, monitoring and modifying buckets. 
+In some instances you may wish to have a programmatic interface. For example, if you wish to manage a cluster from a setup script, or if you are setting up buckets in test scaffolding.
+The SDK also comes with some convenience functionality for common Couchbase management requests, particularly in the 3.0 SDK API.
+* xref:concept-docs:collections.adoc[Collections] -- from Server 7.0 (and available as a xref:6.6@server:developer-preview:collections/collections-overview.adoc[Developer Preview] in Couchbase Server 6.5 and 6.6), _Collections_ allow groupings of documents beneath the Bucket level.
+Bucket items can optionally be assigned to different collections according to content type.
+* xref:howtos:transcoders-nonjson.adoc[Custom Transcoders] -- Whenever key-value data is sent to or retrieved from Couchbase Server, the SDK passes the data being sent to a transcoder. 
+The transcoder can either reject the data as being unsupported, or convert it into a []byte and a Common Flag. 
+Many applications will not need to be aware of transcoders, as the defaults support most standard JSON use cases. 
+More advanced transcoding needs can be accomplished if the application implements their own transcoders and serializers.
+* xref:6.6@server:learn:clusters-and-availability/intra-cluster-replication.adoc#database-change-protocol[DCP] -- 
+Database Change Protocol (DCP) is the protocol used to stream bucket-level mutations. 
+DCP is used for high-speed replication of mutations; to maintain replica vBuckets, incremental MapReduce and spatial views, Global Secondary Indexes (GSIs), XDCR, backups, and external connections.
+This feed is not directly available, and users should look at xref:concept-docs:data-services.adoc#lowest-latency[other low latency alternatives].
 Durability - 
 (for older server versions, see xxx)
 
@@ -55,6 +61,11 @@ xref:[Query] - The Couchbase Query Service uses a SQL-like language for powerful
 RBAC
 
 RTO - see Tracing
+* xref:concept-docs:collections.adoc[Scopes] -- from Server 7.0 (and available as a xref:6.6@server:developer-preview:collections/collections-overview.adoc[Developer Preview] in Couchbase Server 6.5 and 6.6), _Collections_ allow groupings of documents beneath the Bucket level, and _Scopes_ group together Collections.
+Collections might be assigned to different scopes according to content-type, or to deployment-phase (e.g., test and production). 
+Applications can be assigned per-scope access rights, allowing each application to access only those collections it requires.
+
+
 
 Scope - 
 
@@ -70,6 +81,7 @@ Tracing - vs Response Time Observability vs Threshold Logging
 
 Transactions
 
+* Transcoders -- See _Custom Transcoders_, above.
 Transcoders - see Custom Transcoders
 
 Virtual XATTR
