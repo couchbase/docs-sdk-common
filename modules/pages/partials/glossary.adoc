@@ -55,7 +55,7 @@ A _developer preview_ is available for the xref:3.0@java-sdk:concept-docs:encryp
 Create, manage, and query full-text indexes on JSON documents stored in Couchbase buckets. 
 FTS uses natural language processing for indexing and querying documents, provides relevance scoring on the results of your queries, and has fast indexes for querying a wide range of possible text searches.
 Some of the supported query-types include simple queries like Match and Term queries; range queries like Date Range and Numeric Range; and compound queries for conjunctions, disjunctions, and/or boolean queries.
-** xref:6.5@server:learn:services-and-indexes/indexes/global-secondary-indexes.adoc[Global Secondary Indexes (GSI)] -- 
+* xref:6.5@server:learn:services-and-indexes/indexes/global-secondary-indexes.adoc[Global Secondary Indexes (GSI)] -- 
 A Global Secondary Index (GSI) supports queries made by the Query Service on attributes within documents. 
 Secondary indexes -- which contain a filtered or a full set of keys in a given bucket -- are optional, but increase query efficiency on a bucket.
 GSIs can be created xref:concept-docs:n1ql-query.adoc#indexes[through the SDK], using the N1QL `CREATE INDEX` statement.
@@ -65,7 +65,7 @@ See also xref:6.5@server:learn:services-and-indexes/indexes/storage-modes.adoc#m
 MapReduce Views uses distributed Map-Reduce for very fast aggregation operations (fast, because the indexes are pre-computed results) — ideal for pre-grouped aggregations, such as grouping temporal data sets (by day, by month, etc.). 
 Views’ spatial support allows for fast searching over extensive geo-spatial data in Couchbase Data Platform 5.x  --  however, Spatial Views are no longer supported in Couchbase Server 6.x, and so are not found in SDK 3.x. 
 Continuing improvements to our Query Service makes the latter usually a better choice, particularly as Views does not scale as well as the other services, lacking a global Index node.
-* xref:concept-docs:n1ql-query.adoc[[N1QL] -- Couchbase’s powerful SQL-like language allows queries in a format familiar to Database Administrators.
+* xref:concept-docs:n1ql-query.adoc[N1QL] -- Couchbase’s powerful SQL-like language allows queries in a format familiar to Database Administrators.
 // Observability
 * xref:howtos:n1ql-queries-with-sdk.adoc[Query] -- The Couchbase Query Service uses a SQL-like language for powerful queries across documents.
 * xref:6.5@server:learn:security/authorization-overview.adoc#introduction-to-rbac[RBAC] -- Role-Based Access Control allows secure, fine-grained access privileges, assigned to fixed roles.
@@ -83,9 +83,9 @@ Sub-Document operations are also atomic, in that if one Sub-Document mutation fa
 * xref:6.5@server:learn:data/transactions.adoc[Transactions] -- 
 Distributed ACID Transactions guarantee that multiple documents can be updated atomically.
 They are available for the 
-xref:3.0@java-sdk:howtos:distributed-acid-transactions-from-the-sdk.adoc[
-xref:3.0@java-sdk:howtos:distributed-acid-transactions-from-the-sdk.adoc[
-xref:3.0@java-sdk:howtos:distributed-acid-transactions-from-the-sdk.adoc[
+xref:1.0@cxx-txns::distributed-acid-transactions-from-the-sdk.adoc[C & {cpp}], 
+xref:3.0@dotnet-sdk:howtos:distributed-acid-transactions-from-the-sdk.adoc[.NET], and 
+xref:3.0@java-sdk:howtos:distributed-acid-transactions-from-the-sdk.adoc[Java] SDKs.
 * Transcoders -- See _Custom Transcoders_, above.
 * xref:concept-docs:xattr.adoc#virtual-extended-attributes[Virtual XATTRs] -- 
 Virtual Extended Attributes (VXATTR) consist of metadata on an individual document, generated on-demand to expose storage-level document metadata, such as `expiry` to expose document expiration. 
