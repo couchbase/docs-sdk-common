@@ -78,6 +78,8 @@ One cause of errors to try to eliminate, or quickly diagnose to deal with, is th
 Our xref:health-check.adoc[Health Check API] offers status and diagnostics on your cluster's network, and can be used, for example, to diagnose network latencies that are behind timeout errors.
 // end::diag[]
 
+// tag::observability[]
+// end::observability[]
 
 // tag::rto[]
 == Tracing
