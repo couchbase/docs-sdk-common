@@ -13,7 +13,7 @@ Below you will find short definitions of many Couchbase-related terms, with link
 
 * xref:howtos:analytics-using-sdk.adoc[Analytics] -- Couchbase Analytics Service allows longer running queries over big data, whilst taking advantage of Couchbase’s Multi-Dimensional scaling.
 // Bootstrapping -
-* xref:howtos:concurrent-document-mutations.adoc[CAS] -- Check And Swap. 
+* xref:howtos:concurrent-document-mutations.adoc[CAS] -- Conpare And Swap. 
 A value which is altered each time a document is mutated. 
 Used in Concurrent Document Mutations for a type of optimistic logging.
 * xref:howtos:sdk-authentication.adoc#certificate-authentication[Cert Auth] -- Certificate Authentication (xref:6.6@server:introduction:editions.adoc[Enterprise Edition] only). 
