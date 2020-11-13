@@ -71,7 +71,7 @@ Continuing improvements to our Query Service makes the latter usually a better c
 * xref:6.5@server:learn:security/authorization-overview.adoc#introduction-to-rbac[RBAC] -- Role-Based Access Control allows secure, fine-grained access privileges, assigned to fixed roles.
 The 3.0 API allows some user managemeng programmatically from the SDK.
 // RTO - see Tracing
-* xref:concept-docs:collections.adoc[Scopes] -- from Server 7.0 (and available as a xref:6.6@server:developer-preview:collections/collections-overview.adoc[Developer Preview] in Couchbase Server 6.5 and 6.6), _Collections_ allow groupings of documents beneath the Bucket level, and _Scopes_ group together Collections.
+* xref:concept-docs:collections.adoc[Scope] -- from Server 7.0 (and available as a xref:6.6@server:developer-preview:collections/collections-overview.adoc[Developer Preview] in Couchbase Server 6.5 and 6.6), _Collections_ allow groupings of documents beneath the Bucket level, and _Scopes_ group together Collections.
 Collections might be assigned to different scopes according to content-type, or to deployment-phase (e.g., test and production). 
 Applications can be assigned per-scope access rights, allowing each application to access only those collections it requires.
 * xref:howtos:subdocument-operations.adoc[Sub-Document Operations] --
