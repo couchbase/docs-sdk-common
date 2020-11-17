@@ -25,7 +25,7 @@ The SDK also comes with some convenience functionality for common Couchbase mana
 * xref:concept-docs:collections.adoc[Collections] -- from Server 7.0 (and available as a xref:6.6@server:developer-preview:collections/collections-overview.adoc[Developer Preview] in Couchbase Server 6.5 and 6.6), _Collections_ allow groupings of documents beneath the Bucket level.
 Bucket items can optionally be assigned to different collections according to content type.
 * xref:howtos:transcoders-nonjson.adoc[Custom Transcoders] -- Whenever key-value data is sent to or retrieved from Couchbase Server, the SDK passes the data being sent to a transcoder. 
-The transcoder can either reject the data as being unsupported, or convert it into a []byte and a Common Flag. 
+The transcoder can either reject the data as being unsupported, or convert it into a byte array and a Common Flag. 
 Many applications will not need to be aware of transcoders, as the defaults support most standard JSON use cases. 
 More advanced transcoding needs can be accomplished if the application implements their own transcoders and serializers.
 * xref:6.6@server:learn:clusters-and-availability/intra-cluster-replication.adoc#database-change-protocol[DCP] -- 
