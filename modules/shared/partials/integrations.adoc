@@ -9,7 +9,7 @@ Couchbase SDKs are often used with unofficial and third party tools and applicat
 
 // tag::intro[]
 Couchbase SDKs are often used with unofficial and third party tools and applications to integrate into broader language and platform ecosystems, and across data lakes in heterogeneous environments.
-There are some of the applications that you need to be aware of.
+These are some of the applications that you need to be aware of.
 // end::intro[]
 
 
@@ -31,6 +31,6 @@ We offer brief notes on what you should consider if integrating with them:
 // tag::other[]
 == Community 
 
-There are too many third party integrations to evaluate and list (and absence ofa mention in these pages is no judgement on importance or quality), but the following are well worth investigating:
+There are too many third party integrations to evaluate and list (and absence of a mention in these pages is no judgement on importance or quality), but the following are well worth investigating:
 // end::other[]
 
