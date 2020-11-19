@@ -1,7 +1,7 @@
 = User Management
 :nav-title: User Management
 :page-topic-type: concept
-:page-aliases: ROOT:sdk-user-management-overview
+:page-aliases: ROOT:sdk-user-management-overview.adoc
 
 [abstract]
 The SDK lets you programmatically create _users_, assign them _roles_ and associated _privileges_, and remove them from the system.
