@@ -1,0 +1,37 @@
+= Integrations & Ecosystem
+:navtitle: Integrations
+:page-topic-type: project-doc
+:page-aliases: 
+
+[abstract]
+
+Couchbase SDKs are often used with unofficial and third party tools and applications to integrate into broader language and platform ecosystems, and across data lakes in heterogeneous environments.
+
+#tag::intro[]
+Couchbase SDKs are often used with unofficial and third party tools and applications to integrate into broader language and platform ecosystems, and across data lakes in heterogeneous environments.
+There are some of the applications that you need to be aware of.
+
+#end::intro[]
+
+
+#tag::official[]
+== Couchbase Integrations
+
+Couchbase engineers are involved to a greater or lesser degree with projects that help get the SDK working with various common challenges.
+#end::official[]
+
+
+#tag::important[]
+== Across the Ecosystem
+
+Although unsupported, and not maintained by Couchbase, several projects are worth a look at.
+We offer brief notes on what you should consider if integrating with them:
+#end::important[]
+
+
+#tag::other[]
+== Community 
+
+There are too many third party integrations to evaluate and list (and absence ofa mention in these pages is no judgement on importance or quality), but the following are well worth investigating:
+#end::other[]
+
