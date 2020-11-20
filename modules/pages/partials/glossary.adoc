@@ -65,9 +65,8 @@ but non-JSON storage is supported,  including UTF-8 strings, raw sequences of 
 Non-JSON formats may be more efficient in terms of memory and processing power (for example, if storing only flat strings, JSON adds an additional syntactical overhead of two bytes per string). 
 Non-JSON documents may be desirable if migrating a legacy application, which is using a xref:howtos:transcoders-nonjson.adoc[customized binary format].
 JSON’s key-value structure allows the storage of collection data structures such as lists, maps, sets and queues -- see the xref:concept-docs:data-model.adoc[Data Model page];
-JSON’s tree-like structure allows operations against xref:subdocument-operations.adoc[specific paths in the Document],
+JSON’s tree-like structure allows operations against xref:howtos:subdocument-operations.adoc[specific paths in the Document],
 and efficient support for these data structures.
-
 * xref:howtos:kv-operations.adoc[Key-Value Operations] -- KV Operations work directly on the document, for CRUD operations on documents whose identity (key) is known.
 * xref:howtos:view-queries-with-sdk.adoc[MapReduce Views] -- 
 MapReduce Views uses distributed Map-Reduce for very fast aggregation operations (fast, because the indexes are pre-computed results) — ideal for pre-grouped aggregations, such as grouping temporal data sets (by day, by month, etc.). 
