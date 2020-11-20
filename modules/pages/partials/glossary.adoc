@@ -109,6 +109,6 @@ Glossaries are available for:
 * xref:server:learn:glossary.adoc[Couchbase Server]
 * xref:server:eventing:eventing-Terminologies.adoc[Couchbase Eventing Service]
 * xref:couchbase-lite:android:refer/java-android-refer-glossary.adoc[Couchbase Lite (Android)]
-* xref:sync-gateway:refer:refer-sgw-glossary.adoc[Sync Gateway]
+* xref:sync-gateway:ROOT:refer/refer-sgw-glossary.adoc[Sync Gateway]
 
 Only the Server Glossary takes the form of an index, linking to other pages, in the same manner as this page.
