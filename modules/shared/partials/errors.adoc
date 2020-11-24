@@ -19,7 +19,8 @@ See our xref:howtos:error-handling.adoc[practical error handling docs] for some 
 // tag::ref[]
 == Error Reference
 
-Error messages are all listed in our xref:ref:error-codes.adoc[comprehensive SDK error reference] which, where appropriate, links to steps to take to correct the error.
+Error messages are all listed in our xref:ref:error-codes.adoc[comprehensive SDK error reference].
+// which, where appropriate, links to steps to take to correct the error.
 // end::ref[]
 
 // tag::durability[]
@@ -79,6 +80,39 @@ Our xref:health-check.adoc[Health Check API] offers status and diagnostics on yo
 // end::diag[]
 
 // tag::observability[]
+== Threshold & Orphan Logging
+
+Observability is provided by the SDK in the following ways:
+
+=== Threshold Logging
+
+Threshold logging is the recording of slow operations -- useful for diagnosing when and where problems occur in a distributed environment.
+It is enabled by default.
+
+////
+=== Request Tracing
+The tracing capability allows the SDK to store, aggregate and potentially forward information about an individual request which can be used for later analysis. 
+This information can include the time it took to encode it, how much time it spent on the wire, etc.
+
+=== Observability Metrics
+The SDK collects information which is not tied to an individual request but rather to a collection of them (such as requests per second on a specific socket). 
+Or concerning the environment the SDK is running in (for example, garbage collection timings, CPU usage, etc.).
+////
+
+You will see this information turning up in the logs something like this:
+
+[source,json]
+----
+Threshold Log: {"service":"kv","count":2,"top":[{"operation_name":"Insert","total_us":161679},{"operation_name":"Upsert","total_us":161451}]}
+----
+
+And as tracing values such as `total_us`, the duration of the total time taken for the operation, expressed as microseconds.
+
+=== Orphaned Response Reporting
+
+Special reporting capabilities which explicitly collect information about responses which have been abandoned (i.e. timed out) at the time when the SDK tries to complete them.
+This is also enabled by default.
+// The first two of the three categories above are also available as OT
 // end::observability[]
 
 // tag::rto[]
