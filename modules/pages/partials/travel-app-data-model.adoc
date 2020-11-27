@@ -212,9 +212,12 @@ Refer to the xref:concept-docs:n1ql-query.adoc[Querying with N1QL] section for m
 
 In preparation for the introduction of xref:concept-docs:collections.adoc[Collections] in an upcoming release of the Couchbase Data Platform, 
 a version of the Travel Sample application is provided which contains a xref:howtos:working-with-collections.adoc#preparation[script] to split out user data into a separate collection.
-To try this out with Couchbase Server 6.5, you will need to xref:6.5@server:developer-preview:collections/collections-overview.adoc[enable the Collections Developer Preview].
+To try this out with Couchbase Server 6.5 and 6.6, you will need to xref:6.5@server:developer-preview:collections/collections-overview.adoc[enable the Collections Developer Preview].
 This _Developer Preview_ is not to be used in production.
 
+The _Beta_ release of Couchbase Server 7.0 offers the chance to try out a xref:7.0@server:manage:manage-settings/install-sample-buckets.adoc#configuring-sample-buckets[Collections-ready Travel Sample Bucket].
+
+image::travel-sample-collections-7.0β.png[]
 
 == Further Reading
 
