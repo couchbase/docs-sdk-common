@@ -217,7 +217,7 @@ This _Developer Preview_ is not to be used in production.
 
 The _Beta_ release of Couchbase Server 7.0 offers the chance to try out a xref:7.0@server:manage:manage-settings/install-sample-buckets.adoc#configuring-sample-buckets[Collections-ready Travel Sample Bucket].
 
-image:travel-sample-collections-7.0β.png[Collections-aware Travel Sample data model diagram]
+image:travel-sample-collections-7.0-beta.png[Collections-aware Travel Sample data model diagram]
 
 == Further Reading
 
