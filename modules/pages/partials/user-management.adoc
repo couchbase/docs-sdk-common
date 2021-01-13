@@ -20,7 +20,7 @@ boolean upsertUser (String userid, UserSettings settings)
 
 The method *upsertUser* creates a user and adds the user to the Couchbase Cluster.
 The user will subsequently be visible in the *Security* panel of the Couchbase Web Console.
-Note that successful user-addition results in a user _locally_ defined, with _username_ and _password_ stored on Couchbase Server: _external_ users (whose credentials reside on a network-available server, possibly accessed by means of LDAP) cannot be created by this SDK method.
+Note that successful user-addition results in a user _locally_ defined, with _username_ and _password_ stored on Couchbase Server: _external_ users (whose credentials reside on a network-available server, possibly accessed by means of LDAP) should not be created by this SDK method.
 If the local user created by *upsertUser* already exists, the previous definition is overwritten.
 
 The method takes two arguments.
