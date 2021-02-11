@@ -17,6 +17,7 @@ Couchbase uses three interface stability classifiers.
 You may find these classifiers appended as annotations or comments within documentation for each API:
 
 * *Committed*: This stability level is used to indicate the most stable interfaces that are guaranteed to be supported and remain stable between SDK versions.
+This is the default -- unless otherwise stated in the documentation, each API has *Committed* status.
 * *Uncommitted*: This level is used to indicate APIs that are _unlikely_ to change, but _may_ still change as final consensus on their behavior has not yet been reached.
 _Uncommitted_ APIs usually end up becoming stable APIs.
 * *Volatile*: This level is used to indicate experimental APIs that are still in flux and may likely be changed.
