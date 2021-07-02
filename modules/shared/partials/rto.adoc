@@ -1,7 +1,70 @@
-= RTO
+= Request Tracing and Metrics
 
-// tag::placeholder[]
-OpenTelemetry is an Observability Framework, created by the merging of OpenCensus and OpenTracing -- the latter was used in the previous version of the SDK.
-OpenTelemetry is currently in testing, and will be released during 2021, at which point it will be made available in the Couchbase SDKs.
+Both during the development and production lifecycle of an application, it is vital to constantly monitor the various health indicators that exist. One of the most important indicators is performance, which in the database context always boils down to per-request performance. In addition to having insight down to the request level, it is also important to understand how the application behaves as a whole. For both the micro and macro-view, tracing and metrics are powerful tools in the toolbox.
 
-// end::placeholder[]
+Request Tracing allows you to analyze the latency characteristics of individual requests and answer questions around where the overall wall-clock time is spent. So if a request takes 500 milliseconds to execute, it is possible to understand what fraction was spent on the server and network, and how much time was spent in encoding for example. Our built-in tracer will perform the aggregations and log the top slowest operations at a configurable interval to provide efficient ways to start debugging and troubleshooting.
+
+Metrics on the other hand provide insight into how the application (or SDK for that matter) is performing as a whole. Individual requests are aggregated and our default meter implementation will log aggregated percentiles on a per operation-type basis. This makes it possible to quickly pinpoint slow operation types (like a `get` operation) and then further pinpoint the causes through tracing.
+
+In addition to built-in turnkey logging solutions, support for external systems is also provided. These depend on your platform of choice, but OpenTelemetry is one of the more popular ones. Please refer to the specifics in this concept document as well as the how-to guides on specific information for the target platform of choice.
+
+== Request Tracing
+
+Tracing provides granular timing information down the individual phases of a request/operation. For a simple overview, consider the following output for an individual request which is logged from the default tracer that ships with the SDK and is enabled by default: 
+
+[source,java]
+----
+{
+  "total_duration_us": 1200,
+  "encode_duration_us": 100,
+  "last_dispatch_duration_us": 40,
+  "total_dispatch_duration_us": 40,
+  "last_server_duration_us": 2,
+  "total_server_duration_us": 2,
+  "operation_name": "upsert",
+  "last_local_id": "66388CF5BFCF7522/18CC8791579B567C",
+  "operation_id": "0x23",
+  "last_local_socket": "10.211.55.3:52450",
+  "last_remote_socket": "10.112.180.101:11210",
+  "timeout_ms": 2500,
+}
+----
+
+It is possible to identify how long the operation took to encode, how much time it spent on the server, to which node it got sent to and much more. Only requests over a configurable threshold are logged and reported, so it is possible to fine tune these settings depending on the performance characteristics of each environment.
+
+Configuration options are avialable to not only tune the thresholds, but also the logging interval and sample size.
+
+== Metrics
+
+Request metrics provide insight into the sum of all individual requests flowing through an SDK. The overall timings (which can be compared to the `total_duration_us` value from the tracing section above) are aggregated and dumped with percentile values on each configurable interval. Here is an example:
+
+[source,json]
+----
+{
+  "meta": {
+    "emit_interval_s": 600,
+  },
+  "operations": {
+    "kv": {
+        "upsert": {
+        "total_count": 120,
+        "percentiles_us": {
+            "50.0": 5,
+            "90.0": 10,
+            "99.0": 33,
+            "99.9": 55,
+            "100.0": 101,
+        }
+        }
+    }
+  }
+}
+----
+
+The JSON above shows the maximum latency as well as lower percentiles for individual operations. Note that they are aggregated across all nodes and include potential retries, so this really shows end-to-end latency from a users/SDK perspective.
+
+== OpenTelemetry Integration
+
+In addition to the built-in turnkey logging solutions for both tracing and metrics - depending on platform availability - we are providing support for OpenTelemetry and other platform-specific integrations. This allows tight integration into your monitoring infrastructure, making monitoring and troubleshooting performance even more efficient.
+
+The How-To section provides more information on the platform specifics, and general information about OpenTelemetry can be found on their website https://opentelemetry.io/.
