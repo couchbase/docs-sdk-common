@@ -1,5 +1,8 @@
 = Request Tracing and Metrics
+:page-aliases: ROOT:threshold-logging.adoc
 
+
+// tag::rto[]
 Both during the development and production lifecycle of an application, it is vital to constantly monitor the various health indicators that exist. One of the most important indicators is performance, which in the database context always boils down to per-request performance. In addition to having insight down to the request level, it is also important to understand how the application behaves as a whole. For both the micro and macro-view, tracing and metrics are powerful tools in the toolbox.
 
 Request Tracing allows you to analyze the latency characteristics of individual requests and answer questions around where the overall wall-clock time is spent. So if a request takes 500 milliseconds to execute, it is possible to understand what fraction was spent on the server and network, and how much time was spent in encoding for example. Our built-in tracer will perform the aggregations and log the top slowest operations at a configurable interval to provide efficient ways to start debugging and troubleshooting.
@@ -68,3 +71,10 @@ The JSON above shows the maximum latency as well as lower percentiles for indivi
 In addition to the built-in turnkey logging solutions for both tracing and metrics - depending on platform availability - we are providing support for OpenTelemetry and other platform-specific integrations. This allows tight integration into your monitoring infrastructure, making monitoring and troubleshooting performance even more efficient.
 
 The How-To section provides more information on the platform specifics, and general information about OpenTelemetry can be found on their website https://opentelemetry.io/.
+
+
+== Additional Information
+
+A practical look at working with metrics is available in the xref:howtos:slow-operations-logging.adoc[Slow Operations Logging] howto docs.
+
+// end::rto[]
