@@ -10,7 +10,7 @@ This version demonstrates various features of Couchbase, including the Collectio
 
 Fetch the https://github.com/couchbaselabs/{travel-sample-git-project}[Couchbase {name-sdk} travel-sample Application REST Backend] from github:
 
-[source,bash,subs="+attributes"]
+[source,console,subs="+attributes"]
 ----
 git clone https://github.com/couchbaselabs/{travel-sample-git-project}.git
 cd {travel-sample-git-project}
@@ -18,7 +18,7 @@ cd {travel-sample-git-project}
 
 With https://docs.docker.com/get-docker/[Docker] installed, you should now be able to run a bare-bones copy of Couchbase Server, load the travel-sample, add indexes, install the sample-application and its frontend, all by running a single command:
 
-[source,bash]
+[source,console]
 ----
 docker-compose up
 ----
