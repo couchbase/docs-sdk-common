@@ -3,14 +3,7 @@
 
 
 // tag::intro[]
-Distributed Transactions for Couchbase provide these semantics and features:
-
-* Insertion, mutation, and removal of multiple documents can be staged inside a transaction.  
-* Until the transaction is committed, these changes will not be visible to other transactions, or any other part of the Couchbase Data Platform.
-* An isolation level of Read Committed, to support high performance and scalability.
-* A high-level and easy-to-use API that allows the developer to express what they want the transaction to do as a block of logic, while the library takes care of the details of error handling, including conflicts with other transactions.
-
-Please see xref:6.6@server:learn:data/transactions.adoc[our introduction to ACID Transactions] for a guide to the benefits and trade-offs of multi-document transactions.
+This document presents a practical HOWTO on using the transactions library, following on from our xref:7.0@server:learn:data/transactions.adoc[transactions documentation].
 // end::intro[]
 
 
@@ -23,7 +16,7 @@ Please see xref:6.6@server:learn:data/transactions.adoc[our introduction to ACID
 NOTE: If using a single node cluster (for example, during development), then note that the default number of replicas for a newly created bucket is 1.
 If left at this default, then all Key-Value writes performed at with durabiltiy will fail with a `DurabilityImpossibleException`.
 In turn this will cause all transactions (which perform all Key-Value writes durably) to fail.
-This setting can be changed via xref:6.6@server:manage:manage-buckets/create-bucket.adoc#couchbase-bucket-settings[GUI] or xref:6.6@server:cli:cbcli/couchbase-cli-bucket-create.adoc#options[command line].
+This setting can be changed via xref:7.0@server:manage:manage-buckets/create-bucket.adoc#couchbase-bucket-settings[GUI] or xref:7.0@server:cli:cbcli/couchbase-cli-bucket-create.adoc#options[command line].  If the bucket already existed, then the server needs to be rebalanced for the setting to take affect.
 // end::requirements[]
 
 
@@ -41,7 +34,7 @@ There are two higher durability settings available that will additionally wait f
 This further increases safety, at a cost of additional latency.
 
 A level of `None` is present but its use is discouraged and unsupported.
-If durability is set to `None`, then atomicity _cannot be guaranteed_.
+If durability is set to `None`, then ACID semantics are not guaranteed.
 // end::config[]
 
 
@@ -50,12 +43,21 @@ If durability is set to `None`, then atomicity _cannot be guaranteed_.
 // tag::creating[]
 == Creating a Transaction
 
-A core idea of the library is that the application supplies the logic for transaction inside a lambda, including any conditional logic required, and the transactions library takes care of getting the transaction committed.
+A core idea of the library is that the application supplies the logic for transaction inside a lambda, including any conditional logic required, and the transactions library takes care of getting the transaction committed.  If the library encounters a transient error, such as a temporary conflict with another transaction, then it can rollback what has been done so far and run the lambda again.
+The application does have to do these retries and error handling itself.
 
-It is important to understand that the lambda may be run multiple times in order to handle some types of transient error, such as a temporary conflict with another transaction.
- 
 Each run of the lambda is called an `attempt`, inside an overall `transaction`.
 // end::creating[]
+
+
+// tag::lambda-ctx[]
+The lambda gets passed an `AttemptContext` object, generally referred to as `ctx` here.
+
+NOTE: Since the lambda may be rerun multiple times, it is important that it does not contain any side effects.
+In particular, you should never perform regular operations on a `Collection`, such as `collection.insert()`, inside the lambda.
+Such operations may be performed multiple times, and will not be performed transactionally.
+Instead such operations must be done through the `ctx` object, e.g. `ctx.insert()`.
+// end::lambda-ctx[]
 
 
 
@@ -63,6 +65,8 @@ Each run of the lambda is called an `attempt`, inside an overall `transaction`.
 // tag::mechanics[]
 [#mechanics]
 == Transaction Mechanics
+// Note: this section may end up getting removed, as the server docs are being rewritten currently
+
 While this document is focussed on presenting how transactions are used at the API level, it is useful to have a high-level understanding of the mechanics.
 Reading this section is completely optional.
 
@@ -99,12 +103,11 @@ The cleanup process is detailed below in <<Asynchronous Cleanup>>.
 
 === Committing
 Only once the lambda has successfully run to conclusion, will the attempt be committed.
-This updates the attempt entry, which can be used as a signal by transactional actors as to whether to use the post-transaction version of a document from its XATTRs.
-Hence updating the ATR entry is effectively an 'atomic commit' switch for the transaction.
+This updates the ATR entry, which is used as a signal by transactional actors to use the post-transaction version of a document from its XATTRs.
+Hence, updating the ATR entry is an 'atomic commit' switch for the transaction.
 
-After this atomic commit point is reached, the individual documents be committed (or "unstaged").
-This provides an eventually consistent commit for non-transactional actors (including standard Key-Value reads and N1QL statements).
-Transactions will begin reading the post-transactional version of documents as soon as the ATR entry is changed to committed.
+After this commit point is reached, the individual documents will be committed (or "unstaged").
+This provides an eventually consistent commit for non-transactional actors.
 // end::mechanics[]
 
 
@@ -134,7 +137,7 @@ We’re going to do this in a transaction, as we don’t want a situation where 
 == Concurrency with Non-Transactional Writes
 
 This release of transactions for Couchbase requires a degree of co-operation from the application.
-Specifically, the application should ensure that non-transactional writes (such as key-value writes or N1QL UPDATES) are never done concurrently with transactional writes, on the same document.
+Specifically, the application should ensure that non-transactional writes are never done concurrently with transactional writes, on the same document.
 
 This requirement is to ensure that the strong Key-Value performance of Couchbase was not compromised.
 A key philosophy of our transactions is that you 'pay only for what you use'.
@@ -225,22 +228,16 @@ As with `TransactionFailed` it is recommended that it at least writes any logs f
 It may wish to retry the transaction at a later point, or globally extend transactional expiration times to give the protocol additional time to resolve the ambiguity.
 
 === TransactionResult.unstagingComplete()
+This boolean flag indicates whether all documents were able to be unstaged (committed).
 
-As above, there is a 'single point of truth' for a transaction.
-After this atomic commit point is reached, the documents themselves will still be individually committed (we also call this "unstaging").
-However, transactionally-aware actors will now be returning the post-transaction versions of the documents, and the transaction is effectively fully committed to those actors.
+For most use-cases it is not an issue if it is false.
+All transactional actors will still all the changes from this transaction, as though it had committed fully.
+The cleanup process is asynchronously working to complete the commit, so that it will be fully visible to non-transactional actors.
 
-So if the application is solely working with transaction-aware actors, then the unstaging process is optional.
-And failures during the unstaging process are not particularly important, in this case.
-(Note the asynchronous cleanup process will still complete the unstaging process at a later point.)
+The flag is provided for those rare use-cases where the application requires the commit to be fully visible to non-transactional actors, before it may continue.
+In this situation the application can raise an error here, or poll all documents involved until they reflect the mutations.
 
-Hence, many errors during unstaging will cause the transaction to immediately return success.
-That is, successful return simply means that the commit point was reached.
-
-A method `TransactionResult.unstagingComplete()` indicates whether the unstaging process completed successfully or not.
-This should be used any time that the application needs all results of the transaction to be immediately available to non-transactional actors (which currently includes N1QL and non-transactional Key-Value reads).
-
-Error handling differs depending on whether a transaction is before or after the point of commit (or rollback).
+If you regularly see this flag false, consider increasing the transaction expiration time to reduce the possibility that the transaction times out during the commit.
 // end::txnfailed1[]
 
 
@@ -254,15 +251,13 @@ However, there are situations that inevitably created failed, or 'lost' transact
 This requires an asynchronous cleanup task, described in this section.
 
 Creating the `Transactions` object spawns a background cleanup task, whose job it is to periodically scan for expired transactions and clean them up.
-It does this by scanning a subset of the Active Transaction Record (ATR) transaction metadata documents on a bucket.
+It does this by scanning a subset of the Active Transaction Record (ATR) transaction metadata documents, on each bucket.
 As you'll recall from <<mechanics,earlier>>, an entry for each transaction attempt exists in one of these documents.
 (They are removed during cleanup or at some time after successful completion.)
 
 The default settings are tuned to find expired transactions reasonably quickly, while creating neglible impact from the background reads required by the scanning process.
 To be exact, with default settings it will generally find expired transactions within 60 seconds, and use less than 20 reads per second.
 This is unlikely to impact performance on any cluster, but the settings may be <<tuning-cleanup,tuned>> as desired.
-
-Cleanup is done on each bucket in the cluster.
 
 All applications connected to the same cluster and running `Transactions` will share in the cleanup, via a low-touch communication protocol on the "_txn:client-record" metadata document that will be created in each bucket in the cluster.
 This document is visible and should not be modified externally.
@@ -292,11 +287,120 @@ The cleanup settings can be configured as so:
 
 
 
+// tag::query-intro[]
+== N1QL Queries
+As of Couchbase Server 7.0, N1QL queries may be used inside the transaction lambda, freely mixed with Key-Value operations.
+
+=== BEGIN TRANSACTION
+There are two ways to initiate a transaction with Couchbase 7.0: via a transactions library, and via the query service directly using `BEGIN TRANSACTION`.
+The latter is intended for those using query via the REST API, or using the query workbench in the UI, and it is strongly recommended that application writers instead use the transactions library.
+This provides these benefits:
+
+- It automatically handles errors and retrying.
+- It allows Key-Value operations and N1QL queries to be freely mixed.
+- It takes care of issuing `BEGIN TRANSACTION`, `END TRANSACTION`, `COMMIT` and `ROLLBACK` automatically.  These become an implementation detail and you should not use these statements inside the lambda.
+
+=== Supported N1QL
+The majority of N1QL DML statements are permitted within a transaction.  Specifically: INSERT, UPSERT, DELETE, UPDATE, MERGE and SELECT are supported.
+
+DDL statements, such as CREATE INDEX, are not.
+// end::query-intro[]
+
+
+// tag::query-options[]
+The supported options are:
+
+* parameters
+* scanConsistency
+* flexIndex
+* serializer
+* clientContextId
+* scanWait
+* scanCap
+* pipelineBatch
+* pipelineCap
+* readonly
+* adhoc
+* raw
+// end::query-options[]
+
+
+// tag::query-perf[]
+=== Query Concurrency
+Only one query statement will be performed by the query service at a time.
+The reactive API allows performing multiple concurrent query statements, but this may result internally in some added network traffic due to retries, and is unlikely to provide any increased performance.
+
+=== Query Performance Advice
+This section is optional reading, and only for those looking to maximise transactions performance.
+
+After the first query statement in a transaction, subsequent Key-Value operations in the lambda are converted into N1QL and executed by the query service rather than the Key-Value data service.
+The operation will behave identically, and this implementation detail can largely be ignored, except for these two caveats:
+
+* These converted Key-Value operations are likely to be slightly slower, as the query service is optimised for statements involving multiple documents.
+Those looking for the maximum possible performance are recommended to put Key-Value operations before the first query in the lambda, if possible.
+* Those using the reactive API to achieve concurrency should be aware that the converted Key-Value operations are subject to the same parallelism restrictions mentioned above, e.g. they will not be executed in parallel by the query service.
+If possible, concurrent Key-Value operations should be moved before the first query.
+// end::query-perf[]
+
+
+// tag::query-single[]
+==== Single Query Transactions
+This section is mainly of use for those wanting to do large, bulk-loading transactions.
+
+The query service maintains where required some in-memory state for each document in a transaction, that is freed on commit or rollback.
+For most use-cases this presents no issue, but there are some workloads, such as bulk loading many documents, where this could exceed the server resources allocated to the service.
+Solutions to this include breaking the workload up into smaller batches, and allocating additional memory to the query service.
+Alternatively, single query transaction, described here, may be used.
+
+Single query transactions have these characteristics:
+
+- They have greatly reduced memory usage inside the query service.
+- As the name suggests, they consist of exactly one query, and no Key-Value operations.
+
+You will see reference elsewhere in Couchbase documentation to the `tximplicit` query parameter.
+Single query transactions internally are setting this parameter.
+In addition, they provide automatic error and retry handling.
+
+Single query transactions may be initiated via `transactions.query()`:
+// end::query-single[]
+
+
+// tag::custom-metadata-1[]
+== Custom Metadata Collections
+As described earlier, transactions automatically create and use metadata documents.
+By default, these are created in the default collection of the bucket of the first mutated document in the transaction.
+Optionally, you can instead use a collection to store the metadata documents.
+Most users will not need to use this functionality, and can continue to use the default behaviour.
+They are provided for these use-cases:
+
+* The metadata documents contain, for documents involved in each transaction, the document's key and the name of the bucket, scope and collection it exists on.
+In some deployments this may be sensitive data.
+* You wish to remove the default collections.
+Before doing this, you should ensure that all existing transactions using metadata documents in the default collections have finished.
+
+=== Usage
+Custom metadata collections are enabled with:
+
+// end::custom-metadata-1[]
+
+
+// tag::custom-metadata-2[]
+When specified:
+
+* Any transactions created from this `Transactions` object, will create and use metadata in that collection.
+* The asynchronous cleanup started by this `Transactions` object will be looking for expired transactions only in this collection.
+
+You need to ensure that this application has RBAC data read and write privileges to it, and should not delete the collection subsequently as it can interfere with existing transactions.
+You can use an existing collection or create a new one.
+
+// end::custom-metadata-2[]
+
+
 
 // tag::further[]
 == Further Reading
 
-* There’s plenty of explanation about how Transactions work in Couchbase in our xref:6.6@server:learn:data/transactions.adoc[Transactions documentation].
+* There’s plenty of explanation about how Transactions work in Couchbase in our xref:7.0@server:learn:data/transactions.adoc[Transactions documentation].
 * You can find further code examples on our https://github.com/couchbaselabs/couchbase-transactions-java-examples[transactions examples repository].
 // end::further[]
 
