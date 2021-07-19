@@ -1,56 +1,75 @@
-= Travel Sample Application
-
-The aim of the Travel Sample Application, and this accompanying tutorial, is to introduce you to the basics of client code for Couchbase Serve, covering KeyValue and Sub-Document access, as well as Query (N1QL) and Full Text Search (FTS) services.
-
-
-
-
+// tag::abstract[]
+[abstract]
+{description}
+This version demonstrates various features of Couchbase, including the Collections feature new in Server 7.0.
+// end::abstract[]
 
 
+// tag::quick-start[]
+== Quick Start
+
+Fetch the https://github.com/couchbaselabs/{travel-sample-git-project}[Couchbase {name-sdk} travel-sample Application REST Backend] from github:
+
+[source,bash,subs="+attributes"]
+----
+git clone https://github.com/couchbaselabs/{travel-sample-git-project}.git
+cd {travel-sample-git-project}
+----
+
+With https://docs.docker.com/get-docker/[Docker] installed, you should now be able to run a bare-bones copy of Couchbase Server, load the travel-sample, add indexes, install the sample-application and its frontend, all by running a single command:
+
+[source,bash]
+----
+docker-compose up
+----
+// end::quick-start[]
 
 
+// tag::bring-your-own[]
+== Running the code against your own development Couchbase server.
 
 // tag::prereq[]
-Travel Sample Application uses the Travel Sample data Bucket, which ships with Couchbase Server.
-For Couchbase Server 6.5, make sure that you have at least one node each of data; query; index; and search.
+For Couchbase Server {version-server}, make sure that you have at least one node each of data; query; index; and search.
 For a development box, mixing more than one of these on a single node (given enough memory resources) is perfectly acceptable.
-If you have yet to install Couchbase Server in your development environment, xref:6.5@server:getting-started:do-a-quick-install.adoc[start here].
 
-Then load up the Travel Sample Bucket, using either the xref:6.5@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-ui[Web interface] 
-or the xref:6.5@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-cli[command line].
-You will also need to xref:6.5@server:fts:fts-searching-from-the-ui.adoc#create-an-index[create a Search Index] -- Query indexes are taken care of by the Sample Bucket.
+If you have yet to install Couchbase Server in your development environment
+xref:{version-server}@server:getting-started:do-a-quick-install.adoc[start here].
+
+Then load up the Travel Sample Bucket, using either the
+xref:{version-server}@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-ui[Web interface]
+or the
+xref:{version-server}@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-cli[command line].
+You will also need to
+xref:{version-server}@server:fts:fts-searching-from-the-ui.adoc#create-an-index[create a Search Index]
+-- Query indexes are taken care of by the Sample Bucket.
 // end::prereq[]
 
-
-WARNING: This is a sample application, using sample data, running this on a production box would be unwise.
-
-
+See the README at https://github.com/couchbaselabs/{travel-sample-git-project} for full details of how to run and tweak the {name-sdk} travel-sample app.
+// end::bring-your-own[]
 
 
+// tag::using[]
+== Using the Sample App
+
+// TODO: *PIC -- screenshot
+
+Give yourself a username and password and click *Register*.
+
+Now try out a few queries, and see Search in action for the hotel finder feature.
+// end::using[]
 
 
+// tag::data-model[]
+== Data Model
 
-== Prerequisites
-
-
-
-* Couchbase Server 6.5 or above, with _Data_ and _Search_ enabled.
-Preferably running locally.
-* A xref:hello-world:start-using-sdk.adoc[3.0 version of your SDK] -- _preferably_ the latest release.
-* The travel sample app for your SDK
+See the xref:ref:travel-app-data-model.adoc[Travel App Data Model] reference page for more information about the sample data set used.
+// end::data-model[]
 
 
+// tag::rest-api[]
+== REST API
 
+You can explore the REST API here in read-only mode, or once you are running the application, at the `/apidocs` endpoint.
 
-
-
-
-
-
-
-
-
-== See Also
-
-* The Travel Sample's data model is briefly covered xref:ref:??????[in this reference page], for those wanting a more complete picture of what's going on in the application.
-
+swagger_ui::https://raw.githubusercontent.com/couchbaselabs/{travel-sample-git-project}/HEAD/swagger.json[]
+// end::rest-api[]
