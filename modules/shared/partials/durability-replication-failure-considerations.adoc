@@ -24,9 +24,9 @@ By default all writes are asynchronous, but levels of durability can be set, to 
 
 // tag::syncrep[]
 == Durable Writes
-Durability has been enhanced in Couchbase Data Platform 6.5, with xref:6.5@server:learn:data/durability.adoc[Durable Writes], 
+Durability has been enhanced in Couchbase Data Platform 6.5, with xref:7.0@server:learn:data/durability.adoc[Durable Writes],
 under which mutations will not be visible to other clients until they have met their durability requirements.
-These requirements are now enforced on the server side, rather than requiring client logic, which means that this committed durability can now be guaranteed. 
+These requirements are now enforced on the server side, rather than requiring client logic, which means that this committed durability can now be guaranteed.
 
 The optional `durabilityLevel` parameter, which all mutating operations accept, allows the application to wait until this replication (or persistence) is successful before proceeding.
 If `durabilityLevel()` is used with no argument, the application will report success back as soon as the primary node has acknowledged the mutation in its memory.
@@ -36,7 +36,7 @@ With Couchbase Server 6.5 and above, the three replication level options are:
 * `MajorityAndPersistToActive` -- Majority level, plus persisted to disk on the active node.
 * `PersistToMajority` -- Majority level, plus persisted to disk on the majority of configured replicas.
 
-The options are in order of increasing levels of safety.  
+The options are in order of increasing levels of safety.
 For a given node, waiting for writes to storage is considerably slower than waiting for it to be available in-memory.
 In particular, `PersistToMajority` will take longer than the other two, and `timeout` value needs to be selected with care -- particularly for large numbers of documents -- after testing on a representative network, with a realistic workload.
 Variation in network speeds and conditions, _inter alia_, make it difficult to give blanket recommendations.
@@ -45,17 +45,17 @@ Variation in network speeds and conditions, _inter alia_, make it difficult to g
 
 // tag::syncrep2[]
 Options for making changes to `numKvConnections` (kvEndpoints) and `kvDurableTimeout` for Durable Writes can be found on the xref:ref:client-settings.adoc#io-options[Client Settings page].
-Increasing the number of reader and writer threads for Couchbase Server storage _may_ be advantageous: see the discussion on the xref:6.5@server:learn:buckets-memory-and-storage/storage.adoc#threading[Server storage page].
+Increasing the number of reader and writer threads for Couchbase Server storage _may_ be advantageous: see the discussion on the xref:7.0@server:learn:buckets-memory-and-storage/storage.adoc#threading[Server storage page].
 // end::syncrep2[]
 
 
 // tag::syncrep3[]
 
-IMPORTANT: Durable Writes must not be made with three replicas. 
+IMPORTANT: Durable Writes must not be made with three replicas.
 Attempting this will result in an error message: `DURABILITY_IMPOSSIBLE`.
 
-While Durable Writes are being attempted, another client cannot write to the document concerned 
--- see the diagram and explanation xref:6.5@server:learn:data/durability.adoc#process-and-communication[in the Server Durability docs].
+While Durable Writes are being attempted, another client cannot write to the document concerned
+-- see the diagram and explanation xref:7.0@server:learn:data/durability.adoc#process-and-communication[in the Server Durability docs].
 
 
 
@@ -72,7 +72,7 @@ Durable Writes do a great deal to mitigate against network problems, but working
 Consider carefully the case where the client has sent the operation to the server, the server has sent the mutation on to the replica(s), and the replicas have acknowledged completion of their operation(s). Now, at the point where the server is sending the successful status to the client, the network drops. The client is in an ambiguous state, not knowing whether or not the operation was successful.
 
 In cases where the operation is idempotent (such as an upsert operation), then simply retrying is a perfectly acceptable strategy, where the cost of doing so is justified by the importance of the operation.
-Where the operation is an array append, or somesuch, then xref:6.5@server:learn:data/transactions.adoc[distributed, multi-document ACID transactions] should be considered.
+Where the operation is an array append, or somesuch, then xref:7.0@server:learn:data/transactions.adoc[distributed, multi-document ACID transactions] should be considered.
 
 // end::syncrep3[]
 
@@ -80,10 +80,10 @@ Where the operation is an array append, or somesuch, then xref:6.5@server:learn:
 // tag::older[]
 == Older Server Versions
 
-In a version of Couchbase Server lower than 6.5 is being used then the application can fall-back to 'client verified' durability.  
-Here the SDK will do a simple poll of the replicas and only return once the requested durability level is achieved. 
+In a version of Couchbase Server lower than 6.5 is being used then the application can fall-back to 'client verified' durability.
+Here the SDK will do a simple poll of the replicas and only return once the requested durability level is achieved.
 
-Couchbase Server versions prior to 6.5 implement durability using the `Observe` operation for clients to check if a mutation has been replicated and/or persisted to a specified number of cluster nodes. 
+Couchbase Server versions prior to 6.5 implement durability using the `Observe` operation for clients to check if a mutation has been replicated and/or persisted to a specified number of cluster nodes.
 This allows applications to determine when a write is durable (that is, will still be present after some amount of failure).
 
 The_level of durability_ is configurable with two values:
@@ -127,11 +127,11 @@ Durability operations may also cause increased network traffic since it is imple
 // This section only in Java for 3.0 β
 // and later others...
 
-Couchbase introduced xref:6.5@server:learn:data/transactions.adoc[distributed, multi-document ACID Transactions], with Couchbase Data Platform 6.5.
+Couchbase introduced xref:7.0@server:learn:data/transactions.adoc[distributed, multi-document ACID Transactions], with Couchbase Data Platform 6.5.
 They are implemented as a separate library -- currently for the Java SDK.
 The following documentation is available:
 
-* xref:6.5@server:learn:data/transactions.adoc[An introductory guide to how Couchbase ACID Transactions work].
+* xref:7.0@server:learn:data/transactions.adoc[An introductory guide to how Couchbase ACID Transactions work].
 * xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[A HOWTO guide].
 * xref:project-docs:distributed-transactions-java-release-notes.adoc[Transactions Release Notes].
 

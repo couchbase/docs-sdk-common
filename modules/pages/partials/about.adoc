@@ -13,11 +13,11 @@ so this page is a guide to the SDK docs, to help you to get the most from them.
 == Assumptions & Presumptions
 
 Couchbase is a complex and powerful product, with many components.
-The SDKs interact with Couchbase Server and its various services; although some links are given to the pages for these services, gaining an understanding of them is not the principal aim of the SDK documentation, 
+The SDKs interact with Couchbase Server and its various services; although some links are given to the pages for these services, gaining an understanding of them is not the principal aim of the SDK documentation,
 rather it is to gain an understanding of how to interact with them programmatically from the SDK,
 as many application programmers will have the task specced out for them.
 
-Some concepts, such as Role-Based Access Control, do need to be understood in greater depth -- but this is documented xref:6.5@server:learn:security/roles.adoc[in the appropriate place in the Server docs], and linked from the xref:hello-world:start-using-sdk.adoc[Getting Started Guide].
+Some concepts, such as Role-Based Access Control, do need to be understood in greater depth -- but this is documented xref:7.0@server:learn:security/roles.adoc[in the appropriate place in the Server docs], and linked from the xref:hello-world:start-using-sdk.adoc[Getting Started Guide].
 Furthermore, things which are essential in production can be a barrier to getting up and running quickly in order to try something out -- so the _Full Admin_ RBAC role is used in the _Hello World_ code example, contrary to best practice (but this is, of course, called out).
 
 
@@ -32,7 +32,7 @@ The next four sections are collections of practical, task-oriented pages, featur
 
 === Working with Data
 
-This section deals with all of the main Couchbase Services: xref:howtos:kv-operations.adoc[The Data Service] (including xref:howtos:subdocument-operations.adoc[Sub-Document Operations]); the xref:howtos:n1ql-queries-with-sdk.adoc[Query Service]; the xref:howtos:analytics-using-sdk.adoc[Analytics Service]; Full-Text xref:howtos:full-text-searching-with-sdk.adoc[Search Service]; and xref:howtos:view-queries-with-sdk.adoc[MapReduce Views]. 
+This section deals with all of the main Couchbase Services: xref:howtos:kv-operations.adoc[The Data Service] (including xref:howtos:subdocument-operations.adoc[Sub-Document Operations]); the xref:howtos:n1ql-queries-with-sdk.adoc[Query Service]; the xref:howtos:analytics-using-sdk.adoc[Analytics Service]; Full-Text xref:howtos:full-text-searching-with-sdk.adoc[Search Service]; and xref:howtos:view-queries-with-sdk.adoc[MapReduce Views].
 
 NOTE: Some SDKs feature an additional xref:3.0@python-sdk:howtos:caching-example.adoc[fully-worked, complete code example].
 Others may be added at a later date.
@@ -81,7 +81,7 @@ Here can also be found the xref:project-docs:sdk-release-notes.adoc[Release Note
 
 Each page contains several links to related pages in the docs, as well as to relevant sections of the latest generated API docs.
 Links are made to cover as many common user journeys as we could think of.
-For cases where we didn't anticipate your needs, every page in each SDK is linked from the left-hand navigation, and the paragraphs above detail the broad purpose of these groupings and some of their content. 
+For cases where we didn't anticipate your needs, every page in each SDK is linked from the left-hand navigation, and the paragraphs above detail the broad purpose of these groupings and some of their content.
 
 NOTE: Several _non-pages_ exist, in the sense that where a page found in one or more SDKs, such as the _Travel Sample Application_, is not available in one (or more) SDKs --
 as, for example, we have not made a xref:3.0@c-sdk:hello-world:sample-application.adoc[libcouchbase Travel Sample Application] --
