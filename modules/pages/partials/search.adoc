@@ -15,16 +15,16 @@ _Full Text Search_ provides extensive capabilities for _natural-language queryin
 Results can be _scored_, to indicate match-relevancy; and result-sets ordered correspondingly.
 _Conjunctive_ and _disjunctive_ searches can be performed, whereby common result-subsets from multiple queries can either be returned or omitted.
 
-A full overview of Full Text Search is provided in xref:6.5@server:fts:full-text-intro.adoc[Full Text Search: Fundamentals].
+A full overview of Full Text Search is provided in xref:7.0@server:fts:full-text-intro.adoc[Full Text Search: Fundamentals].
 This includes information on the principal features of Couchbase Full Text Search, its architecture, and the latest feature-additions.
 Other information-sources include:
 
-* xref:6.5@server:fts:fts-performing-searches.adoc[Performing Searches]: An explanation of the steps required to prepare for and perform Full Text Search.
-* xref:6.5@server:fts:fts-searching-from-the-ui.adoc[Searching from the UI]: A brief introduction to the Full Text Search user interface provided by the Couchbase Web Console, with a step-by-step example of how to create a simple Full Text Index, and perform a search on it.
-* xref:6.5@server:fts:fts-searching-with-the-rest-api.adoc[Searching with the REST API]: Basic examples of how Full Text Search is performed with REST, and pointers to more complex examples.
-* xref:6.5@server:fts:fts-creating-indexes.adoc[Creating Indexes]: A full description of the index-creation facility provided by the Couchbase Web Console, with explanations of each component to be used, and illustrations of how indexes can be designed to include specific subsets of documents and their fields.
-* xref:6.5@server:fts:fts-using-analyzers.adoc[Understanding Analyzers]: An explanation of _analyzers_, which are used to process the text to be included in Full Text Indexes.
-* xref:6.5@server:fts:fts-queries.adoc[Queries]: A detailed account of available query types, response objects, and result-sorting options.
+* xref:7.0@server:fts:fts-performing-searches.adoc[Performing Searches]: An explanation of the steps required to prepare for and perform Full Text Search.
+* xref:7.0@server:fts:fts-searching-from-the-ui.adoc[Searching from the UI]: A brief introduction to the Full Text Search user interface provided by the Couchbase Web Console, with a step-by-step example of how to create a simple Full Text Index, and perform a search on it.
+* xref:7.0@server:fts:fts-searching-with-the-rest-api.adoc[Searching with the REST API]: Basic examples of how Full Text Search is performed with REST, and pointers to more complex examples.
+* xref:7.0@server:fts:fts-creating-indexes.adoc[Creating Indexes]: A full description of the index-creation facility provided by the Couchbase Web Console, with explanations of each component to be used, and illustrations of how indexes can be designed to include specific subsets of documents and their fields.
+* xref:7.0@server:fts:fts-using-analyzers.adoc[Understanding Analyzers]: An explanation of _analyzers_, which are used to process the text to be included in Full Text Indexes.
+* xref:7.0@server:fts:fts-queries.adoc[Queries]: A detailed account of available query types, response objects, and result-sorting options.
 
 
 == Performing Full Text Search from the SDK
@@ -34,10 +34,10 @@ A detailed example of performing Full Text Search queries from the SDK is provid
 
 Note that to access Full Text Search, users require appropriate _roles_.
 The role *FTS Admin* must therefore be assigned to those who intend to create indexes; and the role *FTS Searcher* to those who intend to perform searches.
-For information on creating users and assigning roles, see the xref:6.5@server:learn:security/roles.adoc#search-admin[RBAC Roles page].
+For information on creating users and assigning roles, see the xref:7.0@server:learn:security/roles.adoc#search-admin[RBAC Roles page].
 
 
 == Search from N1QL
 
-From Couchbase Server 6.5, the search service can be accessed by xref:6.5@server:n1ql:n1ql-language-reference/searchfun.adoc[search functions in N1QL].
+From Couchbase Server 6.5, the search service can be accessed by xref:7.0@server:n1ql:n1ql-language-reference/searchfun.adoc[search functions in N1QL].
 
