@@ -30,7 +30,7 @@ Collections are logical data containers inside a Couchbase bucket that let you g
 Scopes allow the grouping of collections into a namespace, which is very usfeul when you have multilpe tenants acessing the same bucket.
 Couchbase Server includes support for collections as a xref:6.5@server:developer-preview:preview-mode.adoc[developer preview] in version 6.5, and as a first class concept of the programming model from xref:{version-server}@server:learn:data/scopes-and-collections.adoc[version 7.0.]
 
-Note that the SDKs include the feature from SDK 3.0., to allow easier migration.
+Note that the SDKs include the feature from SDK 3.0, to allow easier migration.
 
 In the previous SDK generation, particularly with the `KeyValue` API, the focus has been on the codified concept of a `Document`.
 Documents were read and written and had a certain structure, including the `id`/`key`, content, expiry (`ttl`), and so forth.
