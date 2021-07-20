@@ -1,7 +1,7 @@
 = Glossary of SDK-related Terms
 :navtitle: Glossary
 :page-topic-type: project-doc
-:page-aliases: 
+:page-aliases:
 
 [abstract]
 Unpicking the tangled alphabet soup of the Couchbase Platform, from an SDK perspective.
@@ -13,73 +13,73 @@ Below you will find short definitions of many Couchbase-related terms, with link
 
 * xref:howtos:analytics-using-sdk.adoc[Analytics] -- Couchbase Analytics Service allows longer running queries over big data, whilst taking advantage of Couchbase’s Multi-Dimensional scaling.
 // Bootstrapping -
-* xref:howtos:concurrent-document-mutations.adoc[CAS] -- Conpare And Swap. 
-A value which is altered each time a document is mutated. 
+* xref:howtos:concurrent-document-mutations.adoc[CAS] -- Conpare And Swap.
+A value which is altered each time a document is mutated.
 Used in Concurrent Document Mutations for a type of optimistic logging.
-* xref:howtos:sdk-authentication.adoc#certificate-authentication[Cert Auth] -- Certificate Authentication (xref:6.6@server:introduction:editions.adoc[Enterprise Edition] only). 
-A client attempting to access Couchbase Server can present a certificate to the server, allowing the server to check the validity of the certificate. 
+* xref:howtos:sdk-authentication.adoc#certificate-authentication[Cert Auth] -- Certificate Authentication (xref:7.0@server:introduction:editions.adoc[Enterprise Edition] only).
+A client attempting to access Couchbase Server can present a certificate to the server, allowing the server to check the validity of the certificate.
 If the certificate is valid, the user under whose identity the client is running, and the roles assigned that user, are verified. If the assigned roles are appropriate for the level of access requested to the specified resource, access is granted.
-* xref:howtos:provisioning-cluster-resources.adoc[Cluster Provisioning] -- The primary means for managing clusters is through the Couchbase Web UI which provides an easy to use interface for adding, removing, monitoring and modifying buckets. 
+* xref:howtos:provisioning-cluster-resources.adoc[Cluster Provisioning] -- The primary means for managing clusters is through the Couchbase Web UI which provides an easy to use interface for adding, removing, monitoring and modifying buckets.
 In some instances you may wish to have a programmatic interface. For example, if you wish to manage a cluster from a setup script, or if you are setting up buckets in test scaffolding.
 The SDK also comes with some convenience functionality for common Couchbase management requests, particularly in the 3.0 SDK API.
 * xref:concept-docs:collections.adoc[Collections] -- from Server 7.0 (and available as a xref:6.6@server:developer-preview:collections/collections-overview.adoc[Developer Preview] in Couchbase Server 6.5 and 6.6), _Collections_ allow groupings of documents beneath the Bucket level.
 Bucket items can optionally be assigned to different collections according to content type.
-* xref:howtos:transcoders-nonjson.adoc[Custom Transcoders] -- Whenever key-value data is sent to or retrieved from Couchbase Server, the SDK passes the data being sent to a transcoder. 
-The transcoder can either reject the data as being unsupported, or convert it into a byte array and a Common Flag. 
-Many applications will not need to be aware of transcoders, as the defaults support most standard JSON use cases. 
+* xref:howtos:transcoders-nonjson.adoc[Custom Transcoders] -- Whenever key-value data is sent to or retrieved from Couchbase Server, the SDK passes the data being sent to a transcoder.
+The transcoder can either reject the data as being unsupported, or convert it into a byte array and a Common Flag.
+Many applications will not need to be aware of transcoders, as the defaults support most standard JSON use cases.
 More advanced transcoding needs can be accomplished if the application implements their own transcoders and serializers.
-* xref:6.6@server:learn:clusters-and-availability/intra-cluster-replication.adoc#database-change-protocol[DCP] -- 
-Database Change Protocol (DCP) is the protocol used to stream bucket-level mutations. 
+* xref:7.0@server:learn:clusters-and-availability/intra-cluster-replication.adoc#database-change-protocol[DCP] --
+Database Change Protocol (DCP) is the protocol used to stream bucket-level mutations.
 DCP is used for high-speed replication of mutations; to maintain replica vBuckets, incremental MapReduce and spatial views, Global Secondary Indexes (GSIs), XDCR, backups, and external connections.
 This feed is not directly available, and users should look at xref:concept-docs:data-services.adoc#lowest-latency[other low latency alternatives].
 * xref:concept-docs:durability-replication-failure-considerations.adoc[Durability] -- Couchbase Server 6.0 and earlier, with 2.0 API versions of the SDK, used Observe style durability; this is still available in most versions of SDK 3.0 for working with earlier Server releases.
-Couchbase Server 6.5 saw the introduction of Servir-side xref:6.5@server:learn:data/durability.adoc[Durable Writes].
+Couchbase Server 6.5 saw the introduction of Server-side xref:7.0@server:learn:data/durability.adoc[Durable Writes].
 See also _Transactions, below.
 * Encryption -- see _Field Level Encryption_, below.
 * Extended Attributes -- see _XATTRs_, below.
-* xref:6.5@server:learn:services-and-indexes/services/eventing-service.adoc[Eventing] -- The Eventing Service allows functions to be written, saved, and triggered in response to events. 
+* xref:7.0@server:learn:services-and-indexes/services/eventing-service.adoc[Eventing] -- The Eventing Service allows functions to be written, saved, and triggered in response to events.
 Events include changes made to specified items, and the arrival of scheduled points-in-time.
 At the time of writing (Couchbase Server 6.6 and SDK 3.0), there is no interaction with the Eventing Service from the SDK.
 * xref:concept-docs:encryption.adoc[Field Level Encryption (FLE)] -- encryption of the field or _value_ in a key-value pair, using a FIPS-140-2 compliant cryptography algorithm.
-Client-side implementation of Field Level Encryption is available in previous (2.x API) versions of the 
-xref:2.10@c-sdk:encryption.adoc[C], 
-xref:2.7@dotnet-sdk:encryption.adoc[.NET], 
-xref:1.6@go-sdk:encryption.adoc[Go], 
-xref:2.7@java-sdk:encryption.adoc[Java]], 
-xref:2.6@nodejs-sdk:encryption.adoc[Node.js], 
-xref:2.6@php-sdk:encryption.adoc[PHP], and 
+Client-side implementation of Field Level Encryption is available in previous (2.x API) versions of the
+xref:2.10@c-sdk:encryption.adoc[C],
+xref:2.7@dotnet-sdk:encryption.adoc[.NET],
+xref:1.6@go-sdk:encryption.adoc[Go],
+xref:2.7@java-sdk:encryption.adoc[Java]],
+xref:2.6@nodejs-sdk:encryption.adoc[Node.js],
+xref:2.6@php-sdk:encryption.adoc[PHP], and
 xref:2.5@python-sdk:encryption.adoc[Python] SDKs.
 It will be enabled in a future release of the third generation SDK, including the Ruby and Scala SDKs.
 A _developer preview_ is available for the xref:3.0@java-sdk:concept-docs:encryption.adoc[Java SDK 3.0].
-* xref:howtos:full-text-searching-with-sdk.adoc[Full Text Search (FTS)] -- 
-Create, manage, and query full-text indexes on JSON documents stored in Couchbase buckets. 
+* xref:howtos:full-text-searching-with-sdk.adoc[Full Text Search (FTS)] --
+Create, manage, and query full-text indexes on JSON documents stored in Couchbase buckets.
 FTS uses natural language processing for indexing and querying documents, provides relevance scoring on the results of your queries, and has fast indexes for querying a wide range of possible text searches.
 Some of the supported query-types include simple queries like Match and Term queries; range queries like Date Range and Numeric Range; and compound queries for conjunctions, disjunctions, and/or boolean queries.
-* xref:6.5@server:learn:services-and-indexes/indexes/global-secondary-indexes.adoc[Global Secondary Indexes (GSI)] -- 
-A Global Secondary Index (GSI) supports queries made by the Query Service on attributes within documents. 
+* xref:7.0@server:learn:services-and-indexes/indexes/global-secondary-indexes.adoc[Global Secondary Indexes (GSI)] --
+A Global Secondary Index (GSI) supports queries made by the Query Service on attributes within documents.
 Secondary indexes -- which contain a filtered or a full set of keys in a given bucket -- are optional, but increase query efficiency on a bucket.
 GSIs can be created xref:concept-docs:n1ql-query.adoc#indexes[through the SDK], using the N1QL `CREATE INDEX` statement.
-See also xref:6.5@server:learn:services-and-indexes/indexes/storage-modes.adoc#memory-optimized-index-storage[Memory-Optimized Index Storage] (MOI).
-* JSON & non-JSON -- Couchbase Services work with JSON documents (see https://tools.ietf.org/html/rfc8259[rfc8259^]), 
+See also xref:7.0@server:learn:services-and-indexes/indexes/storage-modes.adoc#memory-optimized-index-storage[Memory-Optimized Index Storage] (MOI).
+* JSON & non-JSON -- Couchbase Services work with JSON documents (see https://tools.ietf.org/html/rfc8259[rfc8259^]),
 but non-JSON storage is supported,  including UTF-8 strings, raw sequences of bytes, and language specific serializations --   see the xref:concept-docs:nonjson.adoc[Binary Storage Documentation].
-Non-JSON formats may be more efficient in terms of memory and processing power (for example, if storing only flat strings, JSON adds an additional syntactical overhead of two bytes per string). 
+Non-JSON formats may be more efficient in terms of memory and processing power (for example, if storing only flat strings, JSON adds an additional syntactical overhead of two bytes per string).
 Non-JSON documents may be desirable if migrating a legacy application, which is using a xref:howtos:transcoders-nonjson.adoc[customized binary format].
 JSON’s key-value structure allows the storage of collection data structures such as lists, maps, sets and queues -- see the xref:concept-docs:data-model.adoc[Data Model page];
 JSON’s tree-like structure allows operations against xref:howtos:subdocument-operations.adoc[specific paths in the Document],
 and efficient support for these data structures.
 * xref:howtos:kv-operations.adoc[Key-Value Operations] -- KV Operations work directly on the document, for CRUD operations on documents whose identity (key) is known.
-* xref:howtos:view-queries-with-sdk.adoc[MapReduce Views] -- 
-MapReduce Views uses distributed Map-Reduce for very fast aggregation operations (fast, because the indexes are pre-computed results) — ideal for pre-grouped aggregations, such as grouping temporal data sets (by day, by month, etc.). 
-Views’ spatial support allows for fast searching over extensive geo-spatial data in Couchbase Data Platform 5.x  --  however, Spatial Views are no longer supported in Couchbase Server 6.x, and so are not found in SDK 3.x. 
+* xref:howtos:view-queries-with-sdk.adoc[MapReduce Views] --
+MapReduce Views uses distributed Map-Reduce for very fast aggregation operations (fast, because the indexes are pre-computed results) — ideal for pre-grouped aggregations, such as grouping temporal data sets (by day, by month, etc.).
+Views’ spatial support allows for fast searching over extensive geo-spatial data in Couchbase Data Platform 5.x  --  however, Spatial Views are no longer supported in Couchbase Server 6.x, and so are not found in SDK 3.x.
 Continuing improvements to our Query Service makes the latter usually a better choice, particularly as Views does not scale as well as the other services, lacking a global Index node.
 * xref:concept-docs:n1ql-query.adoc[N1QL] -- Couchbase’s powerful SQL-like language allows queries in a format familiar to Database Administrators.
 // Observability
 * xref:howtos:n1ql-queries-with-sdk.adoc[Query] -- The Couchbase Query Service uses a SQL-like language for powerful queries across documents.
-* xref:6.5@server:learn:security/authorization-overview.adoc#introduction-to-rbac[RBAC] -- Role-Based Access Control allows secure, fine-grained access privileges, assigned to fixed roles.
+* xref:7.0@server:learn:security/authorization-overview.adoc#introduction-to-rbac[RBAC] -- Role-Based Access Control allows secure, fine-grained access privileges, assigned to fixed roles.
 The 3.0 API allows some user managemeng programmatically from the SDK.
 // RTO - see Tracing
 * xref:concept-docs:collections.adoc[Scope] -- from Server 7.0 (and available as a xref:6.6@server:developer-preview:collections/collections-overview.adoc[Developer Preview] in Couchbase Server 6.5 and 6.6), _Collections_ allow groupings of documents beneath the Bucket level, and _Scopes_ group together Collections.
-Collections might be assigned to different scopes according to content-type, or to deployment-phase (e.g., test and production). 
+Collections might be assigned to different scopes according to content-type, or to deployment-phase (e.g., test and production).
 Applications can be assigned per-scope access rights, allowing each application to access only those collections it requires.
 * xref:howtos:subdocument-operations.adoc[Sub-Document Operations] --
 Sub-Document retrievals only retrieve relevant parts of a document and Sub-Document updates only require sending the updated portions of a document.
@@ -87,18 +87,18 @@ Sub-Document operations are also atomic, in that if one Sub-Document mutation fa
 // Sync-Gateway (? for awareness, also another possible source of interactions via mobile devices?)
 // Threshold Logging - see Tracing
 // Tracing - vs Response Time Observability vs Threshold Logging
-* xref:6.5@server:learn:data/transactions.adoc[Transactions] -- 
+* xref:7.0@server:learn:data/transactions.adoc[Transactions] --
 Distributed ACID Transactions guarantee that multiple documents can be updated atomically.
-They are available for the 
-xref:1.0@cxx-txns::distributed-acid-transactions-from-the-sdk.adoc[C & {cpp}], 
-xref:3.0@dotnet-sdk:howtos:distributed-acid-transactions-from-the-sdk.adoc[.NET], and 
+They are available for the
+xref:1.0@cxx-txns::distributed-acid-transactions-from-the-sdk.adoc[C & {cpp}],
+xref:3.0@dotnet-sdk:howtos:distributed-acid-transactions-from-the-sdk.adoc[.NET], and
 xref:3.0@java-sdk:howtos:distributed-acid-transactions-from-the-sdk.adoc[Java] SDKs.
 * Transcoders -- See _Custom Transcoders_, above.
-* xref:concept-docs:xattr.adoc#virtual-extended-attributes[Virtual XATTRs] -- 
-Virtual Extended Attributes (VXATTR) consist of metadata on an individual document, generated on-demand to expose storage-level document metadata, such as `expiry` to expose document expiration. 
-* xref:howtos:subdocument-operations.adoc#extended-attributes[XATTRs] -- 
-Extended Attributes (XATTRs), built upon the Sub-Document API, allow developers to define application-specific metadata that will only be visible to those applications that request it or attempt to modify it. 
-This might be, for example, meta-data specific to a programming framework that should be hidden by default from other frameworks or libraries, or possibly from other versions of the same framework. 
+* xref:concept-docs:xattr.adoc#virtual-extended-attributes[Virtual XATTRs] --
+Virtual Extended Attributes (VXATTR) consist of metadata on an individual document, generated on-demand to expose storage-level document metadata, such as `expiry` to expose document expiration.
+* xref:howtos:subdocument-operations.adoc#extended-attributes[XATTRs] --
+Extended Attributes (XATTRs), built upon the Sub-Document API, allow developers to define application-specific metadata that will only be visible to those applications that request it or attempt to modify it.
+This might be, for example, meta-data specific to a programming framework that should be hidden by default from other frameworks or libraries, or possibly from other versions of the same framework.
 They are not intended for use in general applications, and data stored there cannot be accessed easily by some Couchbase services, such as Search.
 
 

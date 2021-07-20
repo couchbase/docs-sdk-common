@@ -1,4 +1,4 @@
-= Document 
+= Document
 :nav-title: Documents & Doc Ops
 include::partial$attributes.adoc[]
 :page-topic-type: concept
@@ -15,7 +15,7 @@ This section discusses the various ways in which you can access data (Documents)
 // tag::document[]
 == Document
 
-A _document_ refers to an entry in the database (other databases may refer to the same concept as a xref:6.6@server:learn:data/document-data-model.adoc#couchbase-server-and-json-the-benefits[_row_]).
+A _document_ refers to an entry in the database (other databases may refer to the same concept as a xref:7.0@server:learn:data/document-data-model.adoc#couchbase-server-and-json-the-benefits[_row_]).
 A document has an ID (_primary key_ in other databases), which is unique to the document and by which it can be located.
 The document also has a value which contains the actual application data.
 
@@ -118,7 +118,7 @@ You can also specify additional options when storing a document in Couchbase
 This option is useful for transient data (such as sessions).
 By default documents do not expire.
 See xref:#expiry[Expiry] for more information on expiration.
-// * xref:howtos:concurrent-mutations-cluster.adoc[CAS] 
+// * xref:howtos:concurrent-mutations-cluster.adoc[CAS]
 * CAS value to protect against concurrent updates to the same document.
 // See xref:concurrent-mutations-cluster.adoc[CAS] for a description on how to use CAS values in your application.
 * xref:durability-replication-failure-considerations.adoc[Durability Requirements]
@@ -133,7 +133,7 @@ If you wish to only modify certain parts of a document, you can use xref:subdocu
 cb.mutate_in('docid', subdoc.array_addunique('tags', 'fast'))
 ----
 
-or xref:6.0@server:n1ql:n1ql-language-reference/update.adoc[N1QL UPDATE] to update documents based on specific query criteria:
+or xref:7.0@server:n1ql:n1ql-language-reference/update.adoc[N1QL UPDATE] to update documents based on specific query criteria:
 
 [source,n1ql]
 ----
@@ -200,8 +200,8 @@ name, email = cb.retrieve_in('user:kingarthur', 'contact.name', 'contact.email')
 You can atomically increment or decrement the numerical value of special counter document -- examples can be found in the xref:howtos:kv-operations.adoc#atomic-counters[practical K-V Howto document].
 
 CAUTION: Do not increment or decrement counters if using XDCR.
-Within a single cluster the `incr()` is atomic, as is `decr()`; 
-across XDCR however, if two clients connecting to two different (bidirectional) clusters issue `incr` concurrently, 
+Within a single cluster the `incr()` is atomic, as is `decr()`;
+across XDCR however, if two clients connecting to two different (bidirectional) clusters issue `incr` concurrently,
 this may (and most likely will) result in the value only getting incremented once in total.
 The same is the case for `decr()`.
 
@@ -415,13 +415,13 @@ Bear this in mind in situations where the time on your application servers diffe
 ====
 
 Note that expired documents are not deleted from the server as soon as they expire.
-While a request to the server for an expired document will receive a response indicating the document does not exist, expired documents are actually deleted 
+While a request to the server for an expired document will receive a response indicating the document does not exist, expired documents are actually deleted
 (_i.e._ cease to occupy storage and RAM) when an _expiry pager_ is run.
 The _expiry pager_ is a routine internal process which scans the database for items which have expired and promptly removes them from storage.
 
 When gathering resource usage statistics, note that expired-but-not-purged items (such as the expiry pager has not scanned this item yet) will still be considered with respect to the overall storage size and item count.
 
-NOTE: Although the API only sets expiry values _per document_, it is possible that elsewhere in the server, an expiry value is being set for xref:6.5@server:learn:buckets-memory-and-storage/expiration.adoc[every document in a bucket^].
+NOTE: Although the API only sets expiry values _per document_, it is possible that elsewhere in the server, an expiry value is being set for xref:7.0@server:learn:buckets-memory-and-storage/expiration.adoc[every document in a bucket^].
 Should this be the case, the document TTL may be reduced, and the document may become unavailable to the app sooner than expected.
 // end::expiration[]
 

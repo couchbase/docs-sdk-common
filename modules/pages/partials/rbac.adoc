@@ -1,6 +1,6 @@
 = RBAC
 :page-topic-type: concept
-:page-aliases: 
+:page-aliases:
 
 
 [abstract]
@@ -24,9 +24,9 @@ Elsewhere we use a general "user" which represents whichever permission levels a
 
 == Further Information
 
-All aspects of the Couchbase RBAC system are covered in the section xref:6.5@server:learn:security/authorization-overview.adoc[Authorization].
+All aspects of the Couchbase RBAC system are covered in the section xref:7.0@server:learn:security/authorization-overview.adoc[Authorization].
 Specifically, for information on:
 
-* Adding _Users_ and assigning _roles_, by means of the Couchbase Web Console, see xref:6.5@server:manage:manage-security/manage-users-and-roles.adoc[Manage Users and Roles].
-* _Roles_ required for resource-access, and the privileges they entail, see xref:6.5@server:learn:security/roles.adoc[Roles].
-* _Resources_ controlled by Couchbase RBAC, see xref:6.5@server:learn:security/resources-under-access-control.adoc[Resources Under Access Control].
+* Adding _Users_ and assigning _roles_, by means of the Couchbase Web Console, see xref:7.0@server:manage:manage-security/manage-users-and-roles.adoc[Manage Users and Roles].
+* _Roles_ required for resource-access, and the privileges they entail, see xref:7.0@server:learn:security/roles.adoc[Roles].
+* _Resources_ controlled by Couchbase RBAC, see xref:7.0@server:learn:security/resources-under-access-control.adoc[Resources Under Access Control].

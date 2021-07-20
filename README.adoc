@@ -149,7 +149,7 @@ This imports a page fragment that looks like the following:
 The normal CRUD methods allow you to look up a document by its ID.
 ...
 
-TIP: See xref:6.0@server:understanding-couchbase:views/views-intro.adoc[Views].
+TIP: See xref:7.0@server:understanding-couchbase:views/views-intro.adoc[Views].
 --
 // end::views-intro[]
 -----
@@ -169,7 +169,7 @@ Unfortunately, that means that the references in the share partials to the serve
 
 [source,asciidoc]
 ----
-See xref:6.0@server:understanding-couchbase:views/views-intro.adoc[Views].
+See xref:7.0@server:understanding-couchbase:views/views-intro.adoc[Views].
 ----
 
 ==== Image References

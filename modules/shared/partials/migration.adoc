@@ -28,9 +28,9 @@ The concept of a `Cluster` and a `Bucket` remain the same, but a fundamental new
 Collections are logical data containers inside a Couchbase bucket that let you group similar data just like a _Table_ does in a relational database
 -- although documents inside a collection do not need to have the same structure.
 Scopes allow the grouping of collections into a namespace, which is very usfeul when you have multilpe tenants acessing the same bucket.
-Couchbase Server is including support for collections as a xref:6.5@server:developer-preview:preview-mode.adoc[developer preview] in version 6.5
--- in a future release, it is hoped that collections will become a first class concept of the programming model.
-To prepare for this, the SDKs include the feature from SDK 3.0.
+Couchbase Server includes support for collections as a xref:6.5@server:developer-preview:preview-mode.adoc[developer preview] in version 6.5, and as a first class concept of the programming model from xref:{version-server}@server:learn:data/scopes-and-collections.adoc[version 7.0.]
+
+Note that the SDKs include the feature from SDK 3.0., to allow easier migration.
 
 In the previous SDK generation, particularly with the `KeyValue` API, the focus has been on the codified concept of a `Document`.
 Documents were read and written and had a certain structure, including the `id`/`key`, content, expiry (`ttl`), and so forth.
@@ -139,7 +139,7 @@ First, installation and configuration are covered, then we talk about exception 
 === Serialization and Transcoding
 
  - describe how it works for your language, how to override and any platform-specific
-   encoding and decoding guidelines. 
+   encoding and decoding guidelines.
  - Also important how to convert from the document types to the new approach
 
 === Logging and Events
@@ -148,7 +148,7 @@ First, installation and configuration are covered, then we talk about exception 
 
 ===  Migrating Services
 
- - one section for each service that goes in-depth on each command 
+ - one section for each service that goes in-depth on each command
    and discusses old vs. new
 
 ==== Key Value
