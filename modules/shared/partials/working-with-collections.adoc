@@ -1,0 +1,38 @@
+= Working with Collections
+:nav-title: Collections
+:content-type: howto
+:page-topic-type: howto
+
+[abstract]
+The 3.0 API SDKs all work with all features of Collections and Scopes.
+
+The xref:{version-server}@server:learn:data/scopes-and-collections.adoc[Collections feature] in Couchbase Server 7.x is fully implemented in the
+3.0 API versions of the Couchbase SDKs.
+
+NOTE: When working with earlier versions (before the Developer Preview in 6.5), or with other server versions, the `defaultcollection` is used from the SDK.
+
+Read more about xref:concept-docs:collections.adoc[Collections and Scopes].
+
+== Sample Application
+
+The xref:hello-world:sample-application.adoc[Travel Sample Application] has been updated with a motivating example for Collections - a multi-tenanted travel application.
+Imagine that we are providing a white-label Flight and Hotel booking service
+to multiple travel agents. Each tenant agent will get the same underlying
+service, but interact only with their own data.
+
+The `travel-sample` bucket has been split into _Scopes_ for multiple tenant
+travel agents (for example `tenant_agent_00`, `tenant_agent_01`, ...) and
+a shared `inventory` which is further subdivided into _Collections_ such as
+`hotels` and `airports`.
+
+Read more about the new travel-sample xref:concept-docs:data-model.adoc[Data Model].
+
+The app is currently implemented for the following SDKs:
+
+* xref:2.3@go-sdk:hello-world:sample-application.adoc[Go]
+* xref:3.2@java-sdk:hello-world:sample-application.adoc[Java]
+* xref:3.2@dotnet-sdk:hello-world:sample-application.adoc[.NET]
+* xref:3.2@nodejs-sdk:hello-world:sample-application.adoc[Node.js]
+* xref:3.2@php-sdk:hello-world:sample-application.adoc[PHP]
+* xref:3.2@python-sdk:hello-world:sample-application.adoc[Python]
+* xref:1.2@scala-sdk:hello-world:sample-application.adoc[Scala]
