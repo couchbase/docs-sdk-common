@@ -1,10 +1,10 @@
 = Travel App Data Model
 :page-topic-type: reference
+:description: An overview of the travel sample application data model and documents.
 
 // tag::model[]
 [abstract]
-The data model for the travel app uses several distinct document types: airline, route, airport and landmark.
-
+{description}
 
 Our xref:hello-world:sample-application.adoc[tutorial introduction to using the SDK] uses the _Travel Sample_ data bucket.
 
@@ -18,10 +18,10 @@ The model for each kind of document contains:
 * An `id` field that identifies the document
 * A `type` field that identifies the kind of document
 
-The following figure illustrates the relationship between the different kinds of documents in version 5.1 of the Travel App.
+The following figure illustrates the relationship between the different kinds of documents in the Travel App.
 It shows the primary key, ID, and type fields that each document has, plus a few representative fields in each type of document.
 
-.Documents in the Travel App 5.1 data model
+.Documents in the Travel App data model
 image::travel-app-data-model.png[Travel Sample data model diagram]
 
 Landmark documents are not used in the travel-sample application, which focuses on a more specific subset of point of interests that have their own type: hotels.
@@ -39,14 +39,13 @@ For airline documents, the value of the `type` field is `airline`.
 ----
 airline_24 			   ←This is the key, which also acts as a primary key
 {
-  "active": "Y",
-  "callsign": "AMERICAN",
-  "country": "United States",
+  "id": 24,
+  "type": "airline",               ←This is the type identifier for the document
+  "name": "American Airlines",
   "iata": "AA",
   "icao": "AAL",
-  "id": "24",
-  "name": "American Airlines",
-  "type": "airline"              ←This is the type identifier for the document
+  "callsign": "AMERICAN",
+  "country": "United States"
 }
 ----
 
@@ -65,9 +64,9 @@ For route documents, the value of the `type` field is `route`.
 route_5966                         ←This is the key, which also acts as a primary key
 {
   "id": "5966",
-  "type": "route",               ←This is the type identifier for the document
+  "type": "route",                 ←This is the type identifier for the document
   "airline": "AA",
-  "airlineid": "airline_24",     ←This is the foreign key identifier to an airline document
+  "airlineid": "airline_24",       ←This is the foreign key identifier to an airline document
   "sourceairport": "MCO",
   "destinationairport": "SEA",
   "stops": "0",
@@ -82,29 +81,27 @@ route_5966                         ←This is the key, which also acts as a prim
 
 == Airport documents
 
-[.term]_Airport documents_ contain details about airports  such as name, location, time zone, ICAO four-character alphanumeric airport code, and Federal Aviation Administration (FAA) location identifier.
+[.term]_Airport documents_ contain details about airports such as name, location, time zone, ICAO four-character alphanumeric airport code, and Federal Aviation Administration (FAA) location identifier.
 
 For airport documents, the value of the `type` field is `airport`.
 
 .Airport document model
 [source,json]
 ----
-airport_3577                       ←This is the key, which also acts as a primary key
+airport_3577                             ←This is the key, which also acts as a primary key
 {
-  "travel-sample": {
-      "airportname": "Seattle Tacoma Intl",
-      "city": "Seattle",
-      "country": "United States",
-      "faa": "SEA",
-      "geo": {
-          "alt": 433,
-          "lat": 47.449,
-          "lon": -122.309306
-      },
-      "icao": "KSEA",
-      "id": 3577,
-      "type": "airport",         ←This is the type identifier for the document
-      "tz": "America/Los_Angeles"
+  "id": 3577,
+  "type": "airport",                     ←This is the type identifier for the document
+  "airportname": "Seattle Tacoma Intl",
+  "city": "Seattle",
+  "country": "United States",
+  "faa": "SEA",
+  "icao": "KSEA",
+  "tz": "America/Los_Angeles",
+  "geo": {
+    "lat": 47.449,
+    "lon": -122.309306,
+    "alt": 433
   }
 }
 ----
@@ -119,7 +116,7 @@ For hotel documents, the value of the `type` field is `hotel`.
 .Hotel document model
 [source,json]
 ----
-hotel_10180                     ←This is the key, which also acts as a primary key
+hotel_10180                          ←This is the key, which also acts as a primary key
 {
     "address": "8301 Hollister Ave",
     "checkin": "12PM",
@@ -156,26 +153,24 @@ hotel_10180                     ←This is the key, which also acts as a primary
         }
     ],
     "state": "California",
-    "type": "hotel",         ←This is the type identifier for the document
+    "type": "hotel",                 ←This is the type identifier for the document
     "url": "http://www.bacararesort.com/",
     "vacancy": true
 }
 }
 ----
 
-
 == N1QL query anatomy
 
 The Couchbase Query API is a powerful tool for efficient retrieval of information from a document data store.
-In each SDK-specific travel application, queries about flights are created by a dedicated module (for example in Node.js, the [.path]_flightPath.js_ module).
 Here's an example of a query that finds flights between Seattle-Tacoma International Airport (SEA) and Orlando International Airport (MCO), followed by a description of what's happening in the query:
 
 [source,sql]
 ----
 SELECT a.name, s.flight, s.utc, r.sourceairport, r.destinationairport, r.equipment
-FROM `travel-sample` r
+FROM `travel-sample`.inventory.route r
 UNNEST r.schedule s
-JOIN `travel-sample` a ON KEYS r.airlineid
+JOIN `travel-sample`.inventory.airline a ON KEYS r.airlineid
 WHERE r.sourceairport='SEA' AND r.destinationairport='MCO' AND s.day=6
 ORDER BY a.name
 ----
@@ -195,7 +190,7 @@ SELECT * FROM default b JOIN default a ON KEYS b.joinField
 
 The data model for the travel application includes an `airlineid` field in each `route` document.
 That `airlineid` field is used as a foreign key identifier and corresponds to the key for an `airline` document.
-To select the airline name `a.name`, the query uses the following clause: `pass:c[JOIN `travel-sample` a ON KEYS r.airlineid]`.
+To select the airline name `a.name`, the query uses the following clause: `pass:c[JOIN `travel-sample`.inventory.airline AS a ON KEYS r.airlineid]`.
 
 One of the powerful features available in the N1QL query language is the ability to `UNNEST` or flatten, the results returned in the `SELECT` statement.
 This is frequently needed when working with JSON documents, which may have rich heirarchies.
@@ -207,23 +202,67 @@ The result set is ordered by the `a.name` field, which contains the airline name
 
 Refer to the xref:concept-docs:n1ql-query.adoc[Querying with N1QL] section for more information on using N1QL with the SDKs.
 
-
 == Collections
 
-In preparation for the introduction of xref:concept-docs:collections.adoc[Collections] in an upcoming release of the Couchbase Data Platform, 
-a version of the Travel Sample application is provided which contains a xref:howtos:working-with-collections.adoc#preparation[script] to split out user data into a separate collection.
-To try this out with Couchbase Server 6.5 and 6.6, you will need to xref:6.5@server:developer-preview:collections/collections-overview.adoc[enable the Collections Developer Preview].
-This _Developer Preview_ is not to be used in production.
+With the introduction of xref:concept-docs:collections.adoc[Collections] in the 7.0 release of the Couchbase Data Platform, a new version of the Travel Sample application is provided.
+The application showcases the use of collections and scopes to represent a multi-tenant approach to organizing user and flight data.
 
-The _Beta_ release of Couchbase Server 7.0 offers the chance to try out a xref:7.0@server:manage:manage-settings/install-sample-buckets.adoc#configuring-sample-buckets[Collections-ready Travel Sample Bucket].
+To try this out you will need Couchbase Server 7.0 or higher and the xref:7.0@server:manage:manage-settings/install-sample-buckets.adoc#configuring-sample-buckets[travel-sample] bucket configuration.
 
-image:travel-sample-collections-7.0-beta.png[Collections-aware Travel Sample data model diagram]
+image:travel-sample-collections-7.0.png[Collections-aware Travel Sample data model diagram]
+
+The updated bucket introduces tenant `agent` scopes, `users` and `bookings` collections to allocate data into more logical groupings.
+Note that the `inventory` scope is not multi-tenanted as its collection data will be shared across the tenant agents.
+
+Let's take a quick look at the collections within the agent scopes:
+
+* users
+* bookings
+
+The travel sample application will create/update documents within these new collections when using the flight planner.
+
+The `users` collection stores user related data such as login details and flights booked:
+
+[source,json]
+----
+test_user                                   ←This is the key, which also acts as a primary key
+{
+  "username": "test_user",
+  "password": "5f4dcc3b5aa765d61d8327deb882cf99",
+  "bookings": [
+    "bf7ad6fa-bdb9-4099-a840-196e47179f03",
+    "c4fb6f98-76c8-489f-8fae-b0039cd4d2b8",
+    "2bccc103-4f80-4cac-8faf-e7d2336cd113",
+    "3503b353-7401-4fcc-bbdd-afe290764b68"
+  ]
+}
+----
+
+And the `bookings` collection stores the actual flight information for each booking:
+
+[source,json]
+----
+bf7ad6fa-bdb9-4099-a840-196e47179f03       ←This is the key, which also acts as a primary key
+{
+  "destinationairport": "SFO",
+  "equipment": "73W 73C 733",
+  "flight": "WN533",
+  "flighttime": 7713,
+  "name": "Southwest Airlines",
+  "price": 964.13,
+  "sourceairport": "LAX",
+  "utc": "11:21:00",
+  "date": "07/24/2021"
+}
+----
+
+Each booking is represented by a https://datatracker.ietf.org/doc/html/rfc4122[UUID] primary key to ensure the documents are uniquely identifiable.
 
 == Further Reading
 
 The _Travel Sample_ data set is embedded in many of our examples.
 
-* Learn xref:6.5@server:manage:manage-settings/install-sample-buckets.adoc[how to install the sample data buckets].
-* Manage the sample bucket installations with the xref:6.5@server:rest-api:rest-sample-buckets.adoc[REST API].
-* Our xref:6.5@server:fts:fts-demonstration-indexes.adoc[demonstration indexes] use the _Travel Sample_ data set to demonstrate the running of Full Text Searches.
+* Learn xref:7.0@server:manage:manage-settings/install-sample-buckets.adoc[how to install the sample data buckets].
+* Manage the sample bucket installations with the xref:7.0@server:rest-api:rest-sample-buckets.adoc[REST API].
+* Our xref:7.0@server:fts:fts-demonstration-indexes.adoc[demonstration indexes] use the _Travel Sample_ data set to demonstrate the running of Full Text Searches.
 // end::model[]
