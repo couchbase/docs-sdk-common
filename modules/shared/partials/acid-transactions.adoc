@@ -34,7 +34,7 @@ There are two higher durability settings available that will additionally wait f
 This further increases safety, at a cost of additional latency.
 
 A level of `None` is present but its use is discouraged and unsupported.
-If durability is set to `None`, then ACID semantics are not guaranteed.
+If durability is set to `None`, then ACID cannot be guaranteed.
 // end::config[]
 
 
@@ -231,7 +231,7 @@ It may wish to retry the transaction at a later point, or globally extend transa
 This boolean flag indicates whether all documents were able to be unstaged (committed).
 
 For most use-cases it is not an issue if it is false.
-All transactional actors will still all the changes from this transaction, as though it had committed fully.
+All transactional actors will still see all the changes from this transaction, as though it had committed fully.
 The cleanup process is asynchronously working to complete the commit, so that it will be fully visible to non-transactional actors.
 
 The flag is provided for those rare use-cases where the application requires the commit to be fully visible to non-transactional actors, before it may continue.
