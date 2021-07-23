@@ -25,7 +25,7 @@ travel agents (for example `tenant_agent_00`, `tenant_agent_01`, ...) and
 a shared `inventory` which is further subdivided into _Collections_ such as
 `hotels` and `airports`.
 
-Read more about the new travel-sample xref:concept-docs:data-model.adoc[Data Model].
+Read more about the new travel-sample xref:ref:travel-app-data-model.adoc[Data Model].
 
 The app is currently implemented for the following SDKs:
 
