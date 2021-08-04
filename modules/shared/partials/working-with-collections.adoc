@@ -36,3 +36,4 @@ The app is currently implemented for the following SDKs:
 * xref:3.2@php-sdk:hello-world:sample-application.adoc[PHP]
 * xref:3.2@python-sdk:hello-world:sample-application.adoc[Python]
 * xref:1.2@scala-sdk:hello-world:sample-application.adoc[Scala]
+* xref:3.2@ruby-sdk:hello-world:sample-application.adoc[Ruby]
