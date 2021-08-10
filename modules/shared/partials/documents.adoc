@@ -96,7 +96,7 @@ object get(string doc_id) {
 You can also use xref:n1ql-query.adoc[N1QL Queries] and xref:full-text-search-overview.adoc[Full Text Search] to access documents by means other than their IDs, however these query operations Couchbase eventually translate into primitive key-value operations, and exist as separate services outside the data store.
 // end::crud-overview[]
 
-// tag::store-update
+// tag::store-update[]
 == Storing and Updating Documents
 
 Documents can be stored and updated using either the SDK, Command line, or Web UI.
@@ -122,7 +122,7 @@ See xref:#expiry[Expiry] for more information on expiration.
 * CAS value to protect against concurrent updates to the same document.
 // See xref:concurrent-mutations-cluster.adoc[CAS] for a description on how to use CAS values in your application.
 * xref:durability-replication-failure-considerations.adoc[Durability Requirements]
-// end::store-update
+// end::store-update[]
 
 [NOTE]
 ====
