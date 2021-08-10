@@ -6,10 +6,14 @@
 [abstract]
 You can use MapReduce views to create queryable indexes in Couchbase Server.
 
+////
+// not actually depreaccated in fact
 WARNING: Views is deprecated in Couchbase Server 7.0, and will eventually move to unsupported status.
 Views date from the earliest days of Couchbase Server development, and as such are rarely the best choice over, say, xref:n1ql-query.adoc[our Query service] for your application, see xref:data-services.adoc[our guide to choosing the right service].
 We will maintain support for Views in the SDKs for so long as it can be used with a supported version of Couchbase Server.
+////
 
+WARNING: Although still maintained and supported for legacy use, Views date from the earliest days of Couchbase Server development, and as such are rarely the best choice over, say, xref:n1ql-query.adoc[our Query service] for your application, see xref:data-services.adoc[our guide to choosing the right service].
 
 // may be out of date - needs some re-working
 
