@@ -41,7 +41,12 @@ The following spatial view map function could be used to find landmarks within E
 // end::example-geo-travel[]
 
 // tag::deprecate[]
+WARNING: Although still maintained and supported for legacy use, Views date from the earliest days of Couchbase Server development, and as such are rarely the best choice over, say, xref:howtos:n1ql-queries-with-sdk.adoc[our Query service] if you are starting a fresh application.
+See our discussion document on xref:concept-docs:data-services.adoc[the best service for you to use].
+// end::deprecate[]
+
+// tag::deprecate2[]
 CAUTION: Views is deprecated in Couchbase Server 7.0, and will eventually move to unsupported status.
 Use our xref:howtos:n1ql-queries-with-sdk.adoc[Query Service] if you are starting a fresh application, or see our discussion document on xref:concept-docs:data-services.adoc[the best service for you to use].
 We will maintain support for Views in the SDKs for so long as it can be used with a supported version of Couchbase Server.
-// end::deprecate[]
+// end::deprecate2[]
