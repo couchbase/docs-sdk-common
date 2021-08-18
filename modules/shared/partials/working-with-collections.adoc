@@ -31,6 +31,7 @@ The app is currently implemented for the following SDKs:
 
 * xref:2.3@go-sdk:hello-world:sample-application.adoc[Go]
 * xref:3.2@java-sdk:hello-world:sample-application.adoc[Java]
+* xref:3.2@java-sdk:hello-world:spring-data-sample-application.adoc[Java Spring Data]
 * xref:3.2@dotnet-sdk:hello-world:sample-application.adoc[.NET]
 * xref:3.2@nodejs-sdk:hello-world:sample-application.adoc[Node.js]
 * xref:3.2@php-sdk:hello-world:sample-application.adoc[PHP]
