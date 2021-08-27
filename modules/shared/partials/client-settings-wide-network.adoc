@@ -13,6 +13,6 @@ These settings are some you may want to consider adjusting:
 * Config Poll Interval to 10s
 * Circuit Breaker ErrorThresholdPercentage to 75
 
-A program using the SDK can also use the `waitUntilReady()` API call to handle all connection negotiations and realted errors at one place.
+A program using the SDK can also use the `waitUntilReady()` API call to handle all connection negotiations and related errors at one place.
 It may be useful to block in, for example, a basic console testing application for up to 30 seconds before proceeding in the program to perform data operations.
 See the API reference for further details.
