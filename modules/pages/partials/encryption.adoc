@@ -7,7 +7,7 @@
 [abstract]
 {description}
 
-For a practical guide, see xref:java-sdk:howtos:encrypting-using-sdk.adoc[].
+For a practical guide, see xref:howtos:encrypting-using-sdk.adoc[].
 
 [#architecture]
 == Overview
@@ -54,7 +54,7 @@ Note that the name of the "bar" field is mangled to indicate it holds an encrypt
 }
 ----
 
-See the xref:java-sdk:howtos:encrypting-using-sdk.adoc[sample code page] for examples of reading & writing encrypted fields.
+See the xref:howtos:encrypting-using-sdk.adoc[sample code page] for examples of reading & writing encrypted fields.
 
 [#error]
 == Data Safeguards
