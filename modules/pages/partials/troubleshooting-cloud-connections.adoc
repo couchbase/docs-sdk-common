@@ -12,13 +12,13 @@ SDK doctor is a powerful but simple tool to help diagnose other connection probl
 
 == Troubleshooting Problems
 
-Couchbase Cloud is secure by default, and that means that it always uses TLS connections. 
+https://docs.couchbase.com/cloud/index.html[Couchbase Capella] is secure by default, and that means that it always uses TLS connections. 
 Before carrying out other troubleshooting, please check that your application code is configured for TLS/SSL, using the default method of connecting (not http/https), and not specifying any port numbers.
 
 
 == Troubleshooting Host not Found
 
-In order for your application to connect to your cloud, Couchbase Cloud creates a special kind of DNS record, called a Service record, or DNS-SRV record. 
+In order for your application to connect to your cloud, Capella creates a special kind of DNS record, called a Service record, or DNS-SRV record. 
 DNS SRV records are widely supported and used frequently in systems like XMPP, and Kubernetes services.  
 Occasionally, some DNS providers can run into issues with large DNS SRV records. 
 This can manifest as a host not found issue.  
@@ -494,7 +494,7 @@ Summary:
 Found multiple issues, see listing above.
 ----
 
-Note that there are a few warnings because we did not specify the CA certificate (available in the Couchbase Cloud Console) and because we are connecting across the Internet, which has higher latency than we would have if running the application in the cloud. 
+Note that there are a few warnings because we did not specify the CA certificate (available in the Couchbase Capella Console) and because we are connecting across the Internet, which has higher latency than we would have if running the application in the cloud. 
 There are no errors.
 
 A 'bad' result from SDK-Doctor would end in output more like this:
