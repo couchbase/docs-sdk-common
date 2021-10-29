@@ -319,6 +319,7 @@ The supported options are:
 * scanCap
 * pipelineBatch
 * pipelineCap
+* profile
 * readonly
 * adhoc
 * raw
@@ -392,7 +393,6 @@ When specified:
 
 You need to ensure that this application has RBAC data read and write privileges to it, and should not delete the collection subsequently as it can interfere with existing transactions.
 You can use an existing collection or create a new one.
-
 // end::custom-metadata-2[]
 
 
