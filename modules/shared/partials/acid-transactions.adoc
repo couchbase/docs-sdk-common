@@ -319,6 +319,7 @@ The supported options are:
 * scanCap
 * pipelineBatch
 * pipelineCap
+* profile
 * readonly
 * adhoc
 * raw
