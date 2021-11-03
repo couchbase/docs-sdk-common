@@ -7,6 +7,7 @@ Some options may be commonly used together in certain envionments or to achieve 
 === Constrained Network Environments
 
 Though xref:project-docs:compatibility.adoc#network-requirements[wide area network] (WAN) connections are not directly supported, some development and non-critical operations activities across a WAN are convenient.
+Most likely for connecting to Couchbase Capella, or Server running in your own cloud account, whilst developing from a laptop or other machine not located in the same data center.
 These settings are some you may want to consider adjusting:
 
 * Connect Timeout to 30s
