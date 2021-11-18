@@ -5,22 +5,45 @@
 [abstract]
 The standardized error codes returned by the Couchbase SDK, from cloud connection to sub-document.
 
-
 // tag::intro[]
+include::partial$error-ref.adoc[tag=intro-above]
+
+include::partial$error-ref.adoc[tag=intro-exception-variant]
+
+include::partial$error-ref.adoc[tag=intro-below]
+// end::intro[]
+
+// tag::intro-error[]
+include::partial$error-ref.adoc[tag=intro-above]
+
+include::partial$error-ref.adoc[tag=intro-error-variant]
+
+include::partial$error-ref.adoc[tag=intro-below]
+// end::intro-error[]
+
+
+// tag::intro-above[]
 All exceptions derive from a common base Couchbase exception.
 Exceptions (errors) are broken into different classifications:
 
 * Shared Exceptions -- exceptions or errors thrown or returned by any service.
 * Specific Exceptions -- exceptions or errors thrown by a service and specific to the service that threw or returned them.
 * Internal Exceptions -- exceptions intended to be handled internally by the SDK and not exposed to the application.
+// end::intro-above[]
 
-
+// tag::intro-exception-variant[]
 The base exception, `CouchbaseException`, has two properties -- an `ErrorContext` and an optional _Cause_.
 The `ErrorContext` provides extensive debugging information in JSON format.
+// end::intro-exception-variant[]
 
+// tag::intro-error-variant[]
+The base exception, `CouchbaseError`, has two properties -- an `ErrorContext` and an optional _Cause_.
+The `ErrorContext` provides extensive debugging information in JSON format.
+// end::intro-error-variant[]
 
+// tag::intro-below[]
 Below are the exceptions, categorised by service.
-// end::intro[]
+// end::intro-below[]
 
 
 == Shared Error Definitions
@@ -453,7 +476,7 @@ Note, in SDK 3.0, Field Level Encryption is only available as a xref:3.0@java-sd
 === CryptoException
 
 Generic cryptography failure.
-Inherits from `CouchbaseException`.
+Inherits from the Couchbase base exception class.
 Parent Type for all other Field-Level Encryption errors.
 
 === EncryptionFailure
