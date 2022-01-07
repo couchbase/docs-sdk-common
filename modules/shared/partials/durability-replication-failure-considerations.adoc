@@ -29,9 +29,10 @@ under which mutations will not be visible to other clients until they have met t
 These requirements are now enforced on the server side, rather than requiring client logic, which means that this committed durability can now be guaranteed.
 
 The optional `durabilityLevel` parameter, which all mutating operations accept, allows the application to wait until this replication (or persistence) is successful before proceeding.
-If `durabilityLevel()` is used with no argument, the application will report success back as soon as the primary node has acknowledged the mutation in its memory.
-With Couchbase Server 6.5 and above, the three replication level options are:
+If `durabilityLevel()` is used with no argument or with `None`, the application will report success back as soon as the primary node has acknowledged the mutation in its memory.
+With Couchbase Server 6.5 and above, the four replication level options are:
 
+* `None` -- No enhanced durability configured for a mutation.
 * `Majority` -- The server will ensure that the change is available in memory on the majority of configured replicas.
 * `MajorityAndPersistToActive` -- Majority level, plus persisted to disk on the active node.
 * `PersistToMajority` -- Majority level, plus persisted to disk on the majority of configured replicas.
