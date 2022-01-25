@@ -2,7 +2,7 @@
 
 
 
-// tag::api-version
+// tag::api-version[]
 == API Version
 
 This release of the SDK is written to version 3.2 of the SDK API specification (and matching the features available in Couchbase 7.0 and earlier).
@@ -61,4 +61,4 @@ Whilst these two numbers match for the C, .NET, Java, PHP, Python, and Ruby SDKs
 | 1.2
 |===
 
-// end::api-version
+// end::api-version[]
