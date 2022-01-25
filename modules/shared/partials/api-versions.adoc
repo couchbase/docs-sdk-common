@@ -1,0 +1,63 @@
+= SDK API Specification
+
+
+
+// tag::api-version
+== API Version
+
+This release of the SDK is written to version 3.2 of the SDK API specification.
+For most developers, just using the latest version will be all that matters, and few will need to look at another of our SDKs.
+Just for those few that do, the table below shows each Couchbase SDK release version that matches the API version.
+
+Whilst these two numbers match for the C, .NET, Java, PHP, Python, and Ruby SDKs, this is not the case for the others, as version numbers for individuaal SDKs are bumped up in line with https://semver.org/[Semantic Versioning] -- check the xref:sdk-release-notes[release notes] of each SDK for individual details.
+
+.SDK API Versions
+|===
+| | API 3.0 | API 3.1 | API 3.2
+
+| C (libcouchbase)
+| 3.0
+| 3.1
+| 3.2
+
+| .NET
+| 3.0
+| 3.1
+| 3.2
+
+| Go
+| 2.0, 2.1
+| 2.2
+| 2.3
+
+| Java
+| 3.0
+| 3.1
+| 3.2
+
+| Node.js
+| 3.0
+| 3.1
+| 3.2, 4.0
+
+| PHP
+| 3.0
+| 3.1
+| 3.2
+
+| Python
+| 3.0
+| 3.1
+| 3.2
+
+| Ruby
+| 3.0
+| 3.1
+| 3.2
+
+| Scala
+| 1.0
+| 1.1
+| 1.2
+|===
+
