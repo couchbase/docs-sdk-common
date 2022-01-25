@@ -28,7 +28,7 @@ Whilst these two numbers match for the C, .NET, Java, and Ruby SDKs, this is not
 | 3.3
 
 | Go
-| 2.0, 2.1
+| 2.0 & 2.1
 | 2.2
 | 2.3
 | 2.4
@@ -48,7 +48,7 @@ Whilst these two numbers match for the C, .NET, Java, and Ruby SDKs, this is not
 | Node.js
 | 3.0
 | 3.1
-| 3.2, 4.0
+| 3.2 & 4.0
 | 4.1
 
 | PHP
