@@ -5,7 +5,7 @@
 // tag::api-version
 == API Version
 
-This release of the SDK is written to version 3.4 of the SDK API specification.
+This release of the SDK is written to version 3.3 of the SDK API specification.
 For most developers, just using the latest version will be all that matters, and few will need to look at another of our SDKs.
 Just for those few that do, the table below shows each Couchbase SDK release version that matches the API version.
 
