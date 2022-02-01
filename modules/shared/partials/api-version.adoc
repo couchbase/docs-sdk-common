@@ -13,49 +13,58 @@ Whilst these two numbers match for the C, .NET, Java, PHP, Python, and Ruby SDKs
 
 .SDK API Versions
 |===
-| | API 3.0 | API 3.1 | API 3.2
+| | API 2.7 | API 3.0 | API 3.1 | API 3.2
 
 | C (libcouchbase)
+| 2.10
 | 3.0
 | 3.1
 | 3.2
 
 | .NET
+| 2.7
 | 3.0
 | 3.1
 | 3.2
 
 | Go
+| 1.6
 | 2.0 & 2.1
 | 2.2
 | 2.3
 
 | Java
+| 2.7
 | 3.0
 | 3.1
 | 3.2
 
 | Node.js
+| 2.6
 | 3.0
 | 3.1
 | 3.2 & 4.0
 
 | PHP
+| 2.6
 | 3.0
 | 3.1
 | 3.2
 
 | Python
+| 2.5
 | 3.0
 | 3.1
 | 3.2
 
 | Ruby
+| -
 | 3.0
 | 3.1
 | 3.2
 
 | Scala
+| -
 | 1.0
 | 1.1
 | 1.2
@@ -70,4 +79,6 @@ SDK API 3.3 - Introduced alongside Couchbase Server 7.1,  adds Management API fo
 *SDK API 3.1*: Introduced alongside Couchbase Server 6.6,  focuses on Bucket Management API, adds capabilities around Full Text Search features such-as  Geo-Polygon support, Flex Index and Scoring. 
 
 *SDK API 3.0*: Introduced alongside Couchbase Server 6.5,  is a major overhaul from its predecessor, has simplified surface area, removed long-standing bugs and deprecated/removed old API, introduces new programming languages Scala and Ruby, written in anticipation to support Scopes and Collections.
+
+*SDK API 2.6*: Introduced alongside Couchbase Server 6.0, with support for its new features such as the Analytics Service, improvements to Full Text Search, and support for more complex network configurations.
 // end::api-version[]
