@@ -80,5 +80,5 @@ SDK API 3.3 - Introduced alongside Couchbase Server 7.1,  adds Management API fo
 
 *SDK API 3.0*: Introduced alongside Couchbase Server 6.5,  is a major overhaul from its predecessor, has simplified surface area, removed long-standing bugs and deprecated/removed old API, introduces new programming languages Scala and Ruby, written in anticipation to support Scopes and Collections.
 
-*SDK API 2.6*: Introduced alongside Couchbase Server 6.0, with support for its new features such as the Analytics Service, improvements to Full Text Search, and support for more complex network configurations.
+*SDK API 2.7*: Introduced alongside Couchbase Server 6.0, with support for its new features such as the Analytics Service, improvements to Full Text Search, and support for more complex network configurations.
 // end::api-version[]
