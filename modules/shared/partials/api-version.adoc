@@ -31,7 +31,7 @@ Whilst these two numbers match for the C, .NET, Java, PHP, Python, and Ruby SDKs
 | 1.5 & 1.6
 | 2.0 & 2.1
 | 2.2
-| 2.3
+| 2.3 & 2.4
 
 | Java
 | 2.7
