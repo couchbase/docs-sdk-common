@@ -27,7 +27,7 @@ We recommend familiarizing yourself with the new SDK first by reading at least t
 The concept of a `Cluster` and a `Bucket` remain the same, but a fundamental new layer is introduced into the API: `Collections` and their `Scopes`.
 Collections are logical data containers inside a Couchbase bucket that let you group similar data just like a _Table_ does in a relational database
 -- although documents inside a collection do not need to have the same structure.
-Scopes allow the grouping of collections into a namespace, which is very usfeul when you have multilpe tenants acessing the same bucket.
+Scopes allow the grouping of collections into a namespace, which is very useful when you have multiple tenants accessing the same bucket.
 Couchbase Server includes support for collections as a xref:6.5@server:developer-preview:preview-mode.adoc[developer preview] in version 6.5, and as a first class concept of the programming model from xref:{version-server}@server:learn:data/scopes-and-collections.adoc[version 7.0.]
 
 Note that the SDKs include the feature from SDK 3.0, to allow easier migration.
