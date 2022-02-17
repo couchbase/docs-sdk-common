@@ -5,7 +5,7 @@
 // tag::api-version[]
 == SDK API Specification and Version
 
-API Specification ( referred to as API going forward) and its version represents a logical grouping of a set of features being bundled.
+API Specification (referred to as API going forward) and its version represents a logical grouping of a set of features being bundled.
 SDK Versions follow https://semver.org/[Semantic Versioning] and implement an API specification version.
 
 This release of the SDK is written to version 3.2 of the SDK API specification (and matching the features available in Couchbase 7.0 and earlier).
