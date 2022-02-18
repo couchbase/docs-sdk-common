@@ -3,15 +3,19 @@
 
 
 // tag::api-version[]
-== API Version
+== SDK API Specification and Version
+
+API Specification (referred to as API going forward) and its version represents a logical grouping of a set of features being bundled.
+SDK Versions follow https://semver.org/[Semantic Versioning] and implement an API specification version.
 
 This release of the SDK is written to version 3.2 of the SDK API specification (and matching the features available in Couchbase 7.0 and earlier).
 For most developers, just using the latest version will be all that matters, and few will need to look at another of our SDKs.
 Just for those few that do, the table below shows each Couchbase SDK release version that matches the API version.
 
-Whilst these two numbers match for the C, .NET, Java, PHP, Python, and Ruby SDKs, this is not the case for the others, as version numbers for individual SDKs are bumped up in line with https://semver.org/[Semantic Versioning] -- check the xref:sdk-release-notes[release notes] of each SDK for individual details.
+Whilst these two numbers may match -- for the C, .NET, Java, PHP, Python, and Ruby SDKs -- this is not the case for the others.
+Check the xref:project-docs:sdk-release-notes.adoc[release notes] of each SDK for individual details.
 
-.SDK API Versions
+.API vs SDK Versions
 |===
 | | API 2.7 | API 3.0 | API 3.1 | API 3.2
 
@@ -74,6 +78,7 @@ Whilst these two numbers match for the C, .NET, Java, PHP, Python, and Ruby SDKs
 SDK API 3.3 - Introduced alongside Couchbase Server 7.1,  adds Management API for Eventing and Index Management  for Scopes & Collections , extends Bucket Management API to support Custom Conflict Resolution and Storage Options, adds new platform support for Linux Alpine OS, Apple M1 and AWS Graviton2,  provides improved error messages for better error handling and an upgraded Spark Connector that runs on Spark 3.0 & 3.1 Platform.
 ////
 
+[#sdk3.2]
 *SDK API 3.2*: Introduced alongside Couchbase Server 7.0, provides features in support of Scopes and Collections, extends capabilities around Open Telemetry API to instrument telemetry data, enhanced client side field level encryption to add an additional layer of security to protect sensitive data, adds new platform support such as Ubuntu 20.04 LTS.
 
 *SDK API 3.1*: Introduced alongside Couchbase Server 6.6,  focuses on Bucket Management API, adds capabilities around Full Text Search features such-as  Geo-Polygon support, Flex Index, and Scoring. 
