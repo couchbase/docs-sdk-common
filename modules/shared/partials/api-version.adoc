@@ -43,7 +43,7 @@ Whilst these two numbers match for the C, .NET, Java, and Ruby SDKs, this is not
 | -
 | -
 | -
-| 3.0
+| 1.0
 
 | Node.js
 | 3.0
