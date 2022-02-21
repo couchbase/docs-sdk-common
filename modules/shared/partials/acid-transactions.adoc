@@ -332,7 +332,7 @@ Only one query statement will be performed by the query service at a time.
 The reactive API allows performing multiple concurrent query statements, but this may result internally in some added network traffic due to retries, and is unlikely to provide any increased performance.
 
 === Query Performance Advice
-This section is optional reading, and only for those looking to maximise transactions performance.
+This section is optional reading, and only for those looking to maximize transactions performance.
 
 After the first query statement in a transaction, subsequent Key-Value operations in the lambda are converted into N1QL and executed by the query service rather than the Key-Value data service.
 The operation will behave identically, and this implementation detail can largely be ignored, except for these two caveats:
