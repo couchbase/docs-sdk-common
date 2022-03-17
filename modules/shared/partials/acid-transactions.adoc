@@ -43,9 +43,8 @@ If durability is set to `None`, then ACID semantics are not guaranteed.
 // tag::creating[]
 == Creating a Transaction
 
-A core idea of Couchbase transactions is that an application supplies the logic for transaction inside a lambda, including any conditional logic required.
-Couchbase transactions takes care of getting the transaction committed.
-If a transient error occurs, such as a temporary conflict with another transaction, then Couchbase transactions can rollback what has been done so far and run the lambda again.
+A core idea of Couchbase transactions is that an application supplies the logic for the transaction inside a lambda, including any conditional logic required, and the transaction is then automatically committed.
+If a transient error occurs, such as a temporary conflict with another transaction, then the transaction will rollback what has been done so far and run the lambda again.
 The application does have to do these retries and error handling itself.
 
 Each run of the lambda is called an `attempt`, inside an overall `transaction`.
@@ -106,7 +105,12 @@ These staged document changes effectively act as a lock against other transactio
 === Cleanup
 
 There are safety mechanisms to ensure that leftover staged changes from a failed transaction cannot block live transactions indefinitely.
-These include an asynchronous cleanup process that is started with the creation of the transaction, and scans for expired transactions created by any application, on all buckets.
+// tag::library-cleanup-process[]
+These include an asynchronous cleanup process that is started with the creation of the `Transactions` object, and scans for expired transactions created by any application, on all buckets.
+// end::library-cleanup-process[]
+// tag::integrated-sdk-cleanup-process[]
+These include an asynchronous cleanup process that is started with the first transaction, and scans for expired transactions created by any application, on the relevant collections.
+// end::integrated-sdk-cleanup-process[]
 
 Note that if an application is not running, then this cleanup is also not running.
 
@@ -234,7 +238,7 @@ If unable to, any staged metadata from the transaction will not be visible, and 
 As with `{transaction-failed}` it is recommended that it at least writes any logs from the transaction, for future debugging.
 It may wish to retry the transaction at a later point, or globally extend transactional expiration times to give the protocol additional time to resolve the ambiguity.
 
-=== {tnxfailed-unstaging-complete} 
+=== {txnfailed-unstaging-complete}
 
 This boolean flag indicates whether all documents were able to be unstaged (committed).
 
@@ -258,24 +262,29 @@ However, there are situations that inevitably created failed, or 'lost' transact
 
 This requires an asynchronous cleanup task, described in this section.
 
-The transactions cleanup task periodically scans for expired transactions and cleans them up.
+// tag::library-cleanup-buckets[]
+Creating the `Transactions` object spawns a background cleanup task, whose job it is to periodically scan for expired transactions and clean them up.
 It does this by scanning a subset of the Active Transaction Record (ATR) transaction metadata documents, on each bucket.
 As you'll recall from <<mechanics,earlier>>, an entry for each transaction attempt exists in one of these documents.
 They are removed during cleanup or at some time after successful completion.
+// end::library-cleanup-buckets[]
+// tag::integrated-sdk-cleanup-collections[]
+The first transaction triggered by an application will spawn a background cleanup task, whose job it is to periodically scan for expired transactions and clean them up.
+It does this by scanning a subset of the Active Transaction Record (ATR) transaction metadata documents, for each collection used by any transactions.
+// end::integrated-sdk-cleanup-collections[]
 
 The default settings are tuned to find expired transactions reasonably quickly, while creating negligible impact from the background reads required by the scanning process.
 To be exact, with default settings it will generally find expired transactions within 60 seconds, and use less than 20 reads per second.
 This is unlikely to impact performance on any cluster, but the settings may be <<tuning-cleanup,tuned>> as desired.
 
 All applications connected to the same cluster and running transactions will share in the cleanup, via a low-touch communication protocol on the "_txn:client-record" metadata document that will be created in each bucket in the cluster.
-This document is visible and should not be modified externally.
-It is maintained automatically by Couchbase transactions.
+This document is visible and should not be modified externally as it is maintained automatically.
 All ATRs on a bucket will be distributed between all cleanup clients, so increasing the number of applications will not increase the reads required for scanning.
 
 An application may cleanup transactions created by another application.
 
 It is important to understand that if an application is not running, then cleanup is not running.
-(This is particularly relevant to developers running unit tests or similar.)
+This is particularly relevant to developers running unit tests or similar.
 
 If this is an issue, then the deployment may want to consider running a simple application at all times that just opens a transaction, to guarantee that cleanup is running.
 // end::cleanup[]
@@ -289,8 +298,14 @@ As of Couchbase Server 7.0, N1QL queries may be used inside the transaction lamb
 
 === BEGIN TRANSACTION
 
+// tag::library-begin-transaction[]
 There are two ways to initiate a transaction with Couchbase 7.0: via a transactions library, and via the query service directly using `BEGIN TRANSACTION`.
 The latter is intended for those using query via the REST API, or using the query workbench in the UI, and it is strongly recommended that application writers instead use the transactions library.
+// end::library-begin-transaction[]
+// tag::integrated-sdk-begin-transaction[]
+There are two ways to initiate a transaction with Couchbase 7.0: via the SDK, and via the query service directly using `BEGIN TRANSACTION`.
+The latter is intended for those using query via the REST API, or using the query workbench in the UI, and it is strongly recommended that application writers instead use the SDK.
+// end::integrated-sdk-begin-transaction[]
 This provides these benefits:
 
 - It automatically handles errors and retrying.
@@ -306,14 +321,22 @@ DDL statements, such as CREATE INDEX, are not.
 
 
 // tag::query-perf[]
+=== Query Concurrency
+
+Only one query statement will be performed by the query service at a time.
+Non-blocking mechanisms can be used to perform multiple concurrent query statements, but this may result internally in some added network traffic due to retries, and is unlikely to provide any increased performance.
+
 === Query Performance Advice
+
 This section is optional reading, and only for those looking to maximize transactions performance.
 
 After the first query statement in a transaction, subsequent Key-Value operations in the lambda are converted into N1QL and executed by the query service rather than the Key-Value data service.
-The operation will behave identically, and this implementation detail can largely be ignored, except for this caveat:
+The operation will behave identically, and this implementation detail can largely be ignored, except for these two caveats:
 
 * These converted Key-Value operations are likely to be slightly slower, as the query service is optimized for statements involving multiple documents.
 Those looking for the maximum possible performance are recommended to put Key-Value operations before the first query in the lambda, if possible.
+
+* Those using non-blocking mechanisms to achieve concurrency should be aware that the converted Key-Value operations are subject to the same parallelism restrictions mentioned above, e.g. they will not be executed in parallel by the query service.
 // end::query-perf[]
 
 
@@ -377,7 +400,7 @@ You can use an existing collection or create a new one.
 // tag::further[]
 == Further Reading
 
-There’s plenty of explanation about how Transactions work in Couchbase in our xref:7.0@server:learn:data/transactions.adoc[Transactions documentation].
+There’s plenty of explanation about how transactions work in Couchbase in our xref:7.0@server:learn:data/transactions.adoc[Transactions documentation].
 // end::further[]
 
 
