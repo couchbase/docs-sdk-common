@@ -60,12 +60,12 @@ The mandatory map function describes how to select and transform the data from t
 // tag::one-view-update-warning[]
 [WARNING]
 ====
-When you want to update an existing document with a new view (or a modification of a view's definition), you can use the `upsertDesignDocument` method.
+When you want to update an existing document with a new view (or a modification of a view's definition), you can use the {upsertDesignDocument}.
 
-However, this method needs the list of views in the document to be exhaustive, meaning that if you just create the new view definition as previously and add it to a new `DesignDocument` that you upsert, all your other views will be erased!
+However, this method needs the list of views in the document to be exhaustive, meaning that if you just create the new view definition as previously and add it to a new design document that you upsert, all your other views will be erased!
 
-The solution is to perform a `getDesignDocument`, add your view definition to the DesignDocument's views list, then upsert it.
-This also works with view modifications, provided the change is in the `map` or `reduce` functions (just reuse the same name for the modified `View`), or for deletion of one out of several views in the document.
+The solution is to perform a {getDesignDocument}, add your view definition to the DesignDocument's views list, then upsert it.
+This also works with view modifications, provided the change is in the `map` or `reduce` functions (just reuse the same name for the modified view), or for deletion of one out of several views in the document.
 ====
 // end::one-view-update-warning[]
 
