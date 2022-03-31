@@ -16,7 +16,7 @@ You may need to wait some time until the bucket becomes ready by repeatedly tryi
 
 [#update-bucket-warning]
 // tag::update-bucket-warning[]
-WARNING: Note that any property that is not explicitly set when building the [.api]`BucketSettings` will use the default value.
+WARNING: Note that any property that is not explicitly set when building the bucket settings will use the default value.
 In the case of the update, this is not necessarily the currently configured value, so you should be careful to set all properties to their correct expected values when updating an existing bucket configuration.
 // end::update-bucket-warning[]
 
@@ -60,11 +60,34 @@ The mandatory map function describes how to select and transform the data from t
 // tag::one-view-update-warning[]
 [WARNING]
 ====
-When you want to update an existing document with a new view (or a modification of a view's definition), you can use the `upsertDesignDocument` method.
+When you want to update an existing document with a new view (or a modification of a view's definition), you can use the {upsertDesignDocument}.
 
-However, this method needs the list of views in the document to be exhaustive, meaning that if you just create the new view definition as previously and add it to a new `DesignDocument` that you upsert, all your other views will be erased!
+However, this method needs the list of views in the document to be exhaustive, meaning that if you just create the new view definition as previously and add it to a new design document that you upsert, all your other views will be erased!
 
-The solution is to perform a `getDesignDocument`, add your view definition to the DesignDocument's views list, then upsert it.
-This also works with view modifications, provided the change is in the `map` or `reduce` functions (just reuse the same name for the modified `View`), or for deletion of one out of several views in the document.
+The solution is to perform a {getDesignDocument}, add your view definition to the DesignDocument's views list, then upsert it.
+This also works with view modifications, provided the change is in the `map` or `reduce` functions (just reuse the same name for the modified view), or for deletion of one out of several views in the document.
 ====
 // end::one-view-update-warning[]
+
+// tag::index-management-intro[]
+In general, you will rarely need to work with Index Managers from the SDK.
+For those occasions when you do, index management operations can be performed with the following interfaces:
+
+* {query-api-reference}
+* {analytics-api-reference}
+* {search-api-reference}
+* {view-api-reference}
+
+You will find some of these described in the following section.
+// end::index-management-intro[]
+
+// tag::query-index-manager-intro[]
+Applications can use this manager to perform operations such as creating, deleting, and fetching _primary_ or _secondary_ indexes:
+
+* A _Primary_ index is based off a document's key and is mostly suited for simple queries.
+
+* A _Secondary_ index is the most commonly used type, and is suited for complex queries that require filtering on document fields.
+
+NOTE: To perform query index operations, the provided user must either be an _Admin_ or assigned the _Query Manage Index_ role.
+See the xref:server:learn:security/roles.adoc#query-manage-index[Roles] page for more information.
+// end::query-index-manager-intro[]
