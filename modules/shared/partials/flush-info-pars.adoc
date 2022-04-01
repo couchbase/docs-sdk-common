@@ -84,7 +84,7 @@ You will find some of these described in the following section.
 // tag::query-index-manager-intro[]
 Applications can use this manager to perform operations such as creating, deleting, and fetching _primary_ or _secondary_ indexes:
 
-* A _Primary_ index is based off a document's key and is mostly suited for simple queries.
+* A _Primary_ index is built from a document's key and is mostly suited for simple queries.
 
 * A _Secondary_ index is the most commonly used type, and is suited for complex queries that require filtering on document fields.
 
