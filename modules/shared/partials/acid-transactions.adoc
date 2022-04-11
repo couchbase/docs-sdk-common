@@ -45,7 +45,7 @@ If durability is set to `None`, then ACID semantics are not guaranteed.
 
 A core idea of Couchbase transactions is that an application supplies the logic for the transaction inside a lambda, including any conditional logic required, and the transaction is then automatically committed.
 If a transient error occurs, such as a temporary conflict with another transaction, then the transaction will rollback what has been done so far and run the lambda again.
-The application does have to do these retries and error handling itself.
+The application does not have to do these retries and error handling itself.
 
 Each run of the lambda is called an `attempt`, inside an overall `transaction`.
 // end::creating[]
@@ -158,7 +158,8 @@ Specifically, the application should ensure that non-transactional writes are ne
 This requirement is to ensure that the strong Key-Value performance of Couchbase was not compromised.
 A key philosophy of our transactions is that you 'pay only for what you use'.
 
-If two such writes *do* conflict then the transactional write will 'win', overwriting the non-transactional write.
+If two such writes *do* conflict then the behaviour is undefined: either write may 'win', overwriting the other.
+This still applies if the non-transactional write is using CAS.
 
 Note this only applies to _writes_.
 Any non-transactional _reads_ concurrent with transactions are fine, and are at a Read Committed level.
@@ -174,15 +175,15 @@ As discussed previously, Couchbase transactions will attempt to resolve many err
 This includes some transient server errors, and conflicts with other transactions.
 
 But there are situations that cannot be resolved, and total failure is indicated to the application via errors.
-These errors include:
+These situations include:
 
 * Any error thrown by your transaction lambda, either deliberately or through an application logic bug.
 * Attempting to insert a document that already exists.
 * Attempting to remove or replace a document that does not exist.
-* Calling {ctx-get} on a document key that does not exist.
+* Calling {ctx-get} on a document key that does not exist (if the resultant exception is not caught).
 
-IMPORTANT: Once one of these errors occurs, the current attempt is irrevocably failed (though the transaction may retry the lambda).
-It is not possible for the application to catch the failure and continue.
+Once one of these errors occurs, the current attempt is irrevocably failed (though the transaction may retry the lambda to make a new attempt).
+It is not possible for the application to catch the failure and continue (with the exception of {ctx-get} raising an error).
 Once a failure has occurred, all other operations tried in this attempt (including commit) will instantly fail.
 
 Transactions, as they are multi-stage and multi-document, also have a concept of partial success or failure.
@@ -196,60 +197,59 @@ This is signalled to the application through the {error-unstaging-complete}, des
 === {transaction-failed} and {transaction-expired} 
 
 The transaction definitely did not reach the commit point.
-`{transaction-failed}` indicates a fast-failure whereas `{transaction-expired}` indicates that retries were made until the expiration point was reached, but this distinction is not normally important to the application and generally `{transaction-expired}` does not need to be handled individually.
+`{transaction-failed}` indicates a fast-failure whereas `{transaction-expired}` indicates that retries were made until the timeout was reached, but this distinction is not normally important to the application and generally `{transaction-expired}` does not need to be handled individually.
 
 Either way, an attempt will have been made to rollback all changes.
 This attempt may or may not have been successful, but the results of this will have no impact on the protocol or other actors.
-No changes from the transaction will be visible (presently with the potential and temporary exception of staged inserts being visible to non-transactional actors, as discussed under <<Inserting>>).
+No changes from the transaction will be visible, both to transactional and non-transactional actors.
 
 *Handling:* Generally, debugging exactly why a given transaction failed requires review of the logs, so it is suggested that the application log these on failure (see xref:#logging[Logging]).
 The application may want to try the transaction again later.
-Alternatively, if transaction completion time is not a priority, then transaction expiration times (which default to 15 seconds) can be extended across the board through `{transaction-config}`.
+Alternatively, if transaction completion time is not a priority, then transaction timeouts (which default to 15 seconds) can be extended across the board through `{transaction-config}`.
 // end::txnfailed[]
 
 
 
 // tag::txnfailed1[]
 This will allow the protocol more time to get past any transient failures (for example, those caused by a cluster rebalance).
-The tradeoff to consider with longer expiration times, is that documents that have been staged by a transaction are effectively locked from modification from other transactions, until the expiration time has exceeded.
+The tradeoff to consider with longer timeouts, is that documents that have been staged by a transaction are effectively locked from modification from other transactions, until the timeout has been reached.
 
-Note that expiration is not guaranteed to be followed precisely.
-For example, if the application were to do a long blocking operation inside the lambda (which should be avoided), then expiration can only trigger after this finishes.
-Similarly, if the transaction attempts a key-value operation close to the expiration time, and that key-value operation times out, then the expiration time may be exceeded.
+Note that the timeout is not guaranteed to be followed precisely.
+For example, if the application were to do a long blocking operation inside the lambda (which should be avoided), then timeout can only trigger after this finishes.
+Similarly, if the transaction attempts a key-value operation close to the timeout, and that key-value operation times out, then the transaction timeout may be exceeded.
 
 === {transaction-commit-ambiguous} 
 
 As discussed <<mechanics,previously>>, each transaction has a 'single point of truth' that is updated atomically to reflect whether it is committed.
 
 However, it is not always possible for the protocol to become 100% certain that the operation was successful, before the transaction expires.
-That is, the operation may have successfully completed on the cluster, or may succeed soon, but the protocol is unable to determine this (whether due to transient network failure or other reason).
-This is important as the transaction may or may not have reached the commit point, e.g. succeeded or failed.
+This potential ambiguity is unavoidable in any distributed system; a classic example is a network failure happening just after an operation was sent from a client to a server.
+The client will not get a response back and cannot know if the server received and executed the operation.
 
-Couchbase transactions will raise `{transaction-commit-ambiguous}` to indicate this state.
+The ambiguity is particularly important at the point of the atomic commit, as the transaction may or may not have reached the commit point.  Couchbase transactions will raise `{transaction-commit-ambiguous}` to indicate this state.
 It should be rare to receive this error.
 
 If the transaction had in fact successfully reached the commit point, then the transaction will be fully completed ("unstaged") by the asynchronous cleanup process at some point in the future.
 With default settings this will usually be within a minute, but whatever underlying fault has caused the `{transaction-commit-ambiguous}` may lead to it taking longer.
 
 If the transaction had not in fact reached the commit point, then the asynchronous cleanup process will instead attempt to roll it back at some point in the future.
-If unable to, any staged metadata from the transaction will not be visible, and will not cause problems (e.g. there are safety mechanisms to ensure it will not block writes to these documents for long).
 
 *Handling:* This error can be challenging for an application to handle.
 As with `{transaction-failed}` it is recommended that it at least writes any logs from the transaction, for future debugging.
-It may wish to retry the transaction at a later point, or globally extend transactional expiration times to give the protocol additional time to resolve the ambiguity.
+It may wish to retry the transaction at a later point, or extend transactional timeouts (as detailed above) to give the protocol additional time to resolve the ambiguity.
 
 === {txnfailed-unstaging-complete}
 
 This boolean flag indicates whether all documents were able to be unstaged (committed).
 
 For most use-cases it is not an issue if it is false.
-All transactional actors will still all the changes from this transaction, as though it had committed fully.
+All transactional actors will still read all the changes from this transaction, as though it had committed fully.
 The cleanup process is asynchronously working to complete the commit, so that it will be fully visible to non-transactional actors.
 
 The flag is provided for those rare use-cases where the application requires the commit to be fully visible to non-transactional actors, before it may continue.
 In this situation the application can raise an error here, or poll all documents involved until they reflect the mutations.
 
-If you regularly see this flag false, consider increasing the transaction expiration time to reduce the possibility that the transaction times out during the commit.
+If you regularly see this flag false, consider increasing the transaction timeout to reduce the possibility that the transaction times out during the commit.
 // end::txnfailed1[]
 
 
@@ -274,19 +274,17 @@ It does this by scanning a subset of the Active Transaction Record (ATR) transac
 // end::integrated-sdk-cleanup-collections[]
 
 The default settings are tuned to find expired transactions reasonably quickly, while creating negligible impact from the background reads required by the scanning process.
-To be exact, with default settings it will generally find expired transactions within 60 seconds, and use less than 20 reads per second.
+To be exact, with default settings it will generally find expired transactions within 60 seconds, and use less than 20 reads per second, per collection of metadata documents being checked.
 This is unlikely to impact performance on any cluster, but the settings may be <<tuning-cleanup,tuned>> as desired.
 
-All applications connected to the same cluster and running transactions will share in the cleanup, via a low-touch communication protocol on the "_txn:client-record" metadata document that will be created in each bucket in the cluster.
+All applications connected to the same cluster and running transactions will share in the cleanup, via a low-touch communication protocol on the "_txn:client-record" metadata document that will be created in each collection in the cluster involved with transaction metadata.
 This document is visible and should not be modified externally as it is maintained automatically.
-All ATRs on a bucket will be distributed between all cleanup clients, so increasing the number of applications will not increase the reads required for scanning.
+All ATRs will be distributed between all cleanup clients, so increasing the number of applications will not increase the reads required for scanning.
 
 An application may cleanup transactions created by another application.
 
 It is important to understand that if an application is not running, then cleanup is not running.
 This is particularly relevant to developers running unit tests or similar.
-
-If this is an issue, then the deployment may want to consider running a simple application at all times that just opens a transaction, to guarantee that cleanup is running.
 // end::cleanup[]
 
 
@@ -368,7 +366,7 @@ Single query transactions may be initiated like so:
 
 As described earlier, transactions automatically create and use metadata documents.
 By default, these are created in the default collection of the bucket of the first mutated document in the transaction.
-Optionally, you can instead use a collection to store the metadata documents.
+Optionally, you can instead specify a collection to store the metadata documents.
 Most users will not need to use this functionality, and can continue to use the default behavior.
 They are provided for these use-cases:
 
@@ -392,8 +390,11 @@ When specified:
 
 You need to ensure that this application has RBAC data read and write privileges to it, and should not delete the collection subsequently as it can interfere with existing transactions.
 You can use an existing collection or create a new one.
-
 // end::custom-metadata-2[]
+// tag::integrated-sdk-custom-metadata-2[]
+You need to ensure that this application has RBAC data read and write privileges to any custom metadata collections, and should not delete them subsequently as that can interfere with existing transactions.
+You can use existing collections or create new ones.
+// end::integrated-sdk-custom-metadata-2[]
 
 
 
