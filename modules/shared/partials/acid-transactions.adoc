@@ -423,6 +423,8 @@ Currently, Distributed ACID Transactions are available for:
 // end::other[]
 
 // tag::n1ql-rbac[]
+=== Query with KV Roles
+
 To execute a key-value operation within a transaction, users must have the relevant _Administrative_ or _Data_ RBAC roles, and permissions on the relevant buckets, scopes, and collections.
 
 Similarly, to run a query statement within a transaction, users must have the relevant _Administrative_ or _Query & Index_ RBAC roles, and permissions on the relevant buckets, scopes and collections.
