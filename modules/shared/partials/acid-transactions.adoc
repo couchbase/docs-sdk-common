@@ -414,6 +414,22 @@ Nevertheless, you may find that you can achieve the same result with our xref:co
 Currently, Distributed ACID Transactions are available for:
 
 * The xref:1.0@cxx-txns::distributed-acid-transactions-from-the-sdk.adoc[C++ API].
-* The xref:3.0@dotnet-sdk:howtos:distributed-acid-transactions-from-the-sdk.adoc[.NET SDK].
-* The xref:3.0@java-sdk:howtos:distributed-acid-transactions-from-the-sdk.adoc[Java SDK].
+* The xref:3.3@dotnet-sdk:howtos:distributed-acid-transactions-from-the-sdk.adoc[.NET SDK].
+* The xref:2.4@go-sdk:howtos:distributed-acid-transactions-from-the-sdk.adoc[Go SDK].
+* The xref:3.3@java-sdk:howtos:distributed-acid-transactions-from-the-sdk.adoc[Java SDK].
+* The xref:4.0@nodejs-sdk:howtos:distributed-acid-transactions-from-the-sdk.adoc[node.js SDK].
 // end::other[]
+
+// tag::n1ql-rbac[]
+To execute a key-value operation within a transaction, users must have the relevant _Administrative_ or _Data_ RBAC roles, and permissions on the relevant buckets, scopes, and collections.
+
+Similarly, to run a query statement within a transaction, users must have the relevant _Administrative_ or _Query & Index_ RBAC roles, and permissions on the relevant buckets, scopes and collections.
+
+Refer to xref:learn:security/roles.adoc[Roles] for details.
+
+[NOTE]
+.Query Mode
+When a transaction executes a query statement, the transaction enters query mode, which means that the query is executed with the user's query permissions.
+Any key-value operations which are executed by the transaction _after_ the query statement are _also_ executed with the user's query permissions.
+These may or may not be different to the user's data permissions; if they are different, you may get unexpected results.
+// end::n1ql-rbac[]
