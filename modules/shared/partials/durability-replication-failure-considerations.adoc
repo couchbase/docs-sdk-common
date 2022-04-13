@@ -124,18 +124,10 @@ Durability operations may also cause increased network traffic since it is imple
 // tag::txns[]
 == Transactions
 
-// This section only in Java for 3.0 β
-// and later others...
-
 Couchbase introduced xref:7.0@server:learn:data/transactions.adoc[distributed, multi-document ACID Transactions], with Couchbase Data Platform 6.5.
-They are implemented as a separate library -- currently for the Java SDK.
-The following documentation is available:
 
 * xref:7.0@server:learn:data/transactions.adoc[An introductory guide to how Couchbase ACID Transactions work].
 * xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[A HOWTO guide].
-* xref:project-docs:distributed-transactions-java-release-notes.adoc[Transactions Release Notes].
-
-
 // end::txns[]
 
 
