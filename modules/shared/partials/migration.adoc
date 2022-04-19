@@ -4,16 +4,8 @@
 
 == Fundamentals
 
-The Couchbase SDK team takes https://semver.org/[semantic versioning] seriously, which means that API should not be broken in incompatible ways while staying on a certain major release.
-This has the benefit that most of the time upgrading the SDK should not cause much trouble, even when switching between minor versions (not just bugfix releases).
-The downside though is that significant improvements to the APIs are very often not possible, save as pure additions -- which eventually lead to overloaded methods.
-
-To support new server releases and prepare the SDK for years to come, we have decided to increase the major version of each SDK and as a result take the opportunity to break APIs where we had to.
-As a result, migration from the previous major version to the new major version will take some time and effort -- an effort to be counterbalanced by improvements to coding time, through the simpler API, and performance.
-The new API is built on years of hands-on experience with the current SDK as well as with a focus on simplicity, correctness, and performance.
-
 Before this guide dives into the language-specific technical component of the migration, it is important to understand the high level changes first.
-As a migration guide, this document assumes you are familiar with the previous generation of the SDK and does not re-introduce SDK 2.0 concepts.
+As a migration guide, this document assumes you are familiar with the previous generation of the SDK and does not re-introduce SDK API 2 concepts.
 We recommend familiarizing yourself with the new SDK first by reading at least the xref:hello-world:start-using-sdk.adoc[getting started guide], and browsing through the other chapters a little.
 
 // end::intro[]
