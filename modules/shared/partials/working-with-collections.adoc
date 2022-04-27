@@ -6,7 +6,7 @@
 [abstract]
 The 3.x API SDKs all work with all features of Collections and Scopes.
 
-The xref:{version-server}@server:learn:data/scopes-and-collections.adoc[Collections feature] in Couchbase Server 7.x is fully implemented in the
+The xref:7.0@server:learn:data/scopes-and-collections.adoc[Collections feature] in Couchbase Server 7.x is fully implemented in the
 3.x API versions of the Couchbase SDKs.
 
 NOTE: When working with versions earlier than 7.0, the `defaultcollection` is used from the SDK.

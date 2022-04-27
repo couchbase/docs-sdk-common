@@ -33,14 +33,14 @@ For Couchbase Server {version-server}, make sure that you have at least one node
 For a development box, mixing more than one of these on a single node (given enough memory resources) is perfectly acceptable.
 
 If you have yet to install Couchbase Server in your development environment
-xref:{version-server}@server:getting-started:do-a-quick-install.adoc[start here].
+xref:7.0@server:getting-started:do-a-quick-install.adoc[start here].
 
 Then load up the Travel Sample Bucket, using either the
-xref:{version-server}@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-ui[Web interface]
+xref:7.0@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-ui[Web interface]
 or the
-xref:{version-server}@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-cli[command line].
+xref:7.0@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-cli[command line].
 You will also need to
-xref:{version-server}@server:fts:fts-searching-from-the-ui.adoc#create-an-index[create a Search Index]
+xref:7.0@server:fts:fts-searching-from-the-ui.adoc#create-an-index[create a Search Index]
 -- Query indexes are taken care of by the Sample Bucket.
 // end::prereq[]
 

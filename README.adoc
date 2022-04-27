@@ -90,7 +90,7 @@ For example:
 
 [source,asciidoc]
 ----
-Use the xref:{version-server}@server:tools:query-workbench.adoc[Query Workbench] to issue queries using the web console.
+Use the xref:7.0@server:tools:query-workbench.adoc[Query Workbench] to issue queries using the web console.
 ----
 
 Using the attributes file allows the server version to be managed in a single place.
