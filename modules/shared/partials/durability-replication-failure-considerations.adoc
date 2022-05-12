@@ -24,7 +24,7 @@ By default all writes are asynchronous, but levels of durability can be set, to 
 
 // tag::syncrep[]
 == Durable Writes
-Durability has been enhanced in Couchbase Data Platform 6.5, with xref:7.0@server:learn:data/durability.adoc[Durable Writes],
+Durability has been enhanced in Couchbase Data Platform 6.5, with xref:7.1@server:learn:data/durability.adoc[Durable Writes],
 under which mutations will not be visible to other clients until they have met their durability requirements.
 These requirements are now enforced on the server side, rather than requiring client logic, which means that this committed durability can now be guaranteed.
 
@@ -45,7 +45,7 @@ Variation in network speeds and conditions, _inter alia_, make it difficult to g
 
 // tag::syncrep2[]
 Options for making changes to `numKvConnections` (kvEndpoints) and `kvDurableTimeout` for Durable Writes can be found on the xref:ref:client-settings.adoc#io-options[Client Settings page].
-Increasing the number of reader and writer threads for Couchbase Server storage _may_ be advantageous: see the discussion on the xref:7.0@server:learn:buckets-memory-and-storage/storage.adoc#threading[Server storage page].
+Increasing the number of reader and writer threads for Couchbase Server storage _may_ be advantageous: see the discussion on the xref:7.1@server:learn:buckets-memory-and-storage/storage.adoc#threading[Server storage page].
 // end::syncrep2[]
 
 
@@ -55,7 +55,7 @@ IMPORTANT: Durable Writes must not be made with three replicas.
 Attempting this will result in an error message: `DURABILITY_IMPOSSIBLE`.
 
 While Durable Writes are being attempted, another client cannot write to the document concerned
--- see the diagram and explanation xref:7.0@server:learn:data/durability.adoc#process-and-communication[in the Server Durability docs].
+-- see the diagram and explanation xref:7.1@server:learn:data/durability.adoc#process-and-communication[in the Server Durability docs].
 
 
 
@@ -72,7 +72,7 @@ Durable Writes do a great deal to mitigate against network problems, but working
 Consider carefully the case where the client has sent the operation to the server, the server has sent the mutation on to the replica(s), and the replicas have acknowledged completion of their operation(s). Now, at the point where the server is sending the successful status to the client, the network drops. The client is in an ambiguous state, not knowing whether or not the operation was successful.
 
 In cases where the operation is idempotent (such as an upsert operation), then simply retrying is a perfectly acceptable strategy, where the cost of doing so is justified by the importance of the operation.
-Where the operation is an array append, or somesuch, then xref:7.0@server:learn:data/transactions.adoc[distributed, multi-document ACID transactions] should be considered.
+Where the operation is an array append, or somesuch, then xref:7.1@server:learn:data/transactions.adoc[distributed, multi-document ACID transactions] should be considered.
 
 // end::syncrep3[]
 
@@ -124,9 +124,9 @@ Durability operations may also cause increased network traffic since it is imple
 // tag::txns[]
 == Transactions
 
-Couchbase introduced xref:7.0@server:learn:data/transactions.adoc[distributed, multi-document ACID Transactions], with Couchbase Data Platform 6.5.
+Couchbase introduced xref:7.1@server:learn:data/transactions.adoc[distributed, multi-document ACID Transactions], with Couchbase Data Platform 6.5.
 
-* xref:7.0@server:learn:data/transactions.adoc[An introductory guide to how Couchbase ACID Transactions work].
+* xref:7.1@server:learn:data/transactions.adoc[An introductory guide to how Couchbase ACID Transactions work].
 * xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[A HOWTO guide].
 // end::txns[]
 

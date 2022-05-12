@@ -52,16 +52,16 @@ I.e. no query node in the config, or a memcached bucket is accessed and views or
 === # 5 InternalServerFailure
 
 Raised when:
-* Query: xref:7.0@server:n1ql:n1ql-language-reference/n1ql-error-codes.adoc#5xxx-codes-exec[Error range 5xxx].
-* Analytics: Error range xref:7.0@server:analytics:error-codes.adoc[25xxx].
+* Query: xref:7.1@server:n1ql:n1ql-language-reference/n1ql-error-codes.adoc#5xxx-codes-exec[Error range 5xxx].
+* Analytics: Error range xref:7.1@server:analytics:error-codes.adoc[25xxx].
 * KV: error code ERR_INTERNAL (0x84).
 * Search: HTTP 500.
 
 === # 6 AuthenticationFailure
 
 Raised when:
-* Query: xref:7.0@server:n1ql:n1ql-language-reference/n1ql-error-codes.adoc#10xxx-codes-ds_auth[Error range 10xxx].
-* Analytics: Error range xref:7.0@server:analytics:error-codes.adoc[20xxx].
+* Query: xref:7.1@server:n1ql:n1ql-language-reference/n1ql-error-codes.adoc#10xxx-codes-ds_auth[Error range 10xxx].
+* Analytics: Error range xref:7.1@server:analytics:error-codes.adoc[20xxx].
 * View: HTTP status 401.
 * KV: error code `ERR_ACCESS (0x24)`, `ERR_AUTH_ERROR (0x20)`, `AUTH_STALE (0x1f)`.
 * Search: HTTP status 401, 403.
@@ -69,20 +69,20 @@ Raised when:
 === # 7 TemporaryFailure
 
 Raised when:
-* Analytics: Errors: xref:7.0@server:analytics:error-codes.adoc[23000, 23003].
+* Analytics: Errors: xref:7.1@server:analytics:error-codes.adoc[23000, 23003].
 * KV: Error code `ERR_TMPFAIL (0x86)`, `ERR_BUSY (0x85)` `ERR_OUT_OF_MEMORY (0x82)`, `ERR_NOT_INITIALIZED (0x25)`.
 
 === # 8 ParsingFailure
 
 Raised when:
-* Query: xref:7.0@server:n1ql:n1ql-language-reference/n1ql-error-codes.adoc#3xxx-codes-parse[code 3000].
-* Analytics: code xref:7.0@server:analytics:error-codes.adoc[24000] raised.
+* Query: xref:7.1@server:n1ql:n1ql-language-reference/n1ql-error-codes.adoc#3xxx-codes-parse[code 3000].
+* Analytics: code xref:7.1@server:analytics:error-codes.adoc[24000] raised.
 
 === # 9 CasMismatch
 
 Raised when:
 * KV: `ERR_EXISTS (0x02)` when replace or remove with CAS.
-* Query: xref:7.0@server:n1ql:n1ql-language-reference/n1ql-error-codes.adoc#12xxx-codes-ds_cb[code 12009].
+* Query: xref:7.1@server:n1ql:n1ql-language-reference/n1ql-error-codes.adoc#12xxx-codes-ds_cb[code 12009].
 
 === # 10 BucketNotFound
 
@@ -120,17 +120,17 @@ Raised when a management API attempts to target a scope which does not exist.
 
 Raised when:
 * Query:
-** Codes xref:7.0@server:n1ql:n1ql-language-reference/n1ql-error-codes.adoc#12xxx-codes-ds_cb[12004, 12016].
-** xref:7.0@server:n1ql:n1ql-language-reference/n1ql-error-codes.adoc#5000-9999-codes-errors[Codes 5000] AND message contains index .+ not found.
-* Analytics: rised when xref:7.0@server:analytics:error-codes.adoc[24047] raised.
+** Codes xref:7.1@server:n1ql:n1ql-language-reference/n1ql-error-codes.adoc#12xxx-codes-ds_cb[12004, 12016].
+** xref:7.1@server:n1ql:n1ql-language-reference/n1ql-error-codes.adoc#5000-9999-codes-errors[Codes 5000] AND message contains index .+ not found.
+* Analytics: rised when xref:7.1@server:analytics:error-codes.adoc[24047] raised.
 * Search: Http status code 400 AND text contains "index not found".
 
 === # 18 IndexExists
 
 * Query: Raised when
-** xref:7.0@server:n1ql:n1ql-language-reference/n1ql-error-codes.adoc#5000-9999-codes-errors[Code 5000] AND message contains Index .+ already exist
-** xref:7.0@server:n1ql:n1ql-language-reference/n1ql-error-codes.adoc#4xxx-codes-plan[Code 4300] AND message contains index .+ already exist
-* Analytics: Raised when xref:7.0@server:analytics:error-codes.adoc[24048] raised.
+** xref:7.1@server:n1ql:n1ql-language-reference/n1ql-error-codes.adoc#5000-9999-codes-errors[Code 5000] AND message contains Index .+ already exist
+** xref:7.1@server:n1ql:n1ql-language-reference/n1ql-error-codes.adoc#4xxx-codes-plan[Code 4300] AND message contains index .+ already exist
+* Analytics: Raised when xref:7.1@server:analytics:error-codes.adoc[24048] raised.
 
 === # 19 EncodingFailure
 
@@ -281,15 +281,15 @@ ID Range 200 - 299
 
 === # 201 PlanningFailure
 
-Query: Raised when code range xref:7.0@server:n1ql:n1ql-language-reference/n1ql-error-codes.adoc#4xxx-codes-plan[4xxx] other than those explicitly covered.
+Query: Raised when code range xref:7.1@server:n1ql:n1ql-language-reference/n1ql-error-codes.adoc#4xxx-codes-plan[4xxx] other than those explicitly covered.
 
 === # 202 IndexFailure
 
-Query: Raised when code range xref:7.0@server:n1ql:n1ql-language-reference/n1ql-error-codes.adoc#12xxx-codes-ds_cb[12xxx] and xref:7.0@server:n1ql:n1ql-language-reference/n1ql-error-codes.adoc#14xxx-codes-ds_gsi[14xxx] raised (other than 12004 and 12016).
+Query: Raised when code range xref:7.1@server:n1ql:n1ql-language-reference/n1ql-error-codes.adoc#12xxx-codes-ds_cb[12xxx] and xref:7.1@server:n1ql:n1ql-language-reference/n1ql-error-codes.adoc#14xxx-codes-ds_gsi[14xxx] raised (other than 12004 and 12016).
 
 === # 203 PreparedStatementFailure
 
-Query: Raised when codes xref:7.0@server:n1ql:n1ql-language-reference/n1ql-error-codes.adoc#4xxx-codes-plan[4040, 4050, 4060, 4070, 4080, 4090].
+Query: Raised when codes xref:7.1@server:n1ql:n1ql-language-reference/n1ql-error-codes.adoc#4xxx-codes-plan[4040, 4050, 4060, 4070, 4080, 4090].
 // end::query[]
 
 
@@ -302,31 +302,31 @@ ID Range 300 - 399
 
 === # 301 CompilationFailure
 
-Raised when error range xref:7.0@server:analytics:error-codes.adoc[24xxx] (excluded are specific codes in the errors below).
+Raised when error range xref:7.1@server:analytics:error-codes.adoc[24xxx] (excluded are specific codes in the errors below).
 
 === # 302 JobQueueFull
 
-Raised when error code xref:7.0@server:analytics:error-codes.adoc[23007].
+Raised when error code xref:7.1@server:analytics:error-codes.adoc[23007].
 
 === # 303 DatasetNotFound
 
-Raised when error codes xref:7.0@server:analytics:error-codes.adoc[24044, 24045, 24025].
+Raised when error codes xref:7.1@server:analytics:error-codes.adoc[24044, 24045, 24025].
 
 === # 304 DataverseNotFound
 
-Raised when error code xref:7.0@server:analytics:error-codes.adoc[24034].
+Raised when error code xref:7.1@server:analytics:error-codes.adoc[24034].
 
 === # 305 DatasetExists
 
-Raised when xref:7.0@server:analytics:error-codes.adoc[24040].
+Raised when xref:7.1@server:analytics:error-codes.adoc[24040].
 
 === # 306 DataverseExists
 
-Raised when xref:7.0@server:analytics:error-codes.adoc[24039].
+Raised when xref:7.1@server:analytics:error-codes.adoc[24039].
 
 === # 307 LinkNotFound
 
-Raised when xref:7.0@server:analytics:error-codes.adoc[24006].
+Raised when xref:7.1@server:analytics:error-codes.adoc[24006].
 // end::analytics[]
 
 

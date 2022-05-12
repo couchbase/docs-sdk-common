@@ -1,6 +1,6 @@
 // tag::intro[]
 The N1QL Query Language provides a familiar, SQL-like experience for querying documents stored in Couchbase.
-You can xref:7.0@server:n1ql:n1ql-language-reference/index.adoc[read up on the language in our reference guide],
+You can xref:7.1@server:n1ql:n1ql-language-reference/index.adoc[read up on the language in our reference guide],
 but you probably just want to xref:howtos:n1ql-queries-with-sdk.adoc[dive into a practical example].
 
 Below, we fill in some of the gaps between reference and rolling-up-your-sleeves practicality,
@@ -47,7 +47,7 @@ Because indexes are by design outside the Data Service, they are _eventually con
 and, depending on how you issue the query, may at times not contain the most up-to-date information.
 This may especially be the case when deployed in a write-heavy environment: changes may take some time to propagate over to the index nodes.
 
-The asynchronous updating nature of xref:7.0@server:learn:services-and-indexes/indexes/global-secondary-indexes.adoc[Global Secondary Indexes (GSIs)] means that they can be very quick to query and do not require the additional overhead of index recaclculations at the time documents are modified.
+The asynchronous updating nature of xref:7.1@server:learn:services-and-indexes/indexes/global-secondary-indexes.adoc[Global Secondary Indexes (GSIs)] means that they can be very quick to query and do not require the additional overhead of index recaclculations at the time documents are modified.
 N1QL queries are forwarded to the relevant indexes, and the queries are done based on indexed information, rather than the documents as they exist in the data service.
 
 With default query options, the query service will rely on the current index state:

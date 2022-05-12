@@ -15,7 +15,7 @@ This section discusses the various ways in which you can access data (Documents)
 // tag::document[]
 == Document
 
-A _document_ refers to an entry in the database (other databases may refer to the same concept as a xref:7.0@server:learn:data/document-data-model.adoc#couchbase-server-and-json-the-benefits[_row_]).
+A _document_ refers to an entry in the database (other databases may refer to the same concept as a xref:7.1@server:learn:data/document-data-model.adoc#couchbase-server-and-json-the-benefits[_row_]).
 A document has an ID (_primary key_ in other databases), which is unique to the document and by which it can be located.
 The document also has a value which contains the actual application data.
 
@@ -133,7 +133,7 @@ If you wish to only modify certain parts of a document, you can use xref:subdocu
 cb.mutate_in('docid', subdoc.array_addunique('tags', 'fast'))
 ----
 
-or xref:7.0@server:n1ql:n1ql-language-reference/update.adoc[N1QL UPDATE] to update documents based on specific query criteria:
+or xref:7.1@server:n1ql:n1ql-language-reference/update.adoc[N1QL UPDATE] to update documents based on specific query criteria:
 
 [source,n1ql]
 ----
@@ -421,7 +421,7 @@ The _expiry pager_ is a routine internal process which scans the database for it
 
 When gathering resource usage statistics, note that expired-but-not-purged items (such as the expiry pager has not scanned this item yet) will still be considered with respect to the overall storage size and item count.
 
-NOTE: Although the API only sets expiry values _per document_, it is possible that elsewhere in the server, an expiry value is being set for xref:7.0@server:learn:buckets-memory-and-storage/expiration.adoc[every document in a bucket^].
+NOTE: Although the API only sets expiry values _per document_, it is possible that elsewhere in the server, an expiry value is being set for xref:7.1@server:learn:buckets-memory-and-storage/expiration.adoc[every document in a bucket^].
 Should this be the case, the document TTL may be reduced, and the document may become unavailable to the app sooner than expected.
 // end::expiration[]
 

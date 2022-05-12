@@ -16,7 +16,7 @@ Below you will find short definitions of many Couchbase-related terms, with link
 * xref:howtos:concurrent-document-mutations.adoc[CAS] -- Conpare And Swap.
 A value which is altered each time a document is mutated.
 Used in Concurrent Document Mutations for a type of optimistic logging.
-* xref:howtos:sdk-authentication.adoc#certificate-authentication[Cert Auth] -- Certificate Authentication (xref:7.0@server:introduction:editions.adoc[Enterprise Edition] only).
+* xref:howtos:sdk-authentication.adoc#certificate-authentication[Cert Auth] -- Certificate Authentication (xref:7.1@server:introduction:editions.adoc[Enterprise Edition] only).
 A client attempting to access Couchbase Server can present a certificate to the server, allowing the server to check the validity of the certificate.
 If the certificate is valid, the user under whose identity the client is running, and the roles assigned that user, are verified. If the assigned roles are appropriate for the level of access requested to the specified resource, access is granted.
 * xref:howtos:provisioning-cluster-resources.adoc[Cluster Provisioning] -- The primary means for managing clusters is through the Couchbase Web UI which provides an easy to use interface for adding, removing, monitoring and modifying buckets.
@@ -28,16 +28,16 @@ Bucket items can optionally be assigned to different collections according to co
 The transcoder can either reject the data as being unsupported, or convert it into a byte array and a Common Flag.
 Many applications will not need to be aware of transcoders, as the defaults support most standard JSON use cases.
 More advanced transcoding needs can be accomplished if the application implements their own transcoders and serializers.
-* xref:7.0@server:learn:clusters-and-availability/intra-cluster-replication.adoc#database-change-protocol[DCP] --
+* xref:7.1@server:learn:clusters-and-availability/intra-cluster-replication.adoc#database-change-protocol[DCP] --
 Database Change Protocol (DCP) is the protocol used to stream bucket-level mutations.
 DCP is used for high-speed replication of mutations; to maintain replica vBuckets, incremental MapReduce and spatial views, Global Secondary Indexes (GSIs), XDCR, backups, and external connections.
 This feed is not directly available, and users should look at xref:concept-docs:data-services.adoc#lowest-latency[other low latency alternatives].
 * xref:concept-docs:durability-replication-failure-considerations.adoc[Durability] -- Couchbase Server 6.0 and earlier, with 2.0 API versions of the SDK, used Observe style durability; this is still available in most versions of SDK 3.0 for working with earlier Server releases.
-Couchbase Server 6.5 saw the introduction of Server-side xref:7.0@server:learn:data/durability.adoc[Durable Writes].
+Couchbase Server 6.5 saw the introduction of Server-side xref:7.1@server:learn:data/durability.adoc[Durable Writes].
 See also _Transactions, below.
 * Encryption -- see _Field Level Encryption_, below.
 * Extended Attributes -- see _XATTRs_, below.
-* xref:7.0@server:learn:services-and-indexes/services/eventing-service.adoc[Eventing] -- The Eventing Service allows functions to be written, saved, and triggered in response to events.
+* xref:7.1@server:learn:services-and-indexes/services/eventing-service.adoc[Eventing] -- The Eventing Service allows functions to be written, saved, and triggered in response to events.
 Events include changes made to specified items, and the arrival of scheduled points-in-time.
 At the time of writing (Couchbase Server 6.6 and SDK 3.0), there is no interaction with the Eventing Service from the SDK.
 * xref:concept-docs:encryption.adoc[Field Level Encryption (FLE)] -- encryption of the field or _value_ in a key-value pair, using a FIPS-140-2 compliant cryptography algorithm.
@@ -55,11 +55,11 @@ A _developer preview_ is available for the xref:3.0@java-sdk:concept-docs:encryp
 Create, manage, and query full-text indexes on JSON documents stored in Couchbase buckets.
 FTS uses natural language processing for indexing and querying documents, provides relevance scoring on the results of your queries, and has fast indexes for querying a wide range of possible text searches.
 Some of the supported query-types include simple queries like Match and Term queries; range queries like Date Range and Numeric Range; and compound queries for conjunctions, disjunctions, and/or boolean queries.
-* xref:7.0@server:learn:services-and-indexes/indexes/global-secondary-indexes.adoc[Global Secondary Indexes (GSI)] --
+* xref:7.1@server:learn:services-and-indexes/indexes/global-secondary-indexes.adoc[Global Secondary Indexes (GSI)] --
 A Global Secondary Index (GSI) supports queries made by the Query Service on attributes within documents.
 Secondary indexes -- which contain a filtered or a full set of keys in a given bucket -- are optional, but increase query efficiency on a bucket.
 GSIs can be created xref:concept-docs:n1ql-query.adoc#indexes[through the SDK], using the N1QL `CREATE INDEX` statement.
-See also xref:7.0@server:learn:services-and-indexes/indexes/storage-modes.adoc#memory-optimized-index-storage[Memory-Optimized Index Storage] (MOI).
+See also xref:7.1@server:learn:services-and-indexes/indexes/storage-modes.adoc#memory-optimized-index-storage[Memory-Optimized Index Storage] (MOI).
 * JSON & non-JSON -- Couchbase Services work with JSON documents (see https://tools.ietf.org/html/rfc8259[rfc8259^]),
 but non-JSON storage is supported,  including UTF-8 strings, raw sequences of bytes, and language specific serializations --   see the xref:concept-docs:nonjson.adoc[Binary Storage Documentation].
 Non-JSON formats may be more efficient in terms of memory and processing power (for example, if storing only flat strings, JSON adds an additional syntactical overhead of two bytes per string).
@@ -75,7 +75,7 @@ Continuing improvements to our Query Service makes the latter usually a better c
 * xref:concept-docs:n1ql-query.adoc[N1QL] -- Couchbase’s powerful SQL-like language allows queries in a format familiar to Database Administrators.
 // Observability
 * xref:howtos:n1ql-queries-with-sdk.adoc[Query] -- The Couchbase Query Service uses a SQL-like language for powerful queries across documents.
-* xref:7.0@server:learn:security/authorization-overview.adoc#introduction-to-rbac[RBAC] -- Role-Based Access Control allows secure, fine-grained access privileges, assigned to fixed roles.
+* xref:7.1@server:learn:security/authorization-overview.adoc#introduction-to-rbac[RBAC] -- Role-Based Access Control allows secure, fine-grained access privileges, assigned to fixed roles.
 The 3.0 API allows some user managemeng programmatically from the SDK.
 // RTO - see Tracing
 * xref:concept-docs:collections.adoc[Scope] -- from Server 7.0 (and available as a xref:6.6@server:developer-preview:collections/collections-overview.adoc[Developer Preview] in Couchbase Server 6.5 and 6.6), _Collections_ allow groupings of documents beneath the Bucket level, and _Scopes_ group together Collections.
@@ -87,7 +87,7 @@ Sub-Document operations are also atomic, in that if one Sub-Document mutation fa
 // Sync-Gateway (? for awareness, also another possible source of interactions via mobile devices?)
 // Threshold Logging - see Tracing
 // Tracing - vs Response Time Observability vs Threshold Logging
-* xref:7.0@server:learn:data/transactions.adoc[Transactions] --
+* xref:7.1@server:learn:data/transactions.adoc[Transactions] --
 Distributed ACID Transactions guarantee that multiple documents can be updated atomically.
 They are available for the
 xref:1.0@cxx-txns::distributed-acid-transactions-from-the-sdk.adoc[C & {cpp}],
