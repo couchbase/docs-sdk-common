@@ -20,6 +20,6 @@ This is included in libcouchbase, our C SDK -- see the xref:3.0@c-sdk:hello-worl
 == Couchbase Web Console Document & Query Access
 
 You can use the Couchbase Web Console to view, edit, and create JSON documents up to 256KB in size.
-To access documents using the xref:7.0@server:manage:manage-ui/manage-ui.adoc[Couchbase Web Console].
+To access documents using the xref:7.1@server:manage:manage-ui/manage-ui.adoc[Couchbase Web Console].
 
-You can use the xref:7.0@server:tools:query-workbench.adoc[Query Workbench] to issue queries using the web console.
+You can use the xref:7.1@server:tools:query-workbench.adoc[Query Workbench] to issue queries using the web console.

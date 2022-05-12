@@ -207,7 +207,7 @@ Refer to the xref:concept-docs:n1ql-query.adoc[Querying with N1QL] section for m
 With the introduction of xref:concept-docs:collections.adoc[Collections] in the 7.0 release of the Couchbase Data Platform, a new version of the Travel Sample application is provided.
 The application showcases the use of collections and scopes to represent a multi-tenant approach to organizing user and flight data.
 
-To try this out you will need Couchbase Server 7.0 or higher and the xref:7.0@server:manage:manage-settings/install-sample-buckets.adoc#configuring-sample-buckets[travel-sample] bucket configuration.
+To try this out you will need Couchbase Server 7.0 or higher and the xref:7.1@server:manage:manage-settings/install-sample-buckets.adoc#configuring-sample-buckets[travel-sample] bucket configuration.
 
 image:travel-sample-collections-7.0.png[Collections-aware Travel Sample data model diagram]
 
@@ -262,7 +262,7 @@ Each booking is represented by a https://datatracker.ietf.org/doc/html/rfc4122[U
 
 The _Travel Sample_ data set is embedded in many of our examples.
 
-* Learn xref:7.0@server:manage:manage-settings/install-sample-buckets.adoc[how to install the sample data buckets].
-* Manage the sample bucket installations with the xref:7.0@server:rest-api:rest-sample-buckets.adoc[REST API].
-* Our xref:7.0@server:fts:fts-demonstration-indexes.adoc[demonstration indexes] use the _Travel Sample_ data set to demonstrate the running of Full Text Searches.
+* Learn xref:7.1@server:manage:manage-settings/install-sample-buckets.adoc[how to install the sample data buckets].
+* Manage the sample bucket installations with the xref:7.1@server:rest-api:rest-sample-buckets.adoc[REST API].
+* Our xref:7.1@server:fts:fts-demonstration-indexes.adoc[demonstration indexes] use the _Travel Sample_ data set to demonstrate the running of Full Text Searches.
 // end::model[]

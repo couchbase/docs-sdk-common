@@ -5,7 +5,7 @@
 The Couchbase YYYYYYYYY SDK provides an API for managing a Couchbase cluster programmatically.
 
 // tag::management[]
-The primary means for managing clusters is through the xref:7.0@server:manage:manage-buckets/bucket-management-overview.adoc[Couchbase Web UI] which provides an easy to use interface for adding, removing, monitoring, and modifying buckets.
+The primary means for managing clusters is through the xref:7.1@server:manage:manage-buckets/bucket-management-overview.adoc[Couchbase Web UI] which provides an easy to use interface for adding, removing, monitoring, and modifying buckets.
 In some instances you may wish to have a programmatic interface.
 For example, if you wish to manage a cluster from a setup script, or if you are setting up buckets in test scaffolding.
 

@@ -36,7 +36,7 @@ A durable write fails in the following situations:
 
 . _Server timeout exceeded_.
 The active node aborts the durable write, instructs all replica nodes also to abort the pending write, and informs the client that the durable write has had an ambiguous result.
-See xref:7.0@server:learn:data/durability.adoc#handling-ambiguous-results[Handling Ambiguous Results], below.
+See xref:7.1@server:learn:data/durability.adoc#handling-ambiguous-results[Handling Ambiguous Results], below.
 
 . _Replica node fails while SyncWrite is pending (that is, before the active node can identify whether the node hosted a replica)_.
 If enough alternative replica nodes can be identified, the durable write can proceed.
