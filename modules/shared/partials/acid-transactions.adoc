@@ -179,7 +179,6 @@ These situations include:
 
 * Any error thrown by your transaction lambda, either deliberately or through an application logic bug.
 * Attempting to insert a document that already exists.
-* Attempting to remove or replace a document that does not exist.
 * Calling {ctx-get} on a document key that does not exist (if the resultant exception is not caught).
 
 Once one of these errors occurs, the current attempt is irrevocably failed (though the transaction may retry the lambda to make a new attempt).
