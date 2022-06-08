@@ -428,7 +428,7 @@ To execute a key-value operation within a transaction, users must have the relev
 
 Similarly, to run a query statement within a transaction, users must have the relevant _Administrative_ or _Query & Index_ RBAC roles, and permissions on the relevant buckets, scopes and collections.
 
-Refer to xref:learn:security/roles.adoc[Roles] for details.
+Refer to xref:7.1@server:learn:security/roles.adoc[Roles] for details.
 
 [NOTE]
 .Query Mode
