@@ -1,4 +1,4 @@
-This SDK runs on top of the {cpp} core, Couchbase++, which requires a {cpp} 17 compiler, such as GCC 8.0, or more recent versions.
+This SDK runs on top of the {cpp} core, {cbpp}, which requires a {cpp} 17 compiler, such as GCC 8.0, or more recent versions.
 Centos 7 ships with an older version of GCC.
 
 Workarounds are available for installing a newer build chain with https://docs.fedoraproject.org/en-US/epel/[EPEL], 
