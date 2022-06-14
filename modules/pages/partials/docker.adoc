@@ -1,7 +1,7 @@
 This SDK runs on top of the {cpp} core, {cbpp}, which requires a {cpp} 17 compiler, such as GCC 8.0, or more recent versions.
 Centos 7 ships with an older version of GCC.
 
-IMBORTANT: Workarounds are available for installing a newer build chain with https://docs.fedoraproject.org/en-US/epel/[EPEL], 
+IMPORTANT: Workarounds are available for installing a newer build chain with https://docs.fedoraproject.org/en-US/epel/[EPEL], 
 but this may not be within your company's policy, so also take a look at container options -- 
 such as the unofficial Docker builds https://github.com/raycardillo/couchbase-dockerfiles[here], 
 which can at least be used as a reference to a known working set-up.
