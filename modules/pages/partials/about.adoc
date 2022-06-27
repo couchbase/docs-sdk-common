@@ -95,3 +95,9 @@ then a page will still exist, so that when navigating between SDKs through eithe
 === Site Search
 
 Our internal _Site Search_ is an excellent resource for finding information across Couchbase components and (supported) versions.
+
+
+== Older SDK Versions
+
+All supported versions of the SDKs can be found in the doc set -- use the dropdown version selector in the left-hand navigation to reach each one.
+Documentation on older, unsupported versions of the SDK -- that have reached end-of-life -- can be found in the https://docs-archive.couchbase.com/home/index.html[archive].
