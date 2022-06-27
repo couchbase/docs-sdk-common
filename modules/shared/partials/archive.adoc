@@ -1,0 +1,19 @@
+// tag::link[]
+
+[.column]
+====== {empty}
+
+== Older SDK Versions
+
+Documentation on older, unsupported versions of the SDK -- that have reached end-of-life -- can be found in the https://docs-archive.couchbase.com/home/index.html[archive].
+
+// end::link[]
+
+
+// tag::migration[]
+== Comparing Older Documentation
+
+You may want to visit documentation for older versions of the SDK, to help to understand application code that you are migrating.
+Versions that have reached end of life can be found in the https://docs-archive.couchbase.com/home/index.html[archive].
+In the release notes pages of these older docs, you will also find links to the API reference for each no-longer-supported release.
+// end::migration[]
