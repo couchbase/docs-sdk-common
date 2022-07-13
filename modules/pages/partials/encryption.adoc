@@ -3,11 +3,14 @@
 :page-topic-type: concept
 :page-edition: Enterprise Edition
 :page-aliases: ROOT:encryption.adoc
+:page-partial:
 
 [abstract]
 {description}
 
 For a practical guide, see xref:howtos:encrypting-using-sdk.adoc[].
+
+// tag::enc[]
 
 [#architecture]
 == Overview
@@ -71,3 +74,5 @@ This means you can install the relevant SDK without being dependent upon a suite
 == FIPS 140-2
 
 The standard `AEAD_AES_256_CBC_HMAC_SHA512` encryption algorithm is composed of FIPS 140-2 "Approved Security Functions."
+
+// end::enc[]
