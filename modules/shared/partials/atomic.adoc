@@ -3,7 +3,7 @@
 // tag::xdcr[]
 === Atomicity Across Data Centers
 
-If you are using Cross-DataCenter Replication (XDCR), be sure to avoid modifying the same counter in more than one datacenter.
+If you are using xref:7.1@server:manage:manage-xdcr/xdcr-management-overview.adoc[Cross-DataCenter Replication] (XDCR), be sure to avoid modifying the same counter in more than one datacenter.
 If the same counter is modified in multiple datacenters between replications, the counter will no longer be atomic, and its value can change in unspecified ways.
 
 A counter must be incremented or decremented by only a single datacenter. 
