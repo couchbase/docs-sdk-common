@@ -80,7 +80,7 @@ Where the operation is an array append, or somesuch, then xref:7.1@server:learn:
 // tag::older[]
 == Older Server Versions
 
-In a version of Couchbase Server lower than 6.5 is being used then the application can fall-back to 'client verified' durability.
+If a version of Couchbase Server lower than 6.5 is being used then the application can fall-back to 'client verified' durability.
 Here the SDK will do a simple poll of the replicas and only return once the requested durability level is achieved.
 
 Couchbase Server versions prior to 6.5 implement durability using the `Observe` operation for clients to check if a mutation has been replicated and/or persisted to a specified number of cluster nodes.
