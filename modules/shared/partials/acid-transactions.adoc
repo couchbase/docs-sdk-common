@@ -5,7 +5,7 @@
 
 // tag::intro[]
 Couchbase Distributed xref:7.1@server:learn:data/transactions.adoc#overview[ACID (atomic, consistent, isolated, and durable)] Transactions allow applications to perform a series of database operations as a single unit -- meaning operations are either committed together or all undone.
-Transactions are distributed and work across multiple documents, scopes, and collections, which can reside on multiple nodes.
+Transactions are distributed and work across multiple documents, buckets, scopes, and collections, which can reside on multiple nodes.
 // end::intro[]
 
 
@@ -40,14 +40,14 @@ If durability is set to `None`, then ACID semantics are not guaranteed.
 // tag::creating[]
 To create a transaction, an application must supply its logic inside a `{lambda}`, including any conditional logic required.
 Once the {lambda} has successfully run to conclusion, the transaction will be automatically committed.
-If at any point an error occurs, the transaction will rollback and the {lambda} will be run again.
+If at any point an error occurs, the transaction will rollback and the {lambda} may run again.
 // end::creating[]
 
 
 // tag::lambda-ctx[]
 [[lambda-ops]]
 The transaction lambda gets passed {lambda-attempt-ctx} object -- generally referred to as `ctx` in these examples.
-Since the lambda could be rerun multiple times, it is important that it does not contain any side effects.
+Since the {lambda} could be rerun multiple times, it is important that it does not contain any side effects.
 In particular, you should never perform regular operations on a `Collection`, such as {collection-insert}, inside the lambda.
 Such operations may be performed multiple times, and will not be performed transactionally.
 Instead, you should perform these operations through the `ctx` object, e.g. {ctx-insert}.
@@ -84,6 +84,25 @@ Any *key-value* operations which are executed by the transaction _after_ the que
 These may or may not be different to the user's data permissions; if they are different, you may get unexpected results.
 ====
 // end::rbac[]
+
+
+// tag::single-query-transactions-intro[]
+Single query transactions can be useful if you need to do large, bulk-loading transactions.
+
+The Query service maintains where required some in-memory state for each document in a transaction, that is freed on commit or rollback.
+For most use-cases this presents no issue, but there are some workloads, such as bulk loading many documents, where this could exceed the server resources allocated to the service.
+Solutions to this include breaking the workload up into smaller batches, and allocating additional memory to the Query service.
+Alternatively, single query transaction, described here, may be used.
+
+Single query transactions have these characteristics:
+
+* They have greatly reduced memory usage inside the Query service.
+* As the name suggests, they consist of exactly one query, and no key-value operations.
+
+You will see reference elsewhere in Couchbase documentation to the `tximplicit` query parameter.
+Single query transactions internally are setting this parameter.
+In addition, they provide automatic error and retry handling.
+// end::single-query-transactions-intro[]
 
 
 
@@ -129,7 +148,7 @@ These include an asynchronous cleanup process that is started with the creation 
 These include an asynchronous cleanup process that is started with the first transaction, and scans for expired transactions created by any application, on the relevant collections.
 // end::integrated-sdk-cleanup-process[]
 
-The cleanup process is detailed in xref:concept-docs:transactions-error-cleanup.adoc#background-cleanup[Error Handling].
+The cleanup process is detailed in the xref:concept-docs:transactions-cleanup.adoc[] page.
 
 === Committing
 
@@ -144,10 +163,6 @@ This provides an eventually consistent commit for non-transactional actors.
 
 
 // tag::query[]
-[NOTE]
-.Couchbase Server
-As of Couchbase Server 7.0, https://www.couchbase.com/products/n1ql[{sqlpp} (formerly N1QL)] queries may be used inside the transaction lambda, freely mixed with key-value operations.
-
 // tag::library-begin-transaction[]
 Couchbase transactions can be initiated programmatically through a library, or by using the Query service directly with `BEGIN TRANSACTION`.
 The latter is intended for those using Query via the REST API, or using the Couchbase UI, and it is strongly recommended that application writers instead use the transactions library.
@@ -177,28 +192,10 @@ This section is optional reading, and only for those looking to maximize transac
 After the first query statement in a transaction, subsequent Key-Value operations in the lambda are converted into N1QL and executed by the Query service rather than the Key-Value data service.
 The operation will behave identically, and this implementation detail can largely be ignored, except for these two caveats:
 
-* These converted key-value operations are likely to be slightly slower, as the query service is optimized for statements involving multiple documents.
+* These converted key-value operations are likely to be slightly slower, as the Query service is optimized for statements involving multiple documents.
 Those looking for the maximum possible performance are recommended to put key-value operations before the first query in the lambda, if possible.
 
-* Those using non-blocking mechanisms to achieve concurrency should be aware that the converted key-value operations are subject to the same parallelism restrictions mentioned above, e.g. they will not be executed in parallel by the query service.
-
-==== Single Query Transactions
-
-Single query transactions can be useful if you need to do large, bulk-loading transactions.
-
-The Query service maintains where required some in-memory state for each document in a transaction, that is freed on commit or rollback.
-For most use-cases this presents no issue, but there are some workloads, such as bulk loading many documents, where this could exceed the server resources allocated to the service.
-Solutions to this include breaking the workload up into smaller batches, and allocating additional memory to the query service.
-Alternatively, single query transaction, described here, may be used.
-
-Single query transactions have these characteristics:
-
-* They have greatly reduced memory usage inside the query service.
-* As the name suggests, they consist of exactly one query, and no key-value operations.
-
-You will see reference elsewhere in Couchbase documentation to the `tximplicit` query parameter.
-Single query transactions internally are setting this parameter.
-In addition, they provide automatic error and retry handling.
+* Those using non-blocking mechanisms to achieve concurrency should be aware that the converted key-value operations are subject to the same parallelism restrictions mentioned above, e.g. they will not be executed in parallel by the Query service.
 // end::query[]
 
 
@@ -235,13 +232,11 @@ You can use existing collections or create new ones.
 
 
 // tag::concurrency[]
-== Concurrency with Non-Transactional Writes
-
-This release of transactions for Couchbase requires a degree of co-operation from the application.
+Couchbase transactions require a degree of co-operation from an application.
 Specifically, the application should ensure that non-transactional writes are never done concurrently with transactional writes, on the same document.
 
 This requirement is to ensure that the strong key-value performance of Couchbase was not compromised.
-A key philosophy of our transactions is that you 'pay only for what you use'.
+A key philosophy of Couchbase transactions is that you 'pay only for what you use'.
 
 If two such writes *do* conflict then the behaviour is undefined: either write may 'win', overwriting the other.
 This still applies if the non-transactional write is using CAS.
@@ -394,24 +389,5 @@ Currently, Distributed ACID Transactions are available for:
 * The xref:2.4@go-sdk:howtos:distributed-acid-transactions-from-the-sdk.adoc[Go SDK].
 * The xref:3.3@java-sdk:howtos:distributed-acid-transactions-from-the-sdk.adoc[Java SDK].
 * The xref:4.0@nodejs-sdk:howtos:distributed-acid-transactions-from-the-sdk.adoc[node.js SDK].
-<<<<<<< Updated upstream
 // end::other[]
 
-// tag::n1ql-rbac[]
-=== Query with KV Roles
-
-To execute a key-value operation within a transaction, users must have the relevant _Administrative_ or _Data_ RBAC roles, and permissions on the relevant buckets, scopes, and collections.
-
-Similarly, to run a query statement within a transaction, users must have the relevant _Administrative_ or _Query & Index_ RBAC roles, and permissions on the relevant buckets, scopes and collections.
-
-Refer to xref:learn:security/roles.adoc[Roles] for details.
-
-[NOTE]
-.Query Mode
-When a transaction executes a query statement, the transaction enters query mode, which means that the query is executed with the user's query permissions.
-Any key-value operations which are executed by the transaction _after_ the query statement are _also_ executed with the user's query permissions.
-These may or may not be different to the user's data permissions; if they are different, you may get unexpected results.
-// end::n1ql-rbac[]
-=======
-// end::other[]
->>>>>>> Stashed changes
