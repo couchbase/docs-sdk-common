@@ -46,15 +46,9 @@ If at any point an error occurs, the transaction will rollback and the {lambda} 
 
 // tag::lambda-ctx[]
 [[lambda-ops]]
-<<<<<<< HEAD
 The transaction {lambda} gets passed {lambda-attempt-ctx} object -- generally referred to as `ctx` in these examples.
 Since the {lambda} could be rerun multiple times, it is important that it does not contain any side effects.
 In particular, you should never perform regular operations on a `Collection`, such as {collection-insert}, inside the {lambda}.
-=======
-The transaction lambda gets passed {lambda-attempt-ctx} object -- generally referred to as `ctx` in these examples.
-Since the {lambda} could be rerun multiple times, it is important that it does not contain any side effects.
-In particular, you should never perform regular operations on a `Collection`, such as {collection-insert}, inside the lambda.
->>>>>>> 5dc782d (Address review comments)
 Such operations may be performed multiple times, and will not be performed transactionally.
 Instead, you should perform these operations through the `ctx` object, e.g. {ctx-insert}.
 
