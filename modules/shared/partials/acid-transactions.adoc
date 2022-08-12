@@ -16,7 +16,7 @@ This document presents a practical HOWTO on using Couchbase transactions, follow
 NOTE: If using a single node cluster (for example, during development), then note that the default number of replicas for a newly created bucket is 1.
 If left at this default, then all Key-Value writes performed at with durability will fail with a {durability-exception}.
 In turn this will cause all transactions (which perform all Key-Value writes durably) to fail.
-This setting can be changed via xref:7.1@server:manage:manage-buckets/create-bucket.adoc#couchbase-bucket-settings[GUI] or xref:7.1@server:cli:cbcli/couchbase-cli-bucket-create.adoc#options[command line].  If the bucket already existed, then the server needs to be rebalanced for the setting to take affect.
+This setting can be changed via xref:7.1@server:manage:manage-buckets/create-bucket.adoc#couchbase-bucket-settings[GUI] or xref:7.1@server:cli:cbcli/couchbase-cli-bucket-create.adoc#options[command line].  If the bucket already existed, then the server needs to be rebalanced for the setting to take effect.
 // end::requirements[]
 
 
