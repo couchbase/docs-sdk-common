@@ -1,2 +1,2 @@
-:incimagesdir: ../../../sdk/6.5/pages/_images
-:version-server: 6.5
+:incimagesdir: ../../../sdk/7.1/pages/_images
+:version-server: 7.1
