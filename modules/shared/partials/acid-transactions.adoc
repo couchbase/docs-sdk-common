@@ -38,7 +38,7 @@ If durability is set to `None`, then ACID semantics are not guaranteed.
 
 
 // tag::creating[]
-To create a transaction, an application must supply its logic inside a `{lambda}`, including any conditional logic required.
+To create a transaction, an application must supply its logic inside {intro-lambda}, including any conditional logic required.
 Once the {lambda} has successfully run to conclusion, the transaction will be automatically committed.
 If at any point an error occurs, the transaction will rollback and the {lambda} may run again.
 // end::creating[]
@@ -110,11 +110,11 @@ In addition, they provide automatic error and retry handling.
 
 // tag::mechanics[]
 // Note: this section may end up getting removed, as the server docs are being rewritten currently
-A core idea of Couchbase transactions is that an application supplies the logic for the transaction inside a _lambda_, including any conditional logic required, and the transaction is then automatically committed.
-If a transient error occurs, such as a temporary conflict with another transaction, then the transaction will rollback what has been done so far and run the lambda again.
+A core idea of Couchbase transactions is that an application supplies the logic for the transaction inside {intro-lambda}, including any conditional logic required, and the transaction is then automatically committed.
+If a transient error occurs, such as a temporary conflict with another transaction, then the transaction will rollback what has been done so far and run the {lambda} again.
 The application does not have to do these retries and error handling itself.
 
-Each run of the lambda is called an `attempt`, inside an overall `transaction`.
+Each run of the {lambda} is called an `attempt`, inside an overall `transaction`.
 
 === Active Transaction Record Entries
 
@@ -152,7 +152,7 @@ The cleanup process is detailed in the xref:concept-docs:transactions-cleanup.ad
 
 === Committing
 
-Only once the lambda has successfully run to conclusion, will the attempt be committed.
+Only once the {lambda} has successfully run to conclusion, will the attempt be committed.
 This updates the ATR entry, which is used as a signal by transactional actors to use the post-transaction version of a document from its XATTRs.
 Hence, updating the ATR entry is an 'atomic commit' switch for the transaction.
 
@@ -176,7 +176,7 @@ This provides these benefits:
 * It automatically handles errors and retrying.
 * It allows key-value operations and queries to be freely mixed.
 * It takes care of issuing `BEGIN TRANSACTION`, `END TRANSACTION`, `COMMIT` and `ROLLBACK` automatically.
-These become an implementation detail, and you should not use these statements inside the lambda.
+These become an implementation detail, and you should not use these statements inside the {lambda}.
 
 The standard key-value operations are supported by the SDK: `Insert`, `Get`, `Replace`, `Remove`.
 
@@ -189,11 +189,11 @@ DDL statements such as `CREATE INDEX`, are not supported.
 
 This section is optional reading, and only for those looking to maximize transactions performance.
 
-After the first query statement in a transaction, subsequent Key-Value operations in the lambda are converted into N1QL and executed by the Query service rather than the Key-Value data service.
+After the first query statement in a transaction, subsequent Key-Value operations in the {lambda} are converted into N1QL and executed by the Query service rather than the Key-Value data service.
 The operation will behave identically, and this implementation detail can largely be ignored, except for these two caveats:
 
 * These converted key-value operations are likely to be slightly slower, as the Query service is optimized for statements involving multiple documents.
-Those looking for the maximum possible performance are recommended to put key-value operations before the first query in the lambda, if possible.
+Those looking for the maximum possible performance are recommended to put key-value operations before the first query in the {lambda}, if possible.
 
 * Those using non-blocking mechanisms to achieve concurrency should be aware that the converted key-value operations are subject to the same parallelism restrictions mentioned above, e.g. they will not be executed in parallel by the Query service.
 // end::query[]
@@ -248,7 +248,7 @@ Any non-transactional _reads_ concurrent with transactions are fine, and are at 
 
 
 // tag::error-intro[]
-Couchbase transactions will attempt to resolve many errors for you, through a combination of retrying individual operations and the application's lambda.
+Couchbase transactions will attempt to resolve many errors for you, through a combination of retrying individual operations and the application's {lambda}.
 This includes some transient server errors, and conflicts with other transactions.
 // end::error-intro[]
 
@@ -258,18 +258,18 @@ This includes some transient server errors, and conflicts with other transaction
 There can be situations where total failure is indicated to the application via errors.
 These situations include:
 
-* Any error thrown by a transaction lambda, either deliberately or through an application logic bug.
+* Any error thrown by a transaction {lambda}, either deliberately or through an application logic bug.
 * Attempting to insert a document that already exists.
-* Calling {ctx-get} on a document key that does not exist (if the resultant exception is not caught).
+* Calling {ctx-get} on a document key that does not exist (if the resultant error is not caught).
 
-Once one of these errors occurs, the current attempt is irrevocably failed (though the transaction may retry the lambda to make a new attempt).
+Once one of these errors occurs, the current attempt is irrevocably failed (though the transaction may retry the {lambda} to make a new attempt).
 It is not possible for the application to catch the failure and continue (with the exception of {ctx-get} raising an error).
 Once a failure has occurred, all other operations tried in this attempt (including commit) will instantly fail.
 
 Transactions, as they are multi-stage and multi-document, also have a concept of partial success or failure.
 This is signalled to the application through the {error-unstaging-complete}, described later.
 
-There are three exceptions that transactions can raise to an application:
+There are three errors that transactions can raise to an application:
 
 * `{transaction-failed}`
 * `{transaction-expired}`
@@ -302,7 +302,7 @@ This will allow the protocol more time to get past any transient failures (for e
 The tradeoff to consider with longer timeouts, is that documents that have been staged by a transaction are effectively locked from modification from other transactions, until the timeout has been reached.
 
 Note that the timeout is not guaranteed to be followed precisely.
-For example, if the application were to do a long blocking operation inside the lambda (which should be avoided), then timeout can only trigger after this finishes.
+For example, if the application were to do a long blocking operation inside the {lambda} (which should be avoided), then timeout can only trigger after this finishes.
 Similarly, if the transaction attempts a key-value operation close to the timeout, and that key-value operation times out, then the transaction timeout may be exceeded.
 
 === {transaction-commit-ambiguous}
