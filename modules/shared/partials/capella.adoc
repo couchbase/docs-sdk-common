@@ -1,0 +1,7 @@
+= Capella Compatibility
+
+
+// tag::cloud[]
+Note, Capella is offered as a fully provisioned service, so the underlying version of Couchbase Server changes over time.
+For this reason, compatibility information between Capella and the SDK is available xref:cloud:reference:sdk-compatibility.adoc[on the Capella compatibility page].
+// end::cloud[]
