@@ -8,7 +8,7 @@
 [abstract]
 {description}
 
-For a practical guide, see xref:java-sdk:howtos:encrypting-using-sdk.adoc[].
+For a practical guide, see xref:howtos:encrypting-using-sdk.adoc[].
 
 // tag::enc[]
 
