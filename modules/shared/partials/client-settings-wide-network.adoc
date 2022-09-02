@@ -3,7 +3,6 @@
 The defaults above have been carefully considered and in general it is not recommended to make changes without expert guidance or careful testing of the change.
 Some options may be commonly used together in certain envionments or to achieve certain effects.
 
-[discrete]
 === Constrained Network Environments
 
 Though xref:project-docs:compatibility.adoc#network-requirements[wide area network] (WAN) connections are not directly supported, some development and non-critical operations activities across a WAN are convenient.
