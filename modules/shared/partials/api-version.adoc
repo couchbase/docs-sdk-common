@@ -41,7 +41,8 @@ Whilst these two numbers match for the C, .NET, Java, and Ruby SDKs, this is not
 | 3.0
 | 3.1
 | 3.2
-| 3.3Y
+| 3.3
+| 3.4
 
 | Kotlin
 | -
