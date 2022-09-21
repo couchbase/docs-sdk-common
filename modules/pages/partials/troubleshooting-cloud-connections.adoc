@@ -1,4 +1,4 @@
-= Troubleshooting Cloud Connections During Development
+= Troubleshooting Cloud Connections
 :page-topic-type: howto
 
 [abstract]

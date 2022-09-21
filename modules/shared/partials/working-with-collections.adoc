@@ -1,5 +1,4 @@
 = Working with Collections
-:nav-title: Collections
 :content-type: howto
 :page-topic-type: howto
 
