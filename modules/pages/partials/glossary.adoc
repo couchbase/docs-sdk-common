@@ -1,5 +1,4 @@
-= Glossary of SDK-related Terms
-:navtitle: Glossary
+= Glossary
 :page-topic-type: project-doc
 :page-aliases:
 

@@ -1,5 +1,4 @@
 = Certificate-Based Authentication
-:nav-title: Cert Auth
 :page-topic-type: concept
 :page-edition: Enterprise Edition
 :page-aliases:

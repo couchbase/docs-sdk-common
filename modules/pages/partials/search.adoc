@@ -1,4 +1,4 @@
-= Full Text Search Overview
+= Search
 :page-topic-type: concept
 include::partial$attributes.adoc[]
 :nav-title: Search Overview

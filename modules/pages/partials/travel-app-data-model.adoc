@@ -1,5 +1,5 @@
 // tag::model[]
-= Travel App Data Model
+= Travel Sample Data Model
 :page-topic-type: reference
 :description: An overview of the travel sample application data model and documents.
 

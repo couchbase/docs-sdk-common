@@ -1,4 +1,4 @@
-= About the SDK Docs
+= About These Docs
 :page-toclevels: 2
 
 [abstract]

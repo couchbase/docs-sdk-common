@@ -1,5 +1,4 @@
-= Services -- Choosing the Right One
-:nav-title: Services
+= Service Selection
 :page-topic-type: landing-page
 :page-aliases: choosing-the-right-service,http-services
 

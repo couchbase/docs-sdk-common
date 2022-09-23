@@ -1,5 +1,4 @@
 = MapReduce Views
-:navtitle: MapReduce Views
 :page-topic-type: concept
 :page-aliases: ROOT:managing-views,ROOT:querying-views
 

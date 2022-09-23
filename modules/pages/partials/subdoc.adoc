@@ -1,4 +1,4 @@
-= Sub-Document API
+= Sub-Documents
 :page-topic-type: concept
 include::partial$attributes.adoc[]
 :nav-title: Sub-Doc
