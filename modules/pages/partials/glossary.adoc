@@ -1,6 +1,6 @@
 = Glossary
-:page-topic-type: project-doc
 :page-aliases:
+:page-topic-type: reference
 
 [abstract]
 Unpicking the tangled alphabet soup of the Couchbase Platform, from an SDK perspective.
