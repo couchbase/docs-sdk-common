@@ -43,7 +43,7 @@ As an example here is a KeyValue document fetch:
 GetResult getResult = collection.get("key", getOptions().timeout(Duration.ofSeconds(3));
 ----
 
-Compare this to a N1QL query:
+Compare this to a {sqlpp} query:
 
 [source,java]
 ----
@@ -55,7 +55,7 @@ QueryResult queryResult = cluster.query("select 1=1", queryOptions().timeout(Dur
 
 Since documents also fundamentally handled the serialization aspects of content, two new concepts are introduced: the `Serializer` and the `Transcoder`.
 Out of the box the SDKs ship with a JSON serializer which handles the encoding and decoding of JSON.
-You'll find the serializer exposes the options for methods like N1QL queries and KeyValue subdocument operations,.
+You'll find the serializer exposes the options for methods like {sqlpp} queries and KeyValue subdocument operations,.
 
 The KV API extends the concept of the serializer to the `Transcoder`.
 Since you can also store non-JSON data inside a document, the `Transcoder` allows the writing of binary data as well.
