@@ -14,6 +14,25 @@ We will maintain support for Views in the SDKs for so long as it can be used wit
 
 WARNING: Although still maintained and supported for legacy use, Views date from the earliest days of Couchbase Server development, and as such are rarely the best choice over, say, xref:n1ql-query.adoc[our Query service] for your application, see xref:data-services.adoc[our guide to choosing the right service].
 
+
+//     *******   Note to future Self    *******
+// 
+//     As Views reach removal in latest Server version
+//     or sooner, as they are not in Capella,
+// 
+//  Consider explicitly documenting the SQL++ alternatives (albeit briefly)
+//     See, for example:
+// 
+// https://www.couchbase.com/blog/comparing-couchbase-views-couchbase-n1ql-indexing/
+// 
+// 
+//  *******************************************************************************
+// 
+
+
+
+
+
 // may be out of date - needs some re-working
 
 = MapReduce Views
