@@ -180,7 +180,7 @@ These become an implementation detail, and you should not use these statements i
 
 The standard key-value operations are supported by the SDK: `Insert`, `Get`, `Replace`, `Remove`.
 
-Similarly, the majority of SQL++ DML statements are permitted within a transaction. +
+Similarly, the majority of {sqlpp} (formerly N1QL) DML statements are permitted within a transaction. +
 Specifically: `INSERT`, `UPSERT`, `DELETE`, `UPDATE`, `MERGE`, `SELECT`.
 
 DDL statements such as `CREATE INDEX`, are not supported.
@@ -189,7 +189,7 @@ DDL statements such as `CREATE INDEX`, are not supported.
 
 This section is optional reading, and only for those looking to maximize transactions performance.
 
-After the first query statement in a transaction, subsequent Key-Value operations in the {lambda} are converted into N1QL and executed by the Query service rather than the Key-Value data service.
+After the first query statement in a transaction, subsequent Key-Value operations in the {lambda} are converted into {sqlpp} and executed by the Query service rather than the Key-Value data service.
 The operation will behave identically, and this implementation detail can largely be ignored, except for these two caveats:
 
 * These converted key-value operations are likely to be slightly slower, as the Query service is optimized for statements involving multiple documents.

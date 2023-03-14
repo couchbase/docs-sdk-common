@@ -11,7 +11,7 @@ Nevertheless Couchbase may be used to store non-JSON data for various use cases.
 Non-JSON formats may be more efficient in terms of memory and processing power (for example, if storing only flat strings, JSON adds an additional syntactical overhead of two bytes per string).
 Non-JSON documents may be desirable if migrating a legacy application, which is using a customized binary format.
 
-Note that only JSON documents can be accessed using Query (N1QL) and Search.
+Note that only JSON documents can be accessed using Query and Search.
 Limited support for non-JSON documents is available for MapReduce views.
 Additionally, non-JSON documents will not be accessible using the xref:7.1@server:manage:manage-ui/manage-ui.adoc[Web UI] (the contents will be shown in their Base64 equivalent).
 // end::intro[]

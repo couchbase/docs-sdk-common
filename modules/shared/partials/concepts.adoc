@@ -21,7 +21,7 @@ This section contains discussion-style expansions of key Couchbase features, whi
 ** xref:analytics-for-sdk-users.adoc[Analytics]
 ** xref:full-text-search-overview.adoc[Full Text Search]
 ** xref:understanding-views.adoc[MapReduce Views]
-** xref:n1ql-query.adoc[N1QL Query]
+** xref:n1ql-query.adoc[{sqlpp} Query]
 * xref:sdk-user-management-overview.adoc[User Management]
 ** xref:certificate-based-authentication.adoc[Cert Auth]
 ** xref:rbac.adoc[RBAC]

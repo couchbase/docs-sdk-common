@@ -37,7 +37,7 @@ The role *FTS Admin* must therefore be assigned to those who intend to create in
 For information on creating users and assigning roles, see the xref:7.1@server:learn:security/roles.adoc#search-admin[RBAC Roles page].
 
 
-== Search from N1QL
+== Search from {sqlpp}
 
-From Couchbase Server 6.5, the search service can be accessed by xref:7.1@server:n1ql:n1ql-language-reference/searchfun.adoc[search functions in N1QL].
+From Couchbase Server 6.5, the search service can be accessed by xref:7.1@server:n1ql:n1ql-language-reference/searchfun.adoc[search functions in {sqlpp}] (formerly N1QL).
 

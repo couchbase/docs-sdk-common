@@ -69,7 +69,7 @@ Every common page must have a corresponding master page in every language-specif
 ==== Page References
 
 All page references in the common page are assumed to be relative to the module in which the page is included (i.e., relative to the master page).
-Thus, the reference `+xref:n1ql-query.adoc[Querying with N1QL]+` refers to the [.path]_n1ql-query.adoc_ page in the same module as [.path]_sample-application.adoc_ master page in the language-specific SDK.
+Thus, the reference `+xref:n1ql-query.adoc[Querying with SQL++]+` refers to the [.path]_n1ql-query.adoc_ page in the same module as [.path]_sample-application.adoc_ master page in the language-specific SDK.
 
 References to all other locations, such as to server, must provide the necessary context (component, version, module, etc).
 
@@ -159,7 +159,7 @@ All the lines between `tag::views-intro[]` and `end::views-intro[]` get imported
 ==== Page References
 
 Like the common pages, all page references in shared partials are assumed to be relative to the module in which the partial is included.
-Thus, the reference `+xref:n1ql-query.adoc[Querying with N1QL]+` refers to the [.path]_n1ql-query.adoc_ page in the same module as [.path]_sample-application.adoc_ in the language-specific SDK.
+Thus, the reference `+xref:n1ql-query.adoc[Querying with SQL++]+` refers to the [.path]_n1ql-query.adoc_ page in the same module as [.path]_sample-application.adoc_ in the language-specific SDK.
 
 References to all other locations, such as to server, must provide the necessary context (component, version, module, etc).
 

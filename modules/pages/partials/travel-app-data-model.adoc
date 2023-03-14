@@ -160,9 +160,9 @@ hotel_10180                          ←This is the key, which also acts as a pr
 }
 ----
 
-== N1QL query anatomy
+== Query Anatomy
 
-The Couchbase Query API is a powerful tool for efficient retrieval of information from a document data store.
+The Couchbase {sqlpp} query language (formerly N1QL) is a powerful tool for efficient retrieval of information from a document data store.
 Here's an example of a query that finds flights between Seattle-Tacoma International Airport (SEA) and Orlando International Airport (MCO), followed by a description of what's happening in the query:
 
 [source,sql]
@@ -175,7 +175,7 @@ WHERE r.sourceairport='SEA' AND r.destinationairport='MCO' AND s.day=6
 ORDER BY a.name
 ----
 
-N1QL provides JOIN functionality, something previously not possible in a document database.
+{sqlpp} provides JOIN functionality, something previously not possible in a document database.
 For two documents to be joined in the result of a SELECT statement, one of them must contain a field whose value is equal to the Couchbase key of the other document.
 The following example shows two documents that demonstrate that requirement and a SELECT statement that joins them:
 
@@ -192,7 +192,7 @@ The data model for the travel application includes an `airlineid` field in each 
 That `airlineid` field is used as a foreign key identifier and corresponds to the key for an `airline` document.
 To select the airline name `a.name`, the query uses the following clause: `pass:c[JOIN `travel-sample`.inventory.airline AS a ON KEYS r.airlineid]`.
 
-One of the powerful features available in the N1QL query language is the ability to `UNNEST` or flatten, the results returned in the `SELECT` statement.
+One of the powerful features available in the {sqlpp} query language is the ability to `UNNEST` or flatten, the results returned in the `SELECT` statement.
 This is frequently needed when working with JSON documents, which may have rich heirarchies.
 In the data model for the travel application, each route document contains a nested collection of schedule documents.
 To alleviate a complicated JSON parsing code pattern for the return results, you can have the query execution `UNNEST` the schedule documents, so they become the root-level fields in the returned results.
@@ -200,7 +200,7 @@ To alleviate a complicated JSON parsing code pattern for the return results, you
 Standard SQL syntax is used in the `WHERE` clause for the `SELECT` statement.
 The result set is ordered by the `a.name` field, which contains the airline name.
 
-Refer to the xref:concept-docs:n1ql-query.adoc[Querying with N1QL] section for more information on using N1QL with the SDKs.
+Refer to the xref:concept-docs:n1ql-query.adoc[Querying with {sqlpp}] section for more information on using {sqlpp} with the SDKs.
 
 == Collections
 

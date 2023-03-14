@@ -30,9 +30,9 @@ You may enable bucket flushing on a per-bucket basis using the Couchbase Web Con
 
 [#index-management]
 // tag::index-management[]
-You can create and drop N1QL indexes using the SDK.
+You can create and drop {sqlpp} (formerly N1QL) indexes using the SDK.
 This is especially useful when setting up new applications, or simply when ensuring that a given bucket has certain indexes defined.
-Indexes can be defined using actual N1QL statements or by using convenience functions within the SDK.
+Indexes can be defined using actual {sqlpp} statements or by using convenience functions within the SDK.
 // end::index-management[]
 
 [#ddoc-intro]

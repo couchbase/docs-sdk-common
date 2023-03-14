@@ -57,7 +57,7 @@ Some of the supported query-types include simple queries like Match and Term que
 * xref:7.1@server:learn:services-and-indexes/indexes/global-secondary-indexes.adoc[Global Secondary Indexes (GSI)] --
 A Global Secondary Index (GSI) supports queries made by the Query Service on attributes within documents.
 Secondary indexes -- which contain a filtered or a full set of keys in a given bucket -- are optional, but increase query efficiency on a bucket.
-GSIs can be created xref:concept-docs:n1ql-query.adoc#indexes[through the SDK], using the N1QL `CREATE INDEX` statement.
+GSIs can be created xref:concept-docs:n1ql-query.adoc#indexes[through the SDK], using the {sqlpp} (formerly N1QL) `CREATE INDEX` statement.
 See also xref:7.1@server:learn:services-and-indexes/indexes/storage-modes.adoc#memory-optimized-index-storage[Memory-Optimized Index Storage] (MOI).
 * JSON & non-JSON -- Couchbase Services work with JSON documents (see https://tools.ietf.org/html/rfc8259[rfc8259^]),
 but non-JSON storage is supported,  including UTF-8 strings, raw sequences of bytes, and language specific serializations --   see the xref:concept-docs:nonjson.adoc[Binary Storage Documentation].
@@ -71,7 +71,7 @@ and efficient support for these data structures.
 MapReduce Views uses distributed Map-Reduce for very fast aggregation operations (fast, because the indexes are pre-computed results) — ideal for pre-grouped aggregations, such as grouping temporal data sets (by day, by month, etc.).
 Views’ spatial support allows for fast searching over extensive geo-spatial data in Couchbase Data Platform 5.x  --  however, Spatial Views are no longer supported in Couchbase Server 6.x, and so are not found in SDK 3.x.
 Continuing improvements to our Query Service makes the latter usually a better choice, particularly as Views does not scale as well as the other services, lacking a global Index node.
-* xref:concept-docs:n1ql-query.adoc[N1QL] -- Couchbase’s powerful SQL-like language allows queries in a format familiar to Database Administrators.
+* xref:concept-docs:n1ql-query.adoc[{sqlpp}] -- Couchbase’s powerful SQL-like language (formerly N1QL) allows queries in a format familiar to Database Administrators.
 // Observability
 * xref:howtos:n1ql-queries-with-sdk.adoc[Query] -- The Couchbase Query Service uses a SQL-like language for powerful queries across documents.
 * xref:7.1@server:learn:security/authorization-overview.adoc#introduction-to-rbac[RBAC] -- Role-Based Access Control allows secure, fine-grained access privileges, assigned to fixed roles.

@@ -23,7 +23,7 @@ You can follow the links below for more information on the services with the Cou
 
 
 == Use Cases
-It’s an understandable temptation to reach for the familiar, and Couchbase’s SQL-like N1QL makes the Query service an easy starting point for many, but it’s important to take time to match your use case to the best tool for the job.
+It’s an understandable temptation to reach for the familiar, and Couchbase’s SQL-like {sqlpp} (formerly N1QL) makes the Query service an easy starting point for many, but it’s important to take time to match your use case to the best tool for the job.
 
 === Known documents
 When you already know the _Key_ (ID) of the document, then _KV Operations_ is by far the simplest way to retrieve or mutate it.
@@ -34,7 +34,7 @@ If you know the path to the piece of information that you need within a JSON doc
 
 === Long Running Queries & Big Data
 
-xref:7.1@server:learn:services-and-indexes/services/analytics-service.adoc[Couchbase Analytics Service (CBAS)] performs well on huge datasets, with complex aggregations, and uses the first commercial implementation of SQL++ -- _N1QL for Analytics_ -- which gives a similar query experience to our SQL-like N1QL language.
+xref:7.1@server:learn:services-and-indexes/services/analytics-service.adoc[Couchbase Analytics Service (CBAS)] performs well on huge datasets, with complex aggregations, and uses {sqlpp} for Analytics, which gives a similar query experience to {sqlpp} for Query.
 CBAS supports workloads involving only SELECT (not INSERT or UPDATE), and uses local secondary indexes.
 Scalable performance comes from multi-node partitioned-parallel join, sort, aggregate, and grouped aggregate operators, and multiple storage devices (vbuckets over several nodes).
 
@@ -56,7 +56,7 @@ read the section on CAS and Concurrent Document Mutation to be aware of all of t
 === Array Mutation
 
 Sub-Doc allows appending, prepending, and inserting into arrays.
-For more sophisticated array operations, use N1QL’s `USEKEY`.
+For more sophisticated array operations, use {sqlpp}'s' `USEKEY`.
 
 
 === Aggregation / Reduce
@@ -80,14 +80,14 @@ There are more concepts to learn, as FTS offers a very flexible service.
 In particular, care should be taken over building indexes, to stop them becoming unnecessarily large -- see our xref:7.1@server:fts:full-text-intro.adoc[FTS documentation].
 Once again, the SDK abstracts away much of the complexity from deeply nested queries, and the interface is similar to our Query Service.
 
-From Couchbase Server 6.5, xref:7.1@server:n1ql:n1ql-language-reference/searchfun.adoc[Search Functions] allow the use of FTS _within_ N1QL queries.
+From Couchbase Server 6.5, xref:7.1@server:n1ql:n1ql-language-reference/searchfun.adoc[Search Functions] allow the use of FTS _within_ {sqlpp} queries.
 
 
 === Querying
 
 For operational queries -- such as the front-end queries behind every page display or navigation -- the Query Service is a natural fit.
 
-The Query Service using N1QL - SQL for JSON - is ideal for retrieving multiple documents that match specific queries.
+The Query Service using {sqlpp} - SQL for JSON - is ideal for retrieving multiple documents that match specific queries.
 Data can be joined together, and Global Secondary Indexes can be used to speed up searches.
 It’s a powerful and flexible way of querying, retrieving, and updating data, using a familiar language, but if you know the document’s key, then regular KV (or Sub-Doc) operations will always be faster.
 
@@ -100,7 +100,7 @@ However, it is exposed through use of our xref:2.4@spark-connector::index.adoc[S
 
 ////
 === Repeating Expensive Searches
-Whether N1QL Query, Views, or FTS, expensive search results can easily be cached with (some?) SDKs.
+Whether Query, Views, or FTS, expensive search results can easily be cached with (some?) SDKs.
 This is something we have link:https://blog.couchbase.com/caching-queries-couchbase-high-performance/[featured on our blog in the past].
 
 We could do with a new DA blog post to point to here, perhaps?

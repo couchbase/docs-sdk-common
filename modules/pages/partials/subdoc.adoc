@@ -17,11 +17,11 @@ While full-document retrievals retrieve the entire document and full document up
 
 You should use Sub-Document operations when you are modifying only portions of a document, and full-document operations when the contents of a document is to change significantly.
 
-IMPORTANT: The Sub-Document operations described on this page are for _Key-Value_ requests only: they are not related to Sub-Document N1QL queries.
-(Sub-Document N1QL queries are explained in the section xref:howtos:n1ql-queries-with-sdk.adoc[Querying with N1QL].)
+IMPORTANT: The Sub-Document operations described on this page are for _Key-Value_ requests only: they are not related to Sub-Document {sqlpp} (formerly N1QL) queries.
+(Sub-Document {sqlpp} queries are explained in the section xref:howtos:n1ql-queries-with-sdk.adoc[Querying with {sqlpp}].)
 
 In order to use Sub-Document operations you need to specify a _path_ indicating the location of the Sub-Document.
-The _path_ follows <<Path syntax,N1QL syntax>>.
+The _path_ follows <<Path syntax,{sqlpp} syntax>>.
 Considering the document:
 
 .customer123.json
@@ -58,5 +58,5 @@ The paths `name`, `addresses.billing.country` and `purchases.complete[0]` are al
 
 == Sub-Doc from the SDK
 
-The Sub-Document APIs is exposed through two separate builders which are available through two top-level Collection methods `LookupIn` and `MutateIn`. 
+The Sub-Document APIs is exposed through two separate builders which are available through two top-level Collection methods `LookupIn` and `MutateIn`.
 The object returned, and how to work with it, is extensively documented in our xref:howtos:subdocument-operations.adoc[practical guide to using Sub-Doc from the SDK].

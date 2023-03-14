@@ -209,7 +209,7 @@ arrays of the endpoints.
 | `"config"`  | If configuration colling mechanism uses dedicated sockets, they should use separate key (even though they technically `"kv"` or `"http"` |
 | `"mgmt"`    | Sockets for management requests (administering the cluster or bucket properties                                                          |
 | `"view"`    | Couchbase View queries                                                                                                                   |
-| `"n1ql"`    | N1QL queries                                                                                                                             |
+| `"n1ql"`    | {sqlpp} (formerly N1QL) queries                                                                                                                             |
 | `"fts"`     | Full text search (CBFT) queries                                                                                                          |
 | `"cbas"`    | Analytics queries                                                                                                                        |
 

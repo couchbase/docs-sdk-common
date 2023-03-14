@@ -47,7 +47,7 @@ Also commonly used as a parent class for many service-specific exceptions (see b
 === # 4 ServiceNotAvailable
 
 Raised when it can be determined from the config unambiguously that a given service is not available.
-I.e. no query node in the config, or a memcached bucket is accessed and views or n1ql queries should be performed.
+I.e. no query node in the config, or a memcached bucket is accessed and views or queries should be performed.
 
 === # 5 InternalServerFailure
 
