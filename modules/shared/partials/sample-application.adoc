@@ -1,7 +1,7 @@
 // tag::abstract[]
 [abstract]
 {description}
-This version demonstrates various features of Couchbase, including the Collections feature new in Server 7.0.
+Discover how to program interactions with Couchbase Server 7.0 via the Data, Query, and Search services -- using the Travel Sample Application with the built-in Travel Sample data Bucket.
 // end::abstract[]
 
 
