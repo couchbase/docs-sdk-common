@@ -20,7 +20,7 @@ With https://docs.docker.com/get-docker/[Docker] installed, you should now be ab
 
 [source,console]
 ----
-docker-compose up
+docker-compose --profile local up
 ----
 // end::quick-start[]
 
