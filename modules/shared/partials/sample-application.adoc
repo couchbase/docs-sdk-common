@@ -1,7 +1,7 @@
 // tag::abstract[]
 [abstract]
 {description}
-This version demonstrates various features of Couchbase, including the Collections feature new in Server 7.0.
+Discover how to program interactions with Couchbase Server 7.X via the Data, Query, and Search services -- using the Travel Sample Application with the built-in Travel Sample data Bucket.
 // end::abstract[]
 
 
@@ -20,7 +20,7 @@ With https://docs.docker.com/get-docker/[Docker] installed, you should now be ab
 
 [source,console]
 ----
-docker-compose up
+docker-compose --profile local up
 ----
 // end::quick-start[]
 
@@ -51,12 +51,33 @@ See the README at https://github.com/couchbaselabs/{travel-sample-git-project} f
 // tag::using[]
 == Using the Sample App
 
-// TODO: *PIC -- screenshot
+image::sdk:shared:Travel-Sample-Register.png[]
 
 Give yourself a username and password and click *Register*.
 
-Now try out a few queries, and see Search in action for the hotel finder feature.
+You can now try out searching for flights, booking flights, and searching for hotels.
+You can see which Couchbase SDK operations are being executed by clicking the red bar at the bottom of the screen:
+
+image::sdk:shared:Couchbase-Query-Bar.png[]
 // end::using[]
+
+
+// tag::overview[]
+== Sample App Overview
+
+The sample application runs 3 docker containers which contain the following:
+
+* The frontend -- a Vue web app which communicates with the backend via an API.
+* The backend -- a Python web app which contains the SDK code to communicate with Couchbase Server.
+* The database -- a one node cluster containing the travel sample Bucket and reqisite indexes.
+
+image::sdk:shared:travel-sample-app-overview.png[]
+
+The API implements a different endpoint for each of the app's features. You can explore the API here in read-only mode, or once you are running the application, at the `localhost:8080/apidocs` endpoint.
+
+swagger_ui::https://raw.githubusercontent.com/couchbaselabs/{travel-sample-git-project}/HEAD/swagger.json[]
+
+// end::overview[]
 
 
 // tag::data-model[]
@@ -65,11 +86,6 @@ Now try out a few queries, and see Search in action for the hotel finder feature
 See the xref:ref:travel-app-data-model.adoc[Travel App Data Model] reference page for more information about the sample data set used.
 // end::data-model[]
 
-
 // tag::rest-api[]
-== REST API
-
-You can explore the REST API here in read-only mode, or once you are running the application, at the `/apidocs` endpoint.
-
-swagger_ui::https://raw.githubusercontent.com/couchbaselabs/{travel-sample-git-project}/HEAD/swagger.json[]
+// PLACEHOLDER - Remove when DOC-10964 is completed
 // end::rest-api[]
