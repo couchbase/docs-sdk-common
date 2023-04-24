@@ -1,14 +1,14 @@
 // tag::abstract[]
 [abstract]
 {description}
-Discover how to program interactions with Couchbase Server 7.X via the Data, Query, and Search services -- using the Travel Sample Application with the built-in Travel Sample data Bucket.
+Discover how to program interactions with Couchbase Server 7.X via the Data, Query, and Search services using the Travel Sample Application with the built-in Travel Sample data Bucket.
 // end::abstract[]
 
 
 // tag::quick-start[]
 == Quick Start
 
-Fetch the https://github.com/couchbaselabs/{travel-sample-git-project}[Couchbase {name-sdk} travel-sample Application REST Backend] from github:
+Fetch the https://github.com/couchbaselabs/{travel-sample-git-project}[Couchbase {name-sdk} travel-sample Application REST Backend] from GitHub:
 
 [source,console,subs="+attributes"]
 ----
@@ -16,74 +16,176 @@ git clone https://github.com/couchbaselabs/{travel-sample-git-project}.git
 cd {travel-sample-git-project}
 ----
 
-With https://docs.docker.com/get-docker/[Docker] installed, you should now be able to run a bare-bones copy of Couchbase Server, load the travel-sample, add indexes, install the sample-application and its frontend, all by running a single command:
+Install https://docs.docker.com/get-docker/[Docker].
+
+[{tabs}]
+====
+// tag::local[]
+Local Couchbase Server::
++
+--
+
+With Docker installed, you can run the entire application with a single command:
 
 [source,console]
 ----
 docker-compose --profile local up
 ----
-// end::quick-start[]
 
+See the README at https://github.com/couchbaselabs/{travel-sample-git-project} for more details on how to run the {name-sdk} travel-sample app.
+--
+// end::local[]
+
+// tag::capella[]
+Couchbase Capella::
++
+--
+
+You need to initalise a Couchbase Capella cluster before running the sample app.
+
+*Create the Capella cluster*
+
+First, xref:cloud:get-started:create-account.adoc[sign up for a Capella account] and deploy a cluster.
+
+The sample application uses the default `travel-sample` data bucket, which should already be present in the cluster. To verify the bucket is present, go to menu:Data Tools[Buckets]. You should see the `travel-sample` bucket with around 63k items.
+
+If the bucket isn't present, you can import it manually. See xref:cloud:clusters:data-service/import-data-documents.adoc#accessing-import-in-the-capella-ui[Import] for information about how to import the `travel-sample` bucket.
+
+*Create the Search index*
+
+. Go to menu:Data Tools[Search > Create Search Index]
+. Click btn:[Import from File]
+. Navigate to the {travel-sample-git-project} directory, and select `fts-hotels-index.json`
+. Click btn:[Create Index]
+
+If you don't have access to the filesystem with the sample application backend, you can copy and paste the index defintion from https://raw.githubusercontent.com/couchbaselabs/{travel-sample-git-project}/HEAD/fts-hotels-index.json[GitHub] into the *Index Definition* field.
+
+*Create the Database Access*
+
+Create the credentials to log in: menu:Settings[Database Access > Create Database Access]
+
+* Access Name: cbdemo
+* Secret: Password123!
+* Bucket: travel-sample
+* Scopes: All Scopes
+* Access: read/write
+
+Click btn:[Create Database Access] to save your access credentials.
+
+*Whitelist your IP*
+
+Go to menu:Settings[Allowed IP Ranges > Add Allowed IP].
+
+Enter the IP of the system you will be running the application on in the *Allowed IP* field. If this system is the same one you are accessing the Couchbase Capella Web Console on, you can click btn:[Add Current IP Address].
+
+Click btn:[Add Allowed IP] to add the IP address.
+
+*Copy the Connection String*
+
+From the menu:Connect[] tab, copy your cluster's connection string, which looks something like:
+
+[source,console]
+----
+couchbases://cb.dmt-i0huhchusg9g.cloud.couchbase.com
+----
+
+*Run the Travel Sample Application*
+
+Run the following command to start both the frontend and backend of the application.
+
+[source,console]
+----
+CB_HOST={your-connection-string} docker-compose --profile capella up
+----
+
+See the README at https://github.com/couchbaselabs/{travel-sample-git-project} for more details on how to run the {name-sdk} travel-sample application.
+--
+// end::capella[]
 
 // tag::bring-your-own[]
-== Running the code against your own development Couchbase server.
+Bring your own database::
++
+--
 
-// tag::prereq[]
-For Couchbase Server {version-server}, make sure that you have at least one node each of data; query; index; and search.
-For a development box, mixing more than one of these on a single node (given enough memory resources) is perfectly acceptable.
+Your own configuration of Couchbase Server needs the following to run the sample application:
 
-If you have yet to install Couchbase Server in your development environment
-xref:7.1@server:getting-started:do-a-quick-install.adoc[start here].
+* Couchbase Server version {version-server} or later. If you have yet to install Couchbase Server in your development environment xref:7.1@server:getting-started:do-a-quick-install.adoc[start here].
+* The Data, Query, Index, and Search services.
++
+NOTE: Couchbase recommends running only one service on each node in a production environment. However for a development environment such as this, mixing more than one of these services on a single node is acceptable, given enough memory resources.
+* The `travel-sample` Bucket, which you can install with either the xref:7.1@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-ui[Couchbase Server Web Console] or the xref:7.1@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-cli[command line]
 
-Then load up the Travel Sample Bucket, using either the
-xref:7.1@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-ui[Web interface]
-or the
-xref:7.1@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-cli[command line].
-You will also need to
-xref:7.1@server:fts:fts-searching-from-the-ui.adoc#create-an-index[create a Search Index]
--- Query indexes are taken care of by the Sample Bucket.
-// end::prereq[]
+**Run the application**
 
-See the README at https://github.com/couchbaselabs/{travel-sample-git-project} for full details of how to run and tweak the {name-sdk} travel-sample app.
-// end::bring-your-own[]
+First set the cluster details:
+[source, console]
+----
+CB_HOST=...
+CB_USER=...
+CB_PSWD=...
+----
 
+Then start just the frontend and backend components:
+[source, console]
+----
+docker-compose up backend frontend
+----
+
+See the README at https://github.com/couchbaselabs/{travel-sample-git-project} for full details of how to run and tweak the {name-sdk} travel-sample application.
+--
+// end:bring-your-own[]
+====
+// end::quick-start[]
 
 // tag::using[]
-== Using the Sample App
+== Using the Sample Application
 
 image::sdk:shared:Travel-Sample-Register.png[]
 
-Give yourself a username and password and click *Register*.
+Give yourself a username, password and click *Register*.
 
 You can now try out searching for flights, booking flights, and searching for hotels.
-You can see which Couchbase SDK operations are being executed by clicking the red bar at the bottom of the screen:
+You can see the running Couchbase SDK operations by clicking the red bar at the bottom of the screen:
 
 image::sdk:shared:Couchbase-Query-Bar.png[]
 // end::using[]
 
 
 // tag::overview[]
-== Sample App Overview
+== Sample Application Overview
 
-The sample application runs 3 docker containers which contain the following:
+The sample application consists of the following 3 components:
 
-* The frontend -- a Vue web app which communicates with the backend via an API.
-* The backend -- a Python web app which contains the SDK code to communicate with Couchbase Server.
+* The frontend -- a Vue web app which communicates with the backend via a swagger API.
+* The backend -- a {name-sdk} web app which contains the SDK code to communicate with Couchbase Server.
 * The database -- a one node cluster containing the travel sample Bucket and reqisite indexes.
+
+=== Networking
+
+The sample application utilises the following ports:
+
+* 8091 - Couchbase Cluster Manager
+* 8093 - Couchbase Query Service
+* 8094 - Couchbase Search Service
+* 8080 - Backend
+* 8081 - Frontend
+
+NOTE: Ports 8091-8094 are only used if running Couchbase Server locally. 
+
+If you are running the sample application with the Docker containers initialised by the given `compose.yml`, the networking between the containers is already configured. If you are running a mix-and-match configuration, you may need to expose these ports manually. See the Docker documentation on https://docs.docker.com/network/[networking] for more information.
 
 image::sdk:shared:travel-sample-app-overview.png[]
 
-The API implements a different endpoint for each of the app's features. You can explore the API here in read-only mode, or once you are running the application, at the `localhost:8080/apidocs` endpoint.
+The API implements a different endpoint for each of the application's features. You can explore the API here in read-only mode, or once you are running the application, at the `localhost:8080/apidocs` endpoint.
 
 swagger_ui::https://raw.githubusercontent.com/couchbaselabs/{travel-sample-git-project}/HEAD/swagger.json[]
 
 // end::overview[]
 
-
 // tag::data-model[]
 == Data Model
 
-See the xref:ref:travel-app-data-model.adoc[Travel App Data Model] reference page for more information about the sample data set used.
+See the xref:ref:travel-app-data-model.adoc[Travel Appplication Data Model] reference page for more information about the sample dataset used.
 // end::data-model[]
 
 // tag::rest-api[]
