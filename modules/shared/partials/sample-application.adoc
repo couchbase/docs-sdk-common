@@ -53,6 +53,7 @@ If the bucket isn't present, you can import it manually. See xref:cloud:clusters
 
 .Create the Search index
 
+To perform searches in the hotels scope, you need to create a Search index.
 
 . Go to menu:Data Tools[Search > Create Search Index]
 . Click btn:[Import from File]
