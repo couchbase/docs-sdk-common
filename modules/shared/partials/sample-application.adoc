@@ -43,7 +43,7 @@ Couchbase Capella::
 
 You need to initalise a Couchbase Capella cluster before running the sample app.
 
-*Create the Capella cluster*
+.Create the Capella cluster
 
 First, xref:cloud:get-started:create-account.adoc[sign up for a Capella account] and deploy a cluster.
 
@@ -51,7 +51,8 @@ The sample application uses the default `travel-sample` data bucket, which shoul
 
 If the bucket isn't present, you can import it manually. See xref:cloud:clusters:data-service/import-data-documents.adoc#accessing-import-in-the-capella-ui[Import] for information about how to import the `travel-sample` bucket.
 
-*Create the Search index*
+.Create the Search index
+
 
 . Go to menu:Data Tools[Search > Create Search Index]
 . Click btn:[Import from File]
@@ -60,7 +61,7 @@ If the bucket isn't present, you can import it manually. See xref:cloud:clusters
 
 If you don't have access to the filesystem with the sample application backend, you can copy and paste the index defintion from https://raw.githubusercontent.com/couchbaselabs/{travel-sample-git-project}/HEAD/fts-hotels-index.json[GitHub] into the *Index Definition* field.
 
-*Create the Database Access*
+.Create the Database Access
 
 Create the credentials to log in: menu:Settings[Database Access > Create Database Access]
 
@@ -72,7 +73,7 @@ Create the credentials to log in: menu:Settings[Database Access > Create Databas
 
 Click btn:[Create Database Access] to save your access credentials.
 
-*Whitelist your IP*
+.Whitelist your IP
 
 Go to menu:Settings[Allowed IP Ranges > Add Allowed IP].
 
@@ -80,7 +81,7 @@ Enter the IP of the system you will be running the application on in the *Allowe
 
 Click btn:[Add Allowed IP] to add the IP address.
 
-*Copy the Connection String*
+.Copy the Connection String
 
 From the menu:Connect[] tab, copy your cluster's connection string, which looks something like:
 
@@ -89,7 +90,7 @@ From the menu:Connect[] tab, copy your cluster's connection string, which looks 
 couchbases://cb.dmt-i0huhchusg9g.cloud.couchbase.com
 ----
 
-*Run the Travel Sample Application*
+.Run the Travel Sample Application
 
 Run the following command to start both the frontend and backend of the application.
 
@@ -115,7 +116,7 @@ Your own configuration of Couchbase Server needs the following to run the sample
 NOTE: Couchbase recommends running only one service on each node in a production environment. However for a development environment such as this, mixing more than one of these services on a single node is acceptable, given enough memory resources.
 * The `travel-sample` Bucket, which you can install with either the xref:7.1@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-ui[Couchbase Server Web Console] or the xref:7.1@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-cli[command line]
 
-**Run the application**
+.Run the application
 
 First set the cluster details:
 [source, console]
