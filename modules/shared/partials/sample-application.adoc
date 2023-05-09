@@ -53,7 +53,7 @@ If the bucket isn't present, you can import it manually. See xref:cloud:clusters
 
 .Create the Search index
 
-To perform searches in the hotels scope, you need to create a Search index.
+To perform searches on the hotels collection, you need to create a Search index.
 
 . Go to menu:Data Tools[Search > Create Search Index]
 . Click btn:[Import from File]
@@ -185,7 +185,7 @@ swagger_ui::https://raw.githubusercontent.com/couchbaselabs/{travel-sample-git-p
 // end::overview[]
 
 // tag::data-model[]
-== Data Model
+=== Data Model
 
 See the xref:ref:travel-app-data-model.adoc[Travel Appplication Data Model] reference page for more information about the sample dataset used.
 // end::data-model[]
