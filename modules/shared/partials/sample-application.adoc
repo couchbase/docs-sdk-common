@@ -41,7 +41,7 @@ Couchbase Capella::
 +
 --
 
-You need to initalise a Couchbase Capella cluster before running the sample app.
+You need to initialize a Couchbase Capella cluster before running the sample app.
 
 .Create the Capella cluster
 
@@ -60,7 +60,7 @@ To perform searches on the hotels collection, you need to create a Search index.
 . Navigate to the {travel-sample-git-project} directory, and select `fts-hotels-index.json`
 . Click btn:[Create Index]
 
-If you don't have access to the filesystem with the sample application backend, you can copy and paste the index defintion from https://raw.githubusercontent.com/couchbaselabs/{travel-sample-git-project}/HEAD/fts-hotels-index.json[GitHub] into the *Index Definition* field.
+If you don't have access to the filesystem with the sample application backend, you can copy and paste the index definition from https://raw.githubusercontent.com/couchbaselabs/{travel-sample-git-project}/HEAD/fts-hotels-index.json[GitHub] into the *Index Definition* field.
 
 .Create the Database Access
 
@@ -144,7 +144,7 @@ See the README at https://github.com/couchbaselabs/{travel-sample-git-project} f
 
 image::sdk:shared:Travel-Sample-Register.png[]
 
-Give yourself a username, password and click *Register*.
+Give yourself a username, password, and click *Register*.
 
 You can now try out searching for flights, booking flights, and searching for hotels.
 You can see the running Couchbase SDK operations by clicking the red bar at the bottom of the screen:
@@ -160,11 +160,11 @@ The sample application consists of the following 3 components:
 
 * The frontend -- a Vue web app which communicates with the backend via a swagger API.
 * The backend -- a {name-sdk} web app which contains the SDK code to communicate with Couchbase Server.
-* The database -- a one node cluster containing the travel sample Bucket and reqisite indexes.
+* The database -- a one node cluster containing the travel sample Bucket and requisite indexes.
 
 === Networking
 
-The sample application utilises the following ports:
+The sample application utilizes the following ports:
 
 * 8091 - Couchbase Cluster Manager
 * 8093 - Couchbase Query Service
@@ -174,7 +174,7 @@ The sample application utilises the following ports:
 
 NOTE: Ports 8091-8094 are only used if running Couchbase Server locally. 
 
-If you are running the sample application with the Docker containers initialised by the given `compose.yml`, the networking between the containers is already configured. If you are running a mix-and-match configuration, you may need to expose these ports manually. See the Docker documentation on https://docs.docker.com/network/[networking] for more information.
+If you are running the sample application with the Docker containers initialized by the given `compose.yml`, the networking between the containers is already configured. If you are running a mix-and-match configuration, you may need to expose these ports manually. See the Docker documentation on https://docs.docker.com/network/[networking] for more information.
 
 image::sdk:shared:travel-sample-app-overview.png[]
 
@@ -187,7 +187,7 @@ swagger_ui::https://raw.githubusercontent.com/couchbaselabs/{travel-sample-git-p
 // tag::data-model[]
 === Data Model
 
-See the xref:ref:travel-app-data-model.adoc[Travel Appplication Data Model] reference page for more information about the sample dataset used.
+See the xref:ref:travel-app-data-model.adoc[Travel Application Data Model] reference page for more information about the sample dataset used.
 // end::data-model[]
 
 // tag::rest-api[]
