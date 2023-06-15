@@ -78,7 +78,7 @@ Click btn:[Create Database Access] to save your access credentials.
 
 Go to menu:Settings[Allowed IP Ranges > Add Allowed IP].
 
-Enter the IP of the system you will be running the application on in the *Allowed IP* field. If this system is the same one you are accessing the Couchbase Capella Web Console on, you can click btn:[Add Current IP Address].
+Enter the IP of the system you will be running the application on in the *Allowed IP* field. If this system is the same one you are accessing the Capella UI on, you can click btn:[Add Current IP Address].
 
 Click btn:[Add Allowed IP] to add the IP address.
 
@@ -158,9 +158,9 @@ image::sdk:shared:Couchbase-Query-Bar.png[]
 
 The sample application consists of the following 3 components:
 
-* The frontend -- a Vue web app which communicates with the backend via a swagger API.
-* The backend -- a {name-sdk} web app which contains the SDK code to communicate with Couchbase Server.
-* The database -- a one node cluster containing the travel sample Bucket and requisite indexes.
+* The frontend--a Vue web application which communicates with the backend via a swagger API.
+* The backend--a {name-sdk} web application which contains the SDK code to communicate with Couchbase Server.
+* The database--a one node cluster containing the travel sample Bucket and requisite indexes.
 
 === Networking
 
@@ -191,5 +191,5 @@ See the xref:ref:travel-app-data-model.adoc[Travel Application Data Model] refer
 // end::data-model[]
 
 // tag::rest-api[]
-// PLACEHOLDER - Remove when DOC-10964 is completed
+// PLACEHOLDER - Remove when DOC-10964 is completed. This stops sdks that still use this tag importing the whole file.
 // end::rest-api[]
