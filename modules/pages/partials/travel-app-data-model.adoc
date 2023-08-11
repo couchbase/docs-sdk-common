@@ -6,11 +6,11 @@
 [abstract]
 {description}
 
-Our xref:hello-world:sample-application.adoc[tutorial introduction to using the SDK] uses the _Travel Sample_ data bucket.
+The xref:hello-world:sample-application.adoc[tutorial introduction to using the SDK] uses the _Travel Sample_ data bucket.
 
-== The Travel App data model
+== The Travel Application Data Model
 
-The data model for the travel app uses several distinct document types: airline, route, airport, and hotel.
+The data model for the travel application uses several distinct document types: airline, route, airport, and hotel.
 
 The model for each kind of document contains:
 
@@ -19,16 +19,16 @@ The model for each kind of document contains:
 * A `type` field that identifies the kind of document
 
 The following figure illustrates the relationship between the different kinds of documents in the Travel App.
-It shows the primary key, ID, and type fields that each document has, plus a few representative fields in each type of document.
+It shows the primary key, ID, and type fields that each document has, plus some other representative fields in each type of document.
 
-.Documents in the Travel App data model
+.Documents in the Travel Application data model
 image::travel-app-data-model.png[Travel Sample data model diagram]
 
-Landmark documents are not used in the travel-sample application, which focuses on a more specific subset of point of interests that have their own type: hotels.
+Landmark documents aren't used in the travel-sample application, which focuses on a more specific subset of point of interests that have their own type: hotels.
 
 Hotels, like landmarks, don't have relations to other types.
 
-== Airline documents
+== Airline Documents
 
 [.term]_Airline documents_ contain details about airlines such as the name of the airline, International Air Transport Association (IATA) two-character airline designator, International Civil Aviation Organization (ICAO) three-character airline designator, and the airline call sign.
 
@@ -49,11 +49,11 @@ airline_24 			   ←This is the key, which also acts as a primary key
 }
 ----
 
-== Route documents
+== Route Documents
 
 [.term]_Route documents_ contain details about flights such as the name of the airline, departure airport, destination airport, number of stops during the flight, type of aircraft, flight number, and flight schedule.
 
-Route documents also contain a foreign key identifier, `airlineid`, that is used to retrieve the document that contains information about the airline that flies the route.
+Route documents also contain a foreign key identifier, `airlineid`, that's used to retrieve the document that contains information about the airline that flies the route.
 The value of the `airlineid` field is identical to the key for the corresponding airline document.
 
 For route documents, the value of the `type` field is `route`.
@@ -79,7 +79,7 @@ route_5966                         ←This is the key, which also acts as a prim
 }
 ----
 
-== Airport documents
+== Airport Documents
 
 [.term]_Airport documents_ contain details about airports such as name, location, time zone, ICAO four-character alphanumeric airport code, and Federal Aviation Administration (FAA) location identifier.
 
@@ -106,10 +106,10 @@ airport_3577                             ←This is the key, which also acts as 
 }
 ----
 
-== Hotel documents
+== Hotel Documents
 
 [.term]_Hotel documents_ are all about a specific type of point of interests: hotels.
-They include information such as a name, description, location (coutry, state, city and address), price and services, and even customer reviews.
+They include information such as a name, description, location (country, state, city and address), price, and services, and even customer reviews.
 
 For hotel documents, the value of the `type` field is `hotel`.
 
@@ -175,8 +175,8 @@ WHERE r.sourceairport='SEA' AND r.destinationairport='MCO' AND s.day=6
 ORDER BY a.name
 ----
 
-{sqlpp} provides JOIN functionality, something previously not possible in a document database.
-For two documents to be joined in the result of a SELECT statement, one of them must contain a field whose value is equal to the Couchbase key of the other document.
+{sqlpp} provides the JOIN feature, something previously not possible in a document database.
+To join two documents in a SELECT statement, one of them must contain a field whose value is equal to the key of the other document.
 The following example shows two documents that demonstrate that requirement and a SELECT statement that joins them:
 
 ----
@@ -200,26 +200,25 @@ To alleviate a complicated JSON parsing code pattern for the return results, you
 Standard SQL syntax is used in the `WHERE` clause for the `SELECT` statement.
 The result set is ordered by the `a.name` field, which contains the airline name.
 
-Refer to the xref:concept-docs:n1ql-query.adoc[Querying with {sqlpp}] section for more information on using {sqlpp} with the SDKs.
+Refer to the xref:concept-docs:n1ql-query.adoc[Querying with {sqlpp}] section for more information about using {sqlpp} with the SDKs.
 
 == Collections
 
-With the introduction of xref:concept-docs:collections.adoc[Collections] in the 7.0 release of the Couchbase Data Platform, a new version of the Travel Sample application is provided.
+A new version of the Travel Sample application utilises xref:concept-docs:collections.adoc[Collections], introduced in the 7.0 release of the Couchbase Server.
 The application showcases the use of collections and scopes to represent a multi-tenant approach to organizing user and flight data.
 
-To try this out you will need Couchbase Server 7.0 or higher and the xref:7.1@server:manage:manage-settings/install-sample-buckets.adoc#configuring-sample-buckets[travel-sample] bucket configuration.
+To try this out you need Couchbase Server 7.0 or later and the xref:7.1@server:manage:manage-settings/install-sample-buckets.adoc#configuring-sample-buckets[travel-sample] bucket configuration.
 
 image:travel-sample-collections-7.0.png[Collections-aware Travel Sample data model diagram]
 
 The updated bucket introduces tenant `agent` scopes, `users` and `bookings` collections to allocate data into more logical groupings.
-Note that the `inventory` scope is not multi-tenanted as its collection data will be shared across the tenant agents.
 
-Let's take a quick look at the collections within the agent scopes:
+NOTE: the `inventory` scope isn't multi-tenanted as it shares its collection data across the tenant agents.
 
-* users
-* bookings
+Following is a brief overview of the collections within the new tenant scopes.
 
-The travel sample application will create/update documents within these new collections when using the flight planner.
+IMPORTANT: The preceding documents are for example only and don't exist by default in the `travel-sample` bucket. 
+The travel sample application creates/updates documents within these new collections when using the flight planner.
 
 The `users` collection stores user related data such as login details and flights booked:
 
@@ -256,13 +255,13 @@ bf7ad6fa-bdb9-4099-a840-196e47179f03       ←This is the key, which also acts a
 }
 ----
 
-Each booking is represented by a https://datatracker.ietf.org/doc/html/rfc4122[UUID] primary key to ensure the documents are uniquely identifiable.
+Each booking is represented by a https://datatracker.ietf.org/doc/html/rfc4122[UUID] primary key to make sure the documents are uniquely identifiable.
 
 == Further Reading
 
-The _Travel Sample_ data set is embedded in many of our examples.
+Most examples utilise the _Travel Sample_ dataset.
 
 * Learn xref:7.1@server:manage:manage-settings/install-sample-buckets.adoc[how to install the sample data buckets].
 * Manage the sample bucket installations with the xref:7.1@server:rest-api:rest-sample-buckets.adoc[REST API].
-* Our xref:7.1@server:fts:fts-demonstration-indexes.adoc[demonstration indexes] use the _Travel Sample_ data set to demonstrate the running of Full Text Searches.
+* The xref:7.1@server:fts:fts-demonstration-indexes.adoc[demonstration indexes] use the _Travel Sample_ dataset to demonstrate the running of Full-Text Searches.
 // end::model[]
