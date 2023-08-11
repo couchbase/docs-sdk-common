@@ -22,7 +22,7 @@ This setting can be changed via:
 * xref:{version-server}@server:manage:manage-buckets/create-bucket.adoc#couchbase-bucket-settings[Couchbase Server UI]
 * xref:{version-server}@server:cli:cbcli/couchbase-cli-bucket-create.adoc#options[Command Line]
 
-If the bucket already exists, then the server needs to be rebalanced for the setting to take affect.
+If the bucket already exists, then the server needs to be rebalanced for the setting to take effect.
 ====
 // end::requirements[]
 
