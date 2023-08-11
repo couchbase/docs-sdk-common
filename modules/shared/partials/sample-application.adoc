@@ -1,7 +1,7 @@
 // tag::abstract[]
 [abstract]
 {description}
-Discover how to program interactions with Couchbase Server 7.X via the Data, Query, and Search services -- using the Travel Sample Application with the built-in Travel Sample data Bucket.
+Discover how to program interactions with Couchbase Server 7.X via the Data, Query, and Search services--using the Travel Sample Application with the built-in Travel Sample data Bucket.
 // end::abstract[]
 
 
