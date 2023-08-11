@@ -204,7 +204,7 @@ Refer to the xref:concept-docs:n1ql-query.adoc[Querying with {sqlpp}] section fo
 
 == Collections
 
-A new version of the Travel Sample application utilises xref:concept-docs:collections.adoc[Collections], introduced in the 7.0 release of the Couchbase Server.
+The new version of the Travel Sample application utilises xref:concept-docs:collections.adoc[Collections], introduced in the 7.0 release of Couchbase Server.
 The application showcases the use of collections and scopes to represent a multi-tenant approach to organizing user and flight data.
 
 To try this out you need Couchbase Server 7.0 or later and the xref:7.1@server:manage:manage-settings/install-sample-buckets.adoc#configuring-sample-buckets[travel-sample] bucket configuration.
@@ -217,7 +217,7 @@ NOTE: the `inventory` scope isn't multi-tenanted as it shares its collection dat
 
 Following is a brief overview of the collections within the new tenant scopes.
 
-IMPORTANT: The preceding documents are for example only and don't exist by default in the `travel-sample` bucket. 
+IMPORTANT: The following documents are for example only and don't exist by default in the `travel-sample` bucket. 
 The travel sample application creates/updates documents within these new collections when using the flight planner.
 
 The `users` collection stores user related data such as login details and flights booked:
