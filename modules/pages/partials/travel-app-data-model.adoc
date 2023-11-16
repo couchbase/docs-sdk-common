@@ -263,5 +263,5 @@ Most examples utilise the _Travel Sample_ dataset.
 
 * Learn xref:7.1@server:manage:manage-settings/install-sample-buckets.adoc[how to install the sample data buckets].
 * Manage the sample bucket installations with the xref:7.1@server:rest-api:rest-sample-buckets.adoc[REST API].
-* The xref:7.1@server:fts:fts-demonstration-indexes.adoc[demonstration indexes] use the _Travel Sample_ dataset to demonstrate the running of Full-Text Searches.
+// * The xref:7.1@server:fts:fts-demonstration-indexes.adoc[demonstration indexes] use the _Travel Sample_ dataset to demonstrate the running of Full-Text Searches.
 // end::model[]
