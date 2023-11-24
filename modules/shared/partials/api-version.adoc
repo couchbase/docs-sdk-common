@@ -42,14 +42,14 @@ Whilst these two numbers match for the .NET, Java, and Ruby SDKs, this is not th
 | 3.1
 | 3.2
 | 3.3
-| 3.4
+| 3.4 & 3.5
 
 | Kotlin
 | -
 | -
 | -
 | 1.0
-| 1.1
+| 1.1 & 1.2
 
 | Node.js
 | 3.0
@@ -84,7 +84,7 @@ Whilst these two numbers match for the .NET, Java, and Ruby SDKs, this is not th
 | 1.1
 | 1.2
 | 1.3
-| 1.4
+| 1.4 & 1.5
 |===
 
 *SDK API 3.4*: Introduced support for ARM v8 on Ubuntu 20.04, Transactions on Spring Data Couchbase, and compatibility with running in serverless environments, such as AWS λ.
