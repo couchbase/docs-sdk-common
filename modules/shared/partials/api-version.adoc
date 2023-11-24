@@ -88,7 +88,7 @@ Whilst these two numbers match for the .NET and Ruby SDKs, this is not the case 
 |===
 
 *SDK API 3.4*: Introduced support for ARM v8 on Ubuntu 20.04, Transactions on Spring Data Couchbase, and compatibility with running in serverless environments, such as AWS λ.
-Protostellar was introduced in Go 2.7, Java 3.5, Kotlin 1.2, and Scala 1.5, for a future release of xref:operator::overview.adoc[Couchbase Autonomous Operator].
+The `couchbase2://` connection string was introduced in Go 2.7, Java 3.5, Kotlin 1.2, and Scala 1.5, for a future release of xref:operator::overview.adoc[Couchbase Autonomous Operator] with Cloud Native Gateway.
 
 *SDK API 3.3*: Introduced alongside Couchbase Server 7.1, adds Management API for Eventing and Index Management for Scopes & Collections; extends Bucket Management API to support Custom Conflict Resolution and Storage Options; adds new platform support for Linux Alpine OS, Apple M1, and AWS Graviton2; provides improved error messages for better error handling. and an upgraded Spark Connector that runs on Spark 3.0 & 3.1 Platform.
 
