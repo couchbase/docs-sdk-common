@@ -4,7 +4,7 @@ This repository hosts the common documentation files for the Couchbase SDKs.
 
 == Versioning
 
-This repository is versioned to track the version of Couchbase Server (e.g., release/5.5, release/6.0, etc).
+This repository is versioned to track the version of Couchbase Server (e.g., release/7.1, release/7.2, etc.) closest to the release of the SDK including a file from here.
 The component version is defined in the component descriptor, _antora.yml_.
 References from this repository to pages in the Couchbase Server documentation should mostly stick to this version.
 
