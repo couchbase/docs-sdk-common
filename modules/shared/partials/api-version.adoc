@@ -5,11 +5,11 @@
 // tag::api-version[]
 == API Version
 
-This release of the SDK is written to version 3.4 of the SDK API specification (and matching the features available in Couchbase 7.1 and earlier).
+This release of the SDK is written to version 3.4 of the SDK API specification (and matching the features available in Couchbase 7.2 and earlier).
 For most developers, just using the latest version will be all that matters, and few will need to look at another of our SDKs.
 Just for those few that do, the table below shows each Couchbase SDK release version that matches the API version.
 
-Whilst these two numbers match for the .NET, Java, and Ruby SDKs, this is not the case for the others, as version numbers for individual SDKs are bumped up in line with https://semver.org/[Semantic Versioning] -- check the xref:sdk-release-notes[release notes] of each SDK for individual details.
+Whilst these two numbers match for the .NET and Ruby SDKs, this is not the case for the others, as version numbers for individual SDKs are bumped up in line with https://semver.org/[Semantic Versioning] -- check the xref:sdk-release-notes[release notes] of each SDK for individual details.
 
 .SDK API Versions
 [cols="40,20,20,25,20,20"]
@@ -35,21 +35,21 @@ Whilst these two numbers match for the .NET, Java, and Ruby SDKs, this is not th
 | 2.2
 | 2.3 & 2.4
 | 2.5
-| 2.6
+| 2.6 & 2.7
 
 | Java
 | 3.0
 | 3.1
 | 3.2
 | 3.3
-| 3.4
+| 3.4 & 3.5
 
 | Kotlin
 | -
 | -
 | -
 | 1.0
-| 1.1
+| 1.1 & 1.2
 
 | Node.js
 | 3.0
@@ -84,10 +84,11 @@ Whilst these two numbers match for the .NET, Java, and Ruby SDKs, this is not th
 | 1.1
 | 1.2
 | 1.3
-| 1.4
+| 1.4 & 1.5
 |===
 
 *SDK API 3.4*: Introduced support for ARM v8 on Ubuntu 20.04, Transactions on Spring Data Couchbase, and compatibility with running in serverless environments, such as AWS λ.
+The `couchbase2://` connection string was introduced in Go 2.7, Java 3.5, Kotlin 1.2, and Scala 1.5, for a future release of xref:operator::overview.adoc[Couchbase Autonomous Operator] with Cloud Native Gateway.
 
 *SDK API 3.3*: Introduced alongside Couchbase Server 7.1, adds Management API for Eventing and Index Management for Scopes & Collections; extends Bucket Management API to support Custom Conflict Resolution and Storage Options; adds new platform support for Linux Alpine OS, Apple M1, and AWS Graviton2; provides improved error messages for better error handling. and an upgraded Spark Connector that runs on Spark 3.0 & 3.1 Platform.
 

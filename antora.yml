@@ -1,5 +1,3 @@
 name: sdk
 version: '7.5'
-asciidoc:
-  attributes:
-server_version: '7.5'
+server_version: '7.6'

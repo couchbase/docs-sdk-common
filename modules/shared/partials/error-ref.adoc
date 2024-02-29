@@ -52,6 +52,7 @@ I.e. no query node in the config, or a memcached bucket is accessed and views or
 === # 5 InternalServerFailure
 
 Raised when:
+
 * Query: xref:7.1@server:n1ql:n1ql-language-reference/n1ql-error-codes.adoc#5xxx-codes-exec[Error range 5xxx].
 * Analytics: Error range xref:7.1@server:analytics:error-codes.adoc[25xxx].
 * KV: error code ERR_INTERNAL (0x84).
@@ -60,6 +61,7 @@ Raised when:
 === # 6 AuthenticationFailure
 
 Raised when:
+
 * Query: xref:7.1@server:n1ql:n1ql-language-reference/n1ql-error-codes.adoc#10xxx-codes-ds_auth[Error range 10xxx].
 * Analytics: Error range xref:7.1@server:analytics:error-codes.adoc[20xxx].
 * View: HTTP status 401.
@@ -69,18 +71,21 @@ Raised when:
 === # 7 TemporaryFailure
 
 Raised when:
+
 * Analytics: Errors: xref:7.1@server:analytics:error-codes.adoc[23000, 23003].
 * KV: Error code `ERR_TMPFAIL (0x86)`, `ERR_BUSY (0x85)` `ERR_OUT_OF_MEMORY (0x82)`, `ERR_NOT_INITIALIZED (0x25)`.
 
 === # 8 ParsingFailure
 
 Raised when:
+
 * Query: xref:7.1@server:n1ql:n1ql-language-reference/n1ql-error-codes.adoc#3xxx-codes-parse[code 3000].
 * Analytics: code xref:7.1@server:analytics:error-codes.adoc[24000] raised.
 
 === # 9 CasMismatch
 
 Raised when:
+
 * KV: `ERR_EXISTS (0x02)` when replace or remove with CAS.
 * Query: xref:7.1@server:n1ql:n1ql-language-reference/n1ql-error-codes.adoc#12xxx-codes-ds_cb[code 12009].
 
@@ -95,6 +100,7 @@ Raised when a request is made but the current collection (including scope) is no
 === # 12 UnsupportedOperation
 
 Raised when:
+
 * KV: `0x81` (unknown command), `0x83` (not supported).
 
 === # 13 AmbiguousTimeout
@@ -119,6 +125,7 @@ Raised when a management API attempts to target a scope which does not exist.
 === # 17 IndexNotFound
 
 Raised when:
+
 * Query:
 ** Codes xref:7.1@server:n1ql:n1ql-language-reference/n1ql-error-codes.adoc#12xxx-codes-ds_cb[12004, 12016].
 ** xref:7.1@server:n1ql:n1ql-language-reference/n1ql-error-codes.adoc#5000-9999-codes-errors[Codes 5000] AND message contains index .+ not found.
@@ -354,6 +361,7 @@ Raised when Http status code 404 -- reason or error contains “not_found”.
 === # 502 DesignDocumentNotFound
 
 Raised on the Management APIs only when:
+
 * Getting a design document;
 * Dropping a design document;
 * And the server returns 404.
@@ -402,8 +410,6 @@ Raised from the bucket management API.
 // tag::fle[]
 
 ID Range 700 - 799
-
-Note, in SDK 3.0, Field Level Encryption is only available as a xref:3.0@java-sdk:howtos:encrypting-using-sdk.adoc[Developer Preview with the Java SDK].
 
 
 === # 700 CryptoException
