@@ -1,10 +1,20 @@
 = About These Docs
 :page-toclevels: 2
+:description: Meta documentation -- what you might need to know to get the best from these docs, from their intent to their Information Architecture.
+
+
+// Note to editors
+// 
+// This page pulls in content from -sdk-common-
+// and code samples from -example-dir-
+// 
+// It can be seen built at wwww.
 
 [abstract]
-Meta documentation -- what you might need to know to get the best from these docs, from their intent to their Information Architecture.
+{description}
 
-Welcome to the xref:project-docs:compatibility.adoc#api-version[SDK 3.4] docs -- this is an _afterword_ to the documentation, rather than something most people will read as a _foreword_.
+
+Welcome to the xref:project-docs:compatibility.adoc#api-version[{name-sdk} {sdk_dot_minor}] docs -- this is an _afterword_ to the documentation, rather than something most people will read as a _foreword_.
 Why so?
 On most occasions you will arrive at a page directly from a search engine, perhaps follow a link to another page or two, and then depart (with, we hope, your questions answererd).
 This page is to help with those occasions when you are unsure precisely what you want, but you are after understanding --
@@ -18,53 +28,107 @@ The SDKs interact with Couchbase Server and its various services; although some 
 rather it is to gain an understanding of how to interact with them programmatically from the SDK,
 as many application programmers will have the task specced out for them.
 
-Some concepts, such as Role-Based Access Control, do need to be understood in greater depth -- but this is documented xref:7.1@server:learn:security/roles.adoc[in the appropriate place in the Server docs], and linked from the xref:hello-world:start-using-sdk.adoc[Getting Started Guide].
+Some concepts, such as Role-Based Access Control, do need to be understood in greater depth -- but this is documented xref:{version-server}@server:learn:security/roles.adoc[in the appropriate place in the Server docs], and the xref:cloud:projects:project-roles.adoc[Capella docs], and linked from the xref:hello-world:start-using-sdk.adoc[Getting Started Guide].
 Furthermore, things which are essential in production can be a barrier to getting up and running quickly in order to try something out -- so the _Full Admin_ RBAC role is used in the _Hello World_ code example, contrary to best practice (but this is, of course, called out).
+
+=== Concepts, Howtos, and Reference Information
+
+Earlier SDK docs led with sections of Howto guides, with reference and discussion (concept) docs appended to the end along with project docs such as release notes.
+Whilst howtos, with their easily parseable code snippets, are what the majority of developers want most of the time, a broader context is often needed go ensure that any SDK API is used appropriately.
+
+Furthermore, for developers with less experience of databases in the distributed world, some discussion of the issues of consistency and isolation can ensure that the right decisions are made once your app use starts to scale up.
+Hence each section carries a broad introduction, highlighting points to consider, but skippable by those who already know the territory.
 
 
 == Getting Started
 
-The Getting Started section contains tutorial pages -- in intention, if not always in style -- covering xref:hello-world:start-using-sdk.adoc[how to install and start using] the SDK, as well as a longer xref:hello-world:sample-application.adoc[Sample Application] (which is not present for every SDK).
+* xref:hello-world:start-using-sdk.adoc[Hello World]
+
+The Getting Started section contains tutorial pages -- in intention, if not always in style -- covering xref:hello-world:start-using-sdk.adoc[how to install and start using] the SDK, as well as a longer xref:hello-world:sample-application.adoc[Sample Application] (which is not present for _every_ SDK).
+
+It also contains information on connecting to the database, and a section of troubleshooting information for when the application code is remote from the database -- such as developing an app on your laptop, with the Cluster in the Cloud Service Providers Zone some distance away -- a set-up not supported in production, but typical in development or evaluation.
 
 
-== How to Work With the SDK
+== Data Modelling, Durability, and Consistency
 
-The next four sections are collections of practical, task-oriented pages, featuring snippets of code designed to help you with the individual pieces that will become your application.
+* xref:concept-docs:data-durability-acid-transactions.adoc[Data Modelling, Durability, and Consistency]
 
-=== Working with Data
+A database has a simple job -- storing your data, and giving some of it back to you when you ask.
+Behind that simplicity is a whole world of difficulty, to ensure the best combination of consistency and availability of documents partitioned across many nodes.
+Our introduction suggests key areas to consider when scaling up your app.
 
-This section deals with all of the main Couchbase Services: xref:howtos:kv-operations.adoc[The Data Service] (including xref:howtos:subdocument-operations.adoc[Sub-Document Operations]); the xref:howtos:n1ql-queries-with-sdk.adoc[Query Service]; the xref:howtos:analytics-using-sdk.adoc[Analytics Service]; Full-Text xref:howtos:full-text-searching-with-sdk.adoc[Search Service]; and xref:howtos:view-queries-with-sdk.adoc[MapReduce Views].
-
-NOTE: Some SDKs feature an additional xref:3.0@python-sdk:howtos:caching-example.adoc[fully-worked, complete code example].
-Others may be added at a later date.
-
-////
-=== Transactions
-////
-
-=== Advanced Data Operations
-
-In using the above services, there are several more advanced Couchbase and SDK features that may be advantageous or even critical to your app.
-Everything from xref:howtos:concurrent-async-apis.adoc[Asynchronous APIs] to xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[Distributed Transactions].
-
-=== Managing Couchbase
-
-In this section are collected practical documents grouped around the Management APIs, and around other management tasks, particularly those needed in getting your application talking to the Couchbase Server (xref:howtos:managing-connections.adoc[Managing Connections]), and xref:howtos:provisioning-cluster-resources.adoc[programmatically dealing with Cluster resources].
-
-=== Errors & Diagnostics
-
-xref:howtos:error-handling.adoc[Error handling] is an essential part of developing any application -- as is xref:howtos:collecting-information-and-logging.adoc[logging] --
-but this section also includes some useful diagnostic tools, all too necessary in a distributed environment.
+This section also contains details of interacting with our super fast xref:howtos:kv-operations.adoc[Data Service], 
+bandwidth-saving xref:howtos:subdocument-operations.adoc[Sub-Document APIs], 
+and xref:concept-docs:compression.adoc[compression], 
+xref:howtos:encrypting-using-sdk.adoc[Field-Level Encryption], 
+and xref:concept-docs:nonjson.adoc[working with non-JSON data].
 
 
-== Concept Docs
+== Querying Your Data
 
-The xref:concept-docs:concepts.adoc[Learn] section is a collection of concept docs offering expansive background and context to key areas of the SDKs.
-These understanding-oriented docs are aimed at broadening coverage beyond the goal-oriented howtos, to clarify and illuminate each subject.
-They are a work in progress -- with more breadth and depth to be added over time.
+* xref:concept-docs:querying-your-data.adoc[]
+
+For developers with an RDBMS, Couchbase's SQL implementation, {sqlpp}, makes querying familiar.
+But don't be so quick to jump straight to {sqlpp} -- assess your use case carefully.
+
+In addition to xref:howtos:n1ql-queries-with-sdk.adoc[{sqlpp} queries], 
+and longer running xref:howtos:analytics-using-sdk.adoc[analytics queries] (OLAP) queries, 
+and a xref:howtos:full-text-searching-with-sdk.adoc[Search Service], 
+you can quickly access data where you know keys or xref:howtos:kv-range-scan.adoc[key ranges], 
+and this will be substansially quicker, thanks to the Data Service's speedy binary protocol.
+
+
+== Distributed ACID Transactions
+
+* xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[]
+
+As with {sqlpp} queries, ACID transactions may be a familiar tool that you choose automatically -- but take time to weigh up your use case against the constraints of such a consistency model.
+
+
+== Dealing with Delays, Outages, and Unreliable Networks
+
+* xref:concept-docs:durability-replication-failure-considerations.adoc[]
+
+A distributed world brings challenges not just of node and network failures, but even of operating with uncertain knowledge of those things.
+Couchbase is architected to give reliable results but as always, taking time to understand the issue can give you a more reliable application, and a better service to your users.
+
+This section also contains details of the ** xref:concept-docs:response-time-observability.adoc[observability] stack available within the SDK, 
+to help to identify problems and profile bottlenecks.
+
+
+== Best Practices
+
+* xref:concept-docs:best-practices.adoc[]
+
+Choice is the mantra of many programming languages, and Couchbase offers support for many approaches to programming and architectural choices.
+Where possible, we offer strong recommendations, for what will work best in _most_ circumstances.
+
+This section also contains discussions for some of the xref:howtos:error-handling.adoc[best ways of dealing with errors and exceptions].
+
+
+== Managing Couchbase
+
+* xref:concept-docs:management-api.adoc[Managing Couchbase]
+
+Some will prefer to administer Couchbase programmatically, rather than through UI, REST API, or command line.
+This section covers the available management APIs in the SDK.
+
+
+== SDK Deployment
+
+* xref:project-docs:deployment.adoc[SDK Deployment]
+
+A section on those non-programmatic considerations -- 
+xref:project-docs:compatibility.adoc[compatibility guides], 
+xref:project-docs:migrating-sdk-code-to-3.n.adoc[migration], 
+xref:project-docs:third-party-integrations.adoc[third party integrations], 
+xref:project-docs:sdk-licenses.adoc[licensing],
+ and xref:project-docs:sdk-release-notes.adoc[release notes].
 
 
 == Reference Docs
+
+* xref:ref:index.adoc[]
 
 The key reference doc is the API guide, which should be an accurate and complete source of truth for programming with the SDK's API.
 Any error here should be filed directly against the individual SDKs bug tracker (JIRA), although a ticket against the docs https://issues.couchbase.com/projects/DOC/issues[here] will always be converted to the correct project.
@@ -72,14 +136,8 @@ Any error here should be filed directly against the individual SDKs bug tracker 
 The first link in the navigation for the Reference Section is to the API Guide for the _latest version_ of the SDK.
 Links to previous versions can be found with the xref:project-docs:sdk-release-notes.adoc[Release Notes].
 
-Other reference material includes the xref:ref:client-settings.adoc[Client Settings] that can be adjusted, and a listing of all xref:ref:error-codes.adoc[Error Codes].
-
-
-== Project Docs
-
-All of the above (tutorials, howtos, concept docs, and reference docs) help you directly in _using_ the software, but there remain several decisions around managing your use of the software that can be grouped into documentation about the software _as a project_.
-Things like xref:project-docs:sdk-licenses.adoc[License Information] and xref:project-docs:compatibility.adoc[Compatibility] (with versions of Couchbase Server, with the language, or with the underlying platform).
-Here can also be found the xref:project-docs:sdk-release-notes.adoc[Release Notes], and help in xref:project-docs:migrating-sdk-code-to-3.n.adoc[migrating] from the previous major release.
+Other reference material includes the xref:ref:client-settings.adoc[Client Settings] that can be adjusted, 
+and a listing of all xref:ref:error-codes.adoc[Error Codes].
 
 
 == Another Route Through?
@@ -88,9 +146,11 @@ Each page contains several links to related pages in the docs, as well as to rel
 Links are made to cover as many common user journeys as we could think of.
 For cases where we didn't anticipate your needs, every page in each SDK is linked from the left-hand navigation, and the paragraphs above detail the broad purpose of these groupings and some of their content.
 
+////
 NOTE: Several _non-pages_ exist, in the sense that where a page found in one or more SDKs, such as the _Travel Sample Application_, is not available in one (or more) SDKs --
 as, for example, we have not made a xref:3.0@c-sdk:hello-world:sample-application.adoc[libcouchbase Travel Sample Application] --
 then a page will still exist, so that when navigating between SDKs through either the dropdown nav, or changing ghe name in the URL bar, you will not find yourself facing a 404 error, and will still have access to the left-hand nvigation for that SDK.
+////
 
 === Site Search
 

@@ -1,10 +1,7 @@
 = Interface Stability Paragraphs
-
-[#interface-stability-section]
-// tag::interface-stability-section[]
 == Interface Stability
 
-[#interface-stability-par]
+// tag::interface-stability-section[]
 // tag::interface-stability-par[]
 Couchbase SDKs indicate the stability of an API through documentation.
 Since there are different meanings when developers mention stability, we mean *interface stability*: how likely the interface is to change or be removed entirely.
