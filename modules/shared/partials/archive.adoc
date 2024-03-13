@@ -1,9 +1,10 @@
-// tag::link[]
 
 [.column]
 ====== {empty}
 
 == Older SDK Versions
+
+// tag::link[]
 
 Documentation on older, unsupported versions of the SDK -- that have reached end-of-life -- can be found in the https://docs-archive.couchbase.com/home/index.html[archive].
 
