@@ -10,7 +10,7 @@ If you encounter issues, even with these tune-ables, you should attempt the same
 
 === Serverless Environments
 
-SDK API 3.4 introduces better resilience in handling errors that may occur when running your application in serverless environments, in particular when processes are frozen or thawed, and a rebalance is required.
+SDK API 3.4 introduced better resilience in handling errors that may occur when running your application in serverless environments, in particular when processes are frozen or thawed, and a rebalance is required.
 This means official support for AWS Lambda, Azure Functions, and GCP Functions.
 
 NOTE: When *DNS SRV* records are used to connect to the SDK it is possible for the underlying addresses to change (i.e. the cluster could move).
