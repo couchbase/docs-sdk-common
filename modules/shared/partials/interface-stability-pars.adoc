@@ -1,7 +1,6 @@
 = Interface Stability Paragraphs
 
 [#interface-stability-section]
-// tag::interface-stability-section[]
 == Interface Stability
 
 [#interface-stability-par]
