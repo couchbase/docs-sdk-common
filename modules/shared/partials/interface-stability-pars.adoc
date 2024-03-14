@@ -2,6 +2,7 @@
 
 [#interface-stability-section]
 == Interface Stability
+// tag::interface-stability-section[]
 
 [#interface-stability-par]
 // tag::interface-stability-par[]
