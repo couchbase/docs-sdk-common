@@ -20,8 +20,8 @@ Whilst these two numbers match for the .NET and Ruby SDKs, this is not the case 
 | 3.1
 | 3.2
 | 3.3.0 - 3.3.2
-| 3.3.3 footnote:[]
-| N/A footnote:[ ]
+| 3.3.3 footnote:[see above]
+| N/A footnote:[see above]
 
 | xref:dotnet-sdk:hello-world:overview.adoc[.NET]
 | 3.0
