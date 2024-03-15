@@ -1,4 +1,4 @@
-== Network Requirements
+=== Network Requirements
 
 Couchbase SDKs are developed to be run in an environment with local area network (LAN) like throughput and latencies.
 While there is no technical issue that prevents the use across a wide area network (WAN), SDKs have certain thresholds around timeouts and behaviors to recover that will not be the same once the higher latency and possible bandwidth constraints and congestion of a WAN is introduced.
@@ -8,7 +8,7 @@ For this reason, only LAN-like network environments are officially supported.
 Couchbase does document, for purposes of convenience when developing and performing basic operational work, what may need to be tuned when network throughputs and latencies are higher.
 If you encounter issues, even with these tune-ables, you should attempt the same workload from a supported, LAN-like environment.
 
-=== Serverless Environments
+==== Serverless Environments
 
 SDK API 3.4 introduced better resilience in handling errors that may occur when running your application in serverless environments, in particular when processes are frozen or thawed, and a rebalance is required.
 This means official support for AWS Lambda, Azure Functions, and GCP Functions.
