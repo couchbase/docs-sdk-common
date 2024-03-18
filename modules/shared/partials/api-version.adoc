@@ -100,11 +100,11 @@ Whilst these two numbers match for the .NET and Ruby SDKs, this is not the case 
 <2> For most purposes better productivity and functionality can be found in our
 https://github.com/couchbaselabs/couchbase-cxx-client/[{cpp} SDK], currently in Developer Preview.
 
-*SDK API 3.5*: Introduced support for Vector Search alongside Server 7.6 (and Capella).
-Adds scoped indexes to Search (for Vector Seach and traditional FTS).
-Read from Replica for Query and Sub-Doc operations.
-KV Range Scan for querying documents through the Data Service, even if you don't know the document IDs (for use cases that require relatively low concurrency and tolerate relatively high latency).
-Transactions now implemented as a native library in all SDKs (except libcouchbase).
+*SDK API 3.5*: Introduces support for Vector Search alongside Server 7.6 (and Capella).
+Introduces KV Range Scan to retrieve all documents in a specified range directly from the Data service, with lower performance compared to a direct fetch or retrieval from a Query with an Index.
+Adds FTS Search from the scope level (for Vector Search and traditional FTS).
+Adds Read from Replica for Query and Sub-Document operations.
+ACID Transactions capabilities are now included in the core library.
 
 *SDK API 3.4*: Introduced support for ARM v8 on Ubuntu 20.04, Transactions on Spring Data Couchbase, and compatibility with running in serverless environments, such as AWS λ.
 The `couchbase2://` connection string was introduced in Go 2.7, Java 3.5, Kotlin 1.2, and Scala 1.5, for Cloud Native Gateway with xref:operator::overview.adoc[Couchbase Autonomous Operator] (from CAO 2.6.1).
