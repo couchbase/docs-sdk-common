@@ -155,3 +155,9 @@ Currently, the shared module doesn't contain any images.
 If they are added, a different workaround will have to be developed since not all partials would pick up a shared attributes file.
 
 TODO refresh this section, too.
+
+
+== Docs License
+
+©2024 Couchbase, Inc.
+This work is licensed under https://creativecommons.org/licenses/by-nc-sa/4.0/[CC BY-NC-SA 4.0].
