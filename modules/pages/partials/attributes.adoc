@@ -1,2 +1,0 @@
-:incimagesdir: ../../../sdk/7.1/pages/_images
-:version-server: 7.1
