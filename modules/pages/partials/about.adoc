@@ -3,12 +3,10 @@
 :description: Meta documentation -- what you might need to know to get the best from these docs, from their intent to their Information Architecture.
 
 
-// Note to editors
-// 
-// This page pulls in content from -sdk-common-
-// and code samples from -example-dir-
-// 
-// It can be seen built at wwww.
+// This page can be seen built at https://docs.couchbase.com/java-sdk/current/project-docs/metadoc-about-these-sdk-docs.html
+// replacing java with whichever SDK is pulling in the complete page from the sdk-common repo
+// (the page features in each SDK's docs).
+
 
 [abstract]
 {description}
