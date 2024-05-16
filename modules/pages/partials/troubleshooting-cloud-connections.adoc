@@ -1,10 +1,8 @@
 = Troubleshooting Cloud Connections
-:page-topic-type: howto
+:description: Diagnose DNS-SRV problems. Troubleshoot other network connection trouble with SDK doctor.
 
 [abstract]
-Diagnose DNS-SRV problems.
-Troubleshoot other network connection trouble with SDK doctor.
-
+{description}
 
 Connecting to Cloud -- in particular when developing applications outside the network where the Cluster is hosted -- can expose unexpected network problems. 
 We'll show you how to troubleshoot _Host not Found_ problems. 
@@ -16,7 +14,7 @@ https://docs.couchbase.com/cloud/index.html[Couchbase Capella] is secure by defa
 Before carrying out other troubleshooting, please check that your application code is configured for TLS/SSL, using the default method of connecting (not http/https), and not specifying any port numbers.
 
 
-== Troubleshooting Host not Found
+=== Troubleshooting Host not Found
 
 In order for your application to connect to your cloud, Capella creates a special kind of DNS record, called a Service record, or DNS-SRV record. 
 DNS SRV records are widely supported and used frequently in systems like XMPP, and Kubernetes services.  
@@ -104,7 +102,7 @@ _couchbases._tcp.cb.490e597e-73fd-4b87-a08a-1da9c826970e.dp.cloud.couchbase.com 
 As a workaround, you can switch to a DNS provider which can support modern DNS SRV records.
 
 
-== Validating Connectivity with SDK doctor
+=== Validating Connectivity with SDK doctor
 
 If you appear to be having connectivity issues, it'd be good to diagnostically check for lower level details with https://github.com/couchbaselabs/sdk-doctor[SDK doctor].  
 From the environment where it looks like your program cannot connect, run one of the of the https://github.com/couchbaselabs/sdk-doctor/releases[pre-built binaries] for your platform. 
@@ -512,3 +510,12 @@ Summary:
 This output is a possible indication that the DNS server in use does not support DNS SRV records, as covered in an earlier section.
 
 
+
+
+== Additional Steps
+
+* Check your IP is whitelisted in the https://docs.couchbase.com/cloud/index.html[Couchbase Capella] UI as an Allowed IP (make sure to hit Save after adding it).
+* That you are using "couchbases://<hostname>" as your connection string, to allow DNS SRV.
+* That you are using a supported version of the {name-sdk} -- preferably the latest. All xref:{cert-link}[recent versions] of the {name-sdk} include the Capella cluster's Security Certificate.
+* That you have enabled TLS via `enableTls(true)`.
+* That the user you are connecting as has been created in Capella and has correct permissions for the bucket you are connecting to.
