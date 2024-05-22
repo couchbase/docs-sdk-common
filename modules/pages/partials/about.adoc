@@ -15,7 +15,7 @@
 Welcome to the xref:project-docs:compatibility.adoc#api-version[{name-sdk} {sdk_dot_minor}] docs -- 
 this is an _afterword_ to the documentation, rather than something most people will read as a _foreword_.
 Why so?
-On most occasions you will arrive at a page directly from a search engine, perhaps follow a link to another page or two, and then depart (with, we hope, your questions answererd).
+On most occasions you will arrive at a page directly from a search engine or LLM, perhaps follow a link to another page or two, and then depart (with, we hope, your questions answererd).
 This page is to help with those occasions when you are unsure precisely what you want, but you are after understanding --
 so this page is a guide to the SDK docs, to help you to get the most from them.
 
@@ -44,6 +44,12 @@ a broader context is often needed go ensure that any SDK API is used appropriate
 Furthermore, for developers with less experience of databases in the distributed world, 
 some discussion of the issues of consistency and isolation can ensure that the right decisions are made once your app use starts to scale up.
 Hence each section carries a broad introduction, highlighting points to consider, but skippable by those who already know the territory.
+
+=== Limits of the SDK Docs
+
+Large as this docset is, it can only cover a subset of the complette SDK API.
+For a comprehensive answer to anything not completely covered in these docs, your first port of call should always be the {sdk-api-link}[API reference].
+For many languages, you will also access this from your chosen IDE.
 
 
 == Getting Started
@@ -87,6 +93,17 @@ and a xref:howtos:full-text-searching-with-sdk.adoc[Search Service]
 (which includes xref:howtos:vector-searching-with-sdk.adoc[Vector Search]), 
 you can quickly access data where you know keys or xref:howtos:kv-range-scan.adoc[key ranges], 
 and this can be substantially quicker, thanks to the Data Service's speedy binary protocol.
+
+
+
+
+
+
+// TO BE ADDED -- Columnar info and links
+
+
+
+
 
 
 == Distributed ACID Transactions

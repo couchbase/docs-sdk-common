@@ -1,6 +1,6 @@
 = Glossary
 :page-aliases:
-:page-topic-type: reference
+:description: Couchbase-specific terms you'll need to understand to develop with the SDK.
 
 [abstract]
 Unpicking the tangled alphabet soup of the Couchbase Platform, from an SDK perspective.
