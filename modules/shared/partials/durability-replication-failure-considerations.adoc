@@ -24,13 +24,13 @@ By default all writes are asynchronous, but levels of durability can be set, to 
 
 // tag::syncrep[]
 === Durable Writes
-Durability has been enhanced in Couchbase Data Platform 6.5, with xref:7.1@server:learn:data/durability.adoc[Durable Writes],
+
+All supported versions of Couchbase Server (since 6.5) offer xref:{version-server}@server:learn:data/durability.adoc[Durable Writes],
 under which mutations will not be visible to other clients until they have met their durability requirements.
-These requirements are now enforced on the server side, rather than requiring client logic, which means that this committed durability can now be guaranteed.
 
 The optional `durabilityLevel` parameter, which all mutating operations accept, allows the application to wait until this replication (or persistence) is successful before proceeding.
 If `durabilityLevel()` is used with no argument, the application will report success back as soon as the primary node has acknowledged the mutation in its memory.
-With Couchbase Server 6.5 and above, the three replication level options are:
+The three replication level options are:
 
 * `Majority` -- The server will ensure that the change is available in memory on the majority of configured replicas.
 * `MajorityAndPersistToActive` -- Majority level, plus persisted to disk on the active node.
@@ -45,7 +45,7 @@ Variation in network speeds and conditions, _inter alia_, make it difficult to g
 
 // tag::syncrep2[]
 Options for making changes to `numKvConnections` (kvEndpoints) and `kvDurableTimeout` for Durable Writes can be found on the xref:ref:client-settings.adoc#io-options[Client Settings page].
-Increasing the number of reader and writer threads for Couchbase Server storage _may_ be advantageous: see the discussion on the xref:7.1@server:learn:buckets-memory-and-storage/storage.adoc#threading[Server storage page].
+Increasing the number of reader and writer threads for Couchbase Server storage _may_ be advantageous: see the discussion on the xref:{version-server}@server:learn:buckets-memory-and-storage/storage.adoc#threading[Server storage page].
 // end::syncrep2[]
 
 
