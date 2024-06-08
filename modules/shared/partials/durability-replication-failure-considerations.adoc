@@ -41,6 +41,10 @@ For a given node, waiting for writes to storage is considerably slower than wait
 In particular, `PersistToMajority` will take longer than the other two, and `timeout` value needs to be selected with care -- particularly for large numbers of documents -- after testing on a representative network, with a realistic workload.
 Variation in network speeds and conditions, _inter alia_, make it difficult to give blanket recommendations.
 
+You can set Durablilty as part of regula xref:howtos:kv-operations.adoc#durability[CRUD operations against the Data Service],
+or set it per Bucket from the Server or
+xref:cloud:clusters:data-service/manage-buckets.adoc#configure-advanced-bucket-settings[Capella].
+If it is set in either the SDK, the Server, or both, then the highest level on either side (or the level on the only side that sets it) is enforced.
 // end::syncrep[]
 
 // tag::syncrep2[]
@@ -125,8 +129,9 @@ Durability operations may also cause increased network traffic since it is imple
 == Transactions
 
 Couchbase introduced xref:7.1@server:learn:data/transactions.adoc[distributed, multi-document ACID Transactions], with Couchbase Data Platform 6.5.
+Read more on the concepts and commitment level, and take a look at the implementation:
 
-* xref:7.1@server:learn:data/transactions.adoc[An introductory guide to how Couchbase ACID Transactions work].
+* xref:server:learn:data/transactions.adoc[An introductory guide to how Couchbase ACID Transactions work].
 * xref:howtos:distributed-acid-transactions-from-the-sdk.adoc[A HOWTO guide].
 // end::txns[]
 
