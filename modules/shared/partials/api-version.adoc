@@ -91,7 +91,9 @@ a| N/A ②
 https://github.com/couchbaselabs/couchbase-cxx-client/[{cpp} SDK], currently in Developer Preview.
 
 
-*SDK API 3.5*: Introduced support for base 64 encoded vector types alongside Server 7.6.2 (and Capella). Binary transactions support in some SDKs.
+*SDK API 3.6*: Introduced support for base 64 encoded vector types alongside Server 7.6.2 (and Capella).
+Zone-aware Read-from-Replica is supported for some SDKs.
+// Binary transactions support in some SDKs.
 
 *SDK API 3.5*: Introduced support for Vector Search alongside Server 7.6 (and Capella).
 Adds scoped indexes to Search (for Vector Seach and traditional FTS).
