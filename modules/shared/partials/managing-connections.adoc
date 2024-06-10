@@ -1,14 +1,15 @@
 WaitUntilReady()
 
-// tag::cloud[]
+
 == Working in the Cloud
 
+// tag::cloud[]
 For most use cases, connecting client software using a Couchbase SDK to the new https://docs.couchbase.com/cloud/clouds/clouds.html[Couchbase Capella service] is similar to connecting to an on-premises Couchbase Cluster.
 The use of DNS-SRV. Alternate Address, and TLS is covered above.
 
 We strongly recommend that the client and server xref:project-docs:compatibility.adoc#network-requirements[are in the same LAN-like environment] (e.g. AWS Region).
 As this may not always be possible during development, read the guidance on working with xref:ref:client-settings.adoc#commonly-used-options[constrained network environments].
-More details on connecting your client code to Couchbase Capella can be found xref:cloud:clouds:connect-an-sdk.adoc#connecting-your-sdk-to-capella[in the Cloud docs].
+More details on connecting your client code to Couchbase Capella can be found xref:cloud:clouds:connect.adoc#connecting-from-sdk-cli-or-cbsh[in the Cloud docs].
 
 
 === Troubleshooting Connections to Cloud

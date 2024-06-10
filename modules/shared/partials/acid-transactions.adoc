@@ -4,7 +4,7 @@
 //-------------------------- HOWTO PARTIALS ------------------------
 
 // tag::intro[]
-Couchbase Distributed xref:7.1@server:learn:data/transactions.adoc#overview[ACID (atomic, consistent, isolated, and durable)] Transactions allow applications to perform a series of database operations as a single unit -- meaning operations are either committed together or all undone.
+Couchbase Distributed xref:server:learn:data/transactions.adoc#overview[ACID (atomic, consistent, isolated, and durable)] Transactions allow applications to perform a series of database operations as a single unit -- meaning operations are either committed together or all undone.
 Transactions are distributed and work across multiple documents, buckets, scopes, and collections, which can reside on multiple nodes.
 // end::intro[]
 

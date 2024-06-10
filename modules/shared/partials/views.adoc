@@ -47,7 +47,7 @@ Although still maintained and supported for legacy use, Views date from the earl
 See our discussion document on xref:concept-docs:data-services.adoc[the best service for you to use].
 
 Note, if you are provisioning Views on Couchbase Server for a legacy application, _they must run on a 
-xref:7.2@server:learn:buckets-memory-and-storage/storage-engines.adoc#couchstore[couchstore] bucket_.
+xref:{server_version}@server:learn:buckets-memory-and-storage/storage-engines.adoc#couchstore[couchstore] bucket_.
 ====
 // end::deprecate[]
 
