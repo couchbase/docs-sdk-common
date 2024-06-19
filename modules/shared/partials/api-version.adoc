@@ -22,6 +22,13 @@ a| 3.3.3 ①
 a| N/A ②
 a| N/A ②
 
+| xref:cxx-sdk:hello-world:overview.adoc[{cpp}]
+| -
+| -
+| -
+| -
+| 1.0
+
 | xref:dotnet-sdk:hello-world:overview.adoc[.NET]
 | 3.2
 | 3.3
@@ -86,21 +93,9 @@ a| N/A ②
 | 1.7
 |===
 
-// To add in:
-////
-| xref:cxx-sdk:hello-world:overview.adoc[{cpp}]
-| -
-| -
-| -
-| -
-| 1.0
-////
-
-
-
 <1> Excludes DNS SRV refresh support in Serverless Environments.
 <2> For most purposes better productivity and functionality can be found in our
-https://github.com/couchbaselabs/couchbase-cxx-client/[{cpp} SDK], currently in Developer Preview.
+xref:cxx-sdk:hello-world:overview.adoc[{cpp} SDK].
 
 
 *SDK API 3.6*: Introduced support for base 64 encoded vector types alongside Server 7.6.2 (and Capella).
