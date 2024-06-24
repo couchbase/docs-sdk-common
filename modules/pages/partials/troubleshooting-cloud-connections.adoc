@@ -1,4 +1,5 @@
 = Troubleshooting Cloud Connections
+:page-toclevels: 2
 :description: Diagnose DNS-SRV problems. Troubleshoot other network connection trouble with SDK doctor.
 
 [abstract]
