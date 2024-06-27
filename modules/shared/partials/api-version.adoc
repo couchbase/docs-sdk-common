@@ -15,13 +15,6 @@ Whilst these two numbers match for the .NET and Ruby SDKs, this is not the case 
 |===
 | | API 3.2 | API 3.3 | API 3.4 | API 3.5 | API 3.6
 
-| xref:c-sdk:hello-world:overview.adoc[C (libcouchbase)]
-| 3.2
-| 3.3.0 - 3.3.2
-a| 3.3.3 ①
-a| N/A ②
-a| N/A ②
-
 | xref:dotnet-sdk:hello-world:overview.adoc[.NET]
 | 3.2
 | 3.3
