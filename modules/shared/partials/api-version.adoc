@@ -29,6 +29,20 @@ a| N/A ②
 | 3.5
 | 3.6
 
+| xref:c-sdk:hello-world:overview.adoc[C (libcouchbase)]
+| 3.2
+| 3.3.0 - 3.3.2
+a| 3.3.3 ①
+a| N/A ②
+a| N/A ②
+
+| xref:cxx-sdk:hello-world:overview.adoc[{cpp}]
+| -
+| -
+| -
+| -
+| 1.0
+
 | xref:go-sdk:hello-world:overview.adoc[Go]
 | 2.3 & 2.4
 | 2.5
@@ -86,26 +100,14 @@ a| N/A ②
 | 1.7
 |===
 
-// To add in:
-////
-| xref:cxx-sdk:hello-world:overview.adoc[{cpp}]
-| -
-| -
-| -
-| -
-| 1.0
-////
-
-
-
 <1> Excludes DNS SRV refresh support in Serverless Environments.
 <2> For most purposes better productivity and functionality can be found in our
 https://github.com/couchbaselabs/couchbase-cxx-client/[{cpp} SDK], currently in Developer Preview.
 
 
 *SDK API 3.6*: Introduced support for base 64 encoded vector types alongside Server 7.6.2 (and Capella).
-// General Availability of our {cpp} SDK.
-// Now available as a supported, stand-alone SDK, this SDK is also the core of our Node.js, PHP, Python, and Ruby SDKs.
+General Availability of our {cpp} SDK --
+now available as a supported, stand-alone SDK, this SDK is also the core of our Node.js, PHP, Python, and Ruby SDKs.
 
 // Zone-aware Read-from-Replica is supported for some SDKs.
 // Binary transactions support in some SDKs.
