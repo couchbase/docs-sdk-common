@@ -1,6 +1,6 @@
 // tag::initial-availability[]
 [TIP]
-.Columnar SDKs
+.Capella columnar SDKs
 ====
 SDKs for xref:columnar:intro:intro.adoc[Capella columnar] --
 Couchbase's analytical database (RT-OLAP) for real time apps and operational intelligence --
