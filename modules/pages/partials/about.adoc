@@ -61,7 +61,7 @@ covering xref:hello-world:start-using-sdk.adoc[how to install and start using] t
 as well as a longer xref:hello-world:sample-application.adoc[Sample Application] (which is not present for _every_ SDK).
 
 It also contains information on connecting to the database, and a section of troubleshooting information for when the application code is remote from the database -- 
-such as developing an app on your laptop, with the Cluster in the Cloud Service Providers Zone some distance away -- 
+such as developing an app on your laptop, with the Cluster in the Cloud Service Provider's Zone some distance away -- 
 a set-up not supported in production, but typical in development or evaluation.
 
 
