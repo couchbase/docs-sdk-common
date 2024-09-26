@@ -1,6 +1,4 @@
 = Search
-:page-topic-type: concept
-include::partial$attributes.adoc[]
 :nav-title: Search Overview
 :page-aliases: ROOT:full-text-search-overview
 
