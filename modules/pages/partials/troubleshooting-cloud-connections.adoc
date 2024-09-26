@@ -515,7 +515,7 @@ This output is a possible indication that the DNS server in use does not support
 
 == Additional Steps
 
-* Check your IP is whitelisted in the https://docs.couchbase.com/cloud/index.html[Couchbase Capella] UI as an Allowed IP (make sure to hit Save after adding it).
+* Check your IP is allowlisted in the https://docs.couchbase.com/cloud/index.html[Couchbase Capella] UI as an Allowed IP (make sure to hit Save after adding it).
 * That you are using "couchbases://<hostname>" as your connection string, to allow DNS SRV.
 * That you are using a supported version of the {name-sdk} -- preferably the latest. All xref:{cert-link}[recent versions] of the {name-sdk} include the Capella cluster's Security Certificate.
 * That you have enabled TLS via `enableTls(true)`.
