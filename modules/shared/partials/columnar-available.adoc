@@ -1,24 +1,10 @@
 // tag::initial-availability[]
 [TIP]
-.Capella Columnar SDKs
-====
-SDKs for xref:columnar:intro:intro.adoc[Capella Columnar] --
-Couchbase's analytical database (RT-OLAP) for real time apps and operational intelligence --
-are in development, and will be arriving first for the Java, Node.js, and Python platforms.
-====
-// end::initial-availability[]
-
-
-Replace the above with the below once GA date arrives.
-  
-// tag::initial-availability2[]
-[TIP]
 .Columnar SDKs
 ====
 SDKs for xref:columnar:intro:intro.adoc[Capella Columnar] --
 Couchbase's analytical database (RT-OLAP) for real time apps and operational intelligence --
 are available for the Java, Node.js, and Python platforms.
-See the Capella Columnar SDK pages for more information.
+See the xref:home:columnar-sdk.adoc[Capella Columnar SDK pages] for more information.
 ====
-
-// end::initial-availability2[]
+// end::initial-availability[]
