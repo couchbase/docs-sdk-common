@@ -1,0 +1,42 @@
+= Client Settings -- WAN Profile
+
+// tag::profile-values[]
+.Profile Settings
+[cols="4,3,3"]
+|===
+| Setting | Default Value | WAN Profile Value
+
+| `connectTimeout`
+| 10s
+| 20s
+
+| `kvTimeout`
+| 2.5s
+| 20s
+
+| `kvDurableTimeout`
+| 10s
+| 20s
+
+| `viewTimeout`
+| 75s
+| 120s
+
+| `queryTimeout`
+| 75s
+| 120s
+
+| `analyticsTimeout`
+| 75s
+| 120s
+
+| `searchTimeout`
+| 75s
+| 120s
+
+| `managementTimeout`
+| 75s
+| 120s
+|===
+
+// end::profile-values[]
