@@ -28,3 +28,66 @@ _couchbases._tcp.example.com.  3600  IN  SRV  0  0  11207  node2.example.com.
 _couchbases._tcp.example.com.  3600  IN  SRV  0  0  11207  node3.example.com.
 ----
 // end::dnssrv[]
+
+
+
+
+
+
+
+// tag::dnssrv-rev[]
+
+
+== Using DNS SRV records
+
+As an alternative to specifying multiple hosts in your program, you can get the actual bootstrap node list from a DNS SRV record.
+For Capella, where you only have one endpoint provided, it's good practice to always enable DNS-SRV on the client.
+
+
+The following steps are necessary to make it work:
+
+. Set up your DNS server to respond properly from a DNS SRV request.
+. Enable it on the SDK and point it towards the DNS SRV entry.
+
+=== Setting up the DNS Server
+
+Capella gives you DNS-SRV by default --
+these instructions are for self-managed clusters, where you are responsible for your own DNS records. 
+
+
+Your DNS server zone file should be set up like this (one row for each bootstrap node):
+
+----
+; Service.Protocol.Domain	TTL	Class	Type	Priority	Weight	 Port	Target
+_couchbases._tcp.example.com.	3600	IN	SRV	0		0	 11207	node1.example.com.
+_couchbases._tcp.example.com.	3600	IN 	SRV	0		0	 11207	node2.example.com.
+_couchbases._tcp.example.com.	3600	IN 	SRV	0		0	 11207	node3.example.com.
+----
+
+The first line comment is not needed in the record, we are showing the column headers here for illustration purposes.
+The myriad complexities of DNS are beyond the scope of this document, but note that SRV records must point to an A record, not a `CNAME`.
+
+The order in which you list the nodes -- and any value entered for `Priority` or `Weight` -- will be ignored by the SDK.
+Nevertheless, best practice here is to set them to `0`, avoiding ambiguity.
+
+Also note, the above is for connections using TLS.
+Should you be using an insecure connection (in testing or development, or totally within a firewalled environment), then your records would look like:
+
+----
+_couchbase._tcp.example.com.  3600  IN  SRV  0  0  11210  node1.example.com.
+_couchbase._tcp.example.com.  3600  IN  SRV  0  0  11210  node2.example.com.
+_couchbase._tcp.example.com.  3600  IN  SRV  0  0  11210  node3.example.com.
+----
+
+
+=== Specifying DNS-SRV for the SDK
+
+
+* The connection string must be to a single hostname, with no explicit port specifier, pointing to the DNS SRV entry -- `couchbases://example.org`.
+* DNS-SRV must be enabled in the xref:ref:client-settings.adoc[client settings].
+
+
+// SDK-specific content below here
+
+
+// end::dnssrv-rev[]
