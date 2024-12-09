@@ -83,7 +83,7 @@ _couchbase._tcp.example.com.  3600  IN  SRV  0  0  11210  node3.example.com.
 === Specifying DNS-SRV for the SDK
 
 
-* The connection string must be to a single hostname, with no explicit port specifier, pointing to the DNS SRV entry -- `couchbases://example.org`.
+* The connection string must be to a single hostname, with no explicit port specifier, pointing to the DNS SRV entry -- `couchbases://example.com`.
 * DNS-SRV must be enabled in the xref:ref:client-settings.adoc[client settings].
 
 
