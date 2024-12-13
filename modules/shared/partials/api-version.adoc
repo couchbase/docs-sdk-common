@@ -69,7 +69,7 @@ a| N/A ②
 | 4.0
 | 4.1
 | 4.2
-| 4.3
+| 4.2.2
 
 | xref:python-sdk:hello-world:overview.adoc[Python]
 | 3.2
@@ -83,7 +83,7 @@ a| N/A ②
 | 3.3
 | 3.4
 | 3.5
-| 3.6
+| 3.5.2
 
 | xref:scala-sdk:hello-world:overview.adoc[Scala]
 | 1.2
