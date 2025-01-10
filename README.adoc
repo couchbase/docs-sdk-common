@@ -147,7 +147,7 @@ Unfortunately, that means that the references in the share partials to the serve
 See xref:7.1@server:understanding-couchbase:views/views-intro.adoc[Views].
 ----
 
-TODO refresh this section, as we've worked around it with each SDK's attributes in respective `antora.yhl` files.
+TODO refresh this section, as we've worked around it with each SDK's attributes in respective `antora.yml` files.
 
 ==== Image References
 
