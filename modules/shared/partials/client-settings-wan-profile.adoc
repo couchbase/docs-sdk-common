@@ -6,7 +6,7 @@
 |===
 | Setting | Default Value | WAN Profile Value
 
-| `connectTimeout`
+| `KvConnectTimeout`
 | 10s
 | 20s
 
@@ -14,27 +14,27 @@
 | 2.5s
 | 20s
 
-| `kvDurableTimeout`
+| `kvDurabilityTimeout`
 | 10s
 | 20s
 
-| `viewTimeout`
+| `ViewTimeout`
 | 75s
 | 120s
 
-| `queryTimeout`
+| `QueryTimeout`
 | 75s
 | 120s
 
-| `analyticsTimeout`
+| `AnalyticsTimeout`
 | 75s
 | 120s
 
-| `searchTimeout`
+| `SearchTimeout`
 | 75s
 | 120s
 
-| `managementTimeout`
+| `ManagementTimeout`
 | 75s
 | 120s
 |===
