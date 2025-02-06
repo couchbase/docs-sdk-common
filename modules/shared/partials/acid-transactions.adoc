@@ -382,9 +382,14 @@ Nevertheless, you may find that you can achieve the same result with our xref:co
 
 Currently, Distributed ACID Transactions are available for:
 
-* The xref:1.0@cxx-txns::distributed-acid-transactions-from-the-sdk.adoc[C++ API].
-* The xref:3.3@dotnet-sdk:howtos:distributed-acid-transactions-from-the-sdk.adoc[.NET SDK].
-* The xref:2.4@go-sdk:howtos:distributed-acid-transactions-from-the-sdk.adoc[Go SDK].
-* The xref:3.3@java-sdk:howtos:distributed-acid-transactions-from-the-sdk.adoc[Java SDK].
-* The xref:4.0@nodejs-sdk:howtos:distributed-acid-transactions-from-the-sdk.adoc[node.js SDK].
+* The xref:cxx-sdk:howtos:distributed-acid-transactions-from-the-sdk.adoc[{cpp} SDK].
+* The xref:dotnet-sdk:howtos:distributed-acid-transactions-from-the-sdk.adoc[.NET SDK].
+* The xref:go-sdk:howtos:distributed-acid-transactions-from-the-sdk.adoc[Go SDK].
+* The xref:java-sdk:howtos:distributed-acid-transactions-from-the-sdk.adoc[Java SDK].
+* The xref:kotlin-sdk:howtos:distributed-acid-transactions-from-the-sdk.adoc[Kotlin SDK].
+* The xref:nodejs-sdk:howtos:distributed-acid-transactions-from-the-sdk.adoc[Node.js SDK].
+* The xref:php-sdk:howtos:distributed-acid-transactions-from-the-sdk.adoc[PHP SDK].
+* The xref:python-sdk:howtos:distributed-acid-transactions-from-the-sdk.adoc[Python SDK].
+// * The xref:ruby-sdk:howtos:distributed-acid-transactions-from-the-sdk.adoc[Ruby SDK].
+* The xref:scala-sdk:howtos:distributed-acid-transactions-from-the-sdk.adoc[Scala SDK].
 // end::other[]
