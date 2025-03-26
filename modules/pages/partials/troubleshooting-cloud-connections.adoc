@@ -515,8 +515,10 @@ This output is a possible indication that the DNS server in use does not support
 
 == Additional Steps
 
-* Check your IP is allowlisted in the https://docs.couchbase.com/cloud/index.html[Couchbase Capella] UI as an Allowed IP (make sure to hit Save after adding it).
-* That you are using "couchbases://<hostname>" as your connection string, to allow DNS SRV.
-* That you are using a supported version of the {name-sdk} -- preferably the latest. All xref:{cert-link}[recent versions] of the {name-sdk} include the Capella cluster's Security Certificate.
-* That you have enabled TLS via `enableTls(true)`.
+* Check your IP is allowlisted in the https://docs.couchbase.com/cloud/index.html[Couchbase Capella] UI as an Allowed IP (make sure to hit Save after adding it).* That your connection string has a hostname instead of an IP address, to allow DNS SRV.
+* That you are using a supported version of the {name-sdk} -- preferably the latest.
+All xref:{cert-link}[recent versions] of the {name-sdk} include the Capella cluster's Security Certificate and automatically trust it unless you specify otherwise.
+* That if you are connecting via a proxy that intercepts TLS connections, you have configured the SDK to trust the Security Certificate used by the proxy.
+This is a common issue when connecting from inside a corporate network.
+* That you have enabled TLS by using a connection string starting with `couchbases://` (note the final 's') or an equivalent client setting (like the Java SDK's `security.enableTls` client setting).
 * That the user you are connecting as has been created in Capella and has correct permissions for the bucket you are connecting to.
