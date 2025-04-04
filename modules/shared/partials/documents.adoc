@@ -421,7 +421,7 @@ The _expiry pager_ is a routine internal process which scans the cluster for ite
 
 When gathering resource usage statistics, note that expired-but-not-purged items (such as the expiry pager has not scanned this item yet) will still be considered with respect to the overall storage size and item count.
 
-NOTE: Although the API only sets expiry values _per document_, it is possible that elsewhere in the server, an expiry value is being set for xref:7.1@server:learn:buckets-memory-and-storage/expiration.adoc[every document in a bucket^].
+NOTE: Although the API only sets expiry values _per document_, it is possible that elsewhere in the server, an expiry value is being set for xref:server:learn:buckets-memory-and-storage/expiration.adoc[every document in a bucket^].
 Should this be the case, the document TTL may be reduced, and the document may become unavailable to the app sooner than expected.
 // end::expiration[]
 
