@@ -8,7 +8,7 @@ This release of the SDK is written to version {sdk_api} of the SDK API specifica
 For most developers, just using the latest version will be all that matters, and few will need to look at another of our SDKs.
 Just for those few that do, the table below shows each Couchbase SDK release version that matches the API version (and a table that covers the earliest versions of the 3.x SDK API can be found in documentation for earlier versions of the SDK).
 
-Whilst these two numbers match for the .NET and Ruby SDKs, this is not the case for the others, as version numbers for individual SDKs are bumped up in line with https://semver.org/[Semantic Versioning] -- check the xref:sdk-release-notes[release notes] of each SDK for individual details.
+Whilst these two numbers match for the .NET SDK, this is not the case for the others, as version numbers for individual SDKs are bumped up in line with https://semver.org/[Semantic Versioning] -- check the xref:sdk-release-notes[release notes] of each SDK for individual details.
 
 .SDK API Versions
 [cols="30,23,21,20,20,20"]
