@@ -98,6 +98,11 @@ a| N/A ②
 xref:cxx-sdk:hello-world:overview.adoc[{cpp} SDK].
 
 
+*SDK API 3.7*:  Introduced  support for KV reads from preferred server groups.
+The .NET SDK has been updated to support the latest Transactions specification -- and the library is now incorporated within the .NET SDK.
+A new `getMulti()` interface batch reads with read committed isolation.
+Additionally, the Java SDK now includes a Quarkus extension with GraalVM support.
+
 *SDK API 3.6*: Introduced support for base 64 encoded vector types alongside Server 7.6.2 (and Capella).
 General Availability of our {cpp} SDK --
 now available as a supported, stand-alone SDK, this SDK is also the core of our Node.js, PHP, Python, and Ruby SDKs.
