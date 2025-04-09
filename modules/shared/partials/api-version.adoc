@@ -13,19 +13,19 @@ Whilst these two numbers match for the .NET SDK, this is not the case for the ot
 .SDK API Versions
 [cols="30,23,21,20,20,20"]
 |===
-| | API 3.2 | API 3.3 | API 3.4 | API 3.5 | API 3.6
+| | API 3.3 | API 3.4 | API 3.5 | API 3.6 | API 3.7
 
 | xref:dotnet-sdk:hello-world:overview.adoc[.NET]
-| 3.2
 | 3.3
 | 3.4
 | 3.5
 | 3.6
+| 3.7
 
 | xref:c-sdk:hello-world:overview.adoc[C (libcouchbase)]
-| 3.2
 | 3.3.0 - 3.3.2
 a| 3.3.3 ①
+a| N/A ②
 a| N/A ②
 a| N/A ②
 
@@ -33,70 +33,75 @@ a| N/A ②
 | -
 | -
 | -
-| -
 | 1.0
+| 1.1
 
 | xref:go-sdk:hello-world:overview.adoc[Go]
-| 2.3 & 2.4
 | 2.5
 | 2.6 & 2.7
 | 2.8
 | 2.9
+| 2.10
 
 | xref:java-sdk:hello-world:overview.adoc[Java]
-| 3.2
 | 3.3
 | 3.4 & 3.5
 | 3.6
 | 3.7
+| 3.8
 
 | xref:kotlin-sdk:hello-world:overview.adoc[Kotlin]
-| -
 | 1.0
 | 1.1 & 1.2
 | 1.3
 | 1.4
+| 1.5
 
 | xref:nodejs-sdk:hello-world:overview.adoc[Node.js]
-| 3.2 & 4.0
+| 4.1
+| 4.2
+| 4.3
+| 4.4
+| 4.5
+
+| xref:php-sdk:hello-world:overview.adoc[PHP]
+| 4.0
+| 4.1
+| 4.2
+| 4.2.2
+| 4.3
+
+| xref:python-sdk:hello-world:overview.adoc[Python]
+| 4.0
 | 4.1
 | 4.2
 | 4.3
 | 4.4
 
-| xref:php-sdk:hello-world:overview.adoc[PHP]
-| 3.2
-| 4.0
-| 4.1
-| 4.2
-| 4.2.2
-
-| xref:python-sdk:hello-world:overview.adoc[Python]
-| 3.2
-| 4.0
-| 4.1
-| 4.2
-| 4.3
-
 | xref:ruby-sdk:hello-world:overview.adoc[Ruby]
-| 3.2
 | 3.3
 | 3.4
 | 3.5
 | 3.5.2
+| 3.6
 
 | xref:scala-sdk:hello-world:overview.adoc[Scala]
-| 1.2
 | 1.3
 | 1.4 & 1.5
 | 1.6
 | 1.7
+| 1.8
 |===
 
 <1> Excludes DNS SRV refresh support in Serverless Environments.
 <2> For most purposes better productivity and functionality can be found in our
 xref:cxx-sdk:hello-world:overview.adoc[{cpp} SDK].
 
+
+*SDK API 3.7*:  Introduced  support for KV reads from preferred server groups.
+The .NET SDK has been updated to support the latest Transactions specification -- and the library is now incorporated within the .NET SDK.
+A new `getMulti()` interface batch reads with read committed isolation.
+Additionally, the Java SDK now includes a Quarkus extension with GraalVM support.
 
 *SDK API 3.6*: Introduced support for base 64 encoded vector types alongside Server 7.6.2 (and Capella).
 General Availability of our {cpp} SDK --
