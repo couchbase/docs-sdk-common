@@ -4,7 +4,7 @@
 ====
 SDKs for xref:columnar:intro:intro.adoc[Capella Columnar] --
 Couchbase's analytical database (RT-OLAP) for real time apps and operational intelligence --
-are available for the Java, Node.js, and Python platforms.
+are available for the Go, Java, Node.js, and Python platforms.
 See the xref:home:columnar-sdk.adoc[Capella Columnar SDK pages] for more information.
 ====
 // end::initial-availability[]
