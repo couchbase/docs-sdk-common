@@ -1,0 +1,12 @@
+// tag::signed[]
+=== Verifying Artifacts
+
+Starting with version 3.8.2, Couchbase JVM SDK artifacts are signed with xref:attachment$gpg-keys/181C7A4E908890A2D768365742BDEBD30D10C992.asc[this GPG key].
+
+.Fingerprint
+[source]
+----
+CB SDK Robot <cb-sdk-robot@couchbase.com>
+181C 7A4E 9088 90A2 D768  3657 42BD EBD3 0D10 C992
+----
+// end::signed[]
