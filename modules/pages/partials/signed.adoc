@@ -1,7 +1,7 @@
 // tag::signed[]
 === Verifying Artifacts
 
-Starting with version 3.8.2, Couchbase JVM SDK artifacts are signed with xref:attachment$gpg-keys/181C7A4E908890A2D768365742BDEBD30D10C992.asc[this GPG key].
+Starting with version 3.8.2, Couchbase JVM SDK artifacts are signed with xref:java-sdk:project-docs:attachment$gpg-keys/181C7A4E908890A2D768365742BDEBD30D10C992.asc[this GPG key].
 
 .Fingerprint
 [source]
