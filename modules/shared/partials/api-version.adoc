@@ -110,7 +110,13 @@ xref:cxx-sdk:hello-world:overview.adoc[{cpp} SDK].
 <3> With the Java 3.9 release, the other JVM SDKs hosted in the Java SDK monorepo adopted common release versions.
 This includes a number of other artifacts, as can be seen referenced in the release notes.
 
-*SDK API 3.8*: Introduced alongside Couchbase Server 8.0,
+*SDK API 3.8*: Introduced alongside Couchbase Server 8.0, which adds support for 128 vBuckets on Magma.
+
+
+
+
+
+
 
 *SDK API 3.7*:  Introduced  support for KV reads from preferred server groups.
 The .NET SDK has been updated to support the latest Transactions specification -- and the library is now incorporated within the .NET SDK.
