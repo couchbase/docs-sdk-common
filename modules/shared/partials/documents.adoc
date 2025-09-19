@@ -238,7 +238,7 @@ Many SDKs will limit the _delta_ argument to the value of a _signed_ 64-bit inte
 
 xref:howtos:concurrent-document-mutations.adoc[CAS] values are not used with counter operations since counter operations are atomic.
 The intent of the counter operation is to simply increment the current server-side value of the document.
-If you wish to only increment the document if it is at a certain value, then you may use a normal `upsert` function with CAS:
+If you wish to only increment the document if it is at a certain value, then you may use a normal `replace` function with CAS:
 // end::counters2[]
 
 [source,python]
@@ -246,7 +246,7 @@ If you wish to only increment the document if it is at a certain value, then you
 rv = cb.get('counter_id')
 value, cas = rv.value, rv.cas
 if should_increment_value(value):
-  cb.upsert('counter_id', value + increment_amount, cas=cas)
+  cb.replace('counter_id', value + increment_amount, cas=cas)
 ----
 
 // tag::counters3[]
