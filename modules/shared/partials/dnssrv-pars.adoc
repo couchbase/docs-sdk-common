@@ -55,7 +55,7 @@ Capella gives you DNS-SRV by default --
 these instructions are for self-managed clusters, where you are responsible for your own DNS records. 
 
 
-Your DNS server zone file should be set up like this (one row for each bootstrap node):
+Your DNS server zone file should be set up like this, with one row for each bootstrap (KV, a.k.a. Data Service) node:
 
 ----
 ; Service.Protocol.Domain	TTL	Class	Type	Priority	Weight	 Port	Target
