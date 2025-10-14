@@ -95,6 +95,14 @@ a| N/A ②
 | 3.6
 | 3.7
 
+| xref:rust-sdk:hello-world:overview.adoc[Rust]
+| -
+| -
+| -
+| -
+| -
+| 1.0
+
 | xref:scala-sdk:hello-world:overview.adoc[Scala]
 | 1.3
 | 1.4 & 1.5
