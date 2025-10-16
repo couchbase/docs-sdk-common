@@ -7,11 +7,11 @@
 
 // tag::rbac[]
 Couchbase uses Role Base Access Control (RBAC), and has since Server 5.0 was released.
-For a general overview of Couchbase-Server authorization, see xref:7.1@server:learn:security/authorization-overview.adoc[Authorization].
-For a list of available roles and corresponding privileges, see xref:7.1@server:learn:security/roles.adoc[Roles].
+For a general overview of Couchbase-Server authorization, see xref:{version-server}@server:learn:security/authorization-overview.adoc[Authorization].
+For a list of available roles and corresponding privileges, see xref:{version-server}@server:learn:security/roles.adoc[Roles].
 
 In the SDK docs, many examples will use the full _Administrator_ role for convenience, but this is rarely a good idea on a production machine, so reference the above links to find best practice for the needs of your application.
-RBAC is also implemented by the Community Edition of Couchbase Server, but with fewer roles -- see the xref:7.1@server:learn:security/roles.adoc[Roles overview].
+RBAC is also implemented by the Community Edition of Couchbase Server, but with fewer roles -- see the xref:{version-server}@server:learn:security/roles.adoc[Roles overview].
 // end::rbac[]
 
 
@@ -28,7 +28,7 @@ A client attempting to access Couchbase Server can present a certificate to the 
 If the certificate is valid, the user under whose identity the client is running, and the roles assigned that user, are verified.
 If the assigned roles are appropriate for the level of access requested to the specified resource, access is granted.
 
-For a more detailed conceptual description of using certificates, see xref:7.1@server:learn:security/certificates.adoc[Certificates].
+For a more detailed conceptual description of using certificates, see xref:{version-server}@server:learn:security/certificates.adoc[Certificates].
 
 // end::cert-auth[]
 
