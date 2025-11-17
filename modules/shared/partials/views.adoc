@@ -36,7 +36,7 @@ This view allows landmarks to be queried for by its _"name"_ field.
 // tag::example-geo-travel[]
 A Spatial View can instead be queried with a [.param]`range` or _bounding box_.
 For example, let's imagine we have stored landmarks with coordinates for their home city (eg.
-Paris, Vienna, Berlin and New York) under [.param]`geo`, and each city's coordinates is represented as two attributes, [.param]`lon` and [.param]`lat`.
+Paris, Vienna, Berlin, and New York) under [.param]`geo`, and each city's coordinates is represented as two attributes, [.param]`lon` and [.param]`lat`.
 The following spatial view map function could be used to find landmarks within Europe, as a _"by_location"_ view in a _"spatial"_ design document:
 // end::example-geo-travel[]
 
