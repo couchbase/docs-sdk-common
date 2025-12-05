@@ -2,7 +2,7 @@
 
 
 
-// tag::not-capella
+// tag::not-capella[]
 [TIP]
 .Managing Capella Clusters
 ====
@@ -12,4 +12,4 @@ and is only intended to work with self-managed Couchbase Server clusters.
 Management of your Capella Operational cluster is available away from the Web UI with the
 xref:cloud:management-api-guide:management-api-intro.adoc[Capella Management API].
 ====
-// end::not-capella
+// end::not-capella[]
