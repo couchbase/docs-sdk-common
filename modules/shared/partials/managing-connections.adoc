@@ -1,5 +1,24 @@
 WaitUntilReady()
 
+// tag::bootstrap-completion[]
+
+[TIP]
+.WaitUntilReady()
+====
+For some of the SDKs, such as xref:java-sdk:hello-world:start-using-sdk.adoc#opening-a-bucket[Java],
+you'll see a recommendation to use `waitUntilReady()`,
+which ensures that the bucket resource is fully loaded before proceeding.
+
+Although this is an element of the https://github.com/couchbaselabs/sdk-rfcs/blob/master/rfc/0048-sdk3-bootstrapping.md[SDK bootstrapping RFC],
+it's not required for successful operation of the "wrapper" SDKs (Node.js, PHP, Python, and Ruby -- wrappers over the {cpp} SDK),
+as `Cluster.connect()` blocks until bootstrap is complete and a cluster config is seen. 
+Any bootstrap errors are returned there.
+
+// "There is still value in having wait_until_ready though, because it can be used to ensure all services are in a ready state (similar to ping).”
+====
+// end::bootstrap-completion[]
+
+
 
 == Working in the Cloud
 
