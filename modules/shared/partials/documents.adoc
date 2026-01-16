@@ -382,7 +382,7 @@ Workarounds such as those described above are not required for Couchbase, as it 
 When an application attempts to access a document which has already expired, the server will indicate to the client that the item is not found.
 The server internally handles the process of determining the validity of the document and removing older, expired documents.
 
-== Setting Document Expiration
+=== Setting Document Expiration
 
 By default, Couchbase documents do not expire.
 However, the expiration value may be set for the _upsert_, _replace_, and _insert_ operations when modifying data.
@@ -394,18 +394,13 @@ This method is useful when reading session data from the cluster: since accessin
 * The _touch_ operation allows an application to modify a document’s expiration time without otherwise accessing the document.
 This method is useful when an application is handling a user session but does not need to access the cluster (for example, if a particular  document is already cached locally).
 
-For Couchbase SDKs which accept simple integer expiry values (as opposed to a proper date or time object) allow expiration to be specified in two flavors.
+Code snippets for setting document expiration can be found on the xref:howtos:kv-operations.adoc#document-expiration[data operations page].
+This page also covers the nuances of setting relative or absolute document expiry times --
+all SDKs support duration, but options for setting an absolute timestamp vary by SDK and release version.
 
-. As an offset from the current time.
-. As an absolute Unix time stamp
 
-If the absolute value of the expiry is less than 30 days (`60 * 60 * 24 * 30` seconds), it is considered an _offset_.
-If the value is greater, it is considered an _absolute time stamp_.
-
-It might be preferable for applications to normalize the expiration value, such as by always converting it to an absolute time stamp.
-The conversion is performed to avoid issues when the intended offset is larger than 30 days, in which case it is taken to mean a Unix time stamp and, as a result,  the document will expire automatically as soon as it is stored.
-
-[IMPORTANT,caption=Remember]
+[IMPORTANT]
+.Remember
 ====
 * If you wish to use the expiration feature, then you should supply the expiry value for every mutation operation.
 * When dealing with expiration, it is important to note that _most operations will implicitly remove any existing expiration_.
