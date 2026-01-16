@@ -119,7 +119,7 @@ xref:cxx-sdk:hello-world:overview.adoc[{cpp} SDK].
 This includes a number of other artifacts, as can be seen referenced in the release notes.
 <4> The Rust SDK is currently in Developer Preview.
 
-*SDK API 3.8*: Provides support for JWT based authentication,
+*SDK API 3.9*: Provides support for JWT based authentication,
 as well as mTLS Certs Refresh (without restart).
 Adds Amazon Graviton 3 support.
 Deprecates SDK support for MapReduce Views.
