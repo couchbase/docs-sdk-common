@@ -396,7 +396,7 @@ This method is useful when an application is handling a user session but does no
 
 Code snippets for setting document expiration can be found on the xref:howtos:kv-operations.adoc#document-expiration[data operations page].
 This page also covers the nuances of setting relative or absolute document expiry times --
-all SDKs support duration, but options for setting an absolute date vary by SDK and release version.
+all SDKs support duration, but options for setting an absolute timestamp vary by SDK and release version.
 
 
 [IMPORTANT]
