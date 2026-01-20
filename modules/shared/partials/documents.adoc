@@ -23,7 +23,7 @@ The document also has a value which contains the actual application data.
 A valid document ID must:
 
 * Conform to UTF-8 encoding
-* Be no longer than 250 bytes
+* Be no longer than 246 bytes
 +
 NOTE: There is a difference between bytes and characters: most non-Latin characters occupy more than a single byte.
 
