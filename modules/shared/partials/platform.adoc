@@ -1,0 +1,13 @@
+= Platform Compatibility
+
+// tag::virtual[]
+==== Platforms, Chipsets, and Virtual Environments
+
+Couchbase Server can be expected to run on modern ARM chips (such as AWS Graviton) and virtualised platforms (such as Microsoft Hyper-V). 
+Nevertheless, there are so many products available that not all can be tested --
+as such, we do not call out specific support for any particular product.
+Please contact our support organisation if you run into any issues.
+
+As always, running the very latest version of the SDKs will pick up any fixes already made to platform support
+(see the xref:project-docs:sdk-release-notes.adoc[Release Notes]).
+// end::virtual[]
