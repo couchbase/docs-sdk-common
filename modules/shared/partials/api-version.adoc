@@ -100,7 +100,7 @@ a| N/A ②
 | -
 | -
 | -
-| 1.0 DP ④
+| -
 | 1.0 DP ④
 
 | xref:scala-sdk:hello-world:overview.adoc[Scala]
