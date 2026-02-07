@@ -59,7 +59,7 @@ IMPORTANT: Durable Writes must not be made with three replicas.
 Attempting this will result in an error message: `DURABILITY_IMPOSSIBLE`.
 
 While Durable Writes are being attempted, another client cannot write to the document concerned
--- see the diagram and explanation xref:7.1@server:learn:data/durability.adoc#process-and-communication[in the Server Durability docs].
+-- see the diagram and explanation xref:{version-server}@server:learn:data/durability.adoc#process-and-communication[in the Server Durability docs].
 
 
 
@@ -76,7 +76,7 @@ Durable Writes do a great deal to mitigate against network problems, but working
 Consider carefully the case where the client has sent the operation to the server, the server has sent the mutation on to the replica(s), and the replicas have acknowledged completion of their operation(s). Now, at the point where the server is sending the successful status to the client, the network drops. The client is in an ambiguous state, not knowing whether or not the operation was successful.
 
 In cases where the operation is idempotent (such as an upsert operation), then simply retrying is a perfectly acceptable strategy, where the cost of doing so is justified by the importance of the operation.
-Where the operation is an array append, or somesuch, then xref:7.1@server:learn:data/transactions.adoc[distributed, multi-document ACID transactions] should be considered.
+Where the operation is an array append, or somesuch, then xref:{version-server}@server:learn:data/transactions.adoc[distributed, multi-document ACID transactions] should be considered.
 
 // end::syncrep3[]
 
@@ -128,7 +128,7 @@ Durability operations may also cause increased network traffic since it is imple
 // tag::txns[]
 == Transactions
 
-Couchbase introduced xref:7.1@server:learn:data/transactions.adoc[distributed, multi-document ACID Transactions], with Couchbase Data Platform 6.5.
+Couchbase introduced xref:{version-server}@server:learn:data/transactions.adoc[distributed, multi-document ACID Transactions], with Couchbase Data Platform 6.5.
 Read more on the concepts and commitment level, and take a look at the implementation:
 
 * xref:server:learn:data/transactions.adoc[An introductory guide to how Couchbase ACID Transactions work].
