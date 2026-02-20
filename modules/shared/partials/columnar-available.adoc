@@ -1,3 +1,4 @@
+
 // tag::initial-availability[]
 This page covers using our operational {name-sdk} to connect to the Analytics Service of a Capella Operational or self-managed Couchbase Server cluster.
 As well as this row-based analytics service, a speedy, column-based analytics database is available for real-time analytics.
@@ -16,3 +17,19 @@ Capella Analytics SDKs (also known as Columnar SDKs) are available for the Go, J
 See the xref:home::columnar-sdk.adoc[Capella Analytics SDK pages] for more information.
 ====
 // end::initial-availability[]
+
+// tag::initial-availability-o[]
+[TIP]
+.Analytics SDKs
+====
+SDKs for xref:enterprise-analytics:intro:intro.adoc[Enterprise Analytics] --
+Couchbase's analytical database for real time apps and operational intelligence (RT-OLAP) --
+are available for the .NET, Go, Java, Node.js, and Python platforms.
+See the xref:home::analytics-sdk.adoc[Enterprise Analytics SDK pages] for more information.
+
+Currently, different SDKs are needed to connect to xref:analytics:intro:intro.adoc[Capella Analytics] --
+as this service does not have Enterprise Analytics' load balancer, and uses a different connection protocol.
+Capella Analytics SDKs (also known as Columnar SDKs) are available for the Go, Java, Node.js, and Python platforms.
+See the xref:home::columnar-sdk.adoc[Capella Analytics SDK pages] for more information.
+====
+// end::initial-availability-o[]
