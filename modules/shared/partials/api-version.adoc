@@ -101,7 +101,7 @@ a| N/A ②
 | -
 | -
 | -
-| 1.0 DP ④
+| 1.0
 
 | xref:scala-sdk:hello-world:overview.adoc[Scala]
 | 1.4 & 1.5
@@ -117,7 +117,7 @@ a| N/A ②
 xref:cxx-sdk:hello-world:overview.adoc[{cpp} SDK].
 <3> With the Java 3.9 release, the other JVM SDKs hosted in the Java SDK monorepo adopted common release versions.
 This includes a number of other artifacts, as can be seen referenced in the release notes.
-<4> The Rust SDK is currently in Developer Preview.
+// <4> The Rust SDK is currently in Developer Preview.
 
 *SDK API 3.9*: Provides support for JWT based authentication,
 as well as mTLS Certs Refresh (without restart).
