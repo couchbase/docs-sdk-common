@@ -1,0 +1,15 @@
+= Deployment
+
+
+
+// tag::load-balancer[]
+[TIP]
+.No Load Balancer Required
+====
+Your Couchbase cluster will take care of balancing the load and distribution of data between nodes,
+in tandem with the SDK's use of the cluster map.
+A load balancer would negatively affect this work -- 
+so the use of a load balancer between your app server, where you're running the SDK and client code, and your Couchbase operational cluster, 
+is strongly discouraged.
+====
+// tag::load-balancer[]
