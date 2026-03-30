@@ -12,4 +12,4 @@ A load balancer would negatively affect this work --
 so the use of a load balancer between your app server, where you're running the SDK and client code, and your Couchbase operational cluster, 
 is strongly discouraged.
 ====
-// tag::load-balancer[]
+// end::load-balancer[]
