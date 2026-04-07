@@ -28,7 +28,7 @@ As well as further discussion below, refer to the the howto guide for specific i
 Tracing provides granular timing information down the individual phases of a request/operation. 
 For a simple overview, consider the following output for an individual request -- which is logged from the default tracer that ships with the SDK, and is enabled by default: 
 
-[source,java]
+[source,json]
 ----
 {
   "total_duration_us": 1200,
@@ -82,7 +82,7 @@ Here is an example:
 ----
 
 The JSON above shows the maximum latency as well as lower percentiles for individual operations. 
-Note that they are aggregated across all nodes and include potential retries, so this really shows end-to-end latency from a users/SDK perspective.
+Note that they are aggregated across all nodes and include potential retries, so this really shows end-to-end latency from a user or SDK perspective.
 
 
 == OpenTelemetry Integration
@@ -90,7 +90,8 @@ Note that they are aggregated across all nodes and include potential retries, so
 In addition to the built-in turnkey logging solutions for both tracing and metrics -- depending on platform availability -- we are providing support for OpenTelemetry and other platform-specific integrations. 
 This allows tight integration into your monitoring infrastructure, making monitoring and troubleshooting performance even more efficient.
 
-The howto section provides more information on the platform specifics, and general information about OpenTelemetry can be found on the https://opentelemetry.io/ website.
+The xref:howtos:observability-tracing.adoc#opentelemetry-integration[OTel howto section] provides more information on the platform specifics,
+and general information about OpenTelemetry can be found on the https://opentelemetry.io/ website.
 // end::xplatform[]
 
 == Additional Information
