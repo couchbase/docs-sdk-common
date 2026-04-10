@@ -40,9 +40,9 @@ See also _Transactions_, below.
 Events include changes made to specified items, and the arrival of scheduled points-in-time.
 There is limited interaction with the Eventing Service from the SDK.
 * xref:concept-docs:encryption.adoc[Field Level Encryption (FLE)] -- encryption of the field or _value_ in a key-value pair, using a FIPS-140-2 compliant cryptography algorithm.
-* xref:howtos:full-text-searching-with-sdk.adoc[Full Text Search (FTS)] --
-Create, manage, and query full-text indexes on JSON documents stored in Couchbase buckets.
-FTS uses natural language processing for indexing and querying documents, provides relevance scoring on the results of your queries, and has fast indexes for querying a wide range of possible text searches.
+* xref:howtos:full-text-searching-with-sdk.adoc[The Search Service] --
+Create, manage, and query search indexes on JSON documents stored in Couchbase buckets.
+The Search Service uses natural language processing for indexing and querying documents, provides relevance scoring on the results of your queries, and has fast indexes for querying a wide range of possible text searches.
 Some of the supported query-types include simple queries like Match and Term queries; range queries like Date Range and Numeric Range; and compound queries for conjunctions, disjunctions, and/or boolean queries.
 Also integrates with Vector Search indexes.
 * xref:{server_version}@server:learn:services-and-indexes/indexes/global-secondary-indexes.adoc[Global Secondary Indexes (GSI)] --
