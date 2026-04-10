@@ -6,4 +6,5 @@ sources:
   docs-devex:
     branches: release/8.0
 override:
-  startPage: java-sdk:hello-world:overview.adoc
+  site:
+    startPage: java-sdk:hello-world:overview.adoc
