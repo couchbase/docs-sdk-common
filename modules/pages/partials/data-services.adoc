@@ -4,7 +4,7 @@
 // ,data-services.adoc
 
 [abstract]
-Data in the Couchbase Data Platform can be accessed through Key Value (KV) Operations (including the Sub-Document API), the Analytics Service, the Query Service, Full Text Search, or even MapReduce Views:
+Data in the Couchbase Data Platform can be accessed through Key Value (KV) Operations (including the Sub-Document API), the Analytics Service, the Query Service, the Search Service, or even MapReduce Views:
 how do you pick the right service for your application?
 
 Couchbase Data Platform features several services to enable efficient information retrieval at a speed and scale to suit every use case.
@@ -18,7 +18,7 @@ You can follow the links below for more information on the services with the Cou
 * xref:howtos:subdocument-operations.adoc[Sub-Document API]
 * xref:concept-docs:analytics-for-sdk-users.adoc[Couchbase Analytics Service (CBAS)]
 * xref:concept-docs:n1ql-query.adoc[Query Service]
-* xref:concept-docs:full-text-search-overview.adoc[Full Text Search]
+* xref:concept-docs:full-text-search-overview.adoc[Search Service]
 * xref:concept-docs:understanding-views.adoc[MapReduce Views]
 * xref:7.1@server:connectors:intro.adoc[Connectors]
 
@@ -26,7 +26,7 @@ You can follow the links below for more information on the services with the Cou
 == Use Cases
 It’s an understandable temptation to reach for the familiar, and Couchbase’s SQL-like {sqlpp} (formerly N1QL) makes the Query service an easy starting point for many, but it’s important to take time to match your use case to the best tool for the job.
 
-=== Known documents
+=== Known Documents
 When you already know the _Key_ (ID) of the document, then _KV Operations_ is by far the simplest way to retrieve or mutate it.
 The binary protocol used is far quicker than streaming JSON.
 
@@ -72,16 +72,16 @@ For queries over a larger number of documents, CBAS would be the best tool here,
 otherwise, for high throughput, simple queries, pick our Query Service.
 
 
-=== Fuzzy searches
+=== Fuzzy Searches
 
-Use the Full Text Search (FTS) service when you want to take advantage of natural-language querying.
-For phrase matching, over free-form text, or matching over word stems, FTS is a powerful solution.
+Use the Search Service when you want to take advantage of natural-language querying.
+For phrase matching, over free-form text, or matching over word stems, the Search Service is a powerful solution.
 
-There are more concepts to learn, as FTS offers a very flexible service.
-In particular, care should be taken over building indexes, to stop them becoming unnecessarily large -- see our xref:7.1@server:fts:full-text-intro.adoc[FTS documentation].
+There are more concepts to learn, as the Search Service offers a very flexible service.
+In particular, care should be taken over building indexes, to stop them becoming unnecessarily large -- see our xref:7.1@server:fts:full-text-intro.adoc[The Search Service Documentation].
 Once again, the SDK abstracts away much of the complexity from deeply nested queries, and the interface is similar to our Query Service.
 
-From Couchbase Server 6.5, xref:7.1@server:n1ql:n1ql-language-reference/searchfun.adoc[Search Functions] allow the use of FTS _within_ {sqlpp} queries.
+From Couchbase Server 6.5, xref:7.1@server:n1ql:n1ql-language-reference/searchfun.adoc[Search Functions] allow the use of the Search Service _within_ {sqlpp} queries.
 
 
 === Querying
@@ -101,7 +101,7 @@ However, it is exposed through use of our xref:2.4@spark-connector::index.adoc[S
 
 ////
 === Repeating Expensive Searches
-Whether Query, Views, or FTS, expensive search results can easily be cached with (some?) SDKs.
+Whether Query, Views, or the Search Service, expensive search results can easily be cached with (some?) SDKs.
 This is something we have link:https://blog.couchbase.com/caching-queries-couchbase-high-performance/[featured on our blog in the past].
 
 We could do with a new DA blog post to point to here, perhaps?

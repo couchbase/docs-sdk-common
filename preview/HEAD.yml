@@ -1,0 +1,10 @@
+sources:
+  docs-sdk-java:
+    branches: release/3.11
+  docs-server:
+    branches: release/8.0
+  docs-devex:
+    branches: release/8.0
+override:
+  site:
+    startPage: java-sdk:hello-world:overview.adoc

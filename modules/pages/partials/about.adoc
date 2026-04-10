@@ -89,7 +89,7 @@ But don't be so quick to jump straight to {sqlpp} -- assess your use case carefu
 
 In addition to xref:howtos:n1ql-queries-with-sdk.adoc[{sqlpp} queries], 
 and longer running xref:howtos:analytics-using-sdk.adoc[analytics queries] (OLAP) queries, 
-and a xref:howtos:full-text-searching-with-sdk.adoc[Search Service]
+and the xref:howtos:full-text-searching-with-sdk.adoc[Search Service]
 (which includes xref:howtos:vector-searching-with-sdk.adoc[Vector Search]), 
 you can quickly access data where you know keys or xref:howtos:kv-range-scan.adoc[key ranges], 
 and this can be substantially quicker, thanks to the Data Service's speedy binary protocol.

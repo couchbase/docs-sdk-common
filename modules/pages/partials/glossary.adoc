@@ -40,11 +40,6 @@ See also _Transactions_, below.
 Events include changes made to specified items, and the arrival of scheduled points-in-time.
 There is limited interaction with the Eventing Service from the SDK.
 * xref:concept-docs:encryption.adoc[Field Level Encryption (FLE)] -- encryption of the field or _value_ in a key-value pair, using a FIPS-140-2 compliant cryptography algorithm.
-* xref:howtos:full-text-searching-with-sdk.adoc[Full Text Search (FTS)] --
-Create, manage, and query full-text indexes on JSON documents stored in Couchbase buckets.
-FTS uses natural language processing for indexing and querying documents, provides relevance scoring on the results of your queries, and has fast indexes for querying a wide range of possible text searches.
-Some of the supported query-types include simple queries like Match and Term queries; range queries like Date Range and Numeric Range; and compound queries for conjunctions, disjunctions, and/or boolean queries.
-Also integrates with Vector Search indexes.
 * xref:{server_version}@server:learn:services-and-indexes/indexes/global-secondary-indexes.adoc[Global Secondary Indexes (GSI)] --
 A Global Secondary Index (GSI) supports queries made by the Query Service on attributes within documents.
 Secondary indexes -- which contain a filtered or a full set of keys in a given bucket -- are optional, but increase query efficiency on a bucket.
@@ -72,6 +67,11 @@ The 3.x API allows some user management programmatically from the SDK.
 * xref:concept-docs:collections.adoc[Scope] -- from Server 7.0, _Collections_ allow groupings of documents beneath the Bucket level, and _Scopes_ group together Collections.
 Collections might be assigned to different scopes according to content-type, or to deployment-phase (e.g., test and production).
 Applications can be assigned per-scope access rights, allowing each application to access only those collections it requires.
+* xref:howtos:full-text-searching-with-sdk.adoc[The Search Service] --
+Create, manage, and query search indexes on JSON documents stored in Couchbase buckets.
+The Search Service uses natural language processing for indexing and querying documents, provides relevance scoring on the results of your queries, and has fast indexes for querying a wide range of possible text searches.
+Some of the supported query-types include simple queries like Match and Term queries; range queries like Date Range and Numeric Range; and compound queries for conjunctions, disjunctions, and/or boolean queries.
+Also integrates with Vector Search indexes.
 * xref:concept-docs:n1ql-query.adoc[{sqlpp}] -- Couchbase’s powerful SQL-like language (formerly N1QL) allows queries in a format familiar to Database Administrators.
 These can be made against our Query Service, for transaction (OLTP) queries,
 or against our analytics (OLAP) services -- CBAS or, for _real-time_ analytics, Capella Columnar.
