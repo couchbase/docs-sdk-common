@@ -446,7 +446,7 @@ You get to decide what it means to "belong".
 Developers usually put documents of the same type in the same collection.
 
 For example, imagine you have two types of documents: customers and invoices. 
-You could put the customer documents in a collection called customers`, and the invoice documents in a collection called `invoices`.
+You could put the customer documents in a collection called `customers`, and the invoice documents in a collection called `invoices`.
 
 Each document belongs to exactly one collection. 
 A document’s ID is unique _within_ the collection.
