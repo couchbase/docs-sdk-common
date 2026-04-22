@@ -19,10 +19,10 @@ For maintainability, each adoc page in each SDK's docs repo to carry a form of t
 // https://docs.couchbase.com/scala-sdk/1.6/hello-world/start-using-sdk.html
 
 
-// tag::intro[]
 [abstract]
 {description}
 
+// tag::intro[]
 Couchbase has a simple interface for creating and modifying records in a document, 
 based upon the *collection* into which the documents are organized.
 You can read more about data modeling <<data-modeling,below>>, 
@@ -45,9 +45,20 @@ collection.upsert(docId, json) match {
 // tag::intro-upsert[]
 `upsert` inserts (creates) the document if it does not exist, or replaces it if it does.
 We'll explore creating and retrieving data records in more detail <<create-read-update-delete,below>>
-(and touch lightly upon a little of Scala's functional programming approach as we go), 
+// (and touch lightly upon a little of Scala's functional programming approach as we go), 
 after walking through a quick installation.
 // end::intro-upsert[]
+
+
+
+// TIP - for those SDKs with all of the tutorials:
+
+// tag::other-tutorials[]
+TIP: This page walks you through a quick installation, and CRUD examples against the Data Service.
+Elsewhere in this section you can find a fully worked-through xref:hello-world:sample-application.adoc[] and,
+for those new to document (NoSQL) databases, our xref:hello-world:student-record-developer-tutorial.adoc[Student Record Tutorial].
+// end::other-tutorials[]
+
 
 
 == Before You Start
@@ -202,19 +213,21 @@ check out the xref:project-docs:third-party-integrations.adoc[] page.
 
 === Grab the Code
 
+// tag::complete-code[]
 If you're all set up and in a real hurry, just grab this code sample and add in your Capella details.
 
 .Complete Hello World code sample [*Click to open or collapse the listing*]
 [%collapsible]
 ====
 ....
-include::devguide:example$scala/Cloud.scala[]
+{complete-code-include}
 ....
 ====
 
 Otherwise, read on as we introduce the CRUD API and connection to Capella or self-managed Couchbase Server.
 
 TIP: There's a *View* link to the complete sample code on GitHub above each of the snippets on the page, and a *Copy* icon to grab just the snippet shown.
+// end::complete-code[]
 
 
 == Connect to your Database
@@ -268,11 +281,14 @@ Read more on the xref:howtos:managing-connections.adoc#cloud-native-gateway[Conn
 NOTE: `Cluster.connect` returns a `Try[Cluster]`, as the Scala client uses functional error handling and does not throw exceptions.
 You'll see examples later of how to better handle a `Try`, but for simplicity here we'll assume the operation succeeded and get the result as a `Cluster` using `.get`.
 
+// tag::deeper-conn[]
 For a deeper look at connection options, read xref:howtos:managing-connections.adoc[].
 
 TIP: The connection code for getting started uses the Administrator password that you were given during set up.
 In any production app you should create a role restricted to the permissions needed for your app -- 
 more on this in xref:concept-docs:best-practices.adoc#roles-and-rbac[the Security documentation].
+// end::deeper-conn[]
+
 
 === Opening a Bucket
 
@@ -308,13 +324,17 @@ include::devguide:example$scala/Cloud.scala[tag=collection,indent=0]
 
 == Create, Read, Update, Delete
 
+
+// tag::crud[]
 Couchbase documents are organized into buckets, scopes, and collections.
 https://en.wikipedia.org/wiki/CRUD[CRUD operations^] -- Create, Read, Update, Delete -- can be performed upon documents in a collection.
+// end::crud[]
+
 
 === JSON
 
 We'll create a snippet of JSON to work with, using the client's own JSON library,
-but you can read about the Scala SDK's support for other JSON libraries on the
+but you can read about the {name-sdk}'s support for other JSON libraries on the
 xref:howtos:json.adoc[] page.
 
 [source,scala]
@@ -419,8 +439,9 @@ include::devguide:example$scala/KvOperations.scala[indent=0,tag=remove]
 
 == Data Modeling
 
+// tag::data-model[]
 Documents are organized into collections -- collections of documents that belong together.
-You get to decide what it means to "belong." 
+You get to decide what it means to "belong".
 Developers usually put documents of the same type in the same collection.
 
 For example, imagine you have two types of documents: customers and invoices. 
@@ -437,7 +458,32 @@ A collection’s name is unique within the scope.
 
 
 More details can be found on the xref:concept-docs.data-model.adoc[Data Model page].
-// The xref:student-record-developer-tutorial.adoc[Student Records Tutorial] gives an introduction to data modeling in a document database alongside using the {name-sdk}.
+The xref:student-record-developer-tutorial.adoc[Student Records Tutorial] gives an introduction to data modeling in a document database alongside using the {name-sdk}.
+// end::data-model[]
+
+
+
+// tag::data-model-1[]
+Documents are organized into collections -- collections of documents that belong together.
+You get to decide what it means to "belong".
+Developers usually put documents of the same type in the same collection.
+
+For example, imagine you have two types of documents: customers and invoices. 
+You could put the customer documents in a collection called customers`, and the invoice documents in a collection called `invoices`.
+
+Each document belongs to exactly one collection. 
+A document’s ID is unique _within_ the collection.
+
+Different scopes can hold collections with different names. 
+There is no relationship between collections in different scopes.
+
+Each collection belongs to just one scope. 
+A collection’s name is unique within the scope.
+
+
+More details can be found on the xref:concept-docs.data-model.adoc[Data Model page].
+// end::data-model-1[]
+
 
 
 == What Next?
@@ -450,6 +496,7 @@ both
 
 
 
+// tag::what-next[]
 === Help and Troubleshooting
 
 * xref:howtos:troubleshooting-cloud-connections.adoc[Troubleshooting common network problems].
@@ -460,10 +507,11 @@ both
 
 === Next Steps
 
-// * Take a look at the xref:hello-world:sample-application.adoc[].
+* Take a look at the xref:hello-world:sample-application.adoc[].
 * xref:concept-docs:data-durability-acid-transactions.adoc[Learn more about the Data Service].
-* xref:concept-docs:querying-your-data.adoc[Discover SQL++] -- our SQL-family querying language.
-* Explore some of the xref:project-docs:third-party-integrations.adoc[third party integrations] with Couchbase and the {name_platform} SDK, across the {name_platform} ecosystem.
+* xref:concept-docs:querying-your-data.adoc[Discover {sqlpp}] -- our SQL-family querying language.
+* Explore some of the xref:project-docs:third-party-integrations.adoc[third party integrations] with Couchbase and the {name-sdk}, across the {name_platform} ecosystem.
+// end::what-next[]
 
 
 ////
