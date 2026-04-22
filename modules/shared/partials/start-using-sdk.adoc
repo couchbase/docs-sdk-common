@@ -219,9 +219,10 @@ If you're all set up and in a real hurry, just grab this code sample and add in 
 .Complete Hello World code sample [*Click to open or collapse the listing*]
 [%collapsible]
 ====
-....
+[source,{lang-code},subs="+attributes"]
+----
 {complete-code-include}
-....
+----
 ====
 
 Otherwise, read on as we introduce the CRUD API and connection to Capella or self-managed Couchbase Server.
