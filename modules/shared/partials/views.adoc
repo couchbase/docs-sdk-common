@@ -64,3 +64,20 @@ Note, if you are provisioning Views on Couchbase Server for a legacy application
 xref:{server_version}@server:learn:buckets-memory-and-storage/storage-engines.adoc#couchstore[couchstore] bucket_.
 ====
 // end::deprecate2[]
+
+
+
+// tag::deprecate-sdk[]
+[CAUTION]
+.Views 	Service Deprecation
+====
+MapReduce Views has been deprecated since Couchbase Server 7.0, and is deprecated in the current {name-sdk}.
+Use the {sqlpp} Query Service, which benefits from xref:{version-server}@server:learn:services-and-indexes/services/services.adoc#services-and-multi-dimensional-scaling[Multi-Dimensional Scaling].
+
+The guide below is for those migrating a Views application from the previous major release of the SDK (2.x API).
+However, the best advice is to migrate the app directly to the Query Service.
+
+If you are provisioning Views on Couchbase Server for a legacy application, _they must run on a 
+xref:{version-server}@server:learn:buckets-memory-and-storage/storage-engines.adoc#couchstore[couchstore] bucket_.
+====
+// end::deprecate-sdk[]
