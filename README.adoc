@@ -57,13 +57,13 @@ Instead, they need to be included into pages in the language-specific SDKs.
 
 ==== Usage
 
-One example is the "`Sample Application`" page, located in this repository at [.path]_modules/pages/partials/sample-application.adoc_.
+One example is the "`Sample Application`" page, located in this repository at [.path]_modules/pages/partials/license.adoc_.
 To promote this common page to a concrete page in one of the language-specific SDKs, create the following file in that SDK and populate it with a single include directive, as follows:
 
 .modules/ROOT/pages/sample-application.adoc
 [source,asciidoc]
 ----
-\include::7.6@sdk:pages:partial$sample-application.adoc[]
+\include::3.10@sdk:pages:partial$license.adoc[]
 ----
 
 The include directive effectively imports the common page into a page in the language-specific SDK documentation.
@@ -73,6 +73,8 @@ Every common page must have a corresponding master page in every language-specif
 
 All page references in the common page are assumed to be relative to the module in which the page is included (i.e., relative to the master page).
 Thus, the reference `+xref:n1ql-query.adoc[Querying with SQL++]+` refers to the [.path]_n1ql-query.adoc_ page in the same module as [.path]_sample-application.adoc_ master page in the language-specific SDK.
+
+*TODO* Update above to a relevant, current example.
 
 References to all other locations, such as to server, must provide the necessary context (component, version, module, etc).
 
@@ -132,6 +134,8 @@ TIP: See xref:7.1@server:understanding-couchbase:views/views-intro.adoc[Views].
 
 All the lines between `tag::views-intro[]` and `end::views-intro[]` get imported into the page.
 
+*TODO* Update above to a relevant, current example.
+
 ==== Page References
 
 Like the common pages, all page references in shared partials are assumed to be relative to the module in which the partial is included.
@@ -148,7 +152,11 @@ Unfortunately, that means that the references in the share partials to the serve
 See xref:7.1@server:understanding-couchbase:views/views-intro.adoc[Views].
 ----
 
-TODO refresh this section, as we've worked around it with each SDK's attributes in respective `antora.yml` files.
+*TODO* Update above to a relevant, current example.
+
+// TODO refresh this section, as we've worked around it with each SDK's attributes in respective `antora.yml` files.
+// Is this now done enough?
+
 
 ==== Image References
 
