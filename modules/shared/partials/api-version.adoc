@@ -121,7 +121,8 @@ This includes a number of other artifacts, as can be seen referenced in the rele
 
 *SDK API 3.9*: Provides support for JWT based authentication,
 as well as mTLS Certs Refresh (without restart).
-Adds Amazon Graviton 3 support.
+// Adds Amazon Graviton 3 to the testing framework.
+// Adds Amazon Graviton 3 support.
 Deprecates SDK support for MapReduce Views.
 
 *SDK API 3.8*: Introduced alongside Couchbase Server 8.0, which adds support for 128 vBuckets on Magma.
