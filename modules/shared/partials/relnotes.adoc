@@ -1,0 +1,50 @@
+= SDK Release Notes
+:description: Release notes, installation instructions, and download archive for the Couchbase {name_platform} Client.
+:navtitle: Release Notes
+:page-toclevels: 2
+:page-partial:
+// :page-aliases: relnotes-java-sdk.adoc,ROOT:sdk-release-notes.adoc,ROOT:relnotes-java-sdk.adoc,ROOT:release-notes.adoc,ROOT:download-links.adoc,server:sdks:java-2.2/download-links.adoc
+
+[abstract]
+{description}
+
+
+// tag::intro[]
+These pages cover the {sdk_dot_major} versions of the Couchbase {name_platform} SDK. 
+For release notes, download links, and installation methods for {archive_version} and earlier releases of the Couchbase {name_platform} Client, please see the https://docs-archive.couchbase.com/{name_platform_lc}-sdk/{archive_version}/sdk-release-notes.html[{archive_major} {name_platform} Release Notes & Download Archive].
+// end::intro[]
+
+
+
+// tag::intro-no-archive[]
+These pages cover the {sdk_dot_major} versions of the Couchbase {name_platform} SDK. 
+// end::intro-no-archive[]
+
+
+
+=== Installation
+
+// tag::installation[]
+See the xref:project-docs:sdk-full-installation.adoc[Full Installation] guide for details.
+// end::installation[]
+
+// tag::installation-moved[]
+The full installation instructions that were previously on this page can now be found xref:project-docs:sdk-full-installation.adoc[here].
+// end::installation-moved[]
+
+
+=== API Documentation
+
+The most current and up to date API Documentation is always available through the https://pkg.go.dev/github.com/couchbase/gocb/v2[godoc website].
+
+
+// jvm signed
+include::{version-common}@sdk:pages:partial$signed.adoc[tag=signed]
+
+
+
+== Older Releases
+
+// tag::older[]
+Although https://www.couchbase.com/support-policy/EOL/[no longer supported], documentation for older releases continues to be available in our https://docs-archive.couchbase.com/home/index.html[docs archive].
+// end::older[]
