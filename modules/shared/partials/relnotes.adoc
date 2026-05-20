@@ -12,12 +12,18 @@
 // tag::intro[]
 These pages cover the {sdk_dot_major} versions of the Couchbase {name_platform} SDK. 
 For release notes, download links, and installation methods for {archive_version} and earlier releases of the Couchbase {name_platform} Client, please see the https://docs-archive.couchbase.com/{name_platform_lc}-sdk/{archive_version}/sdk-release-notes.html[{archive_major} {name_platform} Release Notes & Download Archive].
+
+Version {sdk_dot_minor} of the {name_platform} SDK implements the {sdk_api} xref:compatibility.adoc#api-version[SDK API].
+See the xref:compatibility.adoc#couchbase-feature-availability-matrix[compatibility pages] for more information on feature compatibility with different versions of Couchbase Server.
 // end::intro[]
 
 
 
 // tag::intro-no-archive[]
 These pages cover the {sdk_dot_major} versions of the Couchbase {name_platform} SDK. 
+
+Version {sdk_dot_minor} of the {name_platform} SDK implements the {sdk_api} xref:compatibility.adoc#api-version[SDK API].
+See the xref:compatibility.adoc#couchbase-feature-availability-matrix[compatibility pages] for more information on feature compatibility with different versions of Couchbase Server.
 // end::intro-no-archive[]
 
 
