@@ -31,6 +31,8 @@ More advanced transcoding needs can be accomplished if the application implement
 Database Change Protocol (DCP) is the protocol used to stream bucket-level mutations.
 DCP is used for high-speed replication of mutations; to maintain replica vBuckets, incremental MapReduce and spatial views, Global Secondary Indexes (GSIs), XDCR, backups, and external connections.
 This feed is not directly available, and users should look at xref:concept-docs:data-services.adoc#lowest-latency[other low latency alternatives].
+* xref:howtos:health-check.adoc[Diagnostics] -- A diagnostics report just returns whatever current state the client is in.
+This makes it much cheaper than `ping` to call on a regular basis, but does not provide any live insight into network slowness.
 * xref:concept-docs:durability-replication-failure-considerations.adoc[Durability] -- Couchbase Server 6.0 and earlier, with 2.x API versions of the SDK, used Observe style durability; this is still available in most versions of SDK 3.x for working with earlier Server releases.
 All current, supported versions of Couchbase Server offer Server-side xref:{server_version}@server:learn:data/durability.adoc[Durable Writes].
 See also _Transactions_, below.
@@ -40,16 +42,13 @@ See also _Transactions_, below.
 Events include changes made to specified items, and the arrival of scheduled points-in-time.
 There is limited interaction with the Eventing Service from the SDK.
 * xref:concept-docs:encryption.adoc[Field Level Encryption (FLE)] -- encryption of the field or _value_ in a key-value pair, using a FIPS-140-2 compliant cryptography algorithm.
-* xref:howtos:full-text-searching-with-sdk.adoc[Full Text Search (FTS)] --
-Create, manage, and query full-text indexes on JSON documents stored in Couchbase buckets.
-FTS uses natural language processing for indexing and querying documents, provides relevance scoring on the results of your queries, and has fast indexes for querying a wide range of possible text searches.
-Some of the supported query-types include simple queries like Match and Term queries; range queries like Date Range and Numeric Range; and compound queries for conjunctions, disjunctions, and/or boolean queries.
-Also integrates with Vector Search indexes.
 * xref:{server_version}@server:learn:services-and-indexes/indexes/global-secondary-indexes.adoc[Global Secondary Indexes (GSI)] --
 A Global Secondary Index (GSI) supports queries made by the Query Service on attributes within documents.
 Secondary indexes -- which contain a filtered or a full set of keys in a given bucket -- are optional, but increase query efficiency on a bucket.
 GSIs can be created xref:concept-docs:n1ql-query.adoc#indexes[through the SDK], using the {sqlpp} (formerly N1QL) `CREATE INDEX` statement.
 See also xref:{server_version}@server:learn:services-and-indexes/indexes/storage-modes.adoc#memory-optimized-index-storage[Memory-Optimized Index Storage] (MOI).
+* xref:howtos:health-check.adoc[Health Check] -- Health Check provides `ping` and `diagnostics` tests for the health of the network and the cluster.
+See under `ping` and `diagnostics` for more information.
 * JSON & non-JSON -- Couchbase Services work with JSON documents (see https://tools.ietf.org/html/rfc8259[rfc8259^]),
 but non-JSON storage is supported,  including UTF-8 strings, raw sequences of bytes, and language specific serializations --   see the xref:concept-docs:nonjson.adoc[Binary Storage Documentation].
 Non-JSON formats may be more efficient in terms of memory and processing power (for example, if storing only flat strings, JSON adds an additional syntactical overhead of two bytes per string).
@@ -64,14 +63,25 @@ MapReduce Views uses distributed Map-Reduce for very fast aggregation operations
 However, Views are deprecated in the latest versions of Couchbase Server, and will eventually be removed.
 Continuing improvements to our Query Service makes the latter usually a better choice, particularly as Views does not scale as well as the other services, lacking a global Index node.
 * N1QL -- see _{sqlpp}_, below.
-// Observability
-* xref:howtos:n1ql-queries-with-sdk.adoc[Query] -- The Couchbase Query Service uses a SQL-like language for powerful queries across documents.
+* xref:concept-docs:response-time-observability.adoc[Observability] -- Various capabilities within the SDK provide more insight into their inner workings to help debug performance problems (such as latency spikes or reduced throughput) in production.
+These cover Request Tracing, Observability Metrics, and Orphaned Response Reporting.
+See the separate entries on this page for those three individual items.
+* xref:howtos:observability-metrics.adoc[Observability Metrics] -- The SDK collects information which is not tied to an individual request but rather to a collection of them (such as requests per second on a specific socket), or concerning the environment the SDK is running in (including garbage collection timings andCPU usage, amongst others).
+* xref:howtos:observability-orphan-logger.adoc[Orphaned Response Reporting] -- Special reporting capabilities which explicitly collect information about responses which have been abandoned (timed out) at the time when the SDK tries to complete them.* xref:howtos:n1ql-queries-with-sdk.adoc[Query] -- The Couchbase Query Service uses a SQL-like language for powerful queries across documents.
+* xref:howtos:health-check.adoc[Ping] -- Ping provides information about the current state of the connections in the Couchbase cluster, by actively polling for the status of the specified services, giving status and latency information for every node reachable.
+In addition to its use as a monitoring tool, a regular `ping` can be used in an environment which does not respect keep alive values for a connection.
 * xref:{server_version}@server:learn:security/authorization-overview.adoc#introduction-to-rbac[RBAC] -- Role-Based Access Control allows secure, fine-grained access privileges, assigned to fixed roles.
 The 3.x API allows some user management programmatically from the SDK.
-// RTO - see Tracing
+* xref:https://docs.couchbase.com/java-sdk/current/howtos/observability-tracing.adoc[Request Tracing] -- The tracing capability allows the SDK to store, aggregate, and potentially forward information about an individual request which can be used for later analysis.
+Information such as the time it took to encode the request and how much time it spent on the wire.
 * xref:concept-docs:collections.adoc[Scope] -- from Server 7.0, _Collections_ allow groupings of documents beneath the Bucket level, and _Scopes_ group together Collections.
 Collections might be assigned to different scopes according to content-type, or to deployment-phase (e.g., test and production).
 Applications can be assigned per-scope access rights, allowing each application to access only those collections it requires.
+* xref:howtos:full-text-searching-with-sdk.adoc[The Search Service] --
+Create, manage, and query search indexes on JSON documents stored in Couchbase buckets.
+The Search Service uses natural language processing for indexing and querying documents, provides relevance scoring on the results of your queries, and has fast indexes for querying a wide range of possible text searches.
+Some of the supported query-types include simple queries like Match and Term queries; range queries like Date Range and Numeric Range; and compound queries for conjunctions, disjunctions, and/or boolean queries.
+Also integrates with Vector Search indexes.
 * xref:concept-docs:n1ql-query.adoc[{sqlpp}] -- Couchbase’s powerful SQL-like language (formerly N1QL) allows queries in a format familiar to Database Administrators.
 These can be made against our Query Service, for transaction (OLTP) queries,
 or against our analytics (OLAP) services -- CBAS or, for _real-time_ analytics, Capella Columnar.
