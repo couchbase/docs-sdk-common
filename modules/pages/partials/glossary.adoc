@@ -72,7 +72,7 @@ See the separate entries on this page for those three individual items.
 In addition to its use as a monitoring tool, a regular `ping` can be used in an environment which does not respect keep alive values for a connection.
 * xref:{server_version}@server:learn:security/authorization-overview.adoc#introduction-to-rbac[RBAC] -- Role-Based Access Control allows secure, fine-grained access privileges, assigned to fixed roles.
 The 3.x API allows some user management programmatically from the SDK.
-* xref:https://docs.couchbase.com/java-sdk/current/howtos/observability-tracing.adoc[Request Tracing] -- The tracing capability allows the SDK to store, aggregate, and potentially forward information about an individual request which can be used for later analysis.
+* xref:howtos:observability-tracing.adoc[Request Tracing] -- The tracing capability allows the SDK to store, aggregate, and potentially forward information about an individual request which can be used for later analysis.
 Information such as the time it took to encode the request and how much time it spent on the wire.
 * xref:concept-docs:collections.adoc[Scope] -- from Server 7.0, _Collections_ allow groupings of documents beneath the Bucket level, and _Scopes_ group together Collections.
 Collections might be assigned to different scopes according to content-type, or to deployment-phase (e.g., test and production).
