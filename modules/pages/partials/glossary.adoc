@@ -67,9 +67,10 @@ Continuing improvements to our Query Service makes the latter usually a better c
 These cover Request Tracing, Observability Metrics, and Orphaned Response Reporting.
 See the separate entries on this page for those three individual items.
 * xref:howtos:observability-metrics.adoc[Observability Metrics] -- The SDK collects information which is not tied to an individual request but rather to a collection of them (such as requests per second on a specific socket), or concerning the environment the SDK is running in (including garbage collection timings andCPU usage, amongst others).
-* xref:howtos:observability-orphan-logger.adoc[Orphaned Response Reporting] -- Special reporting capabilities which explicitly collect information about responses which have been abandoned (timed out) at the time when the SDK tries to complete them.* xref:howtos:n1ql-queries-with-sdk.adoc[Query] -- The Couchbase Query Service uses a SQL-like language for powerful queries across documents.
+* xref:howtos:observability-orphan-logger.adoc[Orphaned Response Reporting] -- Special reporting capabilities which explicitly collect information about responses which have been abandoned (timed out) at the time when the SDK tries to complete them.
 * xref:howtos:health-check.adoc[Ping] -- Ping provides information about the current state of the connections in the Couchbase cluster, by actively polling for the status of the specified services, giving status and latency information for every node reachable.
 In addition to its use as a monitoring tool, a regular `ping` can be used in an environment which does not respect keep alive values for a connection.
+* xref:howtos:n1ql-queries-with-sdk.adoc[Query] -- The Couchbase Query Service uses a SQL-like language for powerful queries across documents.
 * xref:{server_version}@server:learn:security/authorization-overview.adoc#introduction-to-rbac[RBAC] -- Role-Based Access Control allows secure, fine-grained access privileges, assigned to fixed roles.
 The 3.x API allows some user management programmatically from the SDK.
 * xref:howtos:observability-tracing.adoc[Request Tracing] -- The tracing capability allows the SDK to store, aggregate, and potentially forward information about an individual request which can be used for later analysis.
