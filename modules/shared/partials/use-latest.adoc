@@ -1,0 +1,25 @@
+
+
+
+
+////
+// Add to top of pages that include this
+// (If they're not recent enough to have it in their antora.yml
+
+:name_platform_lc: 'java'
+// Or whichever platform.
+
+// using:
+include::6.5@sdk:shared:partial$use-latest.adoc[tag=latest]
+////
+
+
+// tag::latest[]
+[IMPORTANT]
+.Refer to the Latest Release Notes
+====
+This page is an archive snapshot, and does not contain release notes for the latest version of the SDK.
+
+See the xref:{name_platform_lc}-sdk:project-docs:sdk-release-notes.adoc[latest SDK release notes] for more recent improvements and bug fixes.
+====
+// end::latest[]
