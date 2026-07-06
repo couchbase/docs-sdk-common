@@ -6,7 +6,7 @@
 // Add to top of pages that include this
 // (If they're not recent enough to have it in their antora.yml
 
-:name_platform_lc: 'java'
+:name_platform_lc: java
 // Or whichever platform.
 
 // using:
