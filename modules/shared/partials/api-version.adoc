@@ -13,7 +13,8 @@ Whilst these two numbers match for the .NET SDK, this is not the case for the ot
 .SDK API Versions
 [cols="30,23,21,20,20,20,20"]
 |===
-| | API 3.4 | API 3.5 | API 3.6 | API 3.7| API 3.8 | API 3.9
+|
+| 3.4 | API 3.5 | API 3.6 | API 3.7| API 3.8 | API 3.9 | API 3.10
 
 | xref:dotnet-sdk:hello-world:overview.adoc[.NET]
 | 3.4
@@ -22,9 +23,11 @@ Whilst these two numbers match for the .NET SDK, this is not the case for the ot
 | 3.7
 | 3.8
 | 3.9
+| 3.10
 
 | xref:c-sdk:hello-world:overview.adoc[C (libcouchbase)]
 a| 3.3.3 ①
+a| N/A ②
 a| N/A ②
 a| N/A ②
 a| N/A ②
@@ -38,6 +41,7 @@ a| N/A ②
 | 1.1
 | 1.2
 | 1.3
+| 1.4
 
 | xref:go-sdk:hello-world:overview.adoc[Go]
 | 2.6 & 2.7
@@ -46,6 +50,7 @@ a| N/A ②
 | 2.10
 | 2.11
 | 2.12
+| 2.13
 
 | xref:java-sdk:hello-world:overview.adoc[Java]
 | 3.4 & 3.5
@@ -54,6 +59,7 @@ a| N/A ②
 | 3.8
 | 3.9 & 3.10
 | 3.11 & 3.12
+| 3.13
 
 
 | xref:kotlin-sdk:hello-world:overview.adoc[Kotlin]
@@ -63,6 +69,7 @@ a| N/A ②
 | 1.5
 | 3.9 & 3.10 ③
 | 3.11 & 3.12
+| 3.13
 
 | xref:nodejs-sdk:hello-world:overview.adoc[Node.js]
 | 4.2
@@ -71,6 +78,7 @@ a| N/A ②
 | 4.5
 | 4.6
 | 4.7
+| 4.8
 
 | xref:php-sdk:hello-world:overview.adoc[PHP]
 | 4.1
@@ -79,6 +87,7 @@ a| N/A ②
 | 4.3
 | 4.4
 | 4.5
+| 4.6
 
 | xref:python-sdk:hello-world:overview.adoc[Python]
 | 4.1
@@ -87,6 +96,7 @@ a| N/A ②
 | 4.4
 | 4.5
 | 4.6
+| 4.7
 
 | xref:ruby-sdk:hello-world:overview.adoc[Ruby]
 | 3.4
@@ -95,6 +105,7 @@ a| N/A ②
 | 3.6
 | 3.7
 | 3.8
+| 3.9
 
 | xref:rust-sdk:hello-world:overview.adoc[Rust]
 | -
@@ -103,6 +114,7 @@ a| N/A ②
 | -
 | -
 | 1.0
+| 1.1
 
 | xref:scala-sdk:hello-world:overview.adoc[Scala]
 | 1.4 & 1.5
@@ -111,6 +123,7 @@ a| N/A ②
 | 1.8
 | 3.9 & 3.10 ③
 | 3.11 & 3.12
+| 3.13
 |===
 
 <1> Excludes DNS SRV refresh support in Serverless Environments.
@@ -119,6 +132,8 @@ xref:cxx-sdk:hello-world:overview.adoc[{cpp} SDK].
 <3> With the Java 3.9 release, the other JVM SDKs hosted in the Java SDK monorepo adopted common release versions.
 This includes a number of other artifacts, as can be seen referenced in the release notes.
 // <4> The Rust SDK is currently in Developer Preview.
+
+// *SDK API 3.10*: 
 
 *SDK API 3.9*: Provides support for JWT based authentication,
 as well as mTLS Certs Refresh (without restart).
