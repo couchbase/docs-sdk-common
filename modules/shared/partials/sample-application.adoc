@@ -1,99 +1,193 @@
+= Quickstart in Couchbase with Spring Boot and Java
+:page-toclevels: 2
+:description: Quickstart app to build a REST API using Couchbase Capella in Java using Spring Boot.
+:page-aliases: ROOT:sample-application.adoc,ROOT:tutorial4.adoc,ROOT:sample-app-backend.adoc
+
+
 // tag::abstract[]
 [abstract]
 {description}
+Discover how to program interactions with Couchbase via the Data, Query, and Search services.
 // end::abstract[]
 
 
-// tag::quick-start[]
-== Quick Start
-
-Fetch the https://github.com/couchbaselabs/{travel-sample-git-project}[Couchbase {name-sdk} travel-sample Application REST Backend] from github:
-
-[source,console,subs="+attributes"]
-----
-git clone https://github.com/couchbaselabs/{travel-sample-git-project}.git
-cd {travel-sample-git-project}
-----
-
-With https://docs.docker.com/get-docker/[Docker] installed, you should now be able to run a bare-bones copy of Couchbase Server, load the travel-sample, add indexes, install the sample-application and its frontend, all by running a single command:
-
-[source,console]
-----
-docker-compose --profile local up
-----
-// end::quick-start[]
+// tag::intro[]
+After you have navigated through https://cloud.couchbase.com/sign-up[signing up to Capella],
+if {name_platform} is entered as your chosen language, you will be pointed to a clonable quickstart app on GitHub.
+If you were not, you can still find it {dev-portal-link}[here].
 
 
-// tag::bring-your-own[]
-== Running the code against your own development Couchbase server.
+Often, the first step developers take after creating their database is to create a REST API that can perform Create, Read, Update, and Delete (CRUD) operations for that database.
+The {dev-portal-link}[quickstart project] is designed to teach you and give you a starter project {this-platform} to generate such a REST API.
+After you have loaded the travel-sample bucket in your database, you can run this application which is a REST API with Swagger documentation so that you can learn:
+
+. How to create, read, update, and delete documents using xref:howto:kv-operations[Key-Value operations].
+KV operations are unique to Couchbase and provide super fast (under millisecond) operations.
+. How to write simple parametrized xref:howtos:n1ql-queries-with-sdk.html[{sqlpp} queries] using the built-in travel-sample bucket.
+
+This documentation -- and a number of other useful developer tutorials --
+can be found on the {dev-portal-link}[Couchbase Developer Portal].
+// end::intro[]
+
+
+
+== Prerequisites
 
 // tag::prereq[]
-For Couchbase Server {version-server}, make sure that you have at least one node each of data; query; index; and search.
-For a development box, mixing more than one of these on a single node (given enough memory resources) is perfectly acceptable.
+To run this prebuilt project, you will need:
 
-If you have yet to install Couchbase Server in your development environment
-xref:{version-server}@server:getting-started:do-a-quick-install.adoc[start here].
+* A https://www.couchbase.com/products/capella/[Couchbase Capella] cluster with the xref:ref:travel-app-data-model.adoc[travel-sample] bucket loaded.
++
+To run this tutorial using a self-managed Couchbase cluster, please refer to the <<#running-self-managed-couchbase-cluster>> section.
 
-Then load up the Travel Sample Bucket, using either the
-xref:{version-server}@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-ui[Web interface]
-or the
-xref:{version-server}@server:manage:manage-settings/install-sample-buckets.adoc#install-sample-buckets-with-the-cli[command line].
-You will also need to
-xref:{version-server}@server:fts:fts-searching-from-the-ui.adoc#create-an-index[create a Search Index]
--- Query indexes are taken care of by the Sample Bucket.
+* The Travel Sample Bucket is pre-loaded in Capella Free Tier. If you need to load it manually, see the xref:cloud:clusters:data-service/import-data-documents.adoc#import-sample-data[sample data impost page].
 // end::prereq[]
 
-See the README at https://github.com/couchbaselabs/{travel-sample-git-project} for full details of how to run and tweak the {name-sdk} travel-sample app.
-// end::bring-your-own[]
+
+* Java SDK 17+ -- see the xref:project-docs:compatibility.adoc#jdk-compat[compatibility guide].
++
+[NOTE]
+====
+The application is tested with Java 17 and 21. If you are using a different version of Java, please update the `pom.xml` file accordingly.
+====
+
+* https://maven.apache.org/install.html[Maven 3.6.3+].
 
 
-// tag::using[]
-== Using the Sample App
 
-image::sdk:shared:Travel-Sample-Register.png[]
+== App Setup
 
-Give yourself a username and password and click *Register*.
+// tag::setup[]
+We will walk through the different steps required to get the application running:
 
-You can now try out searching for flights, booking flights, and searching for hotels.
-You can see which Couchbase SDK operations are being executed by clicking the red bar at the bottom of the screen:
+. Cloning Repo
++
+[source,console,subs="+attributes"]
+----
+$ git clone {dev-portal-link}.git
+----
 
-image::sdk:shared:Couchbase-Query-Bar.png[]
-// end::using[]
+. Navigate to the Project Directory
++
+[source,console,subs="+attributes"]
+----
+$ cd {dir-name}
+----
+
+. Install Dependencies
+// end::setup[]
 
 
-// tag::overview[]
-== Sample App Overview
 
-The sample application runs 3 docker containers which contain the following:
 
-* The frontend -- a Vue web app which communicates with the backend via an API.
-* The backend -- a Python web app which contains the SDK code to communicate with Couchbase Server.
-* The database -- a one node cluster containing the travel sample Bucket and reqisite indexes.
+=== Setup Database Configuration
 
-image::sdk:shared:travel-sample-app-overview.png[]
+// tag::db-config[]
+To learn more about connecting to your Capella cluster, please follow the https://docs.couchbase.com/cloud/get-started/connect.html[instructions].
+Specifically, you need to do the following:
 
-The API implements a different endpoint for each of the app's features. You can explore the API here in read-only mode, or once you are running the application, at the `localhost:8080/apidocs` endpoint.
+. Create the xref:cloud:clusters:manage-database-users.adoc[database credentials] to access the travel-sample bucket (Read and Write) used in the application.
+. https://docs.couchbase.com/cloud/clusters/allow-ip-address.html[Allow access] to the Cluster from the IP on which the application is running.
+// end::db-config[]
 
-swagger_ui::https://raw.githubusercontent.com/couchbaselabs/{travel-sample-git-project}/HEAD/swagger.json[]
 
-// end::overview[]
 
+
+// tag::dev-pc[]
+.Running from a Development Machine
+[TIP]
+====
+Couchbase -- including Capella -- is designed to run in a LAN-like environment.
+For development, connecting to a remote cloud instance from a local laptop instead of an application server in the same region,
+may require you to adjust some timeouts.
+If you have problems, refer to the xref:ref:client-settings.adoc#constrained-network-environments[constrained network environments] section of the docs.
+====
+// end::dev-pc[]
+
+
+
+
+
+
+// sdk-specific content
+
+
+
+
+== Appendix
+
+
+=== Data Model
 
 // tag::data-model[]
-== Data Model
+For this quickstart, we use three collections, `airport`, `airline` and `routes` that contain sample airports, airlines and airline routes respectively.
+The routes collection connects the airports and airlines as seen in the figure below.
+We use these connections in the quickstart to generate airports that are directly connected and airlines connecting to a destination airport.
+Note that these are just examples to highlight how you can use {sqlpp} queries to join the collections.
 
-See the xref:ref:travel-app-data-model.adoc[Travel App Data Model] reference page for more information about the sample data set used.
+image::travel_sample_data_model.png[travel-sample data model]
 // end::data-model[]
 
-// tag::rest-api[]
-// PLACEHOLDER - Remove when DOC-10964 is completed
-// end::rest-api[]
 
 
-// TODO: we don't use the partial here, because of the location of swagger.json
-// in try-cb-dotnet/wwwroot/
-== REST API
+=== Extending API by Adding New Entity
 
-You can explore the REST API here in read-only mode, or once you are running the application, at the `/apidocs` endpoint.
+If you would like to add another entity to the APIs, these are the steps to follow:
 
-swagger_ui::https://raw.githubusercontent.com/couchbaselabs/{travel-sample-git-project}/HEAD/try-cb-dotnet/wwwroot/swagger.json[]
+- Create a new collection in the Couchbase scope. You can create new collections using the [SDK](https://docs.couchbase.com/java-sdk/current/howtos/provisioning-cluster-resources.html#collection-management) or via the [Couchbase Server interface](https://docs.couchbase.com/cloud/n1ql/n1ql-language-reference/createcollection.html).
+- Define the routes in a new class in the `controllers` package similar to the existing routes like `AirportController.java`.
+- Define the service in a new class in the `services` package similar to the existing services like `AirportService.java`.
+- Define the repository in a new class in the `repositories` package similar to the existing repositories like `AirportRepository.java`.
+
+
+
+
+=== Running Self-Managed Couchbase Cluster
+
+
+// teg::self-managedl[]
+If you are running this quickstart with a self-managed Couchbase cluster, you need to [load](https://docs.couchbase.com/server/current/manage/manage-settings/install-sample-buckets.html) the travel-sample data bucket in your cluster and generate the credentials for the bucket.
+
+You need to update the connection string and the credentials in the `application.properties` file in the `src/main/resources` folder.
+// end::self-managedl[]
+
+
+
+=== Swagger Documentation
+
+// teg::swagger[]
+Swagger documentation provides a clear view of the API including endpoints, HTTP methods, request parameters, and response objects.
+
+Click on an individual endpoint to expand it and see detailed information.
+This includes the endpoint's description, possible response status codes, and the request parameters it accepts.
+// end::swagger[]
+
+
+
+
+==== Trying Out the API
+
+// teg::try[]
+You can try out an API by clicking on the "Try it out" button next to the endpoints.
+
+- Parameters: If an endpoint requires parameters, Swagger UI provides input boxes for you to fill in.
+This could include path parameters, query strings, headers, or the body of a POST/PUT request.
+
+- Execution: Once you've inputted all the necessary parameters, you can click the "Execute" button to make a live API call.
+Swagger UI will send the request to the API and display the response directly in the documentation.
+This includes the response code, response headers, and response body.
+// end::try[]
+
+
+==== Models
+
+// teg::models[]
+Swagger documents the structure of request and response bodies using models.
+These models define the expected data structure using JSON schema and are extremely helpful in understanding what data to send and expect.
+// end::models[]
+
+
+
+
+
+
