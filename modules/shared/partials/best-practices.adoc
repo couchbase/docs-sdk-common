@@ -1,0 +1,325 @@
+= Best Practices
+:description: Speed up your application development, with some best practices for using Couchbase SDKs.
+:page-toclevels: 2
+:page-aliases: concept-docs:errors.adoc,concept-docs:rbac.adoc
+
+[abstract]
+{description}
+
+
+// see .NET doc on this
+
+
+From batching and reactive APIs, to unit tests and handling errors.
+There's plenty that can be done to remove bottlenecks in development and in performance, and this page can be your checklist of areas not to neglect as you develop your app.
+
+
+
+== Security
+
+// tag::security[]
+
+But before worrying about bottlenecks, let's put security concerns first.
+
+Security is a process, and not just a set of checkboxes -- but there are key areas you must check off as you move from development, through testing, to deploying in production.
+
+// end::security[]
+
+
+
+// tag::rbac[]
+=== Roles and RBAC
+
+Self-managed Couchbase Server uses Role-Based Access Control (RBAC), for applications to restrict _resources_ on a Couchbase cluster to an identified __user__, which is reflected in our managed service (Capella) as a nuanced set of Roles.
+Data security depends in part on only giving access to the minimum amount of data and permissions required to do the job.
+
+
+[tabs]
+====
+Couchbase Capella::
++
+--
+Control programmatic and application-level access to data for each cluster using xref:clusters:manage-database-users.adoc[cluster access credentials].
+Capella offers xref:cloud:clusters:cluster-rbac.adoc#basic-access-credentials[basic access credentials] with predefined read, write, or read/write permissions, and xref:cloud:clusters:cluster-rbac.adoc#advanced-access-credentials[advanced access credentials] with fine-grained privileges and reusable access roles for more precise access control.
+You can choose specific xref:cloud:clusters:data-service/about-buckets-scopes-collections.adoc[buckets, scopes, and collections] for your cluster access credentials to limit access to data.
+
+Only the xref:cloud:projects:project-roles.adoc#project-owner-role[Project Owner] role can create cluster access credentials for their projects.
+
+See cloud:projects:project-roles.adoc[Project Roles]
+and xref:cloud:organizations:organization-user-roles.adoc[Organization Roles] for more information.
+--
+
+Self-Managed Couchbase Server::
++
+--
+Each user who attempts resource-access is identified by means of the _credentials_ they pass to Couchbase Server, for purposes of _authentication_: these consist of a _username_ and (typically) a _password_.
+Once the user is authenticated, an _authorization_ process checks the _roles_ with which the user is associated.
+If one or more of these roles correspond to _privileges_ that permit the user-requested level of resource-access, access is duly granted; otherwise, it is denied.
+
+Users who have been assigned the *Admin* role for the cluster are able to create, edit, and remove users.
+The SDK provides APIs to support these activities.
+
+
+All aspects of the Couchbase RBAC system are covered in the section xref:server:learn:security/authorization-overview.adoc[Authorization].
+Specifically, for information on:
+
+* Adding _Users_ and assigning _roles_, by means of the Couchbase Web Console, see xref:server:manage:manage-security/manage-users-and-roles.adoc[Manage Users and Roles].
+* _Roles_ required for resource-access, and the privileges they entail, see xref:server:learn:security/roles.adoc[Roles].
+* _Resources_ controlled by Couchbase RBAC, see xref:server:learn:security/resources-under-access-control.adoc[Resources Under Access Control].
+--
+====
+
+
+NOTE: Introductory examples in the SDK documentation use the _Administrator_ user to ensure that developers can quickly get up and running; this _should not be used in production_.
+Elsewhere we use a general "user" which represents whichever permission levels are appropriate to your application.
+// end::rbac[]
+
+
+
+== Performance
+
+// tag::performance[]
+Couchbase's Data Service uses a fast binary protocol, which will always outperform JSON streamed over HTTP from {sqlpp} queries.
+If you know the key (ID) of a document, then use the xref:howtos:kv-operations.adoc[Data Service].
+
+If you need pessimistic locking, in particular if you need to lock documents for multi-document ACID transactions, then anything you can do at the schema level to reduce the number of documents locked simultaneously wil remove a bottleneck to updating the affected documents.  
+// end::performance[]
+
+
+
+
+
+=== Dealing with Timeout Errors
+
+// tag::timeout-debug[]
+// see also
+// https://couchbasecloud.atlassian.net/wiki/spaces/CST/pages/1993769712/Java+-+Debugging+KV+Timeouts
+// in Support wiki
+// end::timeout-debug[]
+
+
+
+// tag::timeout-wait[]
+* `waitUntilReady` should be the default setting for `Cluster.connect` and `Cluster.bucket` in most cases, so that resources are fully loaded before the client proceeds with CRUD calls to the cluster.
+* LAN-type connection of client and server is recommended in production, but WAN development is a reality pre-production.
+Ensure that you're familiar with the 
+xref:ref:client-settings.adoc#constrained-network-environments[best timeout options for WAN environments],
+or at least set a xref:ref:client-settings.adoc#wan-development[WAN development Configuration Profile].
+// end::timeout-wait[]
+
+
+
+// tag::timeout-no-wait[]
+* LAN-type connection of client and server is recommended in production, but WAN development is a reality pre-production.
+Ensure that you're familiar with the 
+xref:ref:client-settings.adoc#constrained-network-environments[best timeout options for WAN environments],
+or at least set a xref:ref:client-settings.adoc#wan-development[WAN development Configuration Profile].
+// end::timeout-no-wait[]
+
+
+
+
+
+
+// tag::timeout-more[]
+// Something on longer timeouts and fewer retries?
+// ... reading the logs to find the pattern?
+
+
+// &  Something on polling rate the SDK uses to fetch an updated cluster map whenever a topology change occurs.
+////
+By default the Java SDK polls every 2.5 seconds, regardless of server version or SDK version.
+This interval is configurable via the  io.configPollInterval client setting.
+https://docs.couchbase.com/java-sdk/current/ref/client-settings.html#io.configPollInterval
+When Java SDK 3.5.0 or later is used with Couchbase Server 7.6 or later, the SDK also listens for config change notifications from the server. In this case the polling acts as a failsafe, so it's probably okay to set it significantly higher than 2.5 seconds.
+////
+// end::timeout-more[]
+
+
+// write after more LZA added
+////
+=== Read From Replica
+
+Advanced zone aware....
+////
+
+
+=== Concurrency and Async APIs
+
+// ....this paragraph different for each SDK.
+
+We recommend using the reactive API over the `CompletableFuture` counterpart.
+See the xref:howtos:concurrent-async-apis.adoc[Async & Reactive APIs page] for discussion and practical examples.
+// end::[timeout]
+
+
+
+
+=== Bulk Get, Multi-Get, and Network Latency
+
+// tag::bulk-get[]
+In traditional databases, a bulk get or multi-get is often an efficient way of overcoming network latencies as a bottleneck, or simply making more efficent use of your database's performance.
+
+Couchbase is a distributed database, efficiently fetching data from vbuckets spread across several nodes:
+bulk gets can be an anti-pattern, holding things up on the Server side, compared with the efficiency of fetching your data asynchronously.
+However, this depends upon your platform language's availability of asynchronous APIs --
+see the xref:howtos:concurrent-async-apis.adoc[bulk get and async API page] for the specifics for the {name-sdk}.
+// end::bulk-get[]
+
+
+
+==== When to Use Bulk Get
+// tag::bulk-get-async-platform[]
+As stated above, bulk gets are rarely the best way to fetch data from different documents efficently,
+but given a sufficiently large operation the performance will tilt towards using a bulk get,
+so we do provide a xref:howtos:concurrent-async-apis.adoc#batching[batching example] for the {name-sdk}.
+// end::bulk-get-async-platform[]
+
+
+
+// tag::bulk-get-blocking-platform[]
+As stated above, bulk gets are rarely the best way to fetch data from different documents efficently for most supported platforms,
+although given a sufficiently large operation the performance will tilt towards using a bulk get,
+and async operations are normally the best option.
+But {name_platform} does not provide an async API,
+so we do provide a xref:howtos:concurrent-async-apis.adoc#batching[batching example] for the {name-sdk}.
+// end::bulk-get-blocking-platform[]
+
+
+// for the howto async page, e.g. https://docs.couchbase.com/java-sdk/current/howtos/concurrent-async-apis.html#batching
+
+// tag::bulk-get-sidebar[]
+TIP: This bulk-get example is given for the {name-sdk} as there are times when for a sufficiently large operation it will be the most resource-efficient answer.
+Nevertheless, Couchbase is a distributed database, and efficiently manages the fetching of your database from vbuckets spread across nodes --
+in most cases just use the async API.
+Should you wish to use a bulk get, be sure to benchmark performance in an environment which closely reflects your deployment environment, including network latency.
+// end::bulk-get-sidebar[]
+
+
+
+
+
+
+
+== Error Handling
+
+Best practices for error handling in Java depend somewhat upon your choice of API: 
+blocking, asynchronous, or reactive, as covered in the xref:howtos:concurrent-async-apis.adoc[async and reactive API guide].
+// That guide also covers how errors are actually returned (e.g. via `Try`, `Future`, or `Mono`) and handled.
+See also the xref:howtos:error-handling.adoc[error handling guide],
+which covers specific errors, along with a broader look at error handling strategies.
+
+
+== Testing
+
+Integrate developing with the {name-sdk} into your accustomed test framework.
+
+
+
+
+////
+== General Approach to Scala Exceptions
+
+ When the unexpected happens, take a step-by-step approach.
+
+include::{version-common}@sdk:shared:partial$errors.adoc[tag=exception]
+
+// include::{version-common}@sdk:shared:partial$errors.adoc[tag=ref]
+
+include::{version-common}@sdk:shared:partial$errors.adoc[tag=durability]
+
+include::{version-common}@sdk:shared:partial$errors.adoc[tag=diag]
+////
+
+
+
+
+// Slow Operations Logging
+include::{version-common}@sdk:shared:partial$errors.adoc[tag=observability]
+
+// until opentelemetry release for link below, could add note on API to expose own tracing features?
+// include::{version-common}@sdk:shared:partial$errors.adoc[tag=rto]
+
+
+
+
+
+// Missing APIs
+// For anything that is not covered by the SDK, 
+// for example
+// a raw FTS query from the SDK...
+// use the HTTP client: 
+
+////
+public class CouchbaseHttpClient
+extends Object
+A specialized HTTP client for making requests to Couchbase Server.
+Get an instance by calling Cluster.httpClient().
+
+Example usage:
+
+ public static String getAutoFailoverSettings(Cluster cluster) {
+   HttpResponse response = cluster.httpClient().get(
+       HttpTarget.manager(),
+       HttpPath.of("/settings/autoFailover"));
+
+   if (!response.success()) {
+     throw new RuntimeException(
+         "Failed to get auto-failover settings. HTTP status code " +
+             response.statusCode() + "; " + response.contentAsString());
+   }
+
+   return response.contentAsString();
+ }
+
+ public static void disableAutoFailover(Cluster cluster) {
+   HttpResponse response = cluster.httpClient().post(
+       HttpTarget.manager(),
+       HttpPath.of("/settings/autoFailover"),
+       HttpPostOptions.httpPostOptions()
+           .body(HttpBody.form(Map.of("enabled", "false"))));
+
+   if (!response.success()) {
+     throw new RuntimeException(
+         "Failed to disable auto-failover. HTTP status code " +
+             response.statusCode() + "; " + response.contentAsString());
+   }
+ }
+ 
+////
+// https://docs.couchbase.com/sdk-api/couchbase-java-client/com/couchbase/client/java/http/CouchbaseHttpClient.html
+
+
+
+
+== Additional Information
+
+SDKs are client to Couchbase Server -- whether Capella Database-As-A-Service, or self-managed -- and in some areas it would be wise to take a fully rounded approach.
+Read up on security and performance considerations relevant to your use case.
+
+=== Couchbase Security Best Practices
+
+* xref:cloud:security:security.adoc[Security Best Practices in Capella]
+* xref:server:learn:security/security-overview.adoc[Security for self-managed Couchbase Server]
+
+=== Role-Based Access Control
+
+For Capella, Roles, Cluster Access Credentials, and Authentication options are covered in the xref:cloud:security:security.adoc[Capella Security docs].
+
+
+For self-managed Couchbase Server, all aspects of the Couchbase RBAC system are covered in the section xref:{version-server}@server:learn:security/authorization-overview.adoc[Authorization].
+Specifically, for information on:
+
+* Adding _Users_ and assigning _roles_, by means of the Couchbase Web Console, see xref:{version-server}@server:manage:manage-security/manage-users-and-roles.adoc[Manage Users and Roles].
+* _Roles_ required for resource-access, and the privileges they entail, see xref:{version-server}@server:learn:security/roles.adoc[Roles].
+* _Resources_ controlled by Couchbase RBAC, see xref:{version-server}@server:learn:security/resources-under-access-control.adoc[Resources Under Access Control].
+
+
+
+
+// other SDK's docs
+//
+// add in Python
+// https://docs.couchbase.com/sdk-api/couchbase-python-client/couchbase_api/parallelism.html
+//
+// 
