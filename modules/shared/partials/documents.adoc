@@ -102,7 +102,7 @@ You can also use xref:n1ql-query.adoc[{sqlpp} Queries] (formerly N1QL) and xref:
 Documents can be stored and updated using either the SDK, Command line, or Web UI.
 When using a storage operation, the _full content_ of the document is replaced with a new value.
 
-The following example shows a document being stored using the xref:webui-cli-access.adoc#cli-access[`cbc`] utility.
+The following example shows a document being stored using the xref:hello-world:webui-cli-access.adoc#cli-access[`cbc`] utility.
 The ID of the document is `docid` and its value is JSON containing a single field (`json`) with the value of `value`.
 
 [source,console]
