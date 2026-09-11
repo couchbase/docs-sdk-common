@@ -1,6 +1,5 @@
 = Field Level Encryption
 :description: A high-level overview of Field-Level Encryption concepts.
-:page-topic-type: concept
 :page-edition: Enterprise Edition
 :page-aliases: ROOT:encryption.adoc
 :page-partial:
@@ -9,6 +8,16 @@
 {description}
 
 For a practical guide, see xref:howtos:encrypting-using-sdk.adoc[].
+
+
+[TIP]
+.Native Encryption at Rest
+====
+Server 8.x (and new Capella Operational clusters) offer xref:server:learn:security/native-encryption-at-rest-overview.adoc[encryption at rest].
+It's a comprehensive way of encrypting all data in a non-ephemeral bucket,
+as well as logs, configuration data, and audit data.
+However, you may prefer the relative simplicity of key management in Field Level Encryption for use cases where there are a limited number of data to be encrypted.
+====
 
 // tag::enc[]
 
