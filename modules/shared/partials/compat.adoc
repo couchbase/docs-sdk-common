@@ -1,0 +1,544 @@
+= Compatibility
+:description: Platform compatibility, and features available in different SDK versions, and compatibility between Server and SDK. \
+Plus notes on Cloud, networks, and AWS Lambda.
+:page-aliases: ROOT:overview.adoc,ROOT:compatibility-versions-features.adoc,compatibility-versions-features.adoc
+:page-toclevels: 3
+:table-caption!:
+
+
+[abstract]
+{description}
+
+
+The {sdk_dot_minor} SDK requires Java 8 or later
+_Java {java_latest_lts_version} is recommended_.
+
+
+
+== Platform Compatibility
+
+
+=== JDK Version Compatibility
+
+// tag::jdk-compat[]
+We test the {name-sdk} with https://adoptium.net/[Eclipse Temurin] versions 8, 17, 21, and 25.
+
+The following OpenJDK releases are supported:
+
+* https://adoptium.net/[OpenJDK 25 with HotSpot JVM] (recommended)
+* https://adoptium.net/[OpenJDK 21 with HotSpot JVM]
+* https://adoptium.net/[OpenJDK 17 with HotSpot JVM]
+* https://adoptium.net/[OpenJDK 11 with HotSpot JVM]
+* https://adoptium.net/[OpenJDK 8 with HotSpot JVM]
+
+The following Oracle JDK releases are also supported but we do not do any testing with them owing to Oracle license issues:
+
+* https://www.oracle.com/java/technologies/downloads/#java17[Oracle JDK 17]
+* https://www.oracle.com/java/technologies/downloads/#java11[Oracle JDK 11]
+* https://www.oracle.com/java/technologies/downloads/#java8[Oracle JDK 8]
+
+Other JDK implementations might work but are untested and unsupported.
+
+[TIP]
+Make sure to stay up to date with JDK patch releases because they provide stability improvements and security fixes.
+// end::jdk-compat[]
+
+
+
+=== OS Compatibility
+
+In general, the JVM eliminates concerns about underlying OS compatibility, 
+and Couchbase JVM SDKs can be expected to run on all of the Operating Systems supported by xref:{version-server}@server:install:install-platforms.adoc[Couchbase Server].
+
+// tag::os-compat[]
+The {name-sdk} will run on, and is supported on, the following OSs and platforms.
+The SDK has been tested on a representative subset of the platforms listed below.
+
+****
+[discrete]
+=== GNU/Linux
+
+* Amazon Linux AL2023.
+* Red Hat Enterprise Linux 8, 9, & 10.
+* Oracle Linux 8, 9, & 10.
+* Ubuntu (LTS) 26.04 (_Resolute_) & 24.04 (_Noble_).
+* Debian 11 (_Bullseye_), Debian 12 (_Bookworm_), & Debian 13 (_Trixie_).
+* SUSE Enterprise Linux 12 & 15.
+* Alpine Linux 3.21 - 3.24.
+
+[discrete]
+=== Microsoft Windows
+
+* Microsoft Windows 10 & 11;
+* Windows Server 2019, 2022, & 2025.
+
+[discrete]
+=== Mac OS X
+
+The current and previous two releases of OS X.
+At time of writing (September 2026): 27 (Golden Gate), 26 (Tahoe), and 15 (Sequoia).
+****
+// end::os-compat[]
+
+
+The JVM SDKs should also be expected to run on other commonly-available GNU/Linux distributions which support an appropriate JDK, but not all combinations can be tested -- notable exceptions are listed below.
+
+==== Alpine Linux Compatibility
+
+The https://netty.io[Netty] I/O library used by our JVM SDKs supports native optimizations to achieve higher throughput and lower latency 
+-- which the SDK enables by default. 
+Those modules are compiled against `glibc` and Alpine Linux uses `musl` instead --
+so the {name-sdk} is unable to complete bootstrapping on this platform.
+
+Because Alpine Linux does not have the `glibc` support needed,
+we highly recommend that you seek an alternative distribution where possible. 
+If that is not a option, then a possible workaround that can be applied is as follows:
+
+* Disable native IO and native TLS by setting both the `ioEnvironment.enableNativeIo` and `security.enableNativeTls` client settings to false, as in this example:
++
+[source,java]
+----
+Cluster cluster = Cluster.connect(
+  connectionString,
+  ClusterOptions.clusterOptions(username, password)
+    .environment(env -> env
+      .ioEnvironment(it -> it.enableNativeIo(false))
+      .securityConfig(it -> it.enableNativeTls(false))
+    )
+);
+----
+
+* Alternatively, disable it in Netty itself via the following system properties:
++
+[source,shell]
+----
+-Dcom.couchbase.client.core.deps.io.netty.transport.noNative=true
+-Dcom.couchbase.client.core.deps.io.netty.handler.ssl.noOpenSsl=true
+----
+
+The downside of these workarounds is potentially reduced performance, which can be determined through benchmarking and profiling.
+
+
+
+
+// Platform Compatibility
+
+// tag::virtual[]
+==== Platforms, Chipsets, and Virtual Environments
+
+Couchbase SDKs can be expected to run on modern ARM chips (such as AWS Graviton) and virtualised platforms (such as Microsoft Hyper-V). 
+Nevertheless, there are so many products available that not all can be tested --
+as such, we do not call out specific support for any particular product.
+Please contact our support organisation if you run into any issues.
+
+As always, running the very latest version of the SDKs will pick up any fixes already made to platform support
+(see the xref:project-docs:sdk-release-notes.adoc[Release Notes]).
+// end::virtual[]
+
+
+
+// tag::network-requirements[]
+// Network Requirements
+
+=== Network Requirements
+
+Couchbase SDKs are developed to be run in an environment with local area network (LAN) like throughput and latencies.
+While there is no technical issue that prevents the use across a wide area network (WAN), SDKs have certain thresholds around timeouts and behaviors to recover that will not be the same once the higher latency and possible bandwidth constraints and congestion of a WAN is introduced.
+Couchbase tests for correctness under LAN like conditions.
+For this reason, only LAN-like network environments are officially supported.
+
+Couchbase does document, for purposes of convenience when developing and performing basic operational work, what may need to be tuned when network throughputs and latencies are higher.
+If you encounter issues, even with these tunables, you should attempt the same workload from a supported, LAN-like environment.
+// end::network-requirements[]
+
+
+
+
+// tag::serverless[]
+==== Serverless Environments
+
+Recent SDKs offer better resilience in handling errors that may occur when running your application in serverless environments, in particular when processes are frozen or thawed, and a rebalance is required.
+This means official support for AWS Lambda, Azure Functions, and GCP Functions.
+
+NOTE: When *DNS SRV* records are used to connect to the SDK it is possible for the underlying addresses to change (i.e. the cluster could move).
+The SDK will detect this and react accordingly so that your application can continue to work correctly.
+// end::serverless[]
+
+
+
+
+
+
+
+== Couchbase Server Compatibility
+
+
+Couchbase SDKs are tested against a variety of different environments to ensure both backward and forward compatibility with different versions of Couchbase Server.
+
+=== Couchbase Version/SDK Version Matrix
+
+// tag=matrix-notes1[]
+The matrix below denotes the version of Couchbase Server, the version of the {name-sdk} and whether the SDK is:
+
+* ✖ *Unsupported*: This combination is not tested, and is not within the scope of technical support if you have purchased a support agreement.
+* ◎ *Compatible*: This combination has been tested previously, and should be compatible.
+evertheless, this combination is not recommended by our technical support organization, as not all of the latest features are supported by it.
+It is best to upgrade either the SDK or the Couchbase version you are using.
+* ✔ *Supported*: This combination is subject to ongoing quality assurance, and is fully supported by our technical support organization.
+// end=matrix-notes1[]
+
+.Recommended SDK per Server Version Matrix
+[#table_sdk_versions]
+|===
+| | 3.4, 3.5 | 3.6, 3.7 | 3.8 | 3.9-3.13
+
+| *Server 8.0* ①
+| *✔*
+| *✔*
+| *✔*
+| *✔*
+
+| *Server 7.6* ①
+| *✔*
+| *✔*
+| *✔*
+| *✔*
+
+| *Server 7.2*
+| *◎*
+| *◎*
+| *✔*
+| *✔*
+|===
+
+
+// tag=matrix-notes2[]
+① Server 7.6 & 8.0 are compatible with all supported (not yet End-of-Life) versions of the {name-sdk}, but for full support of the latest features you need to upgrade to a recent version of the SDK.
+See the <<#couchbase-new-feature-availability-matrix,Feature Availablity matrix below>> and the xref:sdk-release-notes.adoc[Release Notes page].
+
+Note the https://www.couchbase.com/support-policy/EOL/[End of Life dates^] for Couchbase Server and SDK versions.
+See the notes there for Support details.
+// end=matrix-notes2[]
+
+
+
+=== Capella Compatibility
+
+// tag::cloud[]
+The Couchbase {name-sdk} is fully compatible with Couchbase Capella, our fully-hosted database-as-a-service.
+To make development easier, the SDK includes the Capella client certificate ready installed.
+
+Note, Capella is offered as a fully provisioned service, so the underlying version of Couchbase Server changes over time.
+For this reason, compatibility information between Capella and the SDK is available xref:cloud:reference:sdk-compatibility.adoc[on the Capella compatibility page].
+// end::cloud[]
+
+
+=== Couchbase New Feature Availability Matrix
+
+.Couchbase Server and SDK Supported Version Matrix
+[.table-merge-cells]
+[cols="7,6,6,6"]
+|===
+| | Server 7.2 | Server 7.6  | Server 8.0
+
+| KV Range Scan
+| N/A
+2+| All supported SDK versions
+
+| Vector Search
+| N/A
+2+| From SDK 3.6.0 (base64 encoded vectors from 3.7.0)
+
+| Preferred Server Group Replica Reads
+| N/A
+2+| From SDK 3.7.4 (with Server 7.6.2 onwards)
+
+| Vector Query using GSI
+2+| N/A
+| From SDK 3.9.0 ①
+|===
+
+
+// tag=feature-notes[]
+① As part of the standard SDK {sqlpp} API, it should be compatible with all earlier versions of the SDK -- but it has not been tested.
+
+This table is not an exhaustive list -- just a few highlights -- provided to help assess compatibility of older versions in particular.
+For a fuller table, see the xref:deployment.adoc#couchbase-operational-cluster-feature-compatibility[Deployment page].
+For alignment of SDKs and new Server features, scroll down to the information below the <<api-version,API Version table>>.
+// end=feature-notes[]
+
+
+=== Spring Data Couchbase Compatibility
+
+https://projects.spring.io/spring-data-couchbase/[Spring Data Couchbase^] uses the Java SDK underneath and as a result is also provides different compatibilities with Couchbase Server.
+The following table provides an overview at the time of Java SDK {sdk_dot_minor}'s release:
+
+.Recommended Spring Data Couchbase per Server Version Matrix
+[#table_spring_versions]
+|===
+|  | SDC 5.4 - 5.5 | SDC 6.0 - 6.1
+
+| _Status ->_
+| _Maintenance Support_
+| _New Features, Active Development_
+
+| *Server 7.2 - 8.0*
+| *Compatible*
+| *Recommended*
+|===
+
+NOTE: Check the Spring Data Couchbase's compile dependencies -- older versions may link an out-of-date version of the SDK in their dependencies list, although a supported version should be in the `updates`.
+Please make sure that you are using a supported version of the Couchbase Java SDK, prefereably the latest version, which will contain any available bug fixes.
+Using the latest Spring Data Couchbase should ensure that this is so.
+
+
+
+
+=== Quarkus Java Compatibility
+
+include::1.4@quarkus-extension::compatibility.adoc[tag=compat-table]
+
+See the xref:quarkus-extension:ROOT:overview.adoc[Couchbase Quarkus Java Extension docs] for details of using Quarkus, and the compatibility with Quarkus, GraalVM, and the Couchbase Java SDK.
+
+
+=== API Version
+
+
+// tag::api-version[]
+This release of the SDK is written to version {sdk_api} of the SDK API specification (and matching the features available in Couchbase {server_version} and earlier).
+For most developers, just using the latest version will be all that matters, and few will need to look at another of our SDKs.
+Just for those few that do, the table below shows each Couchbase SDK release version that matches the API version (and a table that covers the earliest versions of the 3.x SDK API can be found in documentation for earlier versions of the SDK).
+
+Whilst these two numbers match for the .NET SDK, this is not the case for the others, as version numbers for individual SDKs are bumped up in line with https://semver.org/[Semantic Versioning] -- check the xref:sdk-release-notes[release notes] of each SDK for individual details.
+
+.SDK API Versions
+[cols="30,23,21,20,20,20,20,20"]
+|===
+|
+| 3.4 | API 3.5 | API 3.6 | API 3.7| API 3.8 | API 3.9 | API 3.10
+
+| xref:dotnet-sdk:hello-world:overview.adoc[.NET]
+| 3.4
+| 3.5
+| 3.6
+| 3.7
+| 3.8
+| 3.9
+| 3.10
+
+| xref:c-sdk:hello-world:overview.adoc[C (libcouchbase)]
+a| 3.3.3 ①
+a| N/A ②
+a| N/A ②
+a| N/A ②
+a| N/A ②
+a| N/A ②
+a| N/A ②
+
+| xref:cxx-sdk:hello-world:overview.adoc[{cpp}]
+| -
+| -
+| 1.0
+| 1.1
+| 1.2
+| 1.3
+| 1.4
+
+| xref:go-sdk:hello-world:overview.adoc[Go]
+| 2.6 & 2.7
+| 2.8
+| 2.9
+| 2.10
+| 2.11
+| 2.12
+| 2.13
+
+| xref:java-sdk:hello-world:overview.adoc[Java]
+| 3.4 & 3.5
+| 3.6
+| 3.7
+| 3.8
+| 3.9 & 3.10
+| 3.11 & 3.12
+| 3.13
+
+
+| xref:kotlin-sdk:hello-world:overview.adoc[Kotlin]
+| 1.1 & 1.2
+| 1.3
+| 1.4
+| 1.5
+| 3.9 & 3.10 ③
+| 3.11 & 3.12
+| 3.13
+
+| xref:nodejs-sdk:hello-world:overview.adoc[Node.js]
+| 4.2
+| 4.3
+| 4.4
+| 4.5
+| 4.6
+| 4.7
+| 4.8
+
+| xref:php-sdk:hello-world:overview.adoc[PHP]
+| 4.1
+| 4.2
+| 4.2.2
+| 4.3
+| 4.4
+| 4.5
+| 4.6
+
+| xref:python-sdk:hello-world:overview.adoc[Python]
+| 4.1
+| 4.2
+| 4.3
+| 4.4
+| 4.5
+| 4.6
+| 4.7
+
+| xref:ruby-sdk:hello-world:overview.adoc[Ruby]
+| 3.4
+| 3.5
+| 3.5.2
+| 3.6
+| 3.7
+| 3.8
+| 3.9
+
+| xref:rust-sdk:hello-world:overview.adoc[Rust]
+| -
+| -
+| -
+| -
+| -
+| 1.0
+| 1.1
+
+| xref:scala-sdk:hello-world:overview.adoc[Scala]
+| 1.4 & 1.5
+| 1.6
+| 1.7
+| 1.8
+| 3.9 & 3.10 ③
+| 3.11 & 3.12
+| 3.13
+|===
+
+<1> Excludes DNS SRV refresh support in Serverless Environments.
+<2> For most purposes better productivity and functionality can be found in our
+xref:cxx-sdk:hello-world:overview.adoc[{cpp} SDK].
+<3> With the Java 3.9 release, the other JVM SDKs hosted in the Java SDK monorepo adopted common release versions.
+This includes a number of other artifacts, as can be seen referenced in the release notes.
+// <4> The Rust SDK is currently in Developer Preview.
+
+// *SDK API 3.10*: 
+
+*SDK API 3.9*: Provides support for JWT based authentication,
+as well as mTLS Certs Refresh (without restart).
+// Adds Amazon Graviton 3 to the testing framework.
+// Adds Amazon Graviton 3 support.
+Deprecates SDK support for MapReduce Views.
+
+*SDK API 3.8*: Introduced alongside Couchbase Server 8.0, which adds support for 128 vBuckets on Magma.
+Server 8.0 introduced vector query using Global Secondary Indexes (GSI), the Query Service index -- using either a fast Hyperscale index, or a composite index to combine scalar queries with semantic search.
+
+*SDK API 3.7*:  Introduced  support for KV reads from preferred server groups.
+The .NET SDK has been updated to support the latest Transactions specification -- and the library is now incorporated within the .NET SDK.
+A new `getMulti()` interface batch reads with read committed isolation.
+Additionally, the Java SDK now includes a Quarkus extension with GraalVM support.
+
+*SDK API 3.6*: Introduced support for base 64 encoded vector types alongside Server 7.6.2 (and Capella).
+General Availability of our {cpp} SDK --
+now available as a supported, stand-alone SDK, this SDK is also the core of our Node.js, PHP, Python, and Ruby SDKs.
+
+// Zone-aware Read-from-Replica is supported for some SDKs.
+// Binary transactions support in some SDKs.
+// 
+
+*SDK API 3.5*: Introduced support for Vector Search alongside Server 7.6 (and Capella).
+Adds scoped indexes to Search (for Vector Seach and traditional FTS).
+Read from Replica for Query and Sub-Doc operations.
+KV Range Scan for querying documents through the Data Service, even if you don't know the document IDs (for use cases that require relatively low concurrency and tolerate relatively high latency).
+Transactions now implemented as a native library in all SDKs (except libcouchbase).
+
+*SDK API 3.4*: Introduced support for ARM v8 on Ubuntu 20.04, Transactions on Spring Data Couchbase, and compatibility with running in serverless environments, such as AWS λ.
+The `couchbase2://` connection string was introduced in Go 2.7, Java 3.5, Kotlin 1.2, and Scala 1.5, for Cloud Native Gateway with xref:operator::overview.adoc[Couchbase Autonomous Operator] (from CAO 2.6.1).
+
+*SDK API 3.3*: Introduced alongside Couchbase Server 7.1,
+adds Management API for Eventing and Index Management for Scopes & Collections;
+extends Bucket Management API to support Custom Conflict Resolution and Storage Options;
+adds new platform support for Linux Alpine OS, Apple M1, and AWS Graviton2;
+provides improved error messages for better error handling;
+and an upgraded Spark Connector that runs on Spark 3.0 & 3.1 Platform.
+
+*SDK API 3.2*: Introduced alongside Couchbase Server 7.0,
+provides features in support of Scopes and Collections,
+extends capabilities around Open Telemetry API to instrument telemetry data,
+enhanced client side field level encryption to add an additional layer of security to protect sensitive data,
+adds new platform support such as Ubuntu 20.04 LTS.
+
+*SDK API 3.1*: Introduced alongside Couchbase Server 6.6,
+focuses on Bucket Management API,
+adds capabilities around Full Text Search features such-as Geo-Polygon support, Flex Index, and Scoring. 
+
+*SDK API 3.0*: Introduced alongside Couchbase Server 6.5, is a major overhaul from its predecessor,
+has simplified surface area, removed long-standing bugs and deprecated/removed old API,
+introduces new programming languages Scala and Ruby,
+written in anticipation to support Scopes and Collections.
+// end::api-version[]
+
+
+
+== SDK API Stability
+
+=== Interface Stability
+
+// tag::interface-stability-section[]
+// tag::interface-stability-par[]
+Couchbase SDKs indicate the stability of an API through documentation.
+Since there are different meanings when developers mention stability, we mean *interface stability*: how likely the interface is to change or be removed entirely.
+A stable interface is one that is guaranteed not to change between versions, meaning that you may use an API of a given SDK version and be assured that the given API will retain the same parameters and behavior in subsequent versions.
+An unstable interface is one which may appear to work or behave in a specific way within a given SDK version, but may change in its behavior or arguments in future SDK versions, causing odd application behavior or compiler/API usage errors.
+*Implementation stability* is implied to be more reliable at higher levels, but all are tested to the level that is appropriate for their stability.
+// end::interface-stability-par[]
+
+Couchbase uses three interface stability classifiers.
+You may find these classifiers appended as annotations or comments within documentation for each API:
+
+* *Committed*: This stability level is used to indicate the most stable interfaces that are guaranteed to be supported and remain stable between SDK versions.
+This is the default -- unless otherwise stated in the documentation, each API has *Committed* status.
+* *Uncommitted*: This level is used to indicate APIs that are _unlikely_ to change, but _may_ still change as final consensus on their behavior has not yet been reached.
+_Uncommitted_ APIs usually end up becoming stable APIs.
+* *Volatile*: This level is used to indicate experimental APIs that are still in flux and may likely be changed.
+It may also be used to indicate inherently private APIs that may be exposed, but "YMMV" (your mileage may vary) principles apply.
+_Volatile_ APIs typically end up being promoted to _Uncommitted_ after undergoing some modifications.
+
+APIs that are marked as _Committed_ have a stable implementation.
+_Uncommitted_ and _Volatile_ APIs should be stable within the bounds of any known and often documented issues, but Couchbase has not made a commitment to these APIs and may not respond to reported defects with the same priority.
+
+Additionally, take note of the following interface labels:
+
+* *Deprecated*: Any API marked deprecated may be removed in the next major version released. 
+Couchbase recommends migrating from the deprecated API to the replacement as soon as possible. 
+In rare instances, deprecated API may be rendered non-functional in a dot-minor release when the API cannot continue to be supported.
+* *Internal*: This level is used to indicate you should not rely on this API as it is not intended for use outside the module, even to other Couchbase components.
+// end::interface-stability-section[]
+
+
+=== Older SDK Versions
+
+// tag::archive-link[]
+Documentation on older, unsupported versions of the SDK -- that have reached end-of-life -- can be found in the https://docs-archive.couchbase.com/home/index.html[archive].
+// end::archive-link[]
+
+
+// tag::migration[]
+== Comparing Older Documentation
+
+You may want to visit documentation for older versions of the SDK, to help to understand application code that you are migrating.
+Versions that have reached end of life can be found in the https://docs-archive.couchbase.com/home/index.html[archive].
+In the release notes pages of these older docs, you will also find links to the API reference for each no-longer-supported release.
+// end::migration[]
