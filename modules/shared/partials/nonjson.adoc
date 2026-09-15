@@ -39,7 +39,7 @@ Later, when retrieving the document from the server, the SDK checks the type cod
 
 By default, SDKs will only accept document types which can serialize to JSON and will only serialize them to JSON.
 However applications can configure the SDK to use non-JSON serialization and accept other types of inputs as documents.
-Note that using non-JSON serialization will prevent the document from being accessible via Query and MapReduce.
+Note that using non-JSON serialization will prevent the document from being accessible via {sqlpp}.
 
 The table below shows the built-in formats available in most SDKs.
 The _name_ column displays the format name; the _native type_ column displays the native language type which is used as input and output for the document, the _description_ contains the properties of such a type, and the _flags value_ contains the actual code used for the format.
