@@ -145,7 +145,7 @@ If you would like to add another entity to the APIs, these are the steps to foll
 === Running Self-Managed Couchbase Cluster
 
 
-// teg::self-managedl[]
+// tag::self-managedl[]
 If you are running this quickstart with a self-managed Couchbase cluster, you need to [load](https://docs.couchbase.com/server/current/manage/manage-settings/install-sample-buckets.html) the travel-sample data bucket in your cluster and generate the credentials for the bucket.
 
 You need to update the connection string and the credentials in the `application.properties` file in the `src/main/resources` folder.
@@ -155,7 +155,7 @@ You need to update the connection string and the credentials in the `application
 
 === Swagger Documentation
 
-// teg::swagger[]
+// tag::swagger[]
 Swagger documentation provides a clear view of the API including endpoints, HTTP methods, request parameters, and response objects.
 
 Click on an individual endpoint to expand it and see detailed information.
@@ -167,7 +167,7 @@ This includes the endpoint's description, possible response status codes, and th
 
 ==== Trying Out the API
 
-// teg::try[]
+// tag::try[]
 You can try out an API by clicking on the "Try it out" button next to the endpoints.
 
 - Parameters: If an endpoint requires parameters, Swagger UI provides input boxes for you to fill in.
@@ -181,7 +181,7 @@ This includes the response code, response headers, and response body.
 
 ==== Models
 
-// teg::models[]
+// tag::models[]
 Swagger documents the structure of request and response bodies using models.
 These models define the expected data structure using JSON schema and are extremely helpful in understanding what data to send and expect.
 // end::models[]
