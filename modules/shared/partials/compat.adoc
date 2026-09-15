@@ -177,7 +177,7 @@ Couchbase SDKs are tested against a variety of different environments to ensure 
 
 === Couchbase Version/SDK Version Matrix
 
-// tag=matrix-notes1[]
+// tag::matrix-notes1[]
 The matrix below denotes the version of Couchbase Server, the version of the {name-sdk} and whether the SDK is:
 
 * ✖ *Unsupported*: This combination is not tested, and is not within the scope of technical support if you have purchased a support agreement.
@@ -185,7 +185,7 @@ The matrix below denotes the version of Couchbase Server, the version of the {na
 evertheless, this combination is not recommended by our technical support organization, as not all of the latest features are supported by it.
 It is best to upgrade either the SDK or the Couchbase version you are using.
 * ✔ *Supported*: This combination is subject to ongoing quality assurance, and is fully supported by our technical support organization.
-// end=matrix-notes1[]
+// end::matrix-notes1[]
 
 .Recommended SDK per Server Version Matrix
 [#table_sdk_versions]
@@ -212,13 +212,13 @@ It is best to upgrade either the SDK or the Couchbase version you are using.
 |===
 
 
-// tag=matrix-notes2[]
+// tag::matrix-notes2[]
 ① Server 7.6 & 8.0 are compatible with all supported (not yet End-of-Life) versions of the {name-sdk}, but for full support of the latest features you need to upgrade to a recent version of the SDK.
 See the <<#couchbase-new-feature-availability-matrix,Feature Availablity matrix below>> and the xref:sdk-release-notes.adoc[Release Notes page].
 
 Note the https://www.couchbase.com/support-policy/EOL/[End of Life dates^] for Couchbase Server and SDK versions.
 See the notes there for Support details.
-// end=matrix-notes2[]
+// end::matrix-notes2[]
 
 
 
@@ -259,13 +259,13 @@ For this reason, compatibility information between Capella and the SDK is availa
 |===
 
 
-// tag=feature-notes[]
+// tag::feature-notes[]
 ① As part of the standard SDK {sqlpp} API, it should be compatible with all earlier versions of the SDK -- but it has not been tested.
 
 This table is not an exhaustive list -- just a few highlights -- provided to help assess compatibility of older versions in particular.
 For a fuller table, see the xref:deployment.adoc#couchbase-operational-cluster-feature-compatibility[Deployment page].
 For alignment of SDKs and new Server features, scroll down to the information below the <<api-version,API Version table>>.
-// end=feature-notes[]
+// end::feature-notes[]
 
 
 === Spring Data Couchbase Compatibility
