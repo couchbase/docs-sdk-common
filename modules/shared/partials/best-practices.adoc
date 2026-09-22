@@ -170,9 +170,9 @@ see the xref:howtos:concurrent-async-apis.adoc[bulk get and async API page] for 
 
 ==== When to Use Bulk Get
 // tag::bulk-get-async-platform[]
-As stated above, bulk gets are rarely the best way to fetch data from different documents efficently,
-but given a sufficiently large operation the performance will tilt towards using a bulk get,
-so we do provide a xref:howtos:concurrent-async-apis.adoc#batching[batching example] for the {name-sdk}.
+As stated above, bulk gets are rarely the best way to fetch data from different documents efficently.
+Nevertheless, if your business logic dictates that all of, say five, results need to be returned before processing for the application's next step, then a bulk get will give you all of the results together, as needed by your app.
+For this reason we do provide a xref:howtos:concurrent-async-apis.adoc#batching[batching example] for the {name-sdk}.
 // end::bulk-get-async-platform[]
 
 
@@ -189,10 +189,8 @@ so we do provide a xref:howtos:concurrent-async-apis.adoc#batching[batching exam
 // for the howto async page, e.g. https://docs.couchbase.com/java-sdk/current/howtos/concurrent-async-apis.html#batching
 
 // tag::bulk-get-sidebar[]
-TIP: This bulk-get example is given for the {name-sdk} as there are times when for a sufficiently large operation it will be the most resource-efficient answer.
-Nevertheless, Couchbase is a distributed database, and efficiently manages the fetching of your database from vbuckets spread across nodes --
-in most cases just use the async API.
-Should you wish to use a bulk get, be sure to benchmark performance in an environment which closely reflects your deployment environment, including network latency.
+TIP: This bulk-get example is given for the {name-sdk} as there are times when business logic dictates that all of, say five, results need to be returned before processing for the application's next step, then a bulk get will give you all of the results together, as needed by your app.
+This will not be more efficient -- for Cluster or for network -- but will comply with the results handling need of this particular case.
 // end::bulk-get-sidebar[]
 
 
