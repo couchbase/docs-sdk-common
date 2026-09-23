@@ -436,6 +436,8 @@ This includes a number of other artifacts, as can be seen referenced in the rele
 
 // *SDK API 3.10*: 
 
+*SDK API 3.10*: Adds support for a number of features that will be in the next release of Couchbase Server.
+
 *SDK API 3.9*: Provides support for JWT based authentication,
 as well as mTLS Certs Refresh (without restart).
 // Adds Amazon Graviton 3 to the testing framework.
