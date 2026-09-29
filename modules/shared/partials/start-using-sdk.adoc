@@ -261,8 +261,10 @@ include::devguide:example$scala/StartUsing.scala[tag=connect,indent=0]
 Cloud Native Gateway (CNG)::
 +
 --
+// tag::cng[]
 Couchbase's large number of ports across the URLs of many services can be proxied by using a `couchbase2://` endpoint as the connection string --
-currently only compatible with recent versions of xref:operator:ROOT:concept-cloud-native-gateway.adoc[Couchbase Autonomous Operator]:
+compatible with recent versions of xref:operator:ROOT:concept-cloud-native-gateway.adoc[Couchbase Autonomous Operator] or xref:cloud-native-gateway:intro:about-cng.adoc[install alongside self-managed Server]:
+// end::cng[]
 
 [source,scala]
 ----
