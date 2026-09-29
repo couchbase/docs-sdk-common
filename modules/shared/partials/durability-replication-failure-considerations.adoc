@@ -25,7 +25,7 @@ By default all writes are asynchronous, but levels of durability can be set, to 
 // tag::syncrep[]
 === Durable Writes
 
-All supported versions of Couchbase Server (since 6.5) offer xref:{version-server}@server:learn:data/durability.adoc[Durable Writes],
+All supported versions of Couchbase Server offer xref:{version-server}@server:learn:data/durability.adoc[Durable Writes],
 under which mutations will not be visible to other clients until they have met their durability requirements.
 
 The optional `durabilityLevel` parameter, which all mutating operations accept, allows the application to wait until this replication (or persistence) is successful before proceeding.
