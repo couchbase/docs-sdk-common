@@ -159,7 +159,8 @@ xref:project-docs:sdk-licenses.adoc[licensing],
 * xref:ref:index.adoc[]
 
 The key reference doc is the API guide, which should be an accurate and complete source of truth for programming with the {name_platform} SDK's API.
-Any error here should be filed directly against the individual SDKs bug tracker (JIRA), although a ticket against the docs https://issues.couchbase.com/projects/DOC/issues[here] will always be converted to the correct project.
+Any error here should be filed directly against the individual SDKs bug tracker (raise an issue in the GH repo for the source code), although a ticket against the docs https://issues.couchbase.com/projects/DOC/issues[DOCs] will always be converted to the correct project --
+and the simplest way to file a DOC ticket is to click the _Leave Additional Feedback_, usually found at the end of the right-hand page nav.
 
 The first link in the navigation for the Reference Section is to the API Guide for the _latest version_ of the SDK.
 Links to previous versions can be found with the xref:project-docs:sdk-release-notes.adoc[Release Notes].
