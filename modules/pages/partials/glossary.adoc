@@ -10,8 +10,8 @@ Below you will find short definitions of many Couchbase-related terms, with link
 
 // Forms a sort of index of links
 
-// * xref:howtos:analytics-using-sdk.adoc[Analytics] -- Couchbase Analytics Service allows longer running queries over big data, whilst taking advantage of Couchbase’s Multi-Dimensional scaling.
-Couchbase also offers xref:home::operational-insights.adoc[Operational Insights], a Real-Time OLAP database for the execution of complex analytical queries and the extraction of timely insights.
+* xref:howtos:analytics-using-sdk.adoc[Analytics] -- Couchbase Analytics Service allows longer running queries over big data, whilst taking advantage of Couchbase’s Multi-Dimensional scaling.
+// Couchbase also offers xref:home::operational-insights.adoc[Operational Insights], a Real-Time OLAP database for the execution of complex analytical queries and the extraction of timely insights.
 For this you will need to use xref:home::operational-insights-sdk.adoc[Operational Insights SDKs].
 // Bootstrapping -
 * xref:howtos:concurrent-document-mutations.adoc[CAS] -- Conpare And Swap.
