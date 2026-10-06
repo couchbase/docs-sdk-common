@@ -45,7 +45,7 @@ You can choose specific xref:cloud:clusters:data-service/about-buckets-scopes-co
 
 Only the xref:cloud:projects:project-roles.adoc#project-owner-role[Project Owner] role can create cluster access credentials for their projects.
 
-See cloud:projects:project-roles.adoc[Project Roles]
+See xref:cloud:projects:project-roles.adoc[Project Roles]
 and xref:cloud:organizations:organization-user-roles.adoc[Organization Roles] for more information.
 --
 
