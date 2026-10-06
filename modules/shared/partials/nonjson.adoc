@@ -4,6 +4,7 @@
 
 // tag::intro[]
 [abstract]
+{description}
 Couchbase is a document database and functions best when document contents are JSON.
 Nevertheless Couchbase may be used to store non-JSON data for various use cases.
 // This page discusses how to use Couchbase with non-JSON documents, including strings and binary-data.
