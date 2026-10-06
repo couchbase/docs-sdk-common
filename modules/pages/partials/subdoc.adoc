@@ -1,8 +1,6 @@
 = Sub-Documents
-:page-topic-type: concept
-// include::partial$attributes.adoc[]
 :nav-title: Sub-Doc
-:page-aliases: 
+// :page-aliases: 
 
 [abstract]
 High performance Sub-Document API for more efficient use of network bandwidth than fetching entire documents.
