@@ -128,14 +128,18 @@ See xref:#expiry[Expiry] for more information on expiration.
 ====
 If you wish to only modify certain parts of a document, you can use xref:subdocument-operations.adoc[sub-document] operations which operate on specific subsets of documents:
 
-[source,python]
+[source,{lang-code}]
 ----
-cb.mutate_in('docid', subdoc.array_addunique('tags', 'fast'))
+{sub-doc-snippet}
 ----
+
+//  ^ python
+// cb.mutate_in('docid', subdoc.array_addunique('tags', 'fast'))
+
 
 or xref:{version-server}@server:n1ql:n1ql-language-reference/update.adoc[{sqlpp} UPDATE] to update documents based on specific query criteria:
 
-[source,n1ql]
+[source,sqlpp]
 ----
 update `default` SET sale_price = msrp * 0.75 WHERE msrp < 19.95;
 ----
