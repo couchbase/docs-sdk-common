@@ -125,7 +125,7 @@ The routes collection connects the airports and airlines as seen in the figure b
 We use these connections in the quickstart to generate airports that are directly connected and airlines connecting to a destination airport.
 Note that these are just examples to highlight how you can use {sqlpp} queries to join the collections.
 
-image::travel_sample_data_model.png[travel-sample data model]
+image::ref:image$travel_sample_data_model.png[travel-sample data model]
 // end::data-model[]
 
 
