@@ -5,15 +5,15 @@ As well as this row-based analytics service, a speedy, column-based analytics da
 [TIP]
 .Analytics SDKs
 ====
-SDKs for xref:enterprise-analytics:intro:intro.adoc[Enterprise Analytics] --
+SDKs for xref:enterprise-analytics:intro:intro.adoc[Operational Insights Enterprise] --
 Couchbase's analytical database for real time apps and operational intelligence (RT-OLAP) --
 are available for the .NET, Go, Java, Node.js, and Python platforms.
-See the xref:home::analytics-sdk.adoc[Enterprise Analytics SDK pages] for more information.
+See the xref:home::operational-insights-sdk.adoc[Operational Insights Enterprise SDK pages] for more information.
 
-Currently, different SDKs are needed to connect to xref:analytics:intro:intro.adoc[Capella Analytics] --
-as this service does not have Enterprise Analytics' load balancer, and uses a different connection protocol.
-Capella Analytics SDKs (also known as Columnar SDKs) are available for the Go, Java, Node.js, and Python platforms.
-See the xref:home::columnar-sdk.adoc[Capella Analytics SDK pages] for more information.
+Currently, different SDKs are needed to connect to xref:analytics:intro:intro.adoc[Operational Insights Capella] --
+as this service does not have Operational Insights Enterprise's load balancer, and uses a different connection protocol.
+Operational Insights Capella SDKs (also known as Columnar SDKs) are available for the Go, Java, Node.js, and Python platforms.
+See the xref:home::columnar-sdk.adoc[Operational Insights Capella SDK pages] for more information.
 ====
 // end::initial-availability[]
 
@@ -21,15 +21,15 @@ See the xref:home::columnar-sdk.adoc[Capella Analytics SDK pages] for more infor
 [TIP]
 .Analytics SDKs
 ====
-SDKs for xref:enterprise-analytics:intro:intro.adoc[Enterprise Analytics] --
+SDKs for xref:enterprise-analytics:intro:intro.adoc[Operational Insights Enterprise] --
 Couchbase's analytical database for real time apps and operational intelligence (RT-OLAP) --
 are available for the .NET, Go, Java, Node.js, and Python platforms.
-See the xref:home::analytics-sdk.adoc[Enterprise Analytics SDK pages] for more information.
+See the xref:home::analytics-sdk.adoc[Operational Insights Enterprise SDK pages] for more information.
 
-Currently, different SDKs are needed to connect to xref:analytics:intro:intro.adoc[Capella Analytics] --
-as this service does not have Enterprise Analytics' load balancer, and uses a different connection protocol.
-Capella Analytics SDKs (also known as Columnar SDKs) are available for the Go, Java, Node.js, and Python platforms.
-See the xref:home::columnar-sdk.adoc[Capella Analytics SDK pages] for more information.
+Currently, different SDKs are needed to connect to xref:analytics:intro:intro.adoc[Operational Insights Capella] --
+as this service does not have Operational Insights Enterprise's load balancer, and uses a different connection protocol.
+Operational Insights Capella SDKs (also known as Columnar SDKs) are available for the Go, Java, Node.js, and Python platforms.
+See the xref:home::columnar-sdk.adoc[Operational Insights Capella (Columnar) SDK pages] for more information.
 ====
 // end::initial-availability-o[]
 
