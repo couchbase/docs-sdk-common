@@ -1,12 +1,12 @@
 = Managing Connections
 
-
+// TODO update n1ql link once all of the SDK docs are updated.
 
 == Cloud Native Gateway
 
 // tag::cng[]
-Couchbase's next generation connection protocol, is compatible with recent versions of xref:operator:ROOT:concept-cloud-native-gateway.adoc[Couchbase Autonomous Operator] (running on Kubernetes or OpenShift),
-or xref:cloud-native-gateway:intro:about-cng.adoc[installed alongside self-managed Server].
+Cloud Native Gateway (CNG), Couchbase's next generation connection protocol, can be xref:cloud-native-gateway:intro:about-cng.adoc[installed alongside self-managed Server].
+It is also compatible with all supported versions of xref:operator:ROOT:concept-cloud-native-gateway.adoc[Couchbase Autonomous Operator] (running on Kubernetes or OpenShift).
 The protocol implements a gRPC-style interface between the SDK and Couchbase Server.
 
 It can be enabled by changing the connection string to `couchbase2://` but there are a few differences to be aware of, described <<#limitations,below>>.
@@ -25,7 +25,7 @@ The following are not currently implemented over the `couchbase2://` protocol:
 
 * Authentication by client certificate.
 * Multi-document ACID transactions.
-* Analytics service.
+* Analytics service (CBAS).
 * Health Check.
 
 And the output from these features should be seen as volatile and subject to change:
@@ -37,7 +37,7 @@ There are some different behaviors seen with this protocol:
 * Some config options are unsupported -- see the xref:ref:client-settings.adoc#cloud-native-gateway[Settings page].
 * The SDK will poll the gRPC channels until they are in a good state, or return an error, or timeout while waiting -- in our standard protocol there is an option of setting `waitUntilReady()` for just certain services to become available.
 * Some error codes are more generic -- in cases where the client would not be expected to need to take specific action -- but should cause no problem, unless you have written code looking at individual strings within the error messages.
-* Although documents continue to be stored compressed by Couchbase Server, they will not be transmitted in compressed form (to and from the client) over the wire, using `couchbase2://`.
+* Although documents continue to be stored compressed by Couchbase Server, they will not be transmitted in compressed form over the wire (to and from the client), using `couchbase2://`.
 // end::cng-limitations[]
 
 
