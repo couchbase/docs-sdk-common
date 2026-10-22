@@ -10,7 +10,7 @@ Transactions are distributed and work across multiple documents, buckets, scopes
 
 
 // tag::requirements[]
-.Single Node Cluster
+.Single Node Cluster in Self-Managed Environments
 [CAUTION]
 ====
 When using a single node cluster (for example, during development), the default number of replicas for a newly created bucket is *1*.
@@ -18,11 +18,12 @@ If left at this default, all key-value writes performed with durability will fai
 In turn, this will cause all transactions (which perform all key-value writes durably) to fail.
 This setting can be changed via:
 
-* xref:cloud:clusters:data-service/manage-buckets.adoc#add-bucket[Capella UI]
 * xref:{version-server}@server:manage:manage-buckets/create-bucket.adoc#couchbase-bucket-settings[Couchbase Server UI]
 * xref:{version-server}@server:cli:cbcli/couchbase-cli-bucket-create.adoc#options[Command Line]
 
 If the bucket already exists, then the server needs to be rebalanced for the setting to take effect.
+
+This only applies to self-managed clusters: a Capella single node cluster has replica set to `0`, and transactions will work fine in the single node cluster. 
 ====
 // end::requirements[]
 
